@@ -1,0 +1,39 @@
+.date-output-container {
+    display: inline-block;
+    font-family: Helvetica, Arial, sans-serif;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+}
+
+.date-output-value {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Optional: Add hover effect */
+.date-output-container:hover {
+    background-color: #eeeeee;
+    border-color: #d0d0d0;
+}
+
+/* Optional: Add different styles for different date types */
+.date-output-container.date-past {
+    background-color: #fff3e0;
+    border-color: #ffb74d;
+}
+
+.date-output-container.date-today {
+    background-color: #e8f5e9;
+    border-color: #66bb6a;
+}
+
+.date-output-container.date-future {
+    background-color: #e3f2fd;
+    border-color: #42a5f5;
+}
+
+/* Made with Bob */

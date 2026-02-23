@@ -1,0 +1,153 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DateOutput Widget API",
+    "description": "OpenAPI specification for the DateOutput widget business objects and configuration options used in IBM Business Automation Workflow",
+    "version": "1.0.0",
+    "contact": {
+      "name": "IBM BAW Custom Widgets"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "components": {
+    "schemas": {
+      "DateValue": {
+        "oneOf": [
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 date-time string",
+            "example": "2025-12-22T14:30:00Z"
+          },
+          {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp in milliseconds",
+            "example": 1734876600000
+          },
+          {
+            "type": "string",
+            "format": "date",
+            "description": "ISO 8601 date string",
+            "example": "2025-12-22"
+          }
+        ],
+        "description": "Date value - can be ISO 8601 string, timestamp, or Date object"
+      },
+      "DateFormatToken": {
+        "type": "string",
+        "description": "Format tokens for date formatting",
+        "enum": [
+          "YYYY",
+          "YY",
+          "MM",
+          "M",
+          "DD",
+          "D",
+          "HH",
+          "H",
+          "mm",
+          "m",
+          "ss",
+          "s"
+        ],
+        "example": "YYYY-MM-DD"
+      },
+      "DateOptions": {
+        "type": "object",
+        "description": "Configuration options for the DateOutput widget",
+        "properties": {
+          "format": {
+            "type": "string",
+            "description": "Date format string using tokens (YYYY, MM, DD, HH, mm, ss, etc.)",
+            "default": "MM/DD/YYYY",
+            "example": "DD/MM/YYYY HH:mm"
+          },
+          "locale": {
+            "type": "string",
+            "description": "Locale identifier for internationalization (future enhancement)",
+            "default": "en-US",
+            "example": "fr-FR"
+          },
+          "showTime": {
+            "type": "boolean",
+            "description": "Append time if not already in format string",
+            "default": false,
+            "example": true
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "Time zone identifier (future enhancement)",
+            "example": "America/New_York"
+          }
+        }
+      },
+      "DateContext": {
+        "type": "string",
+        "description": "Visual context of the date relative to today",
+        "enum": ["past", "today", "future"],
+        "example": "future"
+      },
+      "DateOutputWidget": {
+        "type": "object",
+        "description": "Complete DateOutput widget configuration",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/DateValue"
+          },
+          "options": {
+            "$ref": "#/components/schemas/DateOptions"
+          }
+        },
+        "example": {
+          "data": "2025-12-22T14:30:00Z",
+          "options": {
+            "format": "MM/DD/YYYY HH:mm",
+            "locale": "en-US",
+            "showTime": false
+          }
+        }
+      },
+      "FormatExamples": {
+        "type": "object",
+        "description": "Common date format examples",
+        "properties": {
+          "US_DATE": {
+            "type": "string",
+            "example": "MM/DD/YYYY",
+            "description": "US date format: 12/22/2025"
+          },
+          "EU_DATE": {
+            "type": "string",
+            "example": "DD/MM/YYYY",
+            "description": "European date format: 22/12/2025"
+          },
+          "ISO_DATE": {
+            "type": "string",
+            "example": "YYYY-MM-DD",
+            "description": "ISO date format: 2025-12-22"
+          },
+          "US_DATETIME": {
+            "type": "string",
+            "example": "MM/DD/YYYY HH:mm",
+            "description": "US date with time: 12/22/2025 14:30"
+          },
+          "EU_DATETIME": {
+            "type": "string",
+            "example": "DD/MM/YYYY HH:mm:ss",
+            "description": "European date with time: 22/12/2025 14:30:45"
+          },
+          "COMPACT": {
+            "type": "string",
+            "example": "D/M/YY",
+            "description": "Compact format: 22/12/25"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,386 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Stepper Widget API",
+    "description": "OpenAPI specification for the Stepper widget business objects and configuration options used in IBM Business Automation Workflow",
+    "version": "1.0.0",
+    "contact": {
+      "name": "IBM BAW Custom Widgets"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "components": {
+    "schemas": {
+      "StepStatus": {
+        "type": "string",
+        "description": "Status of a step in the process",
+        "enum": ["completed", "current", "pending", "error", "warning", "disabled"],
+        "example": "current"
+      },
+      "StepItem": {
+        "type": "object",
+        "description": "A single step in the process",
+        "required": ["label"],
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Display text for the step",
+            "example": "Personal Information"
+          },
+          "text": {
+            "type": "string",
+            "description": "Alternative to 'label' - display text for the step",
+            "example": "Personal Information"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description text for the step",
+            "example": "Enter your personal details"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StepStatus"
+          },
+          "onClick": {
+            "type": "string",
+            "description": "Custom click handler function name or JavaScript code",
+            "example": "handleStepClick"
+          }
+        }
+      },
+      "StepperData": {
+        "type": "array",
+        "description": "Array of step items representing the process stages",
+        "items": {
+          "$ref": "#/components/schemas/StepItem"
+        },
+        "example": [
+          {
+            "label": "Personal Information",
+            "description": "Enter your details",
+            "status": "completed"
+          },
+          {
+            "label": "Address",
+            "description": "Provide your address",
+            "status": "current"
+          },
+          {
+            "label": "Payment",
+            "description": "Payment details",
+            "status": "pending"
+          },
+          {
+            "label": "Review",
+            "description": "Review and submit",
+            "status": "pending"
+          }
+        ]
+      },
+      "StepperOptions": {
+        "type": "object",
+        "description": "Configuration options for the Stepper widget",
+        "properties": {
+          "showNumbers": {
+            "type": "boolean",
+            "description": "Display step numbers in circles (hidden when status icons are shown)",
+            "default": true,
+            "example": true
+          },
+          "showIcons": {
+            "type": "boolean",
+            "description": "Display status icons (checkmark for completed, error/warning icons)",
+            "default": true,
+            "example": true
+          },
+          "clickable": {
+            "type": "boolean",
+            "description": "Enable click interaction on steps (disabled steps are never clickable)",
+            "default": false,
+            "example": false
+          },
+          "currentStep": {
+            "type": "integer",
+            "description": "Index of the current step (0-based). Used for auto-determining status when status is not provided",
+            "default": 0,
+            "minimum": 0,
+            "example": 2
+          }
+        }
+      },
+      "StepClickEvent": {
+        "type": "object",
+        "description": "Event data when a step is clicked",
+        "properties": {
+          "step": {
+            "type": "integer",
+            "description": "Index of clicked step (0-based)",
+            "example": 2
+          },
+          "item": {
+            "$ref": "#/components/schemas/StepItem"
+          }
+        }
+      },
+      "StatusIndicator": {
+        "type": "object",
+        "description": "Visual indicator configuration for each status",
+        "properties": {
+          "completed": {
+            "type": "object",
+            "properties": {
+              "color": {
+                "type": "string",
+                "example": "#0f62fe"
+              },
+              "icon": {
+                "type": "string",
+                "example": "checkmark"
+              },
+              "description": {
+                "type": "string",
+                "example": "Blue filled circle with checkmark icon"
+              }
+            }
+          },
+          "current": {
+            "type": "object",
+            "properties": {
+              "color": {
+                "type": "string",
+                "example": "#0f62fe"
+              },
+              "icon": {
+                "type": "string",
+                "example": "none"
+              },
+              "animation": {
+                "type": "string",
+                "example": "pulsing"
+              },
+              "description": {
+                "type": "string",
+                "example": "Blue outlined circle with pulsing animation"
+              }
+            }
+          },
+          "pending": {
+            "type": "object",
+            "properties": {
+              "color": {
+                "type": "string",
+                "example": "#e0e0e0"
+              },
+              "icon": {
+                "type": "string",
+                "example": "number"
+              },
+              "description": {
+                "type": "string",
+                "example": "Gray outlined circle with step number"
+              }
+            }
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "color": {
+                "type": "string",
+                "example": "#da1e28"
+              },
+              "icon": {
+                "type": "string",
+                "example": "error"
+              },
+              "description": {
+                "type": "string",
+                "example": "Red filled circle with error icon"
+              }
+            }
+          },
+          "warning": {
+            "type": "object",
+            "properties": {
+              "color": {
+                "type": "string",
+                "example": "#f1c21b"
+              },
+              "icon": {
+                "type": "string",
+                "example": "warning"
+              },
+              "description": {
+                "type": "string",
+                "example": "Yellow filled circle with warning icon"
+              }
+            }
+          },
+          "disabled": {
+            "type": "object",
+            "properties": {
+              "color": {
+                "type": "string",
+                "example": "#f4f4f4"
+              },
+              "icon": {
+                "type": "string",
+                "example": "none"
+              },
+              "description": {
+                "type": "string",
+                "example": "Gray filled circle, not clickable"
+              }
+            }
+          }
+        }
+      },
+      "StepperWidget": {
+        "type": "object",
+        "description": "Complete Stepper widget configuration",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/StepperData"
+          },
+          "options": {
+            "$ref": "#/components/schemas/StepperOptions"
+          }
+        },
+        "example": {
+          "data": [
+            {
+              "label": "Account Setup",
+              "description": "Create your account",
+              "status": "completed"
+            },
+            {
+              "label": "Profile Information",
+              "description": "Tell us about yourself",
+              "status": "current"
+            },
+            {
+              "label": "Preferences",
+              "description": "Customize your experience",
+              "status": "pending"
+            }
+          ],
+          "options": {
+            "showNumbers": true,
+            "showIcons": true,
+            "clickable": false,
+            "currentStep": 1
+          }
+        }
+      },
+      "UseCaseExamples": {
+        "type": "object",
+        "description": "Common use case examples",
+        "properties": {
+          "multiStepForm": {
+            "type": "object",
+            "description": "Multi-step form wizard",
+            "example": {
+              "data": [
+                {
+                  "label": "Account Setup",
+                  "description": "Create your account",
+                  "status": "completed"
+                },
+                {
+                  "label": "Profile Information",
+                  "description": "Tell us about yourself",
+                  "status": "current"
+                },
+                {
+                  "label": "Preferences",
+                  "status": "pending"
+                }
+              ],
+              "options": {
+                "showNumbers": true,
+                "clickable": false
+              }
+            }
+          },
+          "orderTracking": {
+            "type": "object",
+            "description": "Order status tracking",
+            "example": {
+              "data": [
+                {
+                  "label": "Order Placed",
+                  "description": "December 15, 2024",
+                  "status": "completed"
+                },
+                {
+                  "label": "Processing",
+                  "description": "Being prepared",
+                  "status": "current"
+                },
+                {
+                  "label": "Shipped",
+                  "status": "pending"
+                },
+                {
+                  "label": "Delivered",
+                  "status": "pending"
+                }
+              ]
+            }
+          },
+          "approvalWorkflow": {
+            "type": "object",
+            "description": "Approval workflow with errors",
+            "example": {
+              "data": [
+                {
+                  "label": "Submit Request",
+                  "status": "completed"
+                },
+                {
+                  "label": "Manager Review",
+                  "description": "Rejected - missing info",
+                  "status": "error"
+                },
+                {
+                  "label": "HR Approval",
+                  "status": "disabled"
+                },
+                {
+                  "label": "Final Approval",
+                  "status": "disabled"
+                }
+              ]
+            }
+          },
+          "autoStatus": {
+            "type": "object",
+            "description": "Auto-status determination using currentStep",
+            "example": {
+              "data": [
+                {
+                  "label": "Step 1"
+                },
+                {
+                  "label": "Step 2"
+                },
+                {
+                  "label": "Step 3"
+                },
+                {
+                  "label": "Step 4"
+                }
+              ],
+              "options": {
+                "currentStep": 2
+              },
+              "result": "Steps 0-1: completed, Step 2: current, Step 3: pending"
+            }
+          }
+        }
+      }
+    }
+  }
+}

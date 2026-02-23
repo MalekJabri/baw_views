@@ -1,0 +1,329 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "CaseStage Widget API",
+    "description": "OpenAPI specification for the CaseStage widget business objects and configuration options used in IBM Business Automation Workflow for case management",
+    "version": "1.0.0",
+    "contact": {
+      "name": "IBM BAW Custom Widgets"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "components": {
+    "schemas": {
+      "StageStatus": {
+        "type": "string",
+        "description": "Status of a case stage",
+        "enum": ["completed", "working", "notyetstarted"],
+        "example": "working"
+      },
+      "CaseStage": {
+        "type": "object",
+        "description": "A single case stage in the case management workflow",
+        "required": ["name", "status"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Display name of the case stage",
+            "example": "Stage1"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StageStatus"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description of the stage",
+            "example": "Initial review and assessment"
+          }
+        }
+      },
+      "CaseStagesData": {
+        "type": "array",
+        "description": "Array of case stages representing the case workflow progression",
+        "items": {
+          "$ref": "#/components/schemas/CaseStage"
+        },
+        "example": [
+          {
+            "name": "Stage1",
+            "status": "completed",
+            "description": "Initial submission"
+          },
+          {
+            "name": "Stage2",
+            "status": "working",
+            "description": "Under review"
+          },
+          {
+            "name": "Stage3",
+            "status": "notyetstarted",
+            "description": "Approval pending"
+          },
+          {
+            "name": "Stage4",
+            "status": "notyetstarted",
+            "description": "Final processing"
+          }
+        ]
+      },
+      "Orientation": {
+        "type": "integer",
+        "description": "Layout orientation for the case stages",
+        "enum": [0, 1],
+        "example": 0
+      },
+      "CaseStageOptions": {
+        "type": "object",
+        "description": "Configuration options for the CaseStage widget",
+        "properties": {
+          "orientation": {
+            "$ref": "#/components/schemas/Orientation",
+            "description": "Layout orientation: 0 = horizontal, 1 = vertical"
+          },
+          "stagesCustomTitle": {
+            "type": "string",
+            "description": "Custom title for the stages section",
+            "default": "Stages",
+            "example": "Case Progress"
+          },
+          "stagesHideTitle": {
+            "type": "boolean",
+            "description": "Hide the title section",
+            "default": false,
+            "example": false
+          },
+          "initialSize": {
+            "type": "integer",
+            "description": "Initial number of stages to display",
+            "default": 5,
+            "minimum": 1,
+            "example": 4
+          },
+          "width": {
+            "type": "string",
+            "description": "Widget width (CSS value)",
+            "default": "100%",
+            "example": "100%"
+          },
+          "minWidth": {
+            "type": "string",
+            "description": "Minimum widget width (CSS value)",
+            "example": "300px"
+          }
+        }
+      },
+      "StatusIndicator": {
+        "type": "object",
+        "description": "Visual indicator configuration for each status",
+        "properties": {
+          "completed": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string",
+                "example": "checkmark-circle"
+              },
+              "color": {
+                "type": "string",
+                "example": "#1446c6"
+              },
+              "borderColor": {
+                "type": "string",
+                "example": "#0f62fe"
+              },
+              "description": {
+                "type": "string",
+                "example": "Blue checkmark circle indicating completed stage"
+              }
+            }
+          },
+          "working": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string",
+                "example": "half-circle"
+              },
+              "color": {
+                "type": "string",
+                "example": "#1446c6"
+              },
+              "borderColor": {
+                "type": "string",
+                "example": "#0f62fe"
+              },
+              "description": {
+                "type": "string",
+                "example": "Blue half-circle indicating stage in progress"
+              }
+            }
+          },
+          "notyetstarted": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string",
+                "example": "circle-dash"
+              },
+              "color": {
+                "type": "string",
+                "example": "#161616"
+              },
+              "borderColor": {
+                "type": "string",
+                "example": "#e0e0e0"
+              },
+              "description": {
+                "type": "string",
+                "example": "Gray dashed circle indicating stage not yet started"
+              }
+            }
+          }
+        }
+      },
+      "CaseStageWidget": {
+        "type": "object",
+        "description": "Complete CaseStage widget configuration",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/CaseStagesData"
+          },
+          "options": {
+            "$ref": "#/components/schemas/CaseStageOptions"
+          }
+        },
+        "example": {
+          "data": [
+            {
+              "name": "Submission",
+              "status": "completed"
+            },
+            {
+              "name": "Review",
+              "status": "working"
+            },
+            {
+              "name": "Approval",
+              "status": "notyetstarted"
+            },
+            {
+              "name": "Completion",
+              "status": "notyetstarted"
+            }
+          ],
+          "options": {
+            "orientation": 0,
+            "stagesCustomTitle": "Case Progress",
+            "stagesHideTitle": false,
+            "initialSize": 4
+          }
+        }
+      },
+      "UseCaseExamples": {
+        "type": "object",
+        "description": "Common use case examples",
+        "properties": {
+          "loanApplication": {
+            "type": "object",
+            "description": "Loan application case workflow",
+            "example": {
+              "data": [
+                {
+                  "name": "Application",
+                  "status": "completed",
+                  "description": "Application submitted"
+                },
+                {
+                  "name": "Verification",
+                  "status": "completed",
+                  "description": "Documents verified"
+                },
+                {
+                  "name": "Assessment",
+                  "status": "working",
+                  "description": "Credit assessment in progress"
+                },
+                {
+                  "name": "Approval",
+                  "status": "notyetstarted"
+                },
+                {
+                  "name": "Disbursement",
+                  "status": "notyetstarted"
+                }
+              ],
+              "options": {
+                "orientation": 0,
+                "stagesCustomTitle": "Loan Application Progress"
+              }
+            }
+          },
+          "claimProcessing": {
+            "type": "object",
+            "description": "Insurance claim processing",
+            "example": {
+              "data": [
+                {
+                  "name": "Claim Filed",
+                  "status": "completed"
+                },
+                {
+                  "name": "Investigation",
+                  "status": "working"
+                },
+                {
+                  "name": "Adjudication",
+                  "status": "notyetstarted"
+                },
+                {
+                  "name": "Payment",
+                  "status": "notyetstarted"
+                }
+              ],
+              "options": {
+                "orientation": 1,
+                "stagesCustomTitle": "Claim Status"
+              }
+            }
+          },
+          "onboarding": {
+            "type": "object",
+            "description": "Employee onboarding process",
+            "example": {
+              "data": [
+                {
+                  "name": "Documentation",
+                  "status": "completed"
+                },
+                {
+                  "name": "IT Setup",
+                  "status": "completed"
+                },
+                {
+                  "name": "Training",
+                  "status": "working"
+                },
+                {
+                  "name": "Orientation",
+                  "status": "notyetstarted"
+                },
+                {
+                  "name": "Completion",
+                  "status": "notyetstarted"
+                }
+              ],
+              "options": {
+                "orientation": 0,
+                "stagesHideTitle": false
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
