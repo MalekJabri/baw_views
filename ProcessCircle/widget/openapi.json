@@ -1,0 +1,272 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "ProcessCircle Widget API",
+    "description": "OpenAPI specification for the ProcessCircle widget business objects and configuration options used in IBM Business Automation Workflow",
+    "version": "1.0.0",
+    "contact": {
+      "name": "IBM BAW Custom Widgets"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProcessValue": {
+        "type": "integer",
+        "description": "The numeric value to be displayed in the progress circle",
+        "example": 65
+      },
+      "ProcessCircleOptions": {
+        "type": "object",
+        "description": "Configuration options for the ProcessCircle widget",
+        "required": ["MinValue", "MaxValue"],
+        "properties": {
+          "MinValue": {
+            "type": "integer",
+            "description": "Minimum value for the range",
+            "default": 0,
+            "example": 0
+          },
+          "MaxValue": {
+            "type": "integer",
+            "description": "Maximum value for the range",
+            "default": 100,
+            "example": 100
+          },
+          "postParameter": {
+            "type": "string",
+            "description": "Suffix text displayed after the value (e.g., %, pts, items)",
+            "default": "%",
+            "example": "%"
+          },
+          "defaultcolor": {
+            "type": "string",
+            "description": "Default color configuration (reserved for future use)",
+            "example": "auto"
+          }
+        }
+      },
+      "ColorThreshold": {
+        "type": "object",
+        "description": "Color thresholds based on percentage",
+        "properties": {
+          "green": {
+            "type": "object",
+            "description": "Green color range (normal/good)",
+            "properties": {
+              "min": {
+                "type": "number",
+                "example": 0
+              },
+              "max": {
+                "type": "number",
+                "example": 50
+              },
+              "color": {
+                "type": "string",
+                "example": "#24a148"
+              }
+            }
+          },
+          "orange": {
+            "type": "object",
+            "description": "Orange color range (warning/caution)",
+            "properties": {
+              "min": {
+                "type": "number",
+                "example": 50
+              },
+              "max": {
+                "type": "number",
+                "example": 70
+              },
+              "color": {
+                "type": "string",
+                "example": "#ff832b"
+              }
+            }
+          },
+          "red": {
+            "type": "object",
+            "description": "Red color range (critical/alert)",
+            "properties": {
+              "min": {
+                "type": "number",
+                "example": 70
+              },
+              "max": {
+                "type": "number",
+                "example": 100
+              },
+              "color": {
+                "type": "string",
+                "example": "#da1e28"
+              }
+            }
+          }
+        }
+      },
+      "CalculatedPercentage": {
+        "type": "object",
+        "description": "Calculated percentage based on value and range",
+        "properties": {
+          "value": {
+            "type": "integer",
+            "description": "Input value",
+            "example": 150
+          },
+          "minValue": {
+            "type": "integer",
+            "description": "Minimum value",
+            "example": 0
+          },
+          "maxValue": {
+            "type": "integer",
+            "description": "Maximum value",
+            "example": 200
+          },
+          "percentage": {
+            "type": "number",
+            "format": "double",
+            "description": "Calculated percentage: ((value - minValue) / (maxValue - minValue)) * 100",
+            "example": 75.0
+          },
+          "displayValue": {
+            "type": "string",
+            "description": "Display value with suffix",
+            "example": "150%"
+          },
+          "colorState": {
+            "type": "string",
+            "enum": ["green", "orange", "red"],
+            "description": "Color state based on percentage",
+            "example": "red"
+          }
+        }
+      },
+      "ProcessCircleWidget": {
+        "type": "object",
+        "description": "Complete ProcessCircle widget configuration",
+        "required": ["data", "options"],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ProcessValue"
+          },
+          "options": {
+            "$ref": "#/components/schemas/ProcessCircleOptions"
+          }
+        },
+        "example": {
+          "data": 65,
+          "options": {
+            "MinValue": 0,
+            "MaxValue": 100,
+            "postParameter": "%"
+          }
+        }
+      },
+      "UseCaseExamples": {
+        "type": "object",
+        "description": "Common use case examples",
+        "properties": {
+          "taskCompletion": {
+            "type": "object",
+            "description": "Task completion tracker",
+            "properties": {
+              "data": {
+                "type": "integer",
+                "example": 45
+              },
+              "options": {
+                "type": "object",
+                "properties": {
+                  "MinValue": {
+                    "type": "integer",
+                    "example": 0
+                  },
+                  "MaxValue": {
+                    "type": "integer",
+                    "example": 60
+                  },
+                  "postParameter": {
+                    "type": "string",
+                    "example": " tasks"
+                  }
+                }
+              },
+              "result": {
+                "type": "string",
+                "example": "Displays '45 tasks' with orange ring (75% completion)"
+              }
+            }
+          },
+          "performanceScore": {
+            "type": "object",
+            "description": "Performance score indicator",
+            "properties": {
+              "data": {
+                "type": "integer",
+                "example": 85
+              },
+              "options": {
+                "type": "object",
+                "properties": {
+                  "MinValue": {
+                    "type": "integer",
+                    "example": 0
+                  },
+                  "MaxValue": {
+                    "type": "integer",
+                    "example": 100
+                  },
+                  "postParameter": {
+                    "type": "string",
+                    "example": "%"
+                  }
+                }
+              },
+              "result": {
+                "type": "string",
+                "example": "Displays '85%' with red ring (85% > 70%)"
+              }
+            }
+          },
+          "storageUsage": {
+            "type": "object",
+            "description": "Storage usage indicator",
+            "properties": {
+              "data": {
+                "type": "integer",
+                "example": 7500
+              },
+              "options": {
+                "type": "object",
+                "properties": {
+                  "MinValue": {
+                    "type": "integer",
+                    "example": 0
+                  },
+                  "MaxValue": {
+                    "type": "integer",
+                    "example": 10000
+                  },
+                  "postParameter": {
+                    "type": "string",
+                    "example": " MB"
+                  }
+                }
+              },
+              "result": {
+                "type": "string",
+                "example": "Displays '7500 MB' with red ring (75% > 70%)"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

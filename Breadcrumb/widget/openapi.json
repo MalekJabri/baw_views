@@ -1,0 +1,131 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Breadcrumb Widget API",
+    "description": "OpenAPI specification for the Breadcrumb widget business objects and configuration options used in IBM Business Automation Workflow",
+    "version": "1.0.0",
+    "contact": {
+      "name": "IBM BAW Custom Widgets"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "components": {
+    "schemas": {
+      "BreadcrumbItem": {
+        "type": "object",
+        "description": "A single breadcrumb item in the navigation path",
+        "required": ["label"],
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Display text for the breadcrumb item",
+            "example": "Products"
+          },
+          "text": {
+            "type": "string",
+            "description": "Alternative to 'label' - display text for the breadcrumb item",
+            "example": "Products"
+          },
+          "href": {
+            "type": "string",
+            "description": "URL or route for the breadcrumb link",
+            "default": "#",
+            "example": "/products"
+          },
+          "onClick": {
+            "type": "string",
+            "description": "Custom click handler function name or JavaScript code",
+            "example": "handleBreadcrumbClick"
+          }
+        }
+      },
+      "BreadcrumbData": {
+        "type": "array",
+        "description": "Array of breadcrumb items representing the navigation path",
+        "items": {
+          "$ref": "#/components/schemas/BreadcrumbItem"
+        },
+        "example": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Products",
+            "href": "/products"
+          },
+          {
+            "label": "Electronics",
+            "href": "/products/electronics"
+          },
+          {
+            "label": "Laptops",
+            "href": "/products/electronics/laptops"
+          }
+        ]
+      },
+      "BreadcrumbOptions": {
+        "type": "object",
+        "description": "Configuration options for the Breadcrumb widget",
+        "properties": {
+          "showHomeIcon": {
+            "type": "boolean",
+            "description": "Display a home icon for the first breadcrumb item",
+            "default": false,
+            "example": false
+          },
+          "maxItems": {
+            "type": "integer",
+            "description": "Maximum number of items to display (0 = no limit). Shows first item, ellipsis, and last (maxItems - 2) items when exceeded",
+            "default": 0,
+            "minimum": 0,
+            "example": 4
+          },
+          "noTrailingSlash": {
+            "type": "boolean",
+            "description": "Remove the trailing slash after the last breadcrumb item",
+            "default": false,
+            "example": false
+          }
+        }
+      },
+      "BreadcrumbWidget": {
+        "type": "object",
+        "description": "Complete Breadcrumb widget configuration",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/BreadcrumbData"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BreadcrumbOptions"
+          }
+        },
+        "example": {
+          "data": [
+            {
+              "label": "Home",
+              "href": "/"
+            },
+            {
+              "label": "Products",
+              "href": "/products"
+            },
+            {
+              "label": "Electronics",
+              "href": "/products/electronics"
+            }
+          ],
+          "options": {
+            "showHomeIcon": false,
+            "maxItems": 0,
+            "noTrailingSlash": false
+          }
+        }
+      }
+    }
+  }
+}
