@@ -1,0 +1,94 @@
+<div id="taskWidget" class="task-widget">
+    <div class="task-header">
+        <h3>Tasks</h3>
+    </div>
+
+    <div id="taskContainer" class="task-container">
+        <!-- Tasks will be rendered here by renderTasks(tasks) -->
+    </div>
+</div>
+<style>.task-widget {
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    background: #fff;
+}
+
+.task-header {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 8px;
+}
+
+.task-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.task-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: 4px;
+    background: #f9f9f9;
+    border-left: 4px solid transparent;
+}
+
+.task-item.complete {
+    border-left-color: #1ba348;
+}
+
+.task-item.pending {
+    border-left-color: #777;
+}
+
+.task-item.processing {
+    border-left-color: #1d61ff;
+}
+
+.task-item.failed {
+    border-left-color: #d32f2f;
+}
+
+.task-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.task-icon svg {
+    display: block;
+}
+
+.task-title {
+    font-size: 13px;
+}
+
+.task-status {
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+}
+
+/* Spinner animation */
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+</style>
