@@ -1,0 +1,55 @@
+<div class="fnimport-widget" role="region" aria-label="FileNet Document Import">
+
+  <!-- Drop Zone -->
+  <div class="fnimport-dropzone"
+       role="region"
+       aria-label="Drop zone for files and folders"
+       aria-describedby="fnimport-dropzone-hint"
+       tabindex="0">
+    <div class="fnimport-dropzone-icon" aria-hidden="true">
+      <div class="fnimport-icon-upload"></div>
+    </div>
+    <p class="fnimport-dropzone-title">Drop files or folders here</p>
+    <p class="fnimport-dropzone-subtitle" id="fnimport-dropzone-hint">
+      Drag and drop documents or entire folder structures. Subfolders will be preserved.
+    </p>
+    <button class="fnimport-browse-btn" type="button" aria-label="Browse files to upload">
+      Browse files
+    </button>
+    <input class="fnimport-file-input"
+           type="file"
+           multiple
+           aria-hidden="true"
+           tabindex="-1" />
+  </div>
+
+  <!-- Status Bar -->
+  <div class="fnimport-statusbar" role="status" aria-live="polite" aria-atomic="false">
+    <span class="fnimport-status-text"></span>
+    <div class="fnimport-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="fnimport-progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- File Queue -->
+  <div class="fnimport-queue" role="list" aria-label="Files queued for import">
+    <!-- Items injected by JS -->
+  </div>
+
+  <!-- Action Bar -->
+  <div class="fnimport-actions">
+    <button class="fnimport-btn-import" type="button" aria-label="Import all queued files to FileNet" disabled>
+      <span class="fnimport-btn-icon fnimport-icon-cloud-upload" aria-hidden="true"></span>
+      Import to FileNet
+    </button>
+    <button class="fnimport-btn-clear" type="button" aria-label="Clear all queued files">
+      Clear all
+    </button>
+  </div>
+
+  <!-- Result Log -->
+  <div class="fnimport-log" role="log" aria-label="Import results" aria-live="polite">
+    <!-- Log entries injected by JS -->
+  </div>
+
+</div>

@@ -1,0 +1,284 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "FileNetImport Widget API",
+    "description": "OpenAPI specification for the FileNetImport widget — a drag-and-drop document and folder import widget for IBM FileNet Content Engine via GraphQL, used in IBM Business Automation Workflow coach views.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "IBM BAW Custom Widgets"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "components": {
+    "schemas": {
+
+      "FileNetImportOptions": {
+        "type": "object",
+        "description": "Configuration options for the FileNetImport widget, set via getOption() in BAW Coach View designer.",
+        "required": ["graphqlEndpoint", "parentFolderId"],
+        "properties": {
+          "graphqlEndpoint": {
+            "type": "string",
+            "format": "uri",
+            "description": "Full URL of the FileNet Content Engine GraphQL API endpoint.",
+            "example": "https://filenet-host/content-services-graphql/graphql"
+          },
+          "parentFolderId": {
+            "type": "string",
+            "description": "FileNet object ID (GUID) of the root destination folder. All imported files and recreated folder structures will be placed under this folder.",
+            "example": "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+          },
+          "maxFileSizeMB": {
+            "type": "number",
+            "description": "Maximum allowed file size in megabytes. Files exceeding this limit are skipped with a warning in the log.",
+            "default": 100,
+            "minimum": 1,
+            "example": 50
+          },
+          "allowedMimeTypes": {
+            "type": "string",
+            "description": "Comma-separated list of accepted MIME types. Empty string means all types are accepted.",
+            "default": "",
+            "example": "application/pdf,image/png,image/jpeg,application/msword"
+          }
+        }
+      },
+
+      "ImportResult": {
+        "type": "object",
+        "description": "Result object passed to the onImportComplete and onImportError event handlers after the import process finishes.",
+        "required": ["total", "succeeded", "failed", "parentFolderId"],
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total number of files that were processed in the import batch.",
+            "example": 10
+          },
+          "succeeded": {
+            "type": "integer",
+            "description": "Number of files successfully imported to FileNet.",
+            "example": 9
+          },
+          "failed": {
+            "type": "integer",
+            "description": "Number of files that failed to import due to errors.",
+            "example": 1
+          },
+          "parentFolderId": {
+            "type": "string",
+            "description": "The FileNet folder ID that was used as the root destination for this import batch.",
+            "example": "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+          }
+        },
+        "example": {
+          "total": 5,
+          "succeeded": 5,
+          "failed": 0,
+          "parentFolderId": "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+        }
+      },
+
+      "FileAddedInfo": {
+        "type": "object",
+        "description": "Information about a file that was added to the import queue. Passed to the onFileAdded event handler.",
+        "required": ["path", "size"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Relative path of the file, preserving the original folder structure from the drag-and-drop operation.",
+            "example": "ProjectA/docs/spec.pdf"
+          },
+          "size": {
+            "type": "integer",
+            "description": "File size in bytes.",
+            "example": 204800
+          }
+        },
+        "example": {
+          "path": "ProjectA/SubFolder/report.pdf",
+          "size": 204800
+        }
+      },
+
+      "GraphQLCreateFolderMutation": {
+        "type": "object",
+        "description": "GraphQL mutation used to create a folder in FileNet Content Engine.",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The GraphQL mutation string.",
+            "example": "mutation CreateFolder($name: String!, $parentId: ID!) { createFolder(name: $name, parentId: $parentId) { id name pathName } }"
+          },
+          "variables": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the folder to create.",
+                "example": "SubFolder"
+              },
+              "parentId": {
+                "type": "string",
+                "description": "FileNet object ID of the parent folder.",
+                "example": "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+              }
+            }
+          }
+        }
+      },
+
+      "GraphQLCreateFolderResponse": {
+        "type": "object",
+        "description": "Response from the createFolder GraphQL mutation.",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "createFolder": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "FileNet object ID of the newly created folder.",
+                    "example": "{B2C3D4E5-F6A7-8901-BCDE-F12345678901}"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the created folder.",
+                    "example": "SubFolder"
+                  },
+                  "pathName": {
+                    "type": "string",
+                    "description": "Full path of the created folder in FileNet.",
+                    "example": "/ParentFolder/SubFolder"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "GraphQLImportDocumentMutation": {
+        "type": "object",
+        "description": "GraphQL mutation used to import a document into FileNet Content Engine.",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The GraphQL mutation string.",
+            "example": "mutation ImportDocument($name: String!, $folderId: ID!, $content: String!, $mimeType: String!) { createDocument(name: $name, folderId: $folderId, content: { data: $content, mimeType: $mimeType }) { id name size created } }"
+          },
+          "variables": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the document to create in FileNet.",
+                "example": "report.pdf"
+              },
+              "folderId": {
+                "type": "string",
+                "description": "FileNet object ID of the target folder.",
+                "example": "{B2C3D4E5-F6A7-8901-BCDE-F12345678901}"
+              },
+              "content": {
+                "type": "string",
+                "format": "byte",
+                "description": "Base64-encoded binary content of the document.",
+                "example": "JVBERi0xLjQKJeLjz9MKMSAwIG9iago..."
+              },
+              "mimeType": {
+                "type": "string",
+                "description": "MIME type of the document.",
+                "example": "application/pdf"
+              }
+            }
+          }
+        }
+      },
+
+      "GraphQLImportDocumentResponse": {
+        "type": "object",
+        "description": "Response from the createDocument GraphQL mutation.",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "createDocument": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "FileNet object ID of the newly created document.",
+                    "example": "{C3D4E5F6-A7B8-9012-CDEF-123456789012}"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the created document.",
+                    "example": "report.pdf"
+                  },
+                  "size": {
+                    "type": "integer",
+                    "description": "Size of the document in bytes.",
+                    "example": 204800
+                  },
+                  "created": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "ISO 8601 timestamp of when the document was created.",
+                    "example": "2026-03-02T10:00:00.000Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "FileNetImportWidget": {
+        "type": "object",
+        "description": "Complete FileNetImport widget configuration and data contract.",
+        "properties": {
+          "options": {
+            "$ref": "#/components/schemas/FileNetImportOptions"
+          },
+          "events": {
+            "type": "object",
+            "description": "Events emitted by the widget.",
+            "properties": {
+              "onImportComplete": {
+                "$ref": "#/components/schemas/ImportResult"
+              },
+              "onImportError": {
+                "$ref": "#/components/schemas/ImportResult"
+              },
+              "onFileAdded": {
+                "$ref": "#/components/schemas/FileAddedInfo"
+              }
+            }
+          }
+        },
+        "example": {
+          "options": {
+            "graphqlEndpoint": "https://filenet-host/content-services-graphql/graphql",
+            "parentFolderId": "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}",
+            "maxFileSizeMB": 50,
+            "allowedMimeTypes": "application/pdf,image/png"
+          },
+          "events": {
+            "onImportComplete": {
+              "total": 5,
+              "succeeded": 5,
+              "failed": 0,
+              "parentFolderId": "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+            }
+          }
+        }
+      }
+
+    }
+  }
+}
