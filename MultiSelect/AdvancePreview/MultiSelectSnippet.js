@@ -62,9 +62,9 @@ var mixObject = {
         // Example selected values
         var selectedValues = ["option1", "option3"];
         var sampleOptions = [
-            { value: "option1", label: "First Option" },
-            { value: "option2", label: "Second Option" },
-            { value: "option3", label: "Third Option" }
+            { value: "option1", name: "First Option" },
+            { value: "option2", name: "Second Option" },
+            { value: "option3", name: "Third Option" }
         ];
 
         // Create container
@@ -108,13 +108,13 @@ var mixObject = {
 
             var tagText = domConstruct.create("span", null, tag);
             domClass.add(tagText, "multiselect-tag-text");
-            tagText.textContent = option.label;
+            tagText.textContent = option.name;
 
             var removeBtn = domConstruct.create("button", null, tag);
             domClass.add(removeBtn, "multiselect-tag-remove");
             domAttr.set(removeBtn, {
                 "type": "button",
-                "aria-label": "Remove " + option.label
+                "aria-label": "Remove " + option.name
             });
             removeBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M12 4.7L11.3 4 8 7.3 4.7 4 4 4.7 7.3 8 4 11.3l.7.7L8 8.7l3.3 3.3.7-.7L8.7 8z"/></svg>';
         });

@@ -180,9 +180,9 @@ options: [
 ```javascript
 {
   options: [
-    { value: "opt1", label: "Option 1" },
-    { value: "opt2", label: "Option 2" },
-    { value: "opt3", label: "Option 3" }
+    { value: "opt1", name: "Option 1" },
+    { value: "opt2", name: "Option 2" },
+    { value: "opt3", name: "Option 3" }
   ],
   placeholder: "Select items...",
   helperText: "Choose one or more options"
@@ -194,10 +194,10 @@ options: [
 ```javascript
 {
   options: [
-    { value: "red", label: "Red" },
-    { value: "blue", label: "Blue" },
-    { value: "green", label: "Green" },
-    { value: "yellow", label: "Yellow" }
+    { value: "red", name: "Red" },
+    { value: "blue", name: "Blue" },
+    { value: "green", name: "Green" },
+    { value: "yellow", name: "Yellow" }
   ],
   maxSelections: 2,
   helperText: "Select up to 2 colors"
@@ -209,9 +209,9 @@ options: [
 ```javascript
 {
   options: [
-    { value: "small", label: "Small" },
-    { value: "medium", label: "Medium" },
-    { value: "large", label: "Large" }
+    { value: "small", name: "Small" },
+    { value: "medium", name: "Medium" },
+    { value: "large", name: "Large" }
   ],
   showSearch: false,
   showActions: false,
@@ -289,10 +289,10 @@ options: tw.local.order.availableProducts
 // Initialize
 tw.local.selectedMembers = [];
 tw.local.teamMembers = [
-  { value: "user1", label: "John Doe" },
-  { value: "user2", label: "Jane Smith" },
-  { value: "user3", label: "Bob Johnson" },
-  { value: "user4", label: "Alice Williams" }
+  { value: "user1", name: "John Doe" },
+  { value: "user2", name: "Jane Smith" },
+  { value: "user3", name: "Bob Johnson" },
+  { value: "user4", name: "Alice Williams" }
 ];
 
 // Widget configuration
@@ -313,12 +313,12 @@ tw.local.teamMembers = [
 // Initialize
 tw.local.selectedSkills = tw.local.employee.skills || [];
 tw.local.availableSkills = [
-  { value: "javascript", label: "JavaScript" },
-  { value: "python", label: "Python" },
-  { value: "java", label: "Java" },
-  { value: "sql", label: "SQL" },
-  { value: "react", label: "React" },
-  { value: "angular", label: "Angular" }
+  { value: "javascript", name: "JavaScript" },
+  { value: "python", name: "Python" },
+  { value: "java", name: "Java" },
+  { value: "sql", name: "SQL" },
+  { value: "react", name: "React" },
+  { value: "angular", name: "Angular" }
 ];
 
 // Widget configuration
@@ -338,11 +338,11 @@ tw.local.availableSkills = [
 // Initialize with existing tags
 tw.local.selectedTags = ["urgent", "review"];
 tw.local.availableTags = [
-  { value: "urgent", label: "🔴 Urgent" },
-  { value: "review", label: "👀 Needs Review" },
-  { value: "approved", label: "✅ Approved" },
-  { value: "pending", label: "⏳ Pending" },
-  { value: "blocked", label: "🚫 Blocked" }
+  { value: "urgent", name: "🔴 Urgent" },
+  { value: "review", name: "👀 Needs Review" },
+  { value: "approved", name: "✅ Approved" },
+  { value: "pending", name: "⏳ Pending" },
+  { value: "blocked", name: "🚫 Blocked" }
 ];
 
 // Widget configuration
@@ -361,12 +361,12 @@ tw.local.availableTags = [
 // Load departments from database
 tw.local.selectedDepartments = [];
 tw.local.departments = [
-  { value: "hr", label: "Human Resources" },
-  { value: "it", label: "Information Technology" },
-  { value: "finance", label: "Finance" },
-  { value: "sales", label: "Sales" },
-  { value: "marketing", label: "Marketing" },
-  { value: "operations", label: "Operations" }
+  { value: "hr", name: "Human Resources" },
+  { value: "it", name: "Information Technology" },
+  { value: "finance", name: "Finance" },
+  { value: "sales", name: "Sales" },
+  { value: "marketing", name: "Marketing" },
+  { value: "operations", name: "Operations" }
 ];
 
 // Widget configuration
@@ -384,14 +384,14 @@ tw.local.departments = [
 // E-commerce category selection
 tw.local.selectedCategories = [];
 tw.local.productCategories = [
-  { value: "electronics", label: "Electronics & Computers" },
-  { value: "clothing", label: "Clothing & Accessories" },
-  { value: "books", label: "Books & Media" },
-  { value: "home", label: "Home & Garden" },
-  { value: "sports", label: "Sports & Outdoors" },
-  { value: "toys", label: "Toys & Games" },
-  { value: "food", label: "Food & Beverages" },
-  { value: "health", label: "Health & Beauty" }
+  { value: "electronics", name: "Electronics & Computers" },
+  { value: "clothing", name: "Clothing & Accessories" },
+  { value: "books", name: "Books & Media" },
+  { value: "home", name: "Home & Garden" },
+  { value: "sports", name: "Sports & Outdoors" },
+  { value: "toys", name: "Toys & Games" },
+  { value: "food", name: "Food & Beverages" },
+  { value: "health", name: "Health & Beauty" }
 ];
 
 // Widget configuration
@@ -535,7 +535,7 @@ this.getOption("helperText")     // Returns: String
 ```javascript
 {
   value: "unique-id",    // String (required)
-  label: "Display Text"  // String (required)
+  name: "Display Text"   // String (required)
 }
 ```
 
@@ -593,7 +593,7 @@ this.getOption("helperText")     // Returns: String
 
 ## 🎯 Best Practices
 
-1. **Clear Labels**: Use descriptive option labels
+1. **Clear Names**: Use descriptive option names
 2. **Unique Values**: Ensure all option values are unique
 3. **Reasonable Limits**: Set appropriate maxSelections
 4. **Helper Text**: Guide users with clear instructions

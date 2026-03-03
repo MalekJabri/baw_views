@@ -14,7 +14,6 @@ The `change` event handler is triggered whenever the selected values change. Thi
 ### Event Handler Code
 
 ```javascript
-// Get widget elements
 var container = this.context.element.querySelector(".multiselect-container");
 var selectedItemsDiv = container.querySelector(".multiselect-selected-items");
 var optionsContainer = container.querySelector(".multiselect-options");
@@ -64,13 +63,13 @@ function renderSelectedItems() {
     
     var tagText = document.createElement("span");
     tagText.className = "multiselect-tag-text";
-    tagText.textContent = option.label;
+    tagText.textContent = option.name;
     tag.appendChild(tagText);
     
     var removeBtn = document.createElement("button");
     removeBtn.type = "button";
     removeBtn.className = "multiselect-tag-remove";
-    removeBtn.setAttribute("aria-label", "Remove " + option.label);
+    removeBtn.setAttribute("aria-label", "Remove " + option.name);
     removeBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M12 4.7L11.3 4 8 7.3 4.7 4 4 4.7 7.3 8 4 11.3l.7.7L8 8.7l3.3 3.3.7-.7L8.7 8z"/></svg>';
     
     removeBtn.addEventListener("click", function(e) {
@@ -98,7 +97,7 @@ function toggleOption(value) {
   this.setData(state.selectedValues);
   renderSelectedItems();
   updateOptions();
-}.bind(this);
+}
 
 // Update options display
 function updateOptions() {

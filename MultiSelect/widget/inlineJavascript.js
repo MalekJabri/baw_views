@@ -1,7 +1,7 @@
-// MultiSelect Widget - Main Logic
-(function() {
+
   // Store widget context reference
   var widget = this;
+
   
   var container = widget.context.element.querySelector(".multiselect-container");
   var wrapper = container.querySelector(".multiselect-wrapper");
@@ -16,7 +16,7 @@
   var helperText = container.querySelector(".multiselect-helper-text");
   
   // Get configuration options
-  var options = widget.getOption("options");
+  var options = widget.getOption("options").items;;
   var placeholder = widget.getOption("placeholder") || "Select items...";
   var maxSelections = widget.getOption("maxSelections") || null;
   var showSearch = widget.getOption("showSearch");
@@ -124,7 +124,7 @@
       // Text
       var text = document.createElement("span");
       text.className = "multiselect-option-text";
-      text.textContent = option.label;
+      text.textContent = option.name;
       optionEl.appendChild(text);
       
       // Click handler
@@ -173,13 +173,13 @@
       
       var tagText = document.createElement("span");
       tagText.className = "multiselect-tag-text";
-      tagText.textContent = option.label;
+      tagText.textContent = option.name;
       tag.appendChild(tagText);
       
       var removeBtn = document.createElement("button");
       removeBtn.type = "button";
       removeBtn.className = "multiselect-tag-remove";
-      removeBtn.setAttribute("aria-label", "Remove " + option.label);
+      removeBtn.setAttribute("aria-label", "Remove " + option.name);
       removeBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M12 4.7L11.3 4 8 7.3 4.7 4 4 4.7 7.3 8 4 11.3l.7.7L8 8.7l3.3 3.3.7-.7L8.7 8z"/></svg>';
       
       removeBtn.addEventListener("click", function(e) {
@@ -249,7 +249,7 @@
       state.filteredOptions = state.allOptions;
     } else {
       state.filteredOptions = state.allOptions.filter(function(option) {
-        return option.label.toLowerCase().indexOf(term) !== -1 ||
+        return option.name.toLowerCase().indexOf(term) !== -1 ||
                option.value.toLowerCase().indexOf(term) !== -1;
       });
     }
@@ -381,7 +381,4 @@
   // Initialize the widget
   init();
   updateAriaLabel();
-  
-})();
-
 // Made with Bob
