@@ -52,7 +52,7 @@ cd ProgressBar/widget
 
 ### What You Need
 
-- ✅ IBM BAW v2X.0+ 
+- ✅ IBM BAW v25.0+
 - ✅ Git installed
 - ✅ Text editor (VS Code, Sublime, etc.)
 - ✅ Modern web browser
@@ -63,20 +63,19 @@ cd ProgressBar/widget
 
 You'll create three essential files. Copy the code exactly as shown.
 
-### 💬 Prompt to Bob
+### 💬 Prompt to Bob (Switch to BAW Coach Widget)
 
 ```
-Create a new widget called "My Progress Bar" 
-•	Animated horizontal progress bar with smooth transitions
-•	Percentage display showing real-time progress
-•	Color-coded states that change automatically:
-o	🔴 Red (0-49%): Low progress
-o	🟡 Yellow (50-74%): Moderate progress
-o	🟢 Green (75-100%): High progress
-•	Status messages ("Not started", "In progress...", "Complete")
-•	Data binding with a integer variable
-•	Event handling for automatic updates
-
+Create a new widget called "My Progress Bar"
+• Animated horizontal progress bar with smooth transitions
+• Percentage display showing real-time progress
+• Color-coded states that change automatically:
+  - 🔴 Red (0-49%): Low progress
+  - 🟡 Yellow (50-74%): Moderate progress
+  - 🟢 Green (75-100%): High progress
+• Status messages ("Not started", "In progress...", "Complete")
+• Data binding with an integer variable
+• Event handling for automatic updates
 ```
 
 ## Part 2: Import to BAW (10 minutes)
@@ -85,7 +84,7 @@ o	🟢 Green (75-100%): High progress
 
 1. Log into IBM Business Automation Studio
 2. Open Workflow Designer
-3. Create your Toolkit using your lastname.
+3. Create your Toolkit using your last name.
 
 ![alt text](<bastudio.png>)
 
@@ -97,7 +96,7 @@ o	🟢 Green (75-100%): High progress
 ![alt text](Artifact2.png)
 
 4. Name it: `My Progress Bar` and click Finish
-5.Search For html in the widget panel and drag and drop the custom html 
+5. Search for HTML in the widget panel and drag and drop the custom HTML widget
 ![Search HTML](image.png)
 
 
@@ -111,22 +110,30 @@ Copy and paste each file into the corresponding tab:
 | **HTML** | `Layout.html` | Copy entire content |
 | **Inline CSS** | `InlineCSS.css` | Copy entire content |
 | **Inline JavaScript** | `inlineJavascript.js` | Copy entire content |
+| **onChange** | `eventHandler.md` | Copy Event Handler Code content |
 
-HTML --> 
+***HTML***
 ![Add Base Widget](image-1.png)
 
-Inline CSS --> 
+***Inline CSS***
+ 
 ![alt text](image-2.png)
 
-Inline JavaScript --> 
+***Inline JavaScript***
+
 ![alt text](image-3.png)
 
+***onChange***
 
-### Step 4: Add Configuration Option and Change Event Handler
+![alt text](<Capture d’écran 2026-03-03 à 15.02.15.png>)
 
-1. Click the **Variable** tab
-2. Add an item under the **Configuration Options** for each variable and each event 
+***
+### Step 4: Add Configuration Options and Change Event Handler
 
+1. Click the **Variables** tab
+2. Add an item under **Business Data** and **Configuration Options** for each variable and event
+
+![alt text](image-5.png)
 
 
 ✅ **Checkpoint:** Widget is now imported into BAW!
@@ -140,22 +147,34 @@ Inline JavaScript -->
 1. Create a new Coach View
 2. Go to **User Interface** 
 3. Click on + 
+![alt text](image-7.png)
 
-![alt text](Artifact1.png)
-![alt text](image-4.png)
+![alt text](image-6.png)
 
-2. Drag **Progress Bar** widget onto coach (like you have done with the Custom HTML)
-3. Create variable: `tw.local.progress` (Integer, default: 0)
-4. Bind widget data to `tw.local.progress`
-
-### Step 2: Configure Options
-
-**Screenshot Placeholder:**
+4. Drag the **Progress Bar** widget onto the coach (like you did with the Custom HTML)
+![alt text](image-8.png)
+5. Create variable: 
+![alt text](image-9.png)
 
 
-### Step 3: Add Test Controls
 
-Add Integer Widget :
+### Step 2: Add Test Controls
+
+Add a Decimal Widget:
+
+![Decimal Object](image-10.png)
+
+The screen should look like this:
+
+![alt text](image-11.png)
+
+Click on Run:
+
+![alt text](image-12.png)
+
+Update the decimal value to see the bar moving.
+
+![alt text](image-13.png)
 
 
 ✅ **Checkpoint:** Your widget is working!
@@ -169,7 +188,7 @@ Add Integer Widget :
 ### 💬 Prompt to Bob
 
 ```
-Bob, please explain to me the new widget structure for ProgressBar
+Bob, please explain the widget structure for ProgressBar
 ```
 
 **HTML Structure:**
@@ -179,9 +198,9 @@ Bob, please explain to me the new widget structure for ProgressBar
 ### Key BAW Concepts
 
 1. **Data Binding**: `this.getData()` retrieves the bound value from BAW
-2. **Configuration Options**: `this.getOption('name')` gets widget configuration
+2. **Configuration Options**: `this.getOption('name')` gets the widget configuration
 3. **Change Event**: Automatically fires when bound data updates
-4. **ARIA Attributes**: `role="progressbar"` and `aria-*` for accessibility
+4. **ARIA Attributes**: `role="progressbar"` and `aria-*` attributes for accessibility
 
 
 ---
