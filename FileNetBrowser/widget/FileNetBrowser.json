@@ -1,0 +1,262 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "FileNetBrowser Widget API",
+    "description": "OpenAPI specification for the FileNetBrowser widget — a folder and document browser for IBM FileNet Content Engine via GraphQL, used in IBM Business Automation Workflow coach views.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "IBM BAW Custom Widgets"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "components": {
+    "schemas": {
+
+      "FileNetBrowserOptions": {
+        "type": "object",
+        "description": "Configuration options for the FileNetBrowser widget, set via getOption() in BAW Coach View designer.",
+        "required": ["graphqlEndpoint", "repositoryIdentifier"],
+        "properties": {
+          "graphqlEndpoint": {
+            "type": "string",
+            "format": "uri",
+            "description": "Full URL of the FileNet Content Engine GraphQL API endpoint.",
+            "example": "https://filenet-host/content-services-graphql/graphql"
+          },
+          "repositoryIdentifier": {
+            "type": "string",
+            "description": "FileNet repository identifier (e.g., 'OS1'). This identifies which object store to use.",
+            "example": "OS1"
+          },
+          "rootFolderPath": {
+            "type": "string",
+            "description": "FileNet folder path to start browsing from. Defaults to root '/'.",
+            "default": "/",
+            "example": "/Folder for Browsing"
+          },
+          "showDocumentDetails": {
+            "type": "boolean",
+            "description": "Show document version and metadata details in the list.",
+            "default": true
+          },
+          "allowMultiSelect": {
+            "type": "boolean",
+            "description": "Allow multiple items to be selected at once.",
+            "default": false
+          },
+          "showBreadcrumb": {
+            "type": "boolean",
+            "description": "Show breadcrumb navigation at the top.",
+            "default": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Number of documents to display per page. Set to 0 to disable pagination.",
+            "default": 50,
+            "minimum": 0,
+            "example": 25
+          },
+          "showPagination": {
+            "type": "boolean",
+            "description": "Show pagination controls when there are more documents than pageSize.",
+            "default": true
+          }
+        }
+      },
+
+      "FolderInfo": {
+        "type": "object",
+        "description": "Information about a FileNet folder returned by the folder query.",
+        "required": ["id", "name", "pathName"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "FileNet object ID of the folder.",
+            "example": "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+          },
+          "className": {
+            "type": "string",
+            "description": "FileNet class name of the folder.",
+            "example": "Folder"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the folder.",
+            "example": "Documents"
+          },
+          "pathName": {
+            "type": "string",
+            "description": "Full path of the folder in FileNet.",
+            "example": "/Folder for Browsing/Documents"
+          }
+        }
+      },
+
+      "DocumentInfo": {
+        "type": "object",
+        "description": "Information about a FileNet document returned by the document query.",
+        "required": ["id", "name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "FileNet object ID of the document.",
+            "example": "{D0D98E6A-0000-CD12-BB33-2DC8E5CABEE1}"
+          },
+          "className": {
+            "type": "string",
+            "description": "FileNet class name of the document.",
+            "example": "Document"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the document.",
+            "example": "report.pdf"
+          },
+          "majorVersionNumber": {
+            "type": "integer",
+            "description": "Major version number of the document.",
+            "example": 1
+          },
+          "minorVersionNumber": {
+            "type": "integer",
+            "description": "Minor version number of the document.",
+            "example": 0
+          },
+          "mimeType": {
+            "type": "string",
+            "description": "MIME type of the document content.",
+            "example": "application/pdf"
+          },
+          "contentSize": {
+            "type": "integer",
+            "description": "Size of the document content in bytes.",
+            "example": 204800
+          }
+        }
+      },
+
+      "SelectionInfo": {
+        "type": "object",
+        "description": "Information about selected item(s) passed to event handlers.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["folder", "document"],
+            "description": "Type of the selected item."
+          },
+          "id": {
+            "type": "string",
+            "description": "FileNet object ID of the selected item."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the selected item."
+          },
+          "pathName": {
+            "type": "string",
+            "description": "Full path of the selected item (folders only)."
+          },
+          "version": {
+            "type": "string",
+            "description": "Version string for documents (e.g., '1.0')."
+          }
+        },
+        "example": {
+          "type": "document",
+          "id": "{D0D98E6A-0000-CD12-BB33-2DC8E5CABEE1}",
+          "name": "report.pdf",
+          "version": "1.0"
+        }
+      },
+
+      "GraphQLFolderQuery": {
+        "type": "object",
+        "description": "GraphQL query used to retrieve folder information.",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The GraphQL query string.",
+            "example": "query GetFolder($repoId: String!, $path: String!) { folder(repositoryIdentifier: $repoId identifier: $path) { className id name pathName } }"
+          },
+          "variables": {
+            "type": "object",
+            "properties": {
+              "repoId": {
+                "type": "string",
+                "description": "FileNet repository identifier.",
+                "example": "OS1"
+              },
+              "path": {
+                "type": "string",
+                "description": "FileNet folder path.",
+                "example": "/Folder for Browsing"
+              }
+            }
+          }
+        }
+      },
+
+      "GraphQLDocumentQuery": {
+        "type": "object",
+        "description": "GraphQL query used to retrieve document information.",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The GraphQL query string.",
+            "example": "query GetDocument($repoId: String!, $docId: String!) { document(repositoryIdentifier: $repoId identifier: $docId) { className id name majorVersionNumber minorVersionNumber } }"
+          },
+          "variables": {
+            "type": "object",
+            "properties": {
+              "repoId": {
+                "type": "string",
+                "description": "FileNet repository identifier.",
+                "example": "OS1"
+              },
+              "docId": {
+                "type": "string",
+                "description": "FileNet document ID.",
+                "example": "{D0D98E6A-0000-CD12-BB33-2DC8E5CABEE1}"
+              }
+            }
+          }
+        }
+      },
+
+      "FileNetBrowserWidget": {
+        "type": "object",
+        "description": "Complete FileNetBrowser widget configuration and data contract.",
+        "properties": {
+          "options": {
+            "$ref": "#/components/schemas/FileNetBrowserOptions"
+          },
+          "events": {
+            "type": "object",
+            "description": "Events emitted by the widget.",
+            "properties": {
+              "onFolderSelected": {
+                "$ref": "#/components/schemas/SelectionInfo"
+              },
+              "onDocumentSelected": {
+                "$ref": "#/components/schemas/SelectionInfo"
+              },
+              "onNavigate": {
+                "type": "object",
+                "properties": {
+                  "pathName": {
+                    "type": "string",
+                    "description": "The new folder path after navigation."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+}

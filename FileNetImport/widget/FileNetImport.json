@@ -26,10 +26,16 @@
             "description": "Full URL of the FileNet Content Engine GraphQL API endpoint.",
             "example": "https://filenet-host/content-services-graphql/graphql"
           },
-          "parentFolderId": {
+          "repositoryIdentifier": {
             "type": "string",
-            "description": "FileNet object ID (GUID) of the root destination folder. All imported files and recreated folder structures will be placed under this folder.",
-            "example": "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+            "description": "FileNet repository identifier (e.g., 'OS1'). This identifies which object store to use.",
+            "example": "OS1"
+          },
+          "parentFolderPath": {
+            "type": "string",
+            "description": "FileNet folder path where files will be imported. All imported files and recreated folder structures will be placed under this path.",
+            "default": "/",
+            "example": "/Folder for Browsing"
           },
           "maxFileSizeMB": {
             "type": "number",
@@ -67,17 +73,23 @@
             "description": "Number of files that failed to import due to errors.",
             "example": 1
           },
-          "parentFolderId": {
+          "repositoryIdentifier": {
             "type": "string",
-            "description": "The FileNet folder ID that was used as the root destination for this import batch.",
-            "example": "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+            "description": "The FileNet repository identifier that was used for this import batch.",
+            "example": "OS1"
+          },
+          "parentFolderPath": {
+            "type": "string",
+            "description": "The FileNet folder path that was used as the root destination for this import batch.",
+            "example": "/Folder for Browsing"
           }
         },
         "example": {
           "total": 5,
           "succeeded": 5,
           "failed": 0,
-          "parentFolderId": "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+          "repositoryIdentifier": "OS1",
+          "parentFolderPath": "/Folder for Browsing"
         }
       },
 
@@ -110,20 +122,25 @@
           "query": {
             "type": "string",
             "description": "The GraphQL mutation string.",
-            "example": "mutation CreateFolder($name: String!, $parentId: ID!) { createFolder(name: $name, parentId: $parentId) { id name pathName } }"
+            "example": "mutation CreateFolder($repoId: String!, $parentPath: String!, $name: String!) { createFolder(repositoryIdentifier: $repoId fileInFolderIdentifier: $parentPath folderProperties: { name: $name }) { id name pathName } }"
           },
           "variables": {
             "type": "object",
             "properties": {
+              "repoId": {
+                "type": "string",
+                "description": "FileNet repository identifier.",
+                "example": "OS1"
+              },
+              "parentPath": {
+                "type": "string",
+                "description": "FileNet folder path of the parent folder.",
+                "example": "/Folder for Browsing"
+              },
               "name": {
                 "type": "string",
                 "description": "Name of the folder to create.",
                 "example": "SubFolder"
-              },
-              "parentId": {
-                "type": "string",
-                "description": "FileNet object ID of the parent folder.",
-                "example": "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
               }
             }
           }
@@ -164,36 +181,37 @@
 
       "GraphQLImportDocumentMutation": {
         "type": "object",
-        "description": "GraphQL mutation used to import a document into FileNet Content Engine.",
+        "description": "GraphQL mutation used to import a document into FileNet Content Engine via multipart form POST.",
         "properties": {
           "query": {
             "type": "string",
-            "description": "The GraphQL mutation string.",
-            "example": "mutation ImportDocument($name: String!, $folderId: ID!, $content: String!, $mimeType: String!) { createDocument(name: $name, folderId: $folderId, content: { data: $content, mimeType: $mimeType }) { id name size created } }"
+            "description": "The GraphQL mutation string with variable placeholder for file content.",
+            "example": "mutation ($contvar: String) { createDocument(repositoryIdentifier: \"OS1\" fileInFolderIdentifier: \"/Folder for Browsing\" documentProperties: { name: \"report.pdf\" contentElements: { replace: [{ type: CONTENT_TRANSFER contentType: \"application/pdf\" subContentTransfer: { content: $contvar } }] } } checkinAction: {}) { id name } }"
           },
           "variables": {
             "type": "object",
+            "description": "Variables object with null value for file content variable (actual file is in multipart form).",
             "properties": {
-              "name": {
+              "contvar": {
+                "type": "null",
+                "description": "Placeholder variable that maps to the file part in the multipart form.",
+                "example": null
+              }
+            }
+          },
+          "multipartForm": {
+            "type": "object",
+            "description": "Multipart form structure for the request.",
+            "properties": {
+              "graphql": {
                 "type": "string",
-                "description": "Name of the document to create in FileNet.",
-                "example": "report.pdf"
+                "description": "JSON string containing the query and variables.",
+                "example": "{\"query\":\"...\",\"variables\":{\"contvar\":null}}"
               },
-              "folderId": {
+              "contvar": {
                 "type": "string",
-                "description": "FileNet object ID of the target folder.",
-                "example": "{B2C3D4E5-F6A7-8901-BCDE-F12345678901}"
-              },
-              "content": {
-                "type": "string",
-                "format": "byte",
-                "description": "Base64-encoded binary content of the document.",
-                "example": "JVBERi0xLjQKJeLjz9MKMSAwIG9iago..."
-              },
-              "mimeType": {
-                "type": "string",
-                "description": "MIME type of the document.",
-                "example": "application/pdf"
+                "format": "binary",
+                "description": "The actual file binary content."
               }
             }
           }

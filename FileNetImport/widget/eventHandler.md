@@ -6,13 +6,14 @@ Fired when **all** files in the queue have been successfully imported to FileNet
 // Retrieve the import result summary
 var result = this.getData();
 // result = {
-//   total:          <number>,   // Total files processed
-//   succeeded:      <number>,   // Files successfully imported
-//   failed:         <number>,   // Files that failed (0 in this event)
-//   parentFolderId: <string>    // Root FileNet folder ID used
+//   total:                 <number>,   // Total files processed
+//   succeeded:             <number>,   // Files successfully imported
+//   failed:                <number>,   // Files that failed (0 in this event)
+//   repositoryIdentifier:  <string>,   // FileNet repository identifier
+//   parentFolderPath:      <string>    // Root FileNet folder path used
 // }
 
-console.log("Import complete:", result.succeeded, "files imported to folder", result.parentFolderId);
+console.log("Import complete:", result.succeeded, "files imported to", result.parentFolderPath);
 
 // Example: update a BAW variable with the result
 tw.local.importResult = result;
@@ -28,10 +29,11 @@ Fired when the import finishes but **one or more files failed**. The result obje
 ```js
 var result = this.getData();
 // result = {
-//   total:          <number>,
-//   succeeded:      <number>,
-//   failed:         <number>,   // > 0 in this event
-//   parentFolderId: <string>
+//   total:                 <number>,
+//   succeeded:             <number>,
+//   failed:                <number>,   // > 0 in this event
+//   repositoryIdentifier:  <string>,
+//   parentFolderPath:      <string>
 // }
 
 console.warn("Import finished with errors:", result.failed, "failed out of", result.total);
@@ -88,16 +90,20 @@ In the BAW Coach View designer, bind these events to boundary events or JavaScri
 
 ## Configuration Options (getOption)
 
-| Option              | Type    | Default | Description |
-|---------------------|---------|---------|-------------|
-| `graphqlEndpoint`   | String  | `""`    | Full URL of the FileNet GraphQL API endpoint |
-| `parentFolderId`    | String  | `""`    | FileNet object ID of the root destination folder |
-| `maxFileSizeMB`     | Number  | `100`   | Maximum allowed file size in megabytes |
-| `allowedMimeTypes`  | String  | `""`    | Comma-separated MIME types to accept (empty = all) |
+| Option                  | Type    | Default | Description |
+|-------------------------|---------|---------|-------------|
+| `graphqlEndpoint`       | String  | `""`    | Full URL of the FileNet GraphQL API endpoint |
+| `repositoryIdentifier`  | String  | `""`    | FileNet repository identifier (e.g., "OS1") |
+| `parentFolderPath`      | String  | `"/"`   | FileNet folder path for imports (e.g., "/Folder for Browsing") |
+| `maxFileSizeMB`         | Number  | `100`   | Maximum allowed file size in megabytes |
+| `allowedMimeTypes`      | String  | `""`    | Comma-separated MIME types to accept (empty = all) |
+| `showImportLog`         | Boolean | `true`  | Show or hide the import result log panel |
 
 ### Example: reading options in the widget
 
 ```js
-var graphqlEndpoint = this.getOption("graphqlEndpoint");
-var parentFolderId  = this.getOption("parentFolderId");
-var maxFileSizeMB   = this.getOption("maxFileSizeMB") || 100;
+var graphqlEndpoint    = this.getOption("graphqlEndpoint");
+var repositoryId       = this.getOption("repositoryIdentifier");
+var parentFolderPath   = this.getOption("parentFolderPath");
+var maxFileSizeMB      = this.getOption("maxFileSizeMB") || 100;
+var showImportLog      = this.getOption("showImportLog") !== false; // Default true
