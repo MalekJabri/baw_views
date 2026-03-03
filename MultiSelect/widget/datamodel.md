@@ -17,7 +17,7 @@ The widget expects an array of selected values and an array of available options
 - **Required**: Yes
 - **Structure**: Each object must have:
   - `value` (String): Unique identifier for the option
-  - `label` (String): Display text for the option
+  - `name` (String): Display text for the option
 
 ### Example Data
 
@@ -27,11 +27,11 @@ tw.local.selectedItems = ["option1", "option3", "option5"];
 
 // Options configuration (set in widget options)
 options: [
-  { value: "option1", label: "First Option" },
-  { value: "option2", label: "Second Option" },
-  { value: "option3", label: "Third Option" },
-  { value: "option4", label: "Fourth Option" },
-  { value: "option5", label: "Fifth Option" }
+  { value: "option1", name: "First Option" },
+  { value: "option2", name: "Second Option" },
+  { value: "option3", name: "Third Option" },
+  { value: "option4", name: "Fourth Option" },
+  { value: "option5", name: "Fifth Option" }
 ]
 ```
 
@@ -57,9 +57,9 @@ The widget supports the following configuration options:
 // In widget configuration options:
 {
   options: [
-    { value: "apple", label: "Apple" },
-    { value: "banana", label: "Banana" },
-    { value: "orange", label: "Orange" }
+    { value: "apple", name: "Apple" },
+    { value: "banana", name: "Banana" },
+    { value: "orange", name: "Orange" }
   ]
 }
 ```
@@ -69,10 +69,10 @@ The widget supports the following configuration options:
 ```javascript
 {
   options: [
-    { value: "red", label: "Red" },
-    { value: "blue", label: "Blue" },
-    { value: "green", label: "Green" },
-    { value: "yellow", label: "Yellow" }
+    { value: "red", name: "Red" },
+    { value: "blue", name: "Blue" },
+    { value: "green", name: "Green" },
+    { value: "yellow", name: "Yellow" }
   ],
   maxSelections: 2,
   helperText: "Select up to 2 colors"
@@ -84,9 +84,9 @@ The widget supports the following configuration options:
 ```javascript
 {
   options: [
-    { value: "small", label: "Small" },
-    { value: "medium", label: "Medium" },
-    { value: "large", label: "Large" }
+    { value: "small", name: "Small" },
+    { value: "medium", name: "Medium" },
+    { value: "large", name: "Large" }
   ],
   showSearch: false,
   showActions: false,
@@ -99,8 +99,8 @@ The widget supports the following configuration options:
 ```javascript
 {
   options: [
-    { value: "opt1", label: "Option 1" },
-    { value: "opt2", label: "Option 2" }
+    { value: "opt1", name: "Option 1" },
+    { value: "opt2", name: "Option 2" }
   ],
   disabled: true,
   helperText: "Selection is currently disabled"
@@ -154,9 +154,9 @@ options: tw.local.order.availableProducts
 
 ```javascript
 [
-  { value: "1", label: "Option One" },
-  { value: "2", label: "Option Two" },
-  { value: "3", label: "Option Three" }
+  { value: "1", name: "Option One" },
+  { value: "2", name: "Option Two" },
+  { value: "3", name: "Option Three" }
 ]
 ```
 
@@ -168,7 +168,7 @@ var options = [];
 for (var i = 0; i < tw.local.dbResults.listLength; i++) {
   options.push({
     value: tw.local.dbResults[i].id.toString(),
-    label: tw.local.dbResults[i].name
+    name: tw.local.dbResults[i].name
   });
 }
 
@@ -181,10 +181,10 @@ options: options
 ```javascript
 // Convert BAW enumeration to options
 var statusOptions = [
-  { value: "PENDING", label: "Pending" },
-  { value: "APPROVED", label: "Approved" },
-  { value: "REJECTED", label: "Rejected" },
-  { value: "IN_REVIEW", label: "In Review" }
+  { value: "PENDING", name: "Pending" },
+  { value: "APPROVED", name: "Approved" },
+  { value: "REJECTED", name: "Rejected" },
+  { value: "IN_REVIEW", name: "In Review" }
 ];
 
 options: statusOptions
@@ -255,7 +255,7 @@ The widget includes full ARIA support:
 
 ## Best Practices
 
-1. **Provide Clear Labels**: Use descriptive labels for options
+1. **Provide Clear Names**: Use descriptive names for options
 2. **Unique Values**: Ensure all option values are unique
 3. **Reasonable Limits**: Set appropriate maxSelections if needed
 4. **Helper Text**: Use helper text to guide users
@@ -271,10 +271,10 @@ The widget includes full ARIA support:
 // Initialize
 tw.local.selectedCategories = [];
 tw.local.categoryOptions = [
-  { value: "electronics", label: "Electronics" },
-  { value: "clothing", label: "Clothing" },
-  { value: "books", label: "Books" },
-  { value: "home", label: "Home & Garden" }
+  { value: "electronics", name: "Electronics" },
+  { value: "clothing", name: "Clothing" },
+  { value: "books", name: "Books" },
+  { value: "home", name: "Home & Garden" }
 ];
 
 // Widget configuration
@@ -290,9 +290,9 @@ tw.local.categoryOptions = [
 ```javascript
 // Load team members from service
 tw.local.teamMembers = [
-  { value: "user1", label: "John Doe" },
-  { value: "user2", label: "Jane Smith" },
-  { value: "user3", label: "Bob Johnson" }
+  { value: "user1", name: "John Doe" },
+  { value: "user2", name: "Jane Smith" },
+  { value: "user3", name: "Bob Johnson" }
 ];
 
 tw.local.selectedMembers = [];
@@ -313,10 +313,10 @@ tw.local.selectedMembers = [];
 tw.local.selectedTags = ["urgent", "review"];
 
 tw.local.availableTags = [
-  { value: "urgent", label: "Urgent" },
-  { value: "review", label: "Needs Review" },
-  { value: "approved", label: "Approved" },
-  { value: "pending", label: "Pending" }
+  { value: "urgent", name: "Urgent" },
+  { value: "review", name: "Needs Review" },
+  { value: "approved", name: "Approved" },
+  { value: "pending", name: "Pending" }
 ];
 
 // Widget configuration
@@ -364,7 +364,7 @@ tw.local.skillOptions = loadSkills();
 
 **Solutions**:
 1. Verify options array is properly formatted
-2. Check that each option has both `value` and `label` properties
+2. Check that each option has both `value` and `name` properties
 3. Ensure options is set in widget configuration, not bound data
 4. Check browser console for JavaScript errors
 
@@ -394,7 +394,7 @@ tw.local.skillOptions = loadSkills();
 
 **Solutions**:
 1. Verify showSearch is set to true
-2. Check that options have searchable labels
+2. Check that options have searchable names
 3. Clear browser cache and reload
 4. Check for JavaScript errors in console
 
