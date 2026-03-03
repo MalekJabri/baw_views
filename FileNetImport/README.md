@@ -39,21 +39,25 @@ FileNetImport/
 
 Set these in the BAW Coach View designer **Properties** panel:
 
-| Option             | Type    | Required | Default | Description |
-|--------------------|---------|----------|---------|-------------|
-| `graphqlEndpoint`  | String  | **Yes**  | `""`    | Full URL of the FileNet GraphQL API. Example: `https://filenet-host/content-services-graphql/graphql` |
-| `parentFolderId`   | String  | **Yes**  | `""`    | FileNet GUID of the root destination folder. Example: `{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}` |
-| `maxFileSizeMB`    | Number  | No       | `100`   | Maximum file size in MB. Files exceeding this are skipped with a warning. |
-| `allowedMimeTypes` | String  | No       | `""`    | Comma-separated MIME types to accept. Empty = all types accepted. |
+| Option                  | Type    | Required | Default | Description |
+|-------------------------|---------|----------|---------|-------------|
+| `graphqlEndpoint`       | String  | **Yes**  | `""`    | Full URL of the FileNet GraphQL API. Example: `https://filenet-host/content-services-graphql/graphql` |
+| `repositoryIdentifier`  | String  | **Yes**  | `""`    | FileNet repository identifier (e.g., `"OS1"`). Identifies which object store to use. |
+| `parentFolderPath`      | String  | **Yes**  | `"/"`   | FileNet folder path for imports. Example: `"/Folder for Browsing"` or `"/Projects/2024"`. |
+| `maxFileSizeMB`         | Number  | No       | `100`   | Maximum file size in MB. Files exceeding this are skipped with a warning. |
+| `allowedMimeTypes`      | String  | No       | `""`    | Comma-separated MIME types to accept. Empty = all types accepted. |
+| `showImportLog`         | Boolean | No       | `true`  | Show or hide the import result log panel. Set to `false` to hide detailed import logs. |
 
 ### Example option binding in BAW
 
 ```javascript
 // In the coach view configuration:
-graphqlEndpoint  = "https://filenet-host/content-services-graphql/graphql"
-parentFolderId   = tw.local.targetFolderId
-maxFileSizeMB    = 50
-allowedMimeTypes = "application/pdf,image/png,application/msword"
+graphqlEndpoint       = "https://filenet-host/content-services-graphql/graphql"
+repositoryIdentifier  = "OS1"
+parentFolderPath      = "/Folder for Browsing"
+maxFileSizeMB         = 50
+allowedMimeTypes      = "application/pdf,image/png,application/msword"
+showImportLog         = true  // Set to false to hide the log panel
 ```
 
 ---
@@ -67,10 +71,11 @@ Fired when **all** files are imported successfully (zero failures).
 ```javascript
 // Event data:
 {
-  total:          5,
-  succeeded:      5,
-  failed:         0,
-  parentFolderId: "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+  total:                 5,
+  succeeded:             5,
+  failed:                0,
+  repositoryIdentifier:  "OS1",
+  parentFolderPath:      "/Folder for Browsing"
 }
 
 // Example handler:
@@ -85,10 +90,11 @@ Fired when the import finishes with **one or more failures**.
 ```javascript
 // Event data:
 {
-  total:          5,
-  succeeded:      4,
-  failed:         1,
-  parentFolderId: "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+  total:                 5,
+  succeeded:             4,
+  failed:                1,
+  repositoryIdentifier:  "OS1",
+  parentFolderPath:      "/Folder for Browsing"
 }
 
 // Example handler:
@@ -118,8 +124,16 @@ console.log("Queued:", this.getData().path);
 ### Create Folder
 
 ```graphql
-mutation CreateFolder($name: String!, $parentId: ID!) {
-  createFolder(name: $name, parentId: $parentId) {
+mutation CreateFolder($repoId: String!, $name: String!, $parentPath: String!) {
+  createFolder(
+    repositoryIdentifier: $repoId
+    folderProperties: {
+      name: $name
+      parent: {
+        identifier: $parentPath
+      }
+    }
+  ) {
     id
     name
     pathName
@@ -130,10 +144,13 @@ mutation CreateFolder($name: String!, $parentId: ID!) {
 **Variables:**
 ```json
 {
+  "repoId": "OS1",
   "name": "SubFolder",
-  "parentId": "{PARENT-FOLDER-GUID}"
+  "parentPath": "/Folder for Browsing"
 }
 ```
+
+> **Note:** The `parent.identifier` specifies the path of the parent folder where the new folder will be created.
 
 **Response:**
 ```json
@@ -142,7 +159,7 @@ mutation CreateFolder($name: String!, $parentId: ID!) {
     "createFolder": {
       "id": "{NEW-FOLDER-GUID}",
       "name": "SubFolder",
-      "pathName": "/ParentFolder/SubFolder"
+      "pathName": "/Folder for Browsing/SubFolder"
     }
   }
 }
@@ -150,40 +167,66 @@ mutation CreateFolder($name: String!, $parentId: ID!) {
 
 ---
 
-### Import Document
+### Import Document (Multipart Form POST)
+
+FileNet GraphQL requires documents to be uploaded using **multipart form POST** with the file as a separate part.
 
 ```graphql
-mutation ImportDocument(
-  $name: String!,
-  $folderId: ID!,
-  $content: String!,
-  $mimeType: String!
-) {
+mutation ($contvar: String) {
   createDocument(
-    name: $name,
-    folderId: $folderId,
-    content: {
-      data: $content,
-      mimeType: $mimeType
+    repositoryIdentifier: "OS1"
+    fileInFolderIdentifier: "/Folder for Browsing"
+    documentProperties: {
+      name: "report.pdf"
+      contentElements: {
+        replace: [{
+          type: CONTENT_TRANSFER
+          contentType: "application/pdf"
+          subContentTransfer: {
+            content: $contvar
+          }
+        }]
+      }
     }
+    checkinAction: {}
   ) {
     id
     name
-    size
-    created
   }
 }
 ```
 
-**Variables:**
+**Multipart Form Structure:**
+
+The request must be sent as `multipart/form-data` with two parts:
+
+1. **`graphql` part** (JSON string):
 ```json
 {
-  "name": "report.pdf",
-  "folderId": "{TARGET-FOLDER-GUID}",
-  "content": "<base64-encoded-content>",
-  "mimeType": "application/pdf"
+  "query": "<mutation string>",
+  "variables": { "contvar": null }
 }
 ```
+
+2. **`contvar` part**: The actual file binary content
+
+**JavaScript Implementation:**
+```javascript
+var formData = new FormData();
+formData.append("graphql", JSON.stringify({
+  query: mutation,
+  variables: { contvar: null }
+}));
+formData.append("contvar", file);  // file is a File object
+
+fetch(graphqlEndpoint, {
+  method: "POST",
+  credentials: "include",
+  body: formData
+});
+```
+
+> **Note:** The variable name `$contvar` in the mutation maps to the `contvar` part name in the multipart form. The browser automatically sets the correct `Content-Type: multipart/form-data` header with boundary.
 
 > **Authentication:** All GraphQL calls use `credentials: "include"`, forwarding the browser's existing FileNet session cookies automatically. No additional auth configuration is needed.
 
@@ -191,7 +234,7 @@ mutation ImportDocument(
 
 ## Folder Structure Preservation
 
-When a folder is dropped, the widget uses the `FileSystemDirectoryEntry` API (`webkitGetAsEntry()`) to recursively traverse the entire tree. Each file's relative path is preserved and used to recreate the folder hierarchy under `parentFolderId`.
+When a folder is dropped, the widget uses the `FileSystemDirectoryEntry` API (`webkitGetAsEntry()`) to recursively traverse the entire tree. Each file's relative path is preserved and used to recreate the folder hierarchy under `parentFolderPath`.
 
 **Example:** Dropping `ProjectA/` containing:
 ```
@@ -203,18 +246,18 @@ ProjectA/
       arch.png
 ```
 
-Results in FileNet:
+With `parentFolderPath = "/Folder for Browsing"`, results in FileNet:
 ```
-<parentFolder>/
-  README.md
+/Folder for Browsing/
   ProjectA/
+    README.md
     docs/
       spec.pdf
       diagrams/
         arch.png
 ```
 
-Folders are created lazily (only when a file needs them) and cached within the session to avoid duplicate API calls.
+Folders are created lazily (only when a file needs them) using the `createFolder` mutation with `fileInFolderIdentifier` pointing to the parent path. Created folder paths are cached within the session to avoid duplicate API calls.
 
 ---
 

@@ -1,0 +1,159 @@
+<div class="fnbrowser-widget" role="region" aria-label="FileNet Folder Browser">
+
+  <!-- Breadcrumb Navigation -->
+  <nav class="fnbrowser-breadcrumb" role="navigation" aria-label="Folder path breadcrumb">
+    <ol class="fnbrowser-breadcrumb-list" role="list">
+      <!-- Breadcrumb items injected by JS -->
+    </ol>
+  </nav>
+
+  <!-- Main Browser Container -->
+  <div class="fnbrowser-container">
+    
+    <!-- Left Panel: Folder Tree -->
+    <aside class="fnbrowser-tree-panel" role="complementary" aria-label="Folder tree">
+      <div class="fnbrowser-tree-header">
+        <h3 class="fnbrowser-tree-title">Folders</h3>
+        <button class="fnbrowser-refresh-btn" 
+                type="button" 
+                aria-label="Refresh folder tree"
+                title="Refresh">
+          <span class="fnbrowser-icon-refresh" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="fnbrowser-tree-container" role="tree" aria-label="Folder hierarchy">
+        <!-- Tree nodes injected by JS -->
+      </div>
+    </aside>
+
+    <!-- Right Panel: Content List -->
+    <main class="fnbrowser-content-panel" role="main" aria-label="Folder contents">
+      
+      <!-- Toolbar -->
+      <div class="fnbrowser-toolbar">
+        <div class="fnbrowser-toolbar-left">
+          <button class="fnbrowser-nav-btn fnbrowser-nav-back" 
+                  type="button" 
+                  aria-label="Navigate back"
+                  title="Back"
+                  disabled>
+            <span class="fnbrowser-icon-arrow-left" aria-hidden="true"></span>
+          </button>
+          <button class="fnbrowser-nav-btn fnbrowser-nav-forward" 
+                  type="button" 
+                  aria-label="Navigate forward"
+                  title="Forward"
+                  disabled>
+            <span class="fnbrowser-icon-arrow-right" aria-hidden="true"></span>
+          </button>
+          <button class="fnbrowser-nav-btn fnbrowser-nav-up" 
+                  type="button" 
+                  aria-label="Navigate to parent folder"
+                  title="Up"
+                  disabled>
+            <span class="fnbrowser-icon-arrow-up" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="fnbrowser-toolbar-right">
+          <div class="fnbrowser-view-toggle" role="radiogroup" aria-label="View mode">
+            <button class="fnbrowser-view-btn fnbrowser-view-list active" 
+                    type="button" 
+                    role="radio"
+                    aria-checked="true"
+                    aria-label="List view"
+                    title="List view">
+              <span class="fnbrowser-icon-list" aria-hidden="true"></span>
+            </button>
+            <button class="fnbrowser-view-btn fnbrowser-view-grid" 
+                    type="button" 
+                    role="radio"
+                    aria-checked="false"
+                    aria-label="Grid view"
+                    title="Grid view">
+              <span class="fnbrowser-icon-grid" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current Path Display -->
+      <div class="fnbrowser-current-path" role="status" aria-live="polite">
+        <span class="fnbrowser-path-icon" aria-hidden="true">📁</span>
+        <span class="fnbrowser-path-text">/</span>
+      </div>
+
+      <!-- Content List -->
+      <div class="fnbrowser-content-list" role="list" aria-label="Folders and documents">
+        <!-- Content items injected by JS -->
+      </div>
+
+      <!-- Loading Indicator -->
+      <div class="fnbrowser-loading" role="status" aria-live="polite" aria-label="Loading content">
+        <div class="fnbrowser-spinner" aria-hidden="true"></div>
+        <span class="fnbrowser-loading-text">Loading...</span>
+      </div>
+
+      <!-- Empty State -->
+      <div class="fnbrowser-empty" role="status">
+        <div class="fnbrowser-empty-icon" aria-hidden="true">📂</div>
+        <p class="fnbrowser-empty-text">This folder is empty</p>
+      </div>
+
+      <!-- Error State -->
+      <div class="fnbrowser-error" role="alert">
+        <div class="fnbrowser-error-icon" aria-hidden="true">⚠</div>
+        <p class="fnbrowser-error-text"></p>
+        <button class="fnbrowser-retry-btn" type="button">Retry</button>
+      </div>
+
+      <!-- Pagination Controls -->
+      <div class="fnbrowser-pagination" role="navigation" aria-label="Pagination">
+        <div class="fnbrowser-pagination-info">
+          <span class="fnbrowser-pagination-text">Showing <strong class="fnbrowser-page-start">1</strong>-<strong class="fnbrowser-page-end">50</strong> of <strong class="fnbrowser-total-items">100</strong> items</span>
+        </div>
+        <div class="fnbrowser-pagination-controls">
+          <button class="fnbrowser-page-btn fnbrowser-page-first"
+                  type="button"
+                  aria-label="Go to first page"
+                  title="First"
+                  disabled>
+            <span aria-hidden="true">«</span>
+          </button>
+          <button class="fnbrowser-page-btn fnbrowser-page-prev"
+                  type="button"
+                  aria-label="Go to previous page"
+                  title="Previous"
+                  disabled>
+            <span aria-hidden="true">‹</span>
+          </button>
+          <span class="fnbrowser-page-numbers" role="status" aria-live="polite">
+            Page <strong class="fnbrowser-current-page">1</strong> of <strong class="fnbrowser-total-pages">2</strong>
+          </span>
+          <button class="fnbrowser-page-btn fnbrowser-page-next"
+                  type="button"
+                  aria-label="Go to next page"
+                  title="Next">
+            <span aria-hidden="true">›</span>
+          </button>
+          <button class="fnbrowser-page-btn fnbrowser-page-last"
+                  type="button"
+                  aria-label="Go to last page"
+                  title="Last">
+            <span aria-hidden="true">»</span>
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Selection Info Bar -->
+  <div class="fnbrowser-selection-bar" role="status" aria-live="polite" aria-atomic="true">
+    <span class="fnbrowser-selection-text">No items selected</span>
+    <button class="fnbrowser-clear-selection-btn" type="button" aria-label="Clear selection">
+      Clear
+    </button>
+  </div>
+
+</div>

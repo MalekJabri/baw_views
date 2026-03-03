@@ -6,10 +6,12 @@
 // ============================================================
 
 // ── Configuration from options ──────────────────────────────
-var graphqlEndpoint = this.getOption("graphqlEndpoint") || "";
-var parentFolderId  = this.getOption("parentFolderId")  || "";
-var maxFileSizeMB   = this.getOption("maxFileSizeMB")   || 100;
-var allowedMimeTypes = this.getOption("allowedMimeTypes") || "";
+var graphqlEndpoint    = this.getOption("graphqlEndpoint") || "";
+var repositoryId       = this.getOption("repositoryIdentifier") || "";
+var parentFolderPath   = this.getOption("parentFolderPath") || "/";
+var maxFileSizeMB      = this.getOption("maxFileSizeMB") || 100;
+var allowedMimeTypes   = this.getOption("allowedMimeTypes") || "";
+var showImportLog      = this.getOption("showImportLog") !== false; // Default true
 
 // ── DOM references ───────────────────────────────────────────
 var root        = this.context.element.querySelector(".fnimport-widget");
@@ -24,6 +26,11 @@ var queueEl     = root.querySelector(".fnimport-queue");
 var importBtn   = root.querySelector(".fnimport-btn-import");
 var clearBtn    = root.querySelector(".fnimport-btn-clear");
 var logEl       = root.querySelector(".fnimport-log");
+
+// ── Apply log visibility based on configuration ─────────────
+if (!showImportLog) {
+  logEl.style.display = "none";
+}
 
 // ── Widget state ─────────────────────────────────────────────
 var fileQueue   = [];   // Array of { file, relativePath, type:"file"|"folder" }
@@ -57,6 +64,9 @@ function sanitizeName(name) {
 
 // ── Utility: add log entry ───────────────────────────────────
 function addLog(message, type) {
+  // Skip if log is hidden
+  if (!showImportLog) return;
+  
   // type: "success" | "error" | "info" | "warning"
   var icons = { success: "✓", error: "✗", info: "ℹ", warning: "⚠" };
   var entry = document.createElement("div");
@@ -278,11 +288,19 @@ function addFileToQueue(file, relativePath) {
   this.executeEventHandlingFunction(this, "onFileAdded", { path: relativePath, size: file.size });
 }
 
-// ── GraphQL: create a folder under a parent ──────────────────
-function gqlCreateFolder(folderName, parentId) {
+// ── GraphQL: create a folder under a parent path ─────────────
+function gqlCreateFolder(folderName, parentPath) {
   var mutation = [
-    "mutation CreateFolder($name: String!, $parentId: ID!) {",
-    "  createFolder(name: $name, parentId: $parentId) {",
+    "mutation CreateFolder($repoId: String!, $name: String!, $parentPath: String!) {",
+    "  createFolder(",
+    "    repositoryIdentifier: $repoId",
+    "    folderProperties: {",
+    "      name: $name",
+    "      parent: {",
+    "        identifier: $parentPath",
+    "      }",
+    "    }",
+    "  ) {",
     "    id",
     "    name",
     "    pathName",
@@ -296,7 +314,11 @@ function gqlCreateFolder(folderName, parentId) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: mutation,
-      variables: { name: sanitizeName(folderName), parentId: parentId }
+      variables: {
+        repoId: repositoryId,
+        name: sanitizeName(folderName),
+        parentPath: parentPath
+      }
     })
   })
   .then(function(res) { return res.json(); })
@@ -304,85 +326,89 @@ function gqlCreateFolder(folderName, parentId) {
     if (json.errors && json.errors.length > 0) {
       throw new Error(json.errors[0].message);
     }
-    return json.data.createFolder.id;
+    return json.data.createFolder.pathName;
   });
 }
 
-// ── GraphQL: import a document into a folder ─────────────────
-function gqlImportDocument(file, folderId) {
-  // Convert file to base64
+// ── GraphQL: import a document into a folder (multipart form) ─
+function gqlImportDocument(file, folderPath) {
   return new Promise(function(resolve, reject) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      var base64 = e.target.result.split(",")[1];
-      var mimeType = file.type || "application/octet-stream";
+    var mimeType = file.type || "application/octet-stream";
+    
+    // Build GraphQL mutation with variable placeholder
+    var mutation = [
+      "mutation ($contvar: String) {",
+      "  createDocument(",
+      "    repositoryIdentifier: \"" + repositoryId + "\"",
+      "    fileInFolderIdentifier: \"" + folderPath + "\"",
+      "    documentProperties: {",
+      "      name: \"" + sanitizeName(file.name) + "\"",
+      "      contentElements: {",
+      "        replace: [{",
+      "          type: CONTENT_TRANSFER",
+      "          contentType: \"" + mimeType + "\"",
+      "          subContentTransfer: {",
+      "            content: $contvar",
+      "          }",
+      "        }]",
+      "      }",
+      "    }",
+      "    checkinAction: {}",
+      "  ) {",
+      "    id",
+      "    name",
+      "  }",
+      "}"
+    ].join("\n");
 
-      var mutation = [
-        "mutation ImportDocument($name: String!, $folderId: ID!, $content: String!, $mimeType: String!) {",
-        "  createDocument(",
-        "    name: $name,",
-        "    folderId: $folderId,",
-        "    content: {",
-        "      data: $content,",
-        "      mimeType: $mimeType",
-        "    }",
-        "  ) {",
-        "    id",
-        "    name",
-        "    size",
-        "    created",
-        "  }",
-        "}"
-      ].join("\n");
+    // Build multipart form data
+    var formData = new FormData();
+    
+    // Add GraphQL query and variables as JSON
+    formData.append("graphql", JSON.stringify({
+      query: mutation,
+      variables: { contvar: null }  // null because file is in separate part
+    }));
+    
+    // Add file content as separate part named "contvar"
+    formData.append("contvar", file);
 
-      fetch(graphqlEndpoint, {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: mutation,
-          variables: {
-            name: sanitizeName(file.name),
-            folderId: folderId,
-            content: base64,
-            mimeType: mimeType
-          }
-        })
-      })
-      .then(function(res) { return res.json(); })
-      .then(function(json) {
-        if (json.errors && json.errors.length > 0) {
-          reject(new Error(json.errors[0].message));
-        } else {
-          resolve(json.data.createDocument);
-        }
-      })
-      .catch(reject);
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
+    fetch(graphqlEndpoint, {
+      method: "POST",
+      credentials: "include",
+      body: formData  // No Content-Type header - browser sets it with boundary
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(json) {
+      if (json.errors && json.errors.length > 0) {
+        reject(new Error(json.errors[0].message));
+      } else {
+        resolve(json.data.createDocument);
+      }
+    })
+    .catch(reject);
   });
 }
 
-// ── Ensure folder path exists, return leaf folder ID ─────────
+// ── Ensure folder path exists, return leaf folder path ───────
 function ensureFolderPath(relativePath) {
   // relativePath: e.g. "ProjectA/SubFolder"
   var segments = relativePath.split("/").filter(function(s) { return s.length > 0; });
-  if (segments.length === 0) return Promise.resolve(parentFolderId);
+  if (segments.length === 0) return Promise.resolve(parentFolderPath);
 
-  var chain = Promise.resolve(parentFolderId);
+  var chain = Promise.resolve(parentFolderPath);
   var builtPath = "";
 
   segments.forEach(function(segment) {
-    chain = chain.then(function(currentParentId) {
+    chain = chain.then(function(currentParentPath) {
       builtPath = builtPath ? builtPath + "/" + segment : segment;
       if (folderCache[builtPath]) {
         return Promise.resolve(folderCache[builtPath]);
       }
-      return gqlCreateFolder(segment, currentParentId).then(function(newId) {
-        folderCache[builtPath] = newId;
-        addLog("Created folder: " + builtPath, "info");
-        return newId;
+      return gqlCreateFolder(segment, currentParentPath).then(function(newPath) {
+        folderCache[builtPath] = newPath;
+        addLog("Created folder: " + newPath, "info");
+        return newPath;
       });
     });
   });
@@ -396,8 +422,12 @@ function startImport() {
     addLog("Error: GraphQL endpoint is not configured.", "error");
     return;
   }
-  if (!parentFolderId) {
-    addLog("Error: Parent folder ID is not configured.", "error");
+  if (!repositoryId) {
+    addLog("Error: Repository identifier is not configured.", "error");
+    return;
+  }
+  if (!parentFolderPath) {
+    addLog("Error: Parent folder path is not configured.", "error");
     return;
   }
   if (fileQueue.length === 0) return;
@@ -428,8 +458,8 @@ function startImport() {
         : "";
 
       return ensureFolderPath(dirPath)
-        .then(function(targetFolderId) {
-          return gqlImportDocument(entry.file, targetFolderId);
+        .then(function(targetFolderPath) {
+          return gqlImportDocument(entry.file, targetFolderPath);
         })
         .then(function(doc) {
           done++;
@@ -459,7 +489,8 @@ function startImport() {
       total: total,
       succeeded: total - errors,
       failed: errors,
-      parentFolderId: parentFolderId
+      repositoryIdentifier: repositoryId,
+      parentFolderPath: parentFolderPath
     };
     if (errors > 0) {
       this.executeEventHandlingFunction(this, "onImportError", result);

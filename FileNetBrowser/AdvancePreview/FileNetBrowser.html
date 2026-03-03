@@ -1,0 +1,49 @@
+<!--
+ #BEGIN COPYRIGHT
+
+ Licensed Materials - Property of IBM
+ 5725-C95
+ (C) Copyright IBM Corporation 2026. All Rights Reserved.
+ US Government Users Restricted Rights - Use, duplication or disclosure
+ restricted by GSA ADP Schedule Contract with IBM Corp.
+
+ #END COPYRIGHT
+-->
+
+<style>
+/* ── Preview root ─────────────────────────────────────────── */
+.fnbrowser-preview-wrap {
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  color: #161616;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.fnbrowser-preview-note {
+  background-color: #edf5ff;
+  border-left: 3px solid #0f62fe;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  color: #0043ce;
+}
+
+.fnbrowser-preview-note strong {
+  font-weight: 600;
+}
+</style>
+
+<div class="fnbrowser-preview-wrap">
+  <div class="fnbrowser-preview-note">
+    <strong>Preview Mode:</strong> This preview uses mock data to demonstrate the FileNetBrowser widget. 
+    In production, the widget connects to a real FileNet GraphQL endpoint to browse folders and documents.
+  </div>
+  
+  <!-- Widget container -->
+  <div id="fnbrowser-widget-container"></div>
+</div>
+
+<script src="FileNetBrowser.js"></script>
