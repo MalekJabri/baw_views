@@ -253,6 +253,160 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-width: 0; /* Allow flex shrinking */
+}
+
+/* ── Properties Panel ───────────────────────────────────── */
+.fnbrowser-properties-panel {
+  width: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--fnbrowser-gray-20);
+  background-color: #ffffff;
+  overflow: hidden;
+  transition: width var(--fnbrowser-transition);
+}
+
+.fnbrowser-properties-panel.visible {
+  width: 300px;
+}
+
+.fnbrowser-properties-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--fnbrowser-gray-20);
+  background-color: var(--fnbrowser-gray-10);
+}
+
+.fnbrowser-properties-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fnbrowser-gray-100);
+}
+
+.fnbrowser-properties-close-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  transition: background-color var(--fnbrowser-transition);
+}
+
+.fnbrowser-properties-close-btn:hover {
+  background-color: var(--fnbrowser-gray-20);
+}
+
+.fnbrowser-properties-close-btn:focus {
+  outline: 2px solid var(--fnbrowser-blue);
+  outline-offset: 2px;
+}
+
+.fnbrowser-icon-close {
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 32 32'%3E%3Cpath d%3D'M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6L24 9.4z' fill%3D'%23161616'%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.fnbrowser-properties-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.fnbrowser-properties-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 32px 16px;
+  color: var(--fnbrowser-gray-60);
+  text-align: center;
+}
+
+.fnbrowser-properties-panel.visible .fnbrowser-properties-empty {
+  display: none;
+}
+
+.fnbrowser-properties-empty-icon {
+  font-size: 40px;
+  opacity: 0.5;
+}
+
+.fnbrowser-properties-empty-text {
+  margin: 0;
+  font-size: 13px;
+}
+
+.fnbrowser-properties-details {
+  display: none;
+}
+
+.fnbrowser-properties-panel.visible .fnbrowser-properties-details {
+  display: block;
+}
+
+.fnbrowser-property-group {
+  margin-bottom: 16px;
+}
+
+.fnbrowser-property-group:last-child {
+  margin-bottom: 0;
+}
+
+.fnbrowser-property-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fnbrowser-gray-60);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.fnbrowser-property-value {
+  font-size: 13px;
+  color: var(--fnbrowser-gray-100);
+  word-wrap: break-word;
+  padding: 6px 8px;
+  background-color: var(--fnbrowser-gray-10);
+  border-radius: var(--fnbrowser-border-r);
+  border: 1px solid var(--fnbrowser-gray-20);
+}
+
+.fnbrowser-property-value.empty {
+  color: var(--fnbrowser-gray-40);
+  font-style: italic;
+}
+
+.fnbrowser-document-icon-large {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 12px;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 32 32'%3E%3Cpath d%3D'M25.7 9.3l-7-7A1 1 0 0 0 18 2H8a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V10a1 1 0 0 0-.3-.7zM18 4.4l5.6 5.6H18zM24 28H8V4h8v6a2 2 0 0 0 2 2h6z' fill%3D'%230f62fe'%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.fnbrowser-document-name-large {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fnbrowser-gray-100);
+  text-align: center;
+  margin-bottom: 16px;
+  word-wrap: break-word;
 }
 
 /* Toolbar */
@@ -503,6 +657,13 @@
   flex-direction: column;
   text-align: center;
   padding: 12px 8px;
+  position: relative;
+}
+
+.fnbrowser-content-list.grid-view .fnbrowser-item-checkbox {
+  position: absolute;
+  top: 8px;
+  left: 8px;
 }
 
 .fnbrowser-content-list.grid-view .fnbrowser-item-icon {

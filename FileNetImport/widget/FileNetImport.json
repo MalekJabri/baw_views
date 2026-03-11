@@ -49,6 +49,18 @@
             "description": "Comma-separated list of accepted MIME types. Empty string means all types are accepted.",
             "default": "",
             "example": "application/pdf,image/png,image/jpeg,application/msword"
+          },
+          "documentClassIdentifier": {
+            "type": "string",
+            "description": "Optional FileNet document class identifier (symbolic name) to use when creating documents. If empty, the classIdentifier field is not included in the mutation and FileNet uses the default Document class.",
+            "default": "",
+            "example": "MyCustomDocument"
+          },
+          "folderClassIdentifier": {
+            "type": "string",
+            "description": "Optional FileNet folder class identifier (symbolic name) to use when creating folders. If empty, the classIdentifier field is not included in the mutation and FileNet uses the default Folder class.",
+            "default": "",
+            "example": "MyCustomFolder"
           }
         }
       },

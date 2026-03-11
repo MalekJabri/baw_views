@@ -52,6 +52,7 @@ The widget reads the following options via `this.getOption()`:
 | `showBreadcrumb`        | Boolean | No       | `true`  | Show breadcrumb navigation at the top of the widget. |
 | `pageSize`              | Integer | No       | `50`    | Number of documents to display per page. Set to 0 to disable pagination. |
 | `showPagination`        | Boolean | No       | `true`  | Show pagination controls when there are more documents than pageSize. |
+| `customProperties`      | String  | No       | `""`    | Comma-separated list of custom FileNet property names to display in the properties panel. Example: `"DocumentClass,Department,Status"`. Properties will be queried from GraphQL and displayed with auto-formatted labels. |
 
 ---
 

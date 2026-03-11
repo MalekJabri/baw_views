@@ -1,49 +1,61 @@
-<!--
- #BEGIN COPYRIGHT
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FileNetBrowser Widget - Preview</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
- Licensed Materials - Property of IBM
- 5725-C95
- (C) Copyright IBM Corporation 2026. All Rights Reserved.
- US Government Users Restricted Rights - Use, duplication or disclosure
- restricted by GSA ADP Schedule Contract with IBM Corp.
+    body {
+      font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
 
- #END COPYRIGHT
--->
+    .preview-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
 
-<style>
-/* ── Preview root ─────────────────────────────────────────── */
-.fnbrowser-preview-wrap {
-  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 14px;
-  color: #161616;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0;
-}
+    .preview-header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #e0e0e0;
+    }
 
-.fnbrowser-preview-note {
-  background-color: #edf5ff;
-  border-left: 3px solid #0f62fe;
-  padding: 12px 16px;
-  margin-bottom: 16px;
-  border-radius: 0 4px 4px 0;
-  font-size: 13px;
-  color: #0043ce;
-}
+    .preview-header h1 {
+      font-size: 24px;
+      font-weight: 400;
+      color: #161616;
+      margin-bottom: 8px;
+    }
 
-.fnbrowser-preview-note strong {
-  font-weight: 600;
-}
-</style>
+    .preview-header p {
+      font-size: 14px;
+      color: #6f6f6f;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-container">
+    <div class="preview-header">
+      <h1>FileNetBrowser Widget - Preview</h1>
+      <p>Preview of the FileNetBrowser widget with mock FileNet data</p>
+    </div>
 
-<div class="fnbrowser-preview-wrap">
-  <div class="fnbrowser-preview-note">
-    <strong>Preview Mode:</strong> This preview uses mock data to demonstrate the FileNetBrowser widget. 
-    In production, the widget connects to a real FileNet GraphQL endpoint to browse folders and documents.
+    <!-- Widget Container -->
+    <div id="fnbrowser-widget-container"></div>
   </div>
-  
-  <!-- Widget container -->
-  <div id="fnbrowser-widget-container"></div>
-</div>
 
-<script src="FileNetBrowser.js"></script>
+  <script src="FileNetBrowser.js"></script>
+</body>
+</html>

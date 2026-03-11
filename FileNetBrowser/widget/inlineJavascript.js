@@ -14,6 +14,7 @@ var allowMultiSelect   = this.getOption("allowMultiSelect") || false;
 var showBreadcrumb     = this.getOption("showBreadcrumb") !== false;
 var pageSize           = this.getOption("pageSize") || 50;
 var showPagination     = this.getOption("showPagination") !== false;
+var customProperties   = this.getOption("customProperties") || ""; // Comma-separated list of custom property names
 
 // ── DOM references ───────────────────────────────────────────
 var root              = this.context.element.querySelector(".fnbrowser-widget");
@@ -46,6 +47,9 @@ var pageFirstBtn      = root.querySelector(".fnbrowser-page-first");
 var pagePrevBtn       = root.querySelector(".fnbrowser-page-prev");
 var pageNextBtn       = root.querySelector(".fnbrowser-page-next");
 var pageLastBtn       = root.querySelector(".fnbrowser-page-last");
+var propertiesPanel   = root.querySelector(".fnbrowser-properties-panel");
+var propertiesDetails = root.querySelector(".fnbrowser-properties-details");
+var propertiesCloseBtn= root.querySelector(".fnbrowser-properties-close-btn");
 
 // ── Widget state ─────────────────────────────────────────────
 var currentPath       = rootFolderPath;
@@ -143,6 +147,75 @@ function queryFolderContents(folderPath) {
       folders: (json.data.folder.subFolders && json.data.folder.subFolders.folders) || [],
       documents: (json.data.folder.containedDocuments && json.data.folder.containedDocuments.documents) || []
     };
+  });
+}
+
+// ── GraphQL: Query document properties ──────────────────────
+function queryDocumentProperties(documentId) {
+  // Build query with custom properties
+  var customPropsArray = [];
+  if (customProperties) {
+    customPropsArray = customProperties.split(",").map(function(prop) {
+      return prop.trim();
+    }).filter(function(prop) {
+      return prop.length > 0;
+    });
+  }
+  
+  var queryFields = [
+    "    id",
+    "    name",
+    "    majorVersionNumber",
+    "    minorVersionNumber",
+    "    mimeType",
+    "    contentSize",
+    "    dateCreated",
+    "    creator"
+  ];
+  
+  // Add custom properties query if specified
+  if (customPropsArray.length > 0) {
+    var propsIncludes = customPropsArray.map(function(prop) {
+      return '"' + prop + '"';
+    }).join(", ");
+    
+    queryFields.push("    properties(includes: [" + propsIncludes + "]) {");
+    queryFields.push("      id");
+    queryFields.push("      label");
+    queryFields.push("      type");
+    queryFields.push("      value");
+    queryFields.push("    }");
+  }
+  
+  var query = [
+    "query GetDocumentProperties($repoId: String!, $docId: String!) {",
+    "  document(repositoryIdentifier: $repoId, identifier: $docId) {",
+    queryFields.join("\n"),
+    "  }",
+    "}"
+  ].join("\n");
+
+  return fetch(graphqlEndpoint, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: query,
+      variables: {
+        repoId: repositoryId,
+        docId: documentId
+      }
+    })
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(json) {
+    if (json.errors && json.errors.length > 0) {
+      throw new Error(json.errors[0].message);
+    }
+    if (!json.data || !json.data.document) {
+      throw new Error("Document not found: " + documentId);
+    }
+    return json.data.document;
   });
 }
 
@@ -563,6 +636,20 @@ function createContentItem(type, data) {
     item.setAttribute("data-path", data.pathName);
   }
   
+  // Checkbox for documents (for multi-selection)
+  if (type === "document") {
+    var checkboxContainer = document.createElement("div");
+    checkboxContainer.className = "fnbrowser-item-checkbox";
+    
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.className = "fnbrowser-checkbox";
+    checkbox.setAttribute("aria-label", "Select " + data.name);
+    
+    checkboxContainer.appendChild(checkbox);
+    item.appendChild(checkboxContainer);
+  }
+  
   // Icon
   var icon = document.createElement("div");
   icon.className = "fnbrowser-item-icon " + type;
@@ -605,7 +692,12 @@ function createContentItem(type, data) {
   
   // Event handlers
   item.addEventListener("click", function(e) {
-    handleItemClick(item, type, data, e);
+    // Don't trigger selection if clicking on checkbox
+    if (e.target.classList.contains("fnbrowser-checkbox")) {
+      handleCheckboxClick(item, type, data, e);
+    } else {
+      handleItemClick(item, type, data, e);
+    }
   });
   
   item.addEventListener("dblclick", function(e) {
@@ -677,15 +769,41 @@ function createContentItem(type, data) {
   return item;
 }
 
+// ── Handle checkbox click ────────────────────────────────────
+function handleCheckboxClick(item, type, data, event) {
+  event.stopPropagation();
+  var checkbox = item.querySelector(".fnbrowser-checkbox");
+  
+  if (checkbox.checked) {
+    // Select item
+    selectItem(item, type, data);
+  } else {
+    // Deselect item
+    deselectItem(item);
+  }
+}
+
 // ── Handle item click ────────────────────────────────────────
 function handleItemClick(item, type, data, event) {
-  if (allowMultiSelect && (event.ctrlKey || event.metaKey)) {
-    // Toggle selection
-    toggleItemSelection(item, type, data);
+  if (type === "document") {
+    // For documents, toggle checkbox
+    var checkbox = item.querySelector(".fnbrowser-checkbox");
+    if (checkbox) {
+      checkbox.checked = !checkbox.checked;
+      if (checkbox.checked) {
+        selectItem(item, type, data);
+      } else {
+        deselectItem(item);
+      }
+    }
   } else {
-    // Single selection
-    clearSelection();
-    selectItem(item, type, data);
+    // For folders, use original behavior
+    if (allowMultiSelect && (event.ctrlKey || event.metaKey)) {
+      toggleItemSelection(item, type, data);
+    } else {
+      clearSelection();
+      selectItem(item, type, data);
+    }
   }
 }
 
@@ -708,6 +826,15 @@ function handleItemDoubleClick(item, type, data, event) {
 
 // ── Selection management ─────────────────────────────────────
 function selectItem(item, type, data) {
+  // Check if already selected
+  var alreadySelected = selectedItems.some(function(sel) {
+    return sel.element === item;
+  });
+  
+  if (alreadySelected) {
+    return; // Already selected
+  }
+  
   item.classList.add("selected");
   selectedItems.push({
     element: item,
@@ -726,9 +853,44 @@ function selectItem(item, type, data) {
   if (type === "folder") {
     eventData.pathName = data.pathName;
     _this.executeEventHandlingFunction(this, "onFolderSelected", eventData);
+    // Close properties panel when folder is selected
+    closePropertiesPanel();
   } else {
     eventData.version = formatVersion(data.majorVersionNumber, data.minorVersionNumber);
     _this.executeEventHandlingFunction(this, "onDocumentSelected", eventData);
+    // Show properties panel for the first selected document
+    if (selectedItems.filter(function(s) { return s.type === "document"; }).length === 1) {
+      showDocumentProperties(data.id);
+    } else {
+      // Multiple documents selected, show count in properties panel
+      showMultipleDocumentsSelected();
+    }
+  }
+}
+
+function deselectItem(item) {
+  var index = -1;
+  for (var i = 0; i < selectedItems.length; i++) {
+    if (selectedItems[i].element === item) {
+      index = i;
+      break;
+    }
+  }
+  
+  if (index >= 0) {
+    item.classList.remove("selected");
+    selectedItems.splice(index, 1);
+    updateSelectionBar();
+    
+    // Update properties panel
+    var documentsSelected = selectedItems.filter(function(s) { return s.type === "document"; });
+    if (documentsSelected.length === 0) {
+      closePropertiesPanel();
+    } else if (documentsSelected.length === 1) {
+      showDocumentProperties(documentsSelected[0].data.id);
+    } else {
+      showMultipleDocumentsSelected();
+    }
   }
 }
 
@@ -756,9 +918,16 @@ function toggleItemSelection(item, type, data) {
 function clearSelection() {
   selectedItems.forEach(function(item) {
     item.element.classList.remove("selected");
+    // Uncheck checkboxes
+    var checkbox = item.element.querySelector(".fnbrowser-checkbox");
+    if (checkbox) {
+      checkbox.checked = false;
+    }
   });
   selectedItems = [];
   updateSelectionBar();
+  // Close properties panel when selection is cleared
+  closePropertiesPanel();
 }
 
 function updateSelectionBar() {
@@ -1064,6 +1233,11 @@ clearSelectionBtn.addEventListener("click", function() {
   clearSelection();
 });
 
+// Properties panel close button
+propertiesCloseBtn.addEventListener("click", function() {
+  closePropertiesPanel();
+});
+
 // Pagination button listeners
 pageFirstBtn.addEventListener("click", function() {
   goToPage(1);
@@ -1072,6 +1246,21 @@ pageFirstBtn.addEventListener("click", function() {
 pagePrevBtn.addEventListener("click", function() {
   goToPage(currentPage - 1);
 });
+function showMultipleDocumentsSelected() {
+  propertiesPanel.classList.add("visible");
+  var count = selectedItems.filter(function(s) { return s.type === "document"; }).length;
+  
+  var html = [];
+  html.push('<div class="fnbrowser-document-icon-large"></div>');
+  html.push('<div class="fnbrowser-document-name-large">Multiple Documents Selected</div>');
+  html.push('<div class="fnbrowser-property-group">');
+  html.push('  <div class="fnbrowser-property-label">Selected Documents</div>');
+  html.push('  <div class="fnbrowser-property-value">' + count + ' document' + (count > 1 ? 's' : '') + ' selected</div>');
+  html.push('</div>');
+  
+  propertiesDetails.innerHTML = html.join("");
+}
+
 
 pageNextBtn.addEventListener("click", function() {
   goToPage(currentPage + 1);
@@ -1093,3 +1282,89 @@ if (!graphqlEndpoint) {
 }
 
 // Made with Bob
+// ── Properties Panel Management ──────────────────────────────
+function showDocumentProperties(documentId) {
+  // Show loading state
+  propertiesPanel.classList.add("visible");
+  propertiesDetails.innerHTML = '<div class="fnbrowser-loading visible"><div class="fnbrowser-spinner"></div><span class="fnbrowser-loading-text">Loading properties...</span></div>';
+  
+  // Fetch document properties
+  queryDocumentProperties(documentId)
+    .then(function(doc) {
+      displayDocumentProperties(doc);
+    })
+    .catch(function(err) {
+      console.error("Failed to load document properties:", err);
+      propertiesDetails.innerHTML = '<div class="fnbrowser-error visible"><div class="fnbrowser-error-icon">⚠</div><p class="fnbrowser-error-text">Failed to load properties</p></div>';
+    });
+}
+
+function closePropertiesPanel() {
+  propertiesPanel.classList.remove("visible");
+  propertiesDetails.innerHTML = "";
+}
+
+function displayDocumentProperties(doc) {
+  // Format date
+  function formatDate(dateString) {
+    if (!dateString) return "N/A";
+    try {
+      var date = new Date(dateString);
+      return date.toLocaleDateString() + " " + date.toLocaleTimeString();
+    } catch (e) {
+      return dateString;
+    }
+  }
+  
+  // Build properties HTML
+  var html = [];
+  
+  // Document icon and name
+  html.push('<div class="fnbrowser-document-icon-large"></div>');
+  html.push('<div class="fnbrowser-document-name-large">' + escapeHtml(doc.name) + '</div>');
+  
+  // Document Title - using name as the title
+  html.push('<div class="fnbrowser-property-group">');
+  html.push('  <div class="fnbrowser-property-label">Document Title</div>');
+  html.push('  <div class="fnbrowser-property-value">' + escapeHtml(doc.name) + '</div>');
+  html.push('</div>');
+  
+  // Creation Date - using dateCreated (lowercase)
+  if (doc.dateCreated) {
+    html.push('<div class="fnbrowser-property-group">');
+    html.push('  <div class="fnbrowser-property-label">Created</div>');
+    html.push('  <div class="fnbrowser-property-value">' + formatDate(doc.dateCreated) + '</div>');
+    html.push('</div>');
+  }
+  
+  // Version
+  html.push('<div class="fnbrowser-property-group">');
+  html.push('  <div class="fnbrowser-property-label">Version</div>');
+  html.push('  <div class="fnbrowser-property-value">' + formatVersion(doc.majorVersionNumber, doc.minorVersionNumber) + '</div>');
+  html.push('</div>');
+  
+  // MIME Type
+  if (doc.mimeType) {
+    html.push('<div class="fnbrowser-property-group">');
+    html.push('  <div class="fnbrowser-property-label">Type</div>');
+    html.push('  <div class="fnbrowser-property-value">' + escapeHtml(doc.mimeType) + '</div>');
+    html.push('</div>');
+  }
+  
+  // File Size
+  if (doc.contentSize) {
+    html.push('<div class="fnbrowser-property-group">');
+    html.push('  <div class="fnbrowser-property-label">Size</div>');
+    html.push('  <div class="fnbrowser-property-value">' + formatBytes(doc.contentSize) + '</div>');
+    html.push('</div>');
+  }
+  
+  propertiesDetails.innerHTML = html.join("");
+}
+
+function escapeHtml(text) {
+  if (!text) return "";
+  var div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}

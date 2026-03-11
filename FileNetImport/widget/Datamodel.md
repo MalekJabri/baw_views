@@ -35,14 +35,16 @@ However, the widget **outputs** structured result data through its event handler
 
 The widget reads the following options via `this.getOption()`:
 
-| Option                  | Type    | Required | Default | Description |
-|-------------------------|---------|----------|---------|-------------|
-| `graphqlEndpoint`       | String  | **Yes**  | `""`    | Full URL of the FileNet Content Engine GraphQL API endpoint. Example: `https://filenet-host/content-services-graphql/graphql` |
-| `repositoryIdentifier`  | String  | **Yes**  | `""`    | FileNet repository identifier (e.g., `"OS1"`). This identifies which object store to use. |
-| `parentFolderPath`      | String  | **Yes**  | `"/"`   | FileNet folder path where files will be imported. Example: `"/Folder for Browsing"` or `"/Projects/2024"`. All imported files and recreated folder structures will be placed under this path. |
-| `maxFileSizeMB`         | Number  | No       | `100`   | Maximum allowed file size in megabytes. Files exceeding this limit are skipped with a warning. |
-| `allowedMimeTypes`      | String  | No       | `""`    | Comma-separated list of accepted MIME types (e.g. `"application/pdf,image/png"`). Empty string means all types are accepted. |
-| `showImportLog`         | Boolean | No       | `true`  | Show or hide the import result log panel. Set to `false` to hide detailed import logs. |
+| Option                     | Type    | Required | Default | Description |
+|----------------------------|---------|----------|---------|-------------|
+| `graphqlEndpoint`          | String  | **Yes**  | `""`    | Full URL of the FileNet Content Engine GraphQL API endpoint. Example: `https://filenet-host/content-services-graphql/graphql` |
+| `repositoryIdentifier`     | String  | **Yes**  | `""`    | FileNet repository identifier (e.g., `"OS1"`). This identifies which object store to use. |
+| `parentFolderPath`         | String  | **Yes**  | `"/"`   | FileNet folder path where files will be imported. Example: `"/Folder for Browsing"` or `"/Projects/2024"`. All imported files and recreated folder structures will be placed under this path. |
+| `maxFileSizeMB`            | Number  | No       | `100`   | Maximum allowed file size in megabytes. Files exceeding this limit are skipped with a warning. |
+| `allowedMimeTypes`         | String  | No       | `""`    | Comma-separated list of accepted MIME types (e.g. `"application/pdf,image/png"`). Empty string means all types are accepted. |
+| `showImportLog`            | Boolean | No       | `true`  | Show or hide the import result log panel. Set to `false` to hide detailed import logs. |
+| `documentClassIdentifier`  | String  | No       | `""`    | Optional FileNet document class identifier (symbolic name). When provided, documents are created with this subclass. When empty, the `classIdentifier` field is omitted from the mutation and FileNet uses the default `Document` class. Example: `"MyCustomDocument"` |
+| `folderClassIdentifier`    | String  | No       | `""`    | Optional FileNet folder class identifier (symbolic name). When provided, folders are created with this subclass. When empty, the `classIdentifier` field is omitted from the mutation and FileNet uses the default `Folder` class. Example: `"MyCustomFolder"` |
 
 ---
 
@@ -50,10 +52,31 @@ The widget reads the following options via `this.getOption()`:
 
 ### Create Folder
 
+**Without classIdentifier (default behavior):**
 ```graphql
 mutation CreateFolder($repoId: String!, $name: String!, $parentPath: String!) {
   createFolder(
     repositoryIdentifier: $repoId
+    folderProperties: {
+      name: $name
+      parent: {
+        identifier: $parentPath
+      }
+    }
+  ) {
+    id
+    name
+    pathName
+  }
+}
+```
+
+**With classIdentifier (when `folderClassIdentifier` option is set):**
+```graphql
+mutation CreateFolder($repoId: String!, $name: String!, $parentPath: String!, $classId: String!) {
+  createFolder(
+    repositoryIdentifier: $repoId
+    classIdentifier: $classId
     folderProperties: {
       name: $name
       parent: {
@@ -73,11 +96,12 @@ mutation CreateFolder($repoId: String!, $name: String!, $parentPath: String!) {
 {
   "repoId": "OS1",
   "name": "SubFolderName",
-  "parentPath": "/Folder for Browsing"
+  "parentPath": "/Folder for Browsing",
+  "classId": "MyCustomFolder"
 }
 ```
 
-> **Note:** The `parent.identifier` specifies the path of the parent folder where the new folder will be created.
+> **Note:** The `parent.identifier` specifies the path of the parent folder where the new folder will be created. The `classIdentifier` field is placed at the top level of `createFolder` (not inside `folderProperties`) and is only included in the mutation when the `folderClassIdentifier` option has a non-empty value.
 
 ---
 
@@ -85,6 +109,7 @@ mutation CreateFolder($repoId: String!, $name: String!, $parentPath: String!) {
 
 FileNet GraphQL requires documents to be uploaded using **multipart form POST** with the file as a separate part.
 
+**Without classIdentifier (default behavior):**
 ```graphql
 mutation ($contvar: String) {
   createDocument(
@@ -109,6 +134,35 @@ mutation ($contvar: String) {
   }
 }
 ```
+
+**With classIdentifier (when `documentClassIdentifier` option is set):**
+```graphql
+mutation ($contvar: String) {
+  createDocument(
+    repositoryIdentifier: "OS1"
+    fileInFolderIdentifier: "/Folder for Browsing"
+    classIdentifier: "MyCustomDocument"
+    documentProperties: {
+      name: "report.pdf"
+      contentElements: {
+        replace: [{
+          type: CONTENT_TRANSFER
+          contentType: "application/pdf"
+          subContentTransfer: {
+            content: $contvar
+          }
+        }]
+      }
+    }
+    checkinAction: {}
+  ) {
+    id
+    name
+  }
+}
+```
+
+> **Note:** The `classIdentifier` field is placed at the top level of `createDocument` (not inside `documentProperties`) and is only included in the mutation when the `documentClassIdentifier` option has a non-empty value. This ensures compatibility when the field is not needed.
 
 **Multipart Form Structure:**
 
