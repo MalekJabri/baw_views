@@ -1,0 +1,395 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "FolderTree Widget API",
+    "description": "OpenAPI specification for the FolderTree widget — a file and folder manager with hierarchical structure and bulk metadata editing, used in IBM Business Automation Workflow coach views.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "IBM BAW Custom Widgets"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "components": {
+    "schemas": {
+
+      "FolderTreeOptions": {
+        "type": "object",
+        "description": "Configuration options for the FolderTree widget, set via getOption() in BAW Coach View designer.",
+        "required": ["graphqlEndpoint", "repositoryIdentifier"],
+        "properties": {
+          "graphqlEndpoint": {
+            "type": "string",
+            "format": "uri",
+            "description": "Full URL of the FileNet Content Engine GraphQL API endpoint.",
+            "example": "https://filenet-host/content-services-graphql/graphql"
+          },
+          "repositoryIdentifier": {
+            "type": "string",
+            "description": "FileNet repository identifier (e.g., 'OS1'). This identifies which object store to use.",
+            "example": "OS1"
+          },
+          "rootFolderPath": {
+            "type": "string",
+            "description": "FileNet folder path to start browsing from. Defaults to root '/'.",
+            "default": "/",
+            "example": "/Uploaded Files"
+          },
+          "showDocumentDetails": {
+            "type": "boolean",
+            "description": "Show document version and file size details in the list.",
+            "default": true
+          },
+          "allowMultiSelect": {
+            "type": "boolean",
+            "description": "Allow multiple files to be selected simultaneously for bulk operations.",
+            "default": true
+          },
+          "showFileActions": {
+            "type": "boolean",
+            "description": "Show copy and delete action buttons for individual files.",
+            "default": true
+          },
+          "updateAbleFields": {
+            "type": "string",
+            "description": "Comma-separated list of updateable field names to display in the details panel (e.g., 'author,department,status').",
+            "default": "",
+            "example": "author,department,status"
+          },
+          "enableFolderExpansion": {
+            "type": "boolean",
+            "description": "Allow folders to be expanded/collapsed to show nested contents.",
+            "default": true
+          },
+          "showSelectionControls": {
+            "type": "boolean",
+            "description": "Show 'Select all / Unselect all' controls at the top of the file list.",
+            "default": true
+          },
+          "showFileCount": {
+            "type": "boolean",
+            "description": "Display the total number of files in the list.",
+            "default": true
+          },
+          "autoSave": {
+            "type": "boolean",
+            "description": "Automatically save changes when metadata is modified (fires onSave event immediately).",
+            "default": false
+          },
+          "PropertyOne": {
+            "type": "string",
+            "description": "Custom property name to use for Label One (e.g., 'DocumentLanguage'). If not specified, defaults to 'language'.",
+            "default": "language",
+            "example": "DocumentLanguage"
+          },
+          "PropertyTwo": {
+            "type": "string",
+            "description": "Custom property name to use for Label Two (e.g., 'DocumentType'). If not specified, defaults to 'documentType'.",
+            "default": "documentType",
+            "example": "DocumentType"
+          },
+          "enableDebugLogging": {
+            "type": "boolean",
+            "description": "Enable console logging for debugging property extraction and GraphQL queries.",
+            "default": false
+          },
+          "dateFormat": {
+            "type": "string",
+            "description": "Date format string for displaying date properties (e.g., 'YYYY-MM-DD', 'DD/MM/YYYY', 'MM/DD/YYYY HH:mm:ss'). Uses moment.js format tokens.",
+            "default": "YYYY-MM-DD HH:mm:ss",
+            "example": "DD/MM/YYYY"
+          },
+          "showDetailsPanel": {
+            "type": "boolean",
+            "description": "Show or hide the details/update panel on the right side. When false, only the file list is displayed.",
+            "default": true
+          }
+        }
+      },
+
+      "FileObject": {
+        "type": "object",
+        "description": "Represents a file in the uploaded files list.",
+        "required": ["id", "name", "type"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the file.",
+            "example": "file1"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the file.",
+            "example": "Document.pdf"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["file"],
+            "description": "Type identifier, must be 'file'.",
+            "example": "file"
+          },
+          "language": {
+            "type": "string",
+            "description": "Language code for the file (e.g., 'en', 'fr', 'de').",
+            "example": "en"
+          },
+          "documentType": {
+            "type": "string",
+            "description": "Document type code (e.g., 'judgment', 'indictment', 'contract').",
+            "example": "judgment"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Display metadata for the file.",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Human-readable language name.",
+                "example": "English"
+              },
+              "documentType": {
+                "type": "string",
+                "description": "Human-readable document type name.",
+                "example": "Judgment"
+              }
+            }
+          }
+        }
+      },
+
+      "FolderObject": {
+        "type": "object",
+        "description": "Represents a folder in the uploaded files list.",
+        "required": ["id", "name", "type"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the folder.",
+            "example": "folder1"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the folder.",
+            "example": "Legal Documents"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["folder"],
+            "description": "Type identifier, must be 'folder'.",
+            "example": "folder"
+          },
+          "children": {
+            "type": "array",
+            "description": "Array of nested file and folder objects.",
+            "items": {
+              "oneOf": [
+                {"$ref": "#/components/schemas/FileObject"},
+                {"$ref": "#/components/schemas/FolderObject"}
+              ]
+            }
+          }
+        }
+      },
+
+      "FilesData": {
+        "type": "object",
+        "description": "Root data structure bound to the widget.",
+        "required": ["files"],
+        "properties": {
+          "files": {
+            "type": "array",
+            "description": "Array of file and folder objects at the root level.",
+            "items": {
+              "oneOf": [
+                {"$ref": "#/components/schemas/FileObject"},
+                {"$ref": "#/components/schemas/FolderObject"}
+              ]
+            }
+          }
+        },
+        "example": {
+          "files": [
+            {
+              "id": "file1",
+              "name": "Document.pdf",
+              "type": "file",
+              "language": "en",
+              "documentType": "judgment",
+              "metadata": {
+                "language": "English",
+                "documentType": "Judgment"
+              }
+            },
+            {
+              "id": "folder1",
+              "name": "Legal Documents",
+              "type": "folder",
+              "children": [
+                {
+                  "id": "file2",
+                  "name": "Contract.pdf",
+                  "type": "file",
+                  "language": "fr",
+                  "documentType": "contract"
+                }
+              ]
+            }
+          ]
+        }
+      },
+
+      "SelectionChangeEvent": {
+        "type": "object",
+        "description": "Event data passed when file selection changes.",
+        "properties": {
+          "selectedFiles": {
+            "type": "array",
+            "description": "Array of selected file objects.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "string"},
+                "name": {"type": "string"},
+                "type": {"type": "string"},
+                "language": {"type": "string"},
+                "documentType": {"type": "string"}
+              }
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of files currently selected.",
+            "example": 2
+          }
+        },
+        "example": {
+          "selectedFiles": [
+            {
+              "id": "file1",
+              "name": "Document.pdf",
+              "type": "file",
+              "language": "en",
+              "documentType": "judgment"
+            }
+          ],
+          "count": 1
+        }
+      },
+
+      "SaveEvent": {
+        "type": "object",
+        "description": "Event data passed when the Save button is clicked.",
+        "properties": {
+          "selectedFiles": {
+            "type": "array",
+            "description": "Array of file IDs that were updated.",
+            "items": {
+              "type": "string"
+            },
+            "example": ["file1", "file2", "file3"]
+          },
+          "updates": {
+            "type": "object",
+            "description": "Metadata updates applied to the selected files.",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Language code that was set.",
+                "example": "en"
+              },
+              "documentType": {
+                "type": "string",
+                "description": "Document type code that was set.",
+                "example": "judgment"
+              }
+            }
+          }
+        },
+        "example": {
+          "selectedFiles": ["file1", "file2"],
+          "updates": {
+            "language": "en",
+            "documentType": "judgment"
+          }
+        }
+      },
+
+      "FileActionEvent": {
+        "type": "object",
+        "description": "Event data passed when a file action (copy/delete) is triggered.",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "description": "ID of the file that the action was performed on.",
+            "example": "file1"
+          }
+        },
+        "example": {
+          "fileId": "file1"
+        }
+      },
+
+      "FolderTreeWidget": {
+        "type": "object",
+        "description": "Complete FolderTree widget configuration and data contract.",
+        "properties": {
+          "options": {
+            "$ref": "#/components/schemas/FolderTreeOptions"
+          },
+          "data": {
+            "$ref": "#/components/schemas/FilesData"
+          },
+          "events": {
+            "type": "object",
+            "description": "Events emitted by the widget.",
+            "properties": {
+              "onSelectionChange": {
+                "$ref": "#/components/schemas/SelectionChangeEvent",
+                "description": "Fired when the user selects or deselects files."
+              },
+              "onSave": {
+                "$ref": "#/components/schemas/SaveEvent",
+                "description": "Fired when the user clicks the Save button to apply metadata changes."
+              },
+              "onCopyFile": {
+                "$ref": "#/components/schemas/FileActionEvent",
+                "description": "Fired when the user clicks the copy button for a file."
+              },
+              "onDeleteFile": {
+                "$ref": "#/components/schemas/FileActionEvent",
+                "description": "Fired when the user clicks the delete button for a file."
+              }
+            }
+          }
+        }
+      },
+
+      "SupportedLanguages": {
+        "type": "object",
+        "description": "Supported language codes and their display names.",
+        "properties": {
+          "en": {"type": "string", "example": "English"},
+          "fr": {"type": "string", "example": "French"},
+          "de": {"type": "string", "example": "German"},
+          "es": {"type": "string", "example": "Spanish"},
+          "it": {"type": "string", "example": "Italian"}
+        }
+      },
+
+      "SupportedDocumentTypes": {
+        "type": "object",
+        "description": "Supported document type codes and their display names.",
+        "properties": {
+          "judgment": {"type": "string", "example": "Judgment"},
+          "indictment": {"type": "string", "example": "Indictment"},
+          "contract": {"type": "string", "example": "Contract"},
+          "report": {"type": "string", "example": "Report"},
+          "invoice": {"type": "string", "example": "Invoice"}
+        }
+      }
+
+    }
+  }
+}

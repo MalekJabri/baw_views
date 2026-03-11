@@ -12,6 +12,8 @@ var parentFolderPath   = this.getOption("parentFolderPath") || "/";
 var maxFileSizeMB      = this.getOption("maxFileSizeMB") || 100;
 var allowedMimeTypes   = this.getOption("allowedMimeTypes") || "";
 var showImportLog      = this.getOption("showImportLog") !== false; // Default true
+var documentClassId    = this.getOption("documentClassIdentifier") || "";
+var folderClassId      = this.getOption("folderClassIdentifier") || "";
 
 // ── DOM references ───────────────────────────────────────────
 var root        = this.context.element.querySelector(".fnimport-widget");
@@ -38,9 +40,9 @@ var folderCache = {};   // Map: relativeFolderPath → FileNet folder ID
 var isImporting = false;
 
 // ── Register BAW event handlers ──────────────────────────────
-this.registerEventHandlingFunction(this, "onImportComplete", null);
-this.registerEventHandlingFunction(this, "onImportError",    null);
-this.registerEventHandlingFunction(this, "onFileAdded",      null);
+this.registerEventHandlingFunction(this, "onImportComplete", "data");
+this.registerEventHandlingFunction(this, "onImportError",    "data");
+this.registerEventHandlingFunction(this, "onFileAdded",      "data");
 
 // ── Utility: format bytes ────────────────────────────────────
 function formatBytes(bytes) {
@@ -290,10 +292,19 @@ function addFileToQueue(file, relativePath) {
 
 // ── GraphQL: create a folder under a parent path ─────────────
 function gqlCreateFolder(folderName, parentPath) {
-  var mutation = [
-    "mutation CreateFolder($repoId: String!, $name: String!, $parentPath: String!) {",
+  // Build mutation dynamically based on whether classIdentifier is provided
+  var mutationParts = [
+    "mutation CreateFolder($repoId: String!, $name: String!, $parentPath: String!" + (folderClassId ? ", $classId: String!" : "") + ") {",
     "  createFolder(",
-    "    repositoryIdentifier: $repoId",
+    "    repositoryIdentifier: $repoId"
+  ];
+  
+  // Add classIdentifier at the top level if provided
+  if (folderClassId) {
+    mutationParts.push("    classIdentifier: $classId");
+  }
+  
+  mutationParts = mutationParts.concat([
     "    folderProperties: {",
     "      name: $name",
     "      parent: {",
@@ -306,7 +317,19 @@ function gqlCreateFolder(folderName, parentPath) {
     "    pathName",
     "  }",
     "}"
-  ].join("\n");
+  ]);
+  
+  var mutation = mutationParts.join("\n");
+  
+  var variables = {
+    repoId: repositoryId,
+    name: sanitizeName(folderName),
+    parentPath: parentPath
+  };
+  
+  if (folderClassId) {
+    variables.classId = folderClassId;
+  }
 
   return fetch(graphqlEndpoint, {
     method: "POST",
@@ -314,11 +337,7 @@ function gqlCreateFolder(folderName, parentPath) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: mutation,
-      variables: {
-        repoId: repositoryId,
-        name: sanitizeName(folderName),
-        parentPath: parentPath
-      }
+      variables: variables
     })
   })
   .then(function(res) { return res.json(); })
@@ -335,12 +354,20 @@ function gqlImportDocument(file, folderPath) {
   return new Promise(function(resolve, reject) {
     var mimeType = file.type || "application/octet-stream";
     
-    // Build GraphQL mutation with variable placeholder
-    var mutation = [
+    // Build GraphQL mutation dynamically based on whether classIdentifier is provided
+    var mutationParts = [
       "mutation ($contvar: String) {",
       "  createDocument(",
       "    repositoryIdentifier: \"" + repositoryId + "\"",
-      "    fileInFolderIdentifier: \"" + folderPath + "\"",
+      "    fileInFolderIdentifier: \"" + folderPath + "\""
+    ];
+    
+    // Add classIdentifier at the top level if provided
+    if (documentClassId) {
+      mutationParts.push("    classIdentifier: \"" + documentClassId + "\"");
+    }
+    
+    mutationParts = mutationParts.concat([
       "    documentProperties: {",
       "      name: \"" + sanitizeName(file.name) + "\"",
       "      contentElements: {",
@@ -359,7 +386,9 @@ function gqlImportDocument(file, folderPath) {
       "    name",
       "  }",
       "}"
-    ].join("\n");
+    ]);
+    
+    var mutation = mutationParts.join("\n");
 
     // Build multipart form data
     var formData = new FormData();

@@ -3,8 +3,7 @@
 // Simulates FileNet GraphQL API responses for preview mode
 // ============================================================
 
-(function() {
-  'use strict';
+
 
   // Mock data structure
   var mockData = {
@@ -204,11 +203,10 @@
         return this._eventData;
       },
       registerEventHandlingFunction: function(context, eventName, handler) {
-        console.log('[Event Registered]', eventName);
+        // Event registered
       },
       executeEventHandlingFunction: function(context, eventName, data) {
         this._eventData = data;
-        console.log('[Event Fired]', eventName, data);
       }
     };
   }
@@ -309,12 +307,6 @@
         );
         
         widgetFunction(mockContext);
-        
-        console.log('[Widget Initialized]', {
-          graphqlEndpoint: mockContext.getOption('graphqlEndpoint'),
-          repositoryIdentifier: mockContext.getOption('repositoryIdentifier'),
-          rootFolderPath: mockContext.getOption('rootFolderPath')
-        });
       })
       .catch(function(error) {
         console.error('Error loading widget:', error);
@@ -328,7 +320,3 @@
   } else {
     loadWidget();
   }
-
-})();
-
-// Made with Bob

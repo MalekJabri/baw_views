@@ -26,7 +26,7 @@
       </div>
     </aside>
 
-    <!-- Right Panel: Content List -->
+    <!-- Center Panel: Content List -->
     <main class="fnbrowser-content-panel" role="main" aria-label="Folder contents">
       
       <!-- Toolbar -->
@@ -145,6 +145,28 @@
       </div>
 
     </main>
+
+    <!-- Right Panel: Document Properties -->
+    <aside class="fnbrowser-properties-panel" role="complementary" aria-label="Document properties">
+      <div class="fnbrowser-properties-header">
+        <h3 class="fnbrowser-properties-title">Document Properties</h3>
+        <button class="fnbrowser-properties-close-btn"
+                type="button"
+                aria-label="Close properties panel"
+                title="Close">
+          <span class="fnbrowser-icon-close" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="fnbrowser-properties-content">
+        <div class="fnbrowser-properties-empty">
+          <div class="fnbrowser-properties-empty-icon" aria-hidden="true">📄</div>
+          <p class="fnbrowser-properties-empty-text">Select a document to view its properties</p>
+        </div>
+        <div class="fnbrowser-properties-details">
+          <!-- Document properties will be injected here by JavaScript -->
+        </div>
+      </div>
+    </aside>
 
   </div>
 
