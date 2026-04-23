@@ -92,9 +92,13 @@ Task list display and management widget.
 
 ### Prerequisites
 
-- **IBM BAW Environment**: Version 18.0+ (19.0.0.3+ recommended)
+- **IBM BAW Environment**: Recommended Version 24 or higher
 - **Process Designer Access**: Ability to import custom widgets
-- **Browser**: Chrome 85+, Firefox 90+, Safari 14+, or Edge 85+
+- **Browser**: Chrome, Firefox, Safari, or Edge.
+
+> **Disclaimer:** This lab assumes familiarity with IBM Business Automation Workflow (BAW). If you do not have enough experience to follow the steps, ask for help from an expert (or Bob), or refer to the official IBM documentation: https://www.ibm.com/docs/en/baw
+>
+> **Compatibility Note:** The provided `.twx` file is only compatible with IBM BAW 25.0.1.
 
 ### Installation Steps
 
