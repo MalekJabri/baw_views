@@ -276,6 +276,7 @@ function processDataTransferItems(items) {
 }
 
 // ── Add a file to the queue (with validation) ────────────────
+var self = this;
 function addFileToQueue(file, relativePath) {
   // Size check
   if (file.size > maxFileSizeMB * 1024 * 1024) {
@@ -287,7 +288,7 @@ function addFileToQueue(file, relativePath) {
     if (fileQueue[i].relativePath === relativePath) return;
   }
   fileQueue.push({ file: file, relativePath: relativePath, type: "file" });
-  this.executeEventHandlingFunction(this, "onFileAdded", { path: relativePath, size: file.size });
+  self.executeEventHandlingFunction(self, "onFileAdded", { path: relativePath, size: file.size });
 }
 
 // ── GraphQL: create a folder under a parent path ─────────────
@@ -588,7 +589,9 @@ browseBtn.addEventListener("click", function(e) {
 fileInput.addEventListener("change", function() {
   if (!fileInput.files || fileInput.files.length === 0) return;
   Array.prototype.forEach.call(fileInput.files, function(file) {
-    addFileToQueue(file, file.name);
+    // Use webkitRelativePath if available (folder selection), otherwise just file name
+    var relativePath = file.webkitRelativePath || file.name;
+    addFileToQueue(file, relativePath);
   });
   renderQueue();
   refreshImportButton();

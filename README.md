@@ -266,8 +266,7 @@ baw_views/
 ## 💻 Requirements
 
 ### IBM BAW Environment
-- **Minimum Version**: IBM Business Automation Workflow v18.0
-- **Recommended Version**: IBM Business Automation Workflow v19.0.0.3+
+- **Recommended Version**: IBM Business Automation Workflow v24.x 
 - **Process Designer**: Access to create and modify custom views
 
 ### Browser Support
@@ -428,7 +427,7 @@ Future enhancements planned:
 
 **Version**: 1.0.0  
 **Last Updated**: February 2026  
-**Compatibility**: IBM Business Automation Workflow v18.0+  
+**Compatibility**: IBM Business Automation Workflow v24.x 
 **Carbon Design System**: v11.x compatible
 
 ---

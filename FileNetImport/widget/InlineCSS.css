@@ -130,7 +130,12 @@
 
 /* Hidden file input */
 .fnimport-file-input {
-  display: none;
+  display: none !important;
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 /* ── Status Bar ─────────────────────────────────────────── */
