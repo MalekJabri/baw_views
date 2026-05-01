@@ -1,0 +1,48 @@
+#taskContainer {
+    width: 100%;
+    padding: 10px;
+}
+
+.task-item {
+    padding: 8px 12px;
+    margin: 4px 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.task-item.pending {
+    background-color: #f0f0f0;
+    border-left: 4px solid #999;
+}
+
+.task-item.processing {
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+}
+
+.task-item.complete {
+    background-color: #d4edda;
+    border-left: 4px solid #28a745;
+}
+
+.task-item.failed {
+    background-color: #f8d7da;
+    border-left: 4px solid #dc3545;
+}
+
+.task-label {
+    flex: 1;
+    font-size: 14px;
+}
+
+.task-status {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+}
+
+/* Made with Bob */

@@ -1,0 +1,63 @@
+{
+  "name": "MultiSelect",
+  "description": "Multi-select dropdown widget with search and bulk selection capabilities for IBM Business Automation Workflow",
+  "bindingType": {
+    "name": "SelectedItems",
+    "isList": true,
+    "classId": "String"
+  },
+  "configOptions": [
+    {
+      "name": "options",
+      "type": "List",
+      "label": "Options",
+      "description": "Array of available options with value and name properties",
+      "default": [],
+      "required": true
+    },
+    {
+      "name": "placeholder",
+      "type": "String",
+      "label": "Placeholder",
+      "description": "Placeholder text when no items are selected",
+      "default": "Select items..."
+    },
+    {
+      "name": "maxSelections",
+      "type": "Integer",
+      "label": "Max Selections",
+      "description": "Maximum number of items that can be selected (null = no limit)",
+      "default": null
+    },
+    {
+      "name": "showSearch",
+      "type": "Boolean",
+      "label": "Show Search",
+      "description": "Show/hide search input for filtering options",
+      "default": true
+    },
+    {
+      "name": "showActions",
+      "type": "Boolean",
+      "label": "Show Actions",
+      "description": "Show/hide Select All and Clear All buttons",
+      "default": true
+    },
+    {
+      "name": "disabled",
+      "type": "Boolean",
+      "label": "Disabled",
+      "description": "Disable the entire widget",
+      "default": false
+    },
+    {
+      "name": "helperText",
+      "type": "String",
+      "label": "Helper Text",
+      "description": "Helper text displayed below the widget",
+      "default": ""
+    }
+  ],
+  "businessObjects": [],
+  "changeFunction": true
+}

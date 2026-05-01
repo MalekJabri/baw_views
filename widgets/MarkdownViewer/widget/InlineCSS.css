@@ -1,0 +1,300 @@
+/* Markdown Viewer Widget Styles */
+
+.markdown-viewer-container {
+  width: 100%;
+  min-height: 50px;
+  padding: 16px;
+  background-color: var(--markdown-bg, #ffffff);
+  color: var(--markdown-text, #161616);
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.markdown-content {
+  max-width: 100%;
+}
+
+/* Theme: Default */
+.markdown-theme-default {
+  --markdown-bg: #ffffff;
+  --markdown-text: #161616;
+  --markdown-heading: #161616;
+  --markdown-link: #0f62fe;
+  --markdown-link-hover: #0043ce;
+  --markdown-code-bg: #f4f4f4;
+  --markdown-code-text: #c6c6c6;
+  --markdown-border: #e0e0e0;
+  --markdown-blockquote-bg: #f4f4f4;
+  --markdown-blockquote-border: #0f62fe;
+}
+
+/* Theme: Light */
+.markdown-theme-light {
+  --markdown-bg: #f4f4f4;
+  --markdown-text: #161616;
+  --markdown-heading: #161616;
+  --markdown-link: #0f62fe;
+  --markdown-link-hover: #0043ce;
+  --markdown-code-bg: #e0e0e0;
+  --markdown-code-text: #525252;
+  --markdown-border: #c6c6c6;
+  --markdown-blockquote-bg: #ffffff;
+  --markdown-blockquote-border: #0f62fe;
+}
+
+/* Theme: Dark */
+.markdown-theme-dark {
+  --markdown-bg: #161616;
+  --markdown-text: #f4f4f4;
+  --markdown-heading: #ffffff;
+  --markdown-link: #78a9ff;
+  --markdown-link-hover: #a6c8ff;
+  --markdown-code-bg: #262626;
+  --markdown-code-text: #c6c6c6;
+  --markdown-border: #393939;
+  --markdown-blockquote-bg: #262626;
+  --markdown-blockquote-border: #78a9ff;
+}
+
+/* Headers */
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  color: var(--markdown-heading);
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+
+.markdown-content h1 {
+  font-size: 32px;
+  border-bottom: 1px solid var(--markdown-border);
+  padding-bottom: 8px;
+}
+
+.markdown-content h2 {
+  font-size: 24px;
+  border-bottom: 1px solid var(--markdown-border);
+  padding-bottom: 8px;
+}
+
+.markdown-content h3 {
+  font-size: 20px;
+}
+
+.markdown-content h4 {
+  font-size: 16px;
+}
+
+.markdown-content h5 {
+  font-size: 14px;
+}
+
+.markdown-content h6 {
+  font-size: 12px;
+  color: #6f6f6f;
+}
+
+/* Paragraphs */
+.markdown-content p {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+/* Links */
+.markdown-content a {
+  color: var(--markdown-link);
+  text-decoration: none;
+  transition: color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+}
+
+.markdown-content a:hover {
+  color: var(--markdown-link-hover);
+  text-decoration: underline;
+}
+
+.markdown-content a:focus {
+  outline: 2px solid var(--markdown-link);
+  outline-offset: 2px;
+}
+
+/* Code */
+.markdown-content code {
+  background-color: var(--markdown-code-bg);
+  color: var(--markdown-code-text);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'IBM Plex Mono', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, monospace;
+  font-size: 85%;
+}
+
+.markdown-content pre {
+  background-color: var(--markdown-code-bg);
+  border: 1px solid var(--markdown-border);
+  border-radius: 4px;
+  padding: 16px;
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.markdown-content pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Lists */
+.markdown-content ul,
+.markdown-content ol {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding-left: 32px;
+}
+
+.markdown-content li {
+  margin-bottom: 4px;
+}
+
+.markdown-content ul ul,
+.markdown-content ul ol,
+.markdown-content ol ul,
+.markdown-content ol ol {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+/* Blockquotes */
+.markdown-content blockquote {
+  background-color: var(--markdown-blockquote-bg);
+  border-left: 4px solid var(--markdown-blockquote-border);
+  padding: 8px 16px;
+  margin: 0 0 16px 0;
+  color: var(--markdown-text);
+}
+
+.markdown-content blockquote p {
+  margin-bottom: 0;
+}
+
+/* Horizontal Rules */
+.markdown-content hr {
+  border: 0;
+  border-top: 1px solid var(--markdown-border);
+  margin: 24px 0;
+}
+
+/* Images */
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+/* Tables */
+.markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  display: block;
+}
+
+.markdown-content table thead {
+  background-color: var(--markdown-code-bg);
+}
+
+.markdown-content table th,
+.markdown-content table td {
+  border: 1px solid var(--markdown-border);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.markdown-content table th {
+  font-weight: 600;
+}
+
+.markdown-content table tr:nth-child(even) {
+  background-color: var(--markdown-code-bg);
+}
+
+/* Text Formatting */
+.markdown-content strong {
+  font-weight: 600;
+}
+
+.markdown-content em {
+  font-style: italic;
+}
+
+.markdown-content del {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* Line Numbers (optional feature) */
+.markdown-with-lines {
+  display: table;
+  width: 100%;
+}
+
+.markdown-line {
+  display: table-row;
+}
+
+.line-number {
+  display: table-cell;
+  text-align: right;
+  padding-right: 16px;
+  color: #8d8d8d;
+  user-select: none;
+  width: 40px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+}
+
+.line-content {
+  display: table-cell;
+  padding-left: 8px;
+}
+
+/* Accessibility */
+.markdown-viewer-container:focus {
+  outline: 2px solid var(--markdown-link);
+  outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .markdown-viewer-container {
+    padding: 12px;
+  }
+  
+  .markdown-content h1 {
+    font-size: 28px;
+  }
+  
+  .markdown-content h2 {
+    font-size: 22px;
+  }
+  
+  .markdown-content h3 {
+    font-size: 18px;
+  }
+  
+  .markdown-content pre {
+    padding: 12px;
+  }
+}
+
+/* Made with Bob */

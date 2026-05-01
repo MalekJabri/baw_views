@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamworks>
+    <managedAsset id="61.268711c5-e79e-43d4-8f8c-5d61149e74bb" name="BreadcrumbSnippet.js">
+        <lastModified>1777532143034</lastModified>
+        <lastModifiedBy>cpmanager</lastModifiedBy>
+        <tenantId isNull="true" />
+        <managedAssetId>61.268711c5-e79e-43d4-8f8c-5d61149e74bb</managedAssetId>
+        <assetUuid>940a1189-f8b7-4ae3-93b2-eade226181db</assetUuid>
+        <mimeType>application/javascript</mimeType>
+        <charEncoding isNull="true" />
+        <assetTypeCode>W</assetTypeCode>
+        <length>4386</length>
+        <localLastModification>1765927183634</localLastModification>
+        <description isNull="true" />
+        <isDocumentationFile>false</isDocumentationFile>
+        <guid>guid:268711c5-e79e-43d4-8f8c-5d61149e74bb</guid>
+        <versionId>1d5d2afe-111e-4954-8825-0ab4af435a60</versionId>
+    </managedAsset>
+</teamworks>
+

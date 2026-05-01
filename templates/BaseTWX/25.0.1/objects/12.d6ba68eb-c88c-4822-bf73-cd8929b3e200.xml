@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamworks>
+    <twClass id="12.d6ba68eb-c88c-4822-bf73-cd8929b3e200" name="ItmDef_668132032_d6ba68eb_c88c_4822_bf73_cd8929b3e200">
+        <lastModified>1777528365063</lastModified>
+        <lastModifiedBy>cpmanager</lastModifiedBy>
+        <tenantId isNull="true" />
+        <classId>12.d6ba68eb-c88c-4822-bf73-cd8929b3e200</classId>
+        <type>1</type>
+        <isSystem>false</isSystem>
+        <shared>false</shared>
+        <isShadow>false</isShadow>
+        <globalLifetime>false</globalLifetime>
+        <internalName isNull="true" />
+        <extensionType>3</extensionType>
+        <saveServiceRef isNull="true" />
+        <bpmn2Data isNull="true" />
+        <externalId>itm.12.d6ba68eb-c88c-4822-bf73-cd8929b3e200</externalId>
+        <dependencySummary>&lt;dependencySummary id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7214"&gt;
+  &lt;artifactReference id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7213"&gt;
+    &lt;refId&gt;/6023.b17db097-f9f7-429c-9db5-a67b10049ac0&lt;/refId&gt;
+    &lt;refType&gt;1&lt;/refType&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7212"&gt;
+      &lt;name&gt;externalId&lt;/name&gt;
+      &lt;value&gt;http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/xsd/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7211"&gt;
+      &lt;name&gt;mimeType&lt;/name&gt;
+      &lt;value&gt;xsd&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+  &lt;/artifactReference&gt;
+&lt;/dependencySummary&gt;</dependencySummary>
+        <jsonData>{"attributeFormDefault":"unqualified","elementFormDefault":"unqualified","targetNamespace":"http:\/\/www.ibm.com\/xmlns\/prod\/bpm\/bpmn\/ext\/externalservice\/swagger\/xsd\/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd","complexType":[{"annotation":{"documentation":[{}],"appinfo":[{"shared":[false],"advancedProperties":[{"namespace":"http:\/\/www.ibm.com\/xmlns\/prod\/bpm\/bpmn\/ext\/externalservice\/swagger\/xsd\/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd","typeName":"Import_BreadcrumbItem_json_operationResponse"}],"shadow":[false],"allowAdditionalProperties":[false]}]},"sequence":{},"name":"ItmDef_668132032_d6ba68eb_c88c_4822_bf73_cd8929b3e200"}],"id":"_12.d6ba68eb-c88c-4822-bf73-cd8929b3e200"}</jsonData>
+        <dataName isNull="true" />
+        <allowAdditionalProperties>false</allowAdditionalProperties>
+        <description isNull="true" />
+        <guid>guid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-726f</guid>
+        <versionId>fabd54f1-45e0-4242-897b-d6f61efd6170</versionId>
+        <definition>
+            <annotation type="com.lombardisoftware.core.xml.XMLTypeAnnotation" version="2.0">
+                <exclude isNull="true" />
+                <anonymous isNull="true" />
+                <local isNull="true" />
+                <name>Import_BreadcrumbItem_json_operationResponse</name>
+                <namespace>http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/xsd/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd</namespace>
+                <elementName isNull="true" />
+                <elementNamespace isNull="true" />
+                <protoTypeName isNull="true" />
+                <baseTypeName isNull="true" />
+                <specialType isNull="true" />
+                <contentTypeVariety isNull="true" />
+                <xscRef isNull="true" />
+            </annotation>
+        </definition>
+    </twClass>
+</teamworks>
+

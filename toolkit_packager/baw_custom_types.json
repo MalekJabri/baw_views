@@ -1,0 +1,36 @@
+{
+  "description": "Custom Business Object Type Mappings - Tracks custom types and their BAW class IDs to enable reuse across widgets",
+  "version": "1.0.0",
+  "custom_types": {
+    "StepItem": {
+      "classId": "/12.cc351e20-a6a4-45e2-bab8-698faaf34d85",
+      "description": "Step item for Stepper widget",
+      "widgets": [
+        "Stepper"
+      ],
+      "created": "2026-04-30T16:03:00Z"
+    },
+    "BreadcrumbItem": {
+      "classId": "/12.a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "description": "Breadcrumb item for navigation",
+      "widgets": [
+        "Breadcrumb"
+      ],
+      "created": "2026-04-30T16:03:00Z"
+    },
+    "BusinessObject": {
+      "classId": "/12.9f29bdd1-51fa-4451-96e1-30fc8397ad69",
+      "description": "",
+      "widgets": [
+        "TasksList"
+      ],
+      "created": "2026-05-01T06:09:55.822025Z"
+    }
+  },
+  "notes": {
+    "usage": "This file tracks custom business objects to prevent duplicates and enable sharing across widgets",
+    "classId_format": "Custom types use /12.{guid} format where the GUID is generated once and reused",
+    "widgets": "List of widgets that use this custom type",
+    "auto_update": "This file is automatically updated when new custom types are generated"
+  }
+}

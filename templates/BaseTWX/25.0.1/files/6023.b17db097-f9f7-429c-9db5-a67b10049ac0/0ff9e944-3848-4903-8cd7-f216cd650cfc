@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/xsd/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd" xmlns:ibmbpm="http://lombardi.ibm.com/schema/" targetNamespace="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/xsd/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd">
+  <xsd:element name="Import_BreadcrumbItem_json_operationRequest" type="Import_BreadcrumbItem_json_operationRequest"/>
+  <xsd:element name="Import_BreadcrumbItem_json_operationResponse" type="Import_BreadcrumbItem_json_operationResponse"/>
+  <xsd:complexType name="dummy_input">
+    <xsd:annotation>
+      <xsd:documentation>Input schema for the operation dummy</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="BreadcrumbItem" type="BreadcrumbItem">
+        <xsd:annotation optional="true"/>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="BreadcrumbItem">
+    <xsd:annotation>
+      <xsd:documentation>A single breadcrumb item in the navigation path</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="label" type="xsd:string">
+        <xsd:annotation optional="true">
+          <xsd:documentation>Display text for the breadcrumb item</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="text" type="xsd:string">
+        <xsd:annotation optional="true">
+          <xsd:documentation>Alternative to 'label' - display text for the breadcrumb item</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element default="#" minOccurs="0" name="href" type="xsd:string">
+        <xsd:annotation optional="true">
+          <xsd:documentation>URL or route for the breadcrumb link</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="status" type="xsd:string">
+        <xsd:annotation optional="true">
+          <xsd:documentation>Status of the Item: completed, working, notyetstarted </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Import_BreadcrumbItem_json_operationRequest">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="BreadcrumbItem" type="BreadcrumbItem">
+        <xsd:annotation optional="true"/>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Import_BreadcrumbItem_json_operationResponse">
+    <xsd:sequence/>
+  </xsd:complexType>
+</xsd:schema>

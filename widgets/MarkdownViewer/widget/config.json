@@ -1,0 +1,41 @@
+{
+  "name": "MarkdownViewer",
+  "description": "A widget for rendering markdown-formatted text into styled HTML content with support for headers, lists, code blocks, tables, and more",
+  "bindingType": {
+    "name": "MarkdownText",
+    "isList": false,
+    "classId": "String"
+  },
+  "configOptions": [
+    {
+      "name": "enableSanitization",
+      "type": "Boolean",
+      "label": "Enable HTML Sanitization",
+      "description": "Enable HTML sanitization to prevent XSS attacks. When enabled, HTML tags in the markdown will be escaped",
+      "default": true
+    },
+    {
+      "name": "showLineNumbers",
+      "type": "Boolean",
+      "label": "Show Line Numbers",
+      "description": "Display line numbers alongside the rendered content. Useful for code documentation or technical content",
+      "default": false
+    },
+    {
+      "name": "theme",
+      "type": "String",
+      "label": "Theme",
+      "description": "Visual theme for the markdown viewer (default, light, or dark)",
+      "default": "default"
+    },
+    {
+      "name": "onContentChange",
+      "type": "Event",
+      "label": "On Content Change",
+      "description": "Triggered when the markdown content is rendered or updated",
+      "parameterName": "content"
+    }
+  ],
+  "businessObjects": [],
+  "changeFunction": true
+}

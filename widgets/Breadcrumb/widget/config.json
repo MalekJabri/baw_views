@@ -1,0 +1,39 @@
+{
+  "name": "Breadcrumb",
+  "description": "Horizontal breadcrumb navigation widget for IBM Business Automation Workflow",
+  "bindingType": {
+    "name": "BreadcrumbData",
+    "isList": true,
+    "classId": "String"
+  },
+  "configOptions": [
+    {
+      "name": "showNumbering",
+      "type": "Boolean",
+      "label": "Show Numbering",
+      "description": "Display step numbers before breadcrumb labels (e.g., '1. Home')",
+      "default": true
+    },
+    {
+      "name": "maxItems",
+      "type": "Integer",
+      "label": "Max Items",
+      "description": "Maximum number of breadcrumb items to display (0 = no limit)",
+      "default": 0
+    },
+    {
+      "name": "onClick",
+      "type": "Event",
+      "label": "On Click",
+      "description": "Event fired when a breadcrumb item is clicked",
+      "parameterName": "data"
+    }
+  ],
+  "businessObjects": [
+    {
+      "name": "BreadcrumbItem",
+      "file": "BreadcrumbItem.json"
+    }
+  ],
+  "changeFunction": false
+}

@@ -1,0 +1,12 @@
+{
+  "label": {
+    "type": "String",
+    "label": "Task Label",
+    "description": "The task label or description"
+  },
+  "status": {
+    "type": "String",
+    "label": "Status",
+    "description": "The current status of the task: 'pending', 'processing', 'complete', or 'failed'"
+  }
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamworks>
+    <eSArtifact id="6023.b17db097-f9f7-429c-9db5-a67b10049ac0" name="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice.xsd">
+        <lastModified>1777528365005</lastModified>
+        <lastModifiedBy>cpmanager</lastModifiedBy>
+        <tenantId isNull="true" />
+        <esArtifactId>6023.b17db097-f9f7-429c-9db5-a67b10049ac0</esArtifactId>
+        <ESArtifactDataUUID>0ff9e944-3848-4903-8cd7-f216cd650cfc</ESArtifactDataUUID>
+        <mediaType>application/xml</mediaType>
+        <charEncoding isNull="true" />
+        <length>2645</length>
+        <digest>unknown</digest>
+        <externalId>http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/xsd/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd</externalId>
+        <description isNull="true" />
+        <guid>guid:065edc56-7770-4095-989e-0aa5e9fe1af4</guid>
+        <versionId>f63a6af8-2fec-4aea-b06d-1d6217da9dd8</versionId>
+        <createdByUserId>2048.2</createdByUserId>
+        <createdOn>1777528365005</createdOn>
+    </eSArtifact>
+</teamworks>
+

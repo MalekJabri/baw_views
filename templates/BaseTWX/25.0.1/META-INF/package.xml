@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:package buildId="BPM8600-20251126-121712" buildVersion="8.6.10" buildDescription="IBM Business Process Manager V8.6.10.25010 - 20251126_1440 - BPM8600-20251126-121712" fixPack="25010" containsECM="false" containsBPMN2="false" xmlns:p="http://lombardisoftware.com/schema/teamworks/7.0.0/package.xsd">
+    <target>
+        <project id="2066.91beba32-f01f-45a0-9952-da866f54afe6" name="Custom Widget" description="" shortName="CW" isToolkit="true" isHidden="false" isSystem="false" solutionID="" solutionServerName="" solutionPrefix="" type="" isTemplate="false" isIconSet="false" caseDisplayName=""/>
+        <branch id="2063.71237652-c729-4857-afe9-498c68376c60" name="Main" acronym="Main" description=""/>
+        <snapshot id="2064.960ed891-137d-4537-a66f-ad81b5f230db" name="2" acronym="2" originalCreationDate="2026-04-30T06:56:13.051Z" description=""/>
+    </target>
+    <dependencies>
+        <dependency rank="0" isManaged="false" id="2069.0594de47-b0cd-452b-a221-95dc16247e72">
+            <project id="2066.1b351583-e5cb-43b7-baee-340a63130ea7" name="System Data" shortName="TWSYS" isToolkit="true" isHidden="false" isSystem="true"/>
+            <branch id="2063.0798815e-0346-4ef4-8946-ab4301c9f340" name="Main"/>
+            <snapshot id="2064.1080ded6-d153-4654-947c-2d16fce170db" name="8.6.0.0_TC" originalCreationDate="2015-08-25T00:00:00.000Z"/>
+        </dependency>
+        <dependency rank="1" isManaged="false" id="2069.1d731831-14b3-4e2f-915c-5b4f8fb641ce">
+            <project id="2066.ec5973da-aebe-40f6-aa02-a77962288f52" name="UI Toolkit" shortName="SYSBPMUI" isToolkit="true" isHidden="false" isSystem="true"/>
+            <branch id="2063.83ee2bb2-72b4-4a4d-b8ae-37ecd983c05e" name="Main"/>
+            <snapshot id="2064.304ac881-16c3-47d2-97d5-6e4c4a893177" name="8.6.0.0" originalCreationDate="2017-05-24T23:23:53.574Z"/>
+        </dependency>
+    </dependencies>
+    <objects>
+        <object id="1.00b6de5e-07d7-4b77-9cf3-3c16a8674e92" versionId="f20edeb3-b6e4-4b84-86b4-4e5d487a190e" name="Deployment service flow" type="process"/>
+        <object id="1.27eaac56-0fe7-4286-b7fe-e952287d3c24" versionId="9da215c7-673e-464c-968e-d2c7967d493a" name="BreadcrumbItem.json" type="process"/>
+        <object id="1.92e23161-c001-40b3-afa3-406e201d705f" versionId="163c3e1b-4809-47ab-b78d-4b86ca675b92" name="Demo" type="process"/>
+        <object id="12.458799b8-f858-4758-bc01-eb9efcab6d1e" versionId="414e133c-29ce-435f-84d9-ea841a1902bd" name="BreadcrumbItem" type="twClass"/>
+        <object id="12.45f12ab0-bcc9-4b10-a30d-cef2f43ef3be" versionId="5868a196-1e29-4ede-868f-15ebb8a65bcd" name="ItmDef_89118768_45f12ab0_bcc9_4b10_a30d_cef2f43ef3be" type="twClass"/>
+        <object id="12.67644eab-0982-41e8-951b-753ac71c3f41" versionId="923f9b63-52a9-47e3-ba06-6b4681f2c115" name="Msg_2070506418_67644eab_0982_41e8_951b_753ac71c3f41" type="twClass"/>
+        <object id="12.a7ff63fb-56cf-44d6-ba2e-1a3842724a54" versionId="4773ad35-8122-4fac-ac7b-bf3036b2fea1" name="Msg_1499032576_a7ff63fb_56cf_44d6_ba2e_1a3842724a54" type="twClass"/>
+        <object id="12.d6ba68eb-c88c-4822-bf73-cd8929b3e200" versionId="fabd54f1-45e0-4242-897b-d6f61efd6170" name="ItmDef_668132032_d6ba68eb_c88c_4822_bf73_cd8929b3e200" type="twClass"/>
+        <object id="61.268711c5-e79e-43d4-8f8c-5d61149e74bb" versionId="1d5d2afe-111e-4954-8825-0ab4af435a60" name="BreadcrumbSnippet.js" type="managedAsset"/>
+        <object id="61.7d9f1019-7041-49a0-90d4-bb7c9fc9ffa3" versionId="0c568f79-3ca3-4d9f-b209-34cd073de715" name="Breadcrumb.html" type="managedAsset"/>
+        <object id="61.b730f955-8d0e-40d2-9149-7bb5c3590736" versionId="ada06873-04fc-46cf-aee0-401caaa76ce2" name="993e03e9-2574-40fc-807c-65b06be378fd.zip" type="managedAsset"/>
+        <object id="62.0d0540dd-78d1-4c79-9645-ef44fdc68496" versionId="52fe67fd-fdcf-4694-967f-299affe554e0" name="Environment Variables" type="environmentVariableSet"/>
+        <object id="62.8eecea8b-ca17-4a58-b21a-08633f4b467a" versionId="79260785-13d5-4c17-ba78-f75f5024002c" name="$$REST$BINDING$1.27eaac56-0fe7-4286-b7fe-e952287d3c24" type="environmentVariableSet"/>
+        <object id="63.ac589b49-7ba3-49fa-8d2e-0be44112b7ca" versionId="b80c6393-0c4d-4f33-abf5-e1e4c06f54e4" name="Toolkit Settings" type="projectDefaults"/>
+        <object id="64.aa82916a-4d0c-40f6-ab5f-99e7039bbc8a" versionId="ba003172-bc31-439d-bed5-957337a46fba" name="Breadcrumb" type="coachView"/>
+        <object id="6023.55bf0f38-6528-464d-93e2-89b3113df776" versionId="d4e0bdec-0ffa-4f12-a18a-ab72b825a4db" name="file:/opt/ibm/wlp/output/defaultServer/temp/tmp_a8a5ea16-d367-" type="eSArtifact"/>
+        <object id="6023.b17db097-f9f7-429c-9db5-a67b10049ac0" versionId="f63a6af8-2fec-4aea-b06d-1d6217da9dd8" name="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice.xsd" type="eSArtifact"/>
+    </objects>
+    <files>
+        <file path="940a1189-f8b7-4ae3-93b2-eade226181db" id="61.268711c5-e79e-43d4-8f8c-5d61149e74bb"/>
+        <file path="9c7caba7-854d-4ddc-900b-3247e29d289f" id="61.7d9f1019-7041-49a0-90d4-bb7c9fc9ffa3"/>
+        <file path="8f6ff6bf-c04c-4bc8-b71b-2e219714f6a7" id="61.b730f955-8d0e-40d2-9149-7bb5c3590736"/>
+        <file path="670a23d1-a4b8-4e8b-bfec-08f486d48d1e" id="6023.55bf0f38-6528-464d-93e2-89b3113df776"/>
+        <file path="0ff9e944-3848-4903-8cd7-f216cd650cfc" id="6023.b17db097-f9f7-429c-9db5-a67b10049ac0"/>
+    </files>
+    <migrationPolicies/>
+</p:package>

@@ -1,0 +1,220 @@
+<!--
+ #BEGIN COPYRIGHT 
+
+ Licensed Materials - Property of IBM
+ 5725-C95
+ (C) Copyright IBM Corporation 2026. All Rights Reserved.
+ US Government Users Restricted Rights- Use, duplication or disclosure
+ restricted by GSA ADP Schedule Contract with IBM Corp.
+
+ #END COPYRIGHT 
+-->
+
+<style>
+.markdown-heading {
+    padding-bottom: 4px;
+}
+
+/* Markdown Viewer Widget Styles */
+.markdown-viewer-container {
+  width: 100%;
+  min-height: 50px;
+  padding: 16px;
+  background-color: var(--markdown-bg, #ffffff);
+  color: var(--markdown-text, #161616);
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.markdown-content {
+  max-width: 100%;
+}
+
+/* Theme: Default */
+.markdown-theme-default {
+  --markdown-bg: #ffffff;
+  --markdown-text: #161616;
+  --markdown-heading: #161616;
+  --markdown-link: #0f62fe;
+  --markdown-link-hover: #0043ce;
+  --markdown-code-bg: #f4f4f4;
+  --markdown-code-text: #525252;
+  --markdown-border: #e0e0e0;
+  --markdown-blockquote-bg: #f4f4f4;
+  --markdown-blockquote-border: #0f62fe;
+}
+
+/* Headers */
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  color: var(--markdown-heading);
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+
+.markdown-content h1 {
+  font-size: 32px;
+  border-bottom: 1px solid var(--markdown-border);
+  padding-bottom: 8px;
+}
+
+.markdown-content h2 {
+  font-size: 24px;
+  border-bottom: 1px solid var(--markdown-border);
+  padding-bottom: 8px;
+}
+
+.markdown-content h3 {
+  font-size: 20px;
+}
+
+.markdown-content h4 {
+  font-size: 16px;
+}
+
+.markdown-content h5 {
+  font-size: 14px;
+}
+
+.markdown-content h6 {
+  font-size: 12px;
+  color: #6f6f6f;
+}
+
+/* Paragraphs */
+.markdown-content p {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+/* Links */
+.markdown-content a {
+  color: var(--markdown-link);
+  text-decoration: none;
+}
+
+.markdown-content a:hover {
+  color: var(--markdown-link-hover);
+  text-decoration: underline;
+}
+
+/* Code */
+.markdown-content code {
+  background-color: var(--markdown-code-bg);
+  color: var(--markdown-code-text);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'IBM Plex Mono', 'Menlo', monospace;
+  font-size: 85%;
+}
+
+.markdown-content pre {
+  background-color: var(--markdown-code-bg);
+  border: 1px solid var(--markdown-border);
+  border-radius: 4px;
+  padding: 16px;
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.markdown-content pre code {
+  background-color: transparent;
+  padding: 0;
+  font-size: 12px;
+}
+
+/* Lists */
+.markdown-content ul,
+.markdown-content ol {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding-left: 32px;
+}
+
+.markdown-content li {
+  margin-bottom: 4px;
+}
+
+/* Blockquotes */
+.markdown-content blockquote {
+  background-color: var(--markdown-blockquote-bg);
+  border-left: 4px solid var(--markdown-blockquote-border);
+  padding: 8px 16px;
+  margin: 0 0 16px 0;
+}
+
+/* Horizontal Rules */
+.markdown-content hr {
+  border: 0;
+  border-top: 1px solid var(--markdown-border);
+  margin: 24px 0;
+}
+
+/* Tables */
+.markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.markdown-content table th,
+.markdown-content table td {
+  border: 1px solid var(--markdown-border);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.markdown-content table th {
+  font-weight: 600;
+  background-color: var(--markdown-code-bg);
+}
+
+/* Text Formatting */
+.markdown-content strong {
+  font-weight: 600;
+}
+
+.markdown-content em {
+  font-style: italic;
+}
+
+.markdown-content del {
+  text-decoration: line-through;
+}
+</style>
+
+<div class="SPARKPanel panel">
+	<div class="markdown-heading">
+		<span class="markdown-title"></span>		
+	</div>
+	<div class="markdown-body">
+		<div class="markdown-viewer-container markdown-theme-default" role="article" aria-label="Markdown content viewer">
+			<div class="DesignContentBox layoutSec valignMiddle hChild">
+				<div class="DesignContentBox markdown-content">
+					<h1>Markdown Viewer</h1>
+					<p>This widget renders <strong>markdown-formatted</strong> text into styled HTML.</p>
+					<h2>Features</h2>
+					<ul>
+						<li>Headers and text formatting</li>
+						<li>Lists and tables</li>
+						<li>Code blocks and inline code</li>
+						<li>Links and images</li>
+					</ul>
+					<blockquote>
+						<p>Bind this widget to a string variable containing markdown text.</p>
+					</blockquote>
+					<p>Example: <code>tw.local.markdownText = "# Hello World";</code></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

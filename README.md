@@ -95,6 +95,7 @@ Task list display and management widget.
 - **IBM BAW Environment**: Recommended Version 24 or higher
 - **Process Designer Access**: Ability to import custom widgets
 - **Browser**: Chrome, Firefox, Safari, or Edge.
+- **Python 3.7+**: For widget packaging (optional)
 
 > **Disclaimer:** This lab assumes familiarity with IBM Business Automation Workflow (BAW). If you do not have enough experience to follow the steps, ask for help from an expert (or Bob), or refer to the official IBM documentation: https://www.ibm.com/docs/en/baw
 >
@@ -102,7 +103,25 @@ Task list display and management widget.
 
 ### Installation Steps
 
-#### Method 1: Import Individual Widgets
+#### Method 1: Import Pre-packaged TWX File (Recommended)
+
+1. **Generate TWX Package**
+   ```bash
+   # Package all widgets or specific ones
+   python3 package_multiple_widgets.py
+   ```
+
+2. **Import into BAW**
+   - Open IBM Business Automation Workflow Process Designer
+   - Go to **File** → **Import**
+   - Select the generated TWX file from `output/` directory
+   - Follow the import wizard
+
+3. **Verify Installation**
+   - Check that widgets appear in your toolkit
+   - Test widgets in a sample coach
+
+#### Method 2: Import Individual Widgets
 
 1. **Navigate to Process Designer**
    - Open IBM Business Automation Workflow Process Designer
@@ -416,16 +435,101 @@ limitations under the License.
 
 ---
 
+## 🛠️ Creating New Widgets
+
+### Quick Start with Widget Template Generator
+
+Use the provided script to create a new widget with the correct structure:
+
+```bash
+# Create a new widget
+python3 create_widget_template.py MyWidget "Widget description"
+
+# Example
+python3 create_widget_template.py StatusBadge "A badge widget for status display"
+```
+
+This will generate:
+- Complete widget directory structure
+- All required files (Layout.html, InlineCSS.css, inlineJavascript.js, openapi.json)
+- Optional documentation files (datamodel.md, eventHandler.md)
+- Preview files for BAW designer
+- Comprehensive README.md
+
+### Widget Structure Requirements
+
+All widgets MUST follow this structure for toolkit_packager compatibility:
+
+```
+widgets/[WidgetName]/
+├── widget/                          # MUST be lowercase
+│   ├── Layout.html                  # REQUIRED
+│   ├── InlineCSS.css                # REQUIRED
+│   ├── inlineJavascript.js          # REQUIRED
+│   ├── openapi.json                 # REQUIRED (OpenAPI 3.0 schema)
+│   ├── datamodel.md                 # OPTIONAL
+│   └── eventHandler.md              # OPTIONAL
+├── AdvancePreview/                  # OPTIONAL
+│   ├── [WidgetName].html
+│   └── [WidgetName].js
+└── README.md                        # RECOMMENDED
+```
+
+### Packaging Your Widget
+
+1. **Add to Package List**
+   Edit `package_multiple_widgets.py`:
+   ```python
+   WIDGET_NAMES = ["DateOutput", "ProcessCircle", "Stepper", "TasksList", "YourWidget"]
+   ```
+
+2. **Generate TWX Package**
+   ```bash
+   python3 package_multiple_widgets.py
+   ```
+
+3. **Import into BAW**
+   - Find the TWX file in `output/` directory
+   - Import via BAW Process Designer
+
+### Widget Development Workflow
+
+1. **Create Widget Structure**
+   ```bash
+   python3 create_widget_template.py MyWidget "Description"
+   ```
+
+2. **Develop Widget**
+   - Edit `widgets/MyWidget/widget/Layout.html`
+   - Style in `widgets/MyWidget/widget/InlineCSS.css`
+   - Add logic in `widgets/MyWidget/widget/inlineJavascript.js`
+   - Define data model in `widgets/MyWidget/widget/openapi.json`
+
+3. **Test Locally**
+   - Open `widgets/MyWidget/AdvancePreview/MyWidget.html` in browser
+   - Test with sample data
+
+4. **Package and Deploy**
+   ```bash
+   python3 package_multiple_widgets.py
+   ```
+
+5. **Import and Test in BAW**
+   - Import TWX file
+   - Add widget to a coach
+   - Test with real data
+
 ## 🎯 Roadmap
 
 Future enhancements planned:
+- [x] Widget generator tool (create_widget_template.py)
+- [x] Automated packaging system (toolkit_packager)
 - [ ] Additional widgets (DataTable, Timeline, Notification)
 - [ ] Enhanced accessibility features
 - [ ] More localization options
 - [ ] Performance optimizations
 - [ ] Additional Carbon Design System components
 - [ ] Automated testing suite
-- [ ] Widget generator tool
 
 ---
 

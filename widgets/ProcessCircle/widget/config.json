@@ -1,0 +1,41 @@
+{
+  "name": "ProcessCircle",
+  "description": "Circular progress indicator widget for displaying percentage or value progress in IBM Business Automation Workflow",
+  "bindingType": {
+    "name": "ProgressValue",
+    "isList": false,
+    "classId": "Integer"
+  },
+  "configOptions": [
+    {
+      "name": "MinValue",
+      "type": "Integer",
+      "label": "Minimum Value",
+      "description": "Minimum value for the progress range",
+      "default": 0
+    },
+    {
+      "name": "MaxValue",
+      "type": "Integer",
+      "label": "Maximum Value",
+      "description": "Maximum value for the progress range",
+      "default": 100
+    },
+    {
+      "name": "postParameter",
+      "type": "String",
+      "label": "Post Parameter",
+      "description": "Parameter suffix to display after the value (e.g., '%', 'pts', 'items')",
+      "default": "%"
+    },
+    {
+      "name": "defaultcolor",
+      "type": "String",
+      "label": "Default Color",
+      "description": "Default color for the progress circle (CSS color value)",
+      "default": "#0f62fe"
+    }
+  ],
+  "businessObjects": [],
+  "changeFunction": true
+}

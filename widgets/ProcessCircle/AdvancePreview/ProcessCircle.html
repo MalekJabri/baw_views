@@ -1,0 +1,64 @@
+<style>
+  @keyframes growProgressBar {
+            0%, 33% {
+                --pgPercentage: 0;
+            }
+            100% {
+                --pgPercentage: calc((var(--value) - var(--min)) / (var(--max) - var(--min)) * 100);
+            }
+        }
+
+        @property --pgPercentage {
+            syntax: '<number>';
+            inherits: true;
+            initial-value: 0;
+        }
+
+        div[role="progressbar1"] {
+            --size: 2rem;
+            --fg: green;
+            --bg: lightgrey;
+            --min: 0;
+            --max: 100;
+            --value: 0;
+            --pgPercentage: 0;
+            --percentageDisplay: calc((var(--value) - var(--min)) / (var(--max) - var(--min)) * 100);
+            animation: growProgressBar 3s 1 forwards;
+            width: 12rem;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: grid;
+            background: radial-gradient(farthest-side, #0000 calc(100% - var(--size)), var(--bg) 0);
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: calc(var(--size));
+            color: var(--fg);
+        }
+
+        div[role="progressbar1"]::after {
+            content: "";
+            grid-area: 1/1;
+            border-radius: 50%;
+            padding: var(--size);
+            background:
+                /* if p > 40% blue */
+                linear-gradient(red 0 0) 0/calc((var(--pgPercentage) - 70)*1px) 100%,
+                /* else if p > 20 red */
+                linear-gradient(orange 0 0) 0/calc((var(--pgPercentage) - 50)*1px) 100%,
+                /* else green */
+                green;
+            --_m:
+                conic-gradient(#000 calc(var(--pgPercentage) * 1%), #0000 0),
+                linear-gradient(#000 0 0) content-box;
+            -webkit-mask: var(--_m);
+                    mask: var(--_m);
+            -webkit-mask-composite: source-out;
+                    mask-composite: subtract;
+        }
+
+        div[role="progressbar1"]::before {
+            content: attr(aria-valuenow) attr(data-post);
+            grid-area: 1/1;
+            margin: auto;
+        }
+
+        </style>
