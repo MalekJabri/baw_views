@@ -1,0 +1,83 @@
+{
+  "name": "FileNetImport",
+  "description": "Drag-and-drop document and folder import widget for IBM FileNet Content Engine via GraphQL, used in IBM Business Automation Workflow",
+  "bindingType": {
+    "name": "ImportResult",
+    "isList": false,
+    "classId": "String"
+  },
+  "configOptions": [
+    {
+      "name": "graphqlEndpoint",
+      "type": "String",
+      "label": "GraphQL Endpoint",
+      "description": "Full URL of the FileNet Content Engine GraphQL API endpoint",
+      "required": true
+    },
+    {
+      "name": "repositoryIdentifier",
+      "type": "String",
+      "label": "Repository Identifier",
+      "description": "FileNet repository identifier (e.g., 'OS1')",
+      "default": "OS1"
+    },
+    {
+      "name": "parentFolderPath",
+      "type": "String",
+      "label": "Parent Folder Path",
+      "description": "FileNet folder path where files will be imported",
+      "default": "/"
+    },
+    {
+      "name": "maxFileSizeMB",
+      "type": "Integer",
+      "label": "Max File Size (MB)",
+      "description": "Maximum allowed file size in megabytes",
+      "default": 100
+    },
+    {
+      "name": "allowedMimeTypes",
+      "type": "String",
+      "label": "Allowed MIME Types",
+      "description": "Comma-separated list of accepted MIME types (empty = all types)",
+      "default": ""
+    },
+    {
+      "name": "documentClassIdentifier",
+      "type": "String",
+      "label": "Document Class Identifier",
+      "description": "Optional FileNet document class identifier (symbolic name)",
+      "default": ""
+    },
+    {
+      "name": "folderClassIdentifier",
+      "type": "String",
+      "label": "Folder Class Identifier",
+      "description": "Optional FileNet folder class identifier (symbolic name)",
+      "default": ""
+    },
+    {
+      "name": "onImportComplete",
+      "type": "Event",
+      "label": "On Import Complete",
+      "description": "Event fired when import completes successfully",
+      "parameterName": "importResult"
+    },
+    {
+      "name": "onImportError",
+      "type": "Event",
+      "label": "On Import Error",
+      "description": "Event fired when import encounters errors",
+      "parameterName": "importResult"
+    },
+    {
+      "name": "onFileAdded",
+      "type": "Event",
+      "label": "On File Added",
+      "description": "Event fired when a file is added to the import queue",
+      "parameterName": "fileInfo"
+    }
+  ],
+  "businessObjects": [],
+  "changeFunction": false
+}

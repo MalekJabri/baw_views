@@ -1,0 +1,90 @@
+{
+  "name": "FileNetBrowser",
+  "description": "Folder and document browser widget for IBM FileNet Content Engine via GraphQL, used in IBM Business Automation Workflow",
+  "bindingType": {
+    "name": "SelectedItem",
+    "isList": false,
+    "classId": "String"
+  },
+  "configOptions": [
+    {
+      "name": "graphqlEndpoint",
+      "type": "String",
+      "label": "GraphQL Endpoint",
+      "description": "Full URL of the FileNet Content Engine GraphQL API endpoint",
+      "required": true
+    },
+    {
+      "name": "repositoryIdentifier",
+      "type": "String",
+      "label": "Repository Identifier",
+      "description": "FileNet repository identifier (e.g., 'OS1')",
+      "required": true
+    },
+    {
+      "name": "rootFolderPath",
+      "type": "String",
+      "label": "Root Folder Path",
+      "description": "FileNet folder path to start browsing from",
+      "default": "/"
+    },
+    {
+      "name": "showDocumentDetails",
+      "type": "Boolean",
+      "label": "Show Document Details",
+      "description": "Show document version and metadata details in the list",
+      "default": true
+    },
+    {
+      "name": "allowMultiSelect",
+      "type": "Boolean",
+      "label": "Allow Multi-Select",
+      "description": "Allow multiple items to be selected at once",
+      "default": false
+    },
+    {
+      "name": "showBreadcrumb",
+      "type": "Boolean",
+      "label": "Show Breadcrumb",
+      "description": "Show breadcrumb navigation at the top",
+      "default": true
+    },
+    {
+      "name": "pageSize",
+      "type": "Integer",
+      "label": "Page Size",
+      "description": "Number of documents to display per page (0 = no limit)",
+      "default": 50
+    },
+    {
+      "name": "showPagination",
+      "type": "Boolean",
+      "label": "Show Pagination",
+      "description": "Show pagination controls when there are more documents than pageSize",
+      "default": true
+    },
+    {
+      "name": "onFolderSelected",
+      "type": "Event",
+      "label": "On Folder Selected",
+      "description": "Event fired when a folder is selected",
+      "parameterName": "selectionInfo"
+    },
+    {
+      "name": "onDocumentSelected",
+      "type": "Event",
+      "label": "On Document Selected",
+      "description": "Event fired when a document is selected",
+      "parameterName": "selectionInfo"
+    },
+    {
+      "name": "onNavigate",
+      "type": "Event",
+      "label": "On Navigate",
+      "description": "Event fired when navigating to a different folder",
+      "parameterName": "pathName"
+    }
+  ],
+  "businessObjects": [],
+  "changeFunction": false
+}

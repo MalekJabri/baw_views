@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamworks>
+    <coachView id="64.aa82916a-4d0c-40f6-ab5f-99e7039bbc8a" name="Breadcrumb">
+        <lastModified>1777532144289</lastModified>
+        <lastModifiedBy>cpmanager</lastModifiedBy>
+        <tenantId isNull="true" />
+        <coachViewId>64.aa82916a-4d0c-40f6-ab5f-99e7039bbc8a</coachViewId>
+        <isTemplate>false</isTemplate>
+        <layout>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;ns2:layout xmlns:ns2="http://www.ibm.com/bpm/CoachDesignerNG" xmlns:ns3="http://www.ibm.com/bpm/coachview"&gt;&lt;ns2:layoutItem xsi:type="ns2:CustomHTML" version="8550" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;&lt;ns2:id&gt;dc3560b8-e53e-4ee1-8768-677febf4700e&lt;/ns2:id&gt;&lt;ns2:layoutItemId&gt;CustomHTML1&lt;/ns2:layoutItemId&gt;&lt;ns2:configData&gt;&lt;ns2:id&gt;c94e313a-db68-4965-85e8-05692aadd760&lt;/ns2:id&gt;&lt;ns2:optionName&gt;@customHTML.contentType&lt;/ns2:optionName&gt;&lt;ns2:value&gt;TEXT&lt;/ns2:value&gt;&lt;/ns2:configData&gt;&lt;ns2:configData&gt;&lt;ns2:id&gt;76255f4f-c054-4bcb-80b4-0592c628fcf3&lt;/ns2:id&gt;&lt;ns2:optionName&gt;@customHTML.textContent&lt;/ns2:optionName&gt;&lt;ns2:value&gt;&amp;lt;div class="breadcrumb_maincontentbox"&amp;gt;
+  &amp;lt;div class="breadcrumb-nav"&amp;gt;
+    &amp;lt;div class="breadcrumb-list"&amp;gt;
+      &amp;lt;!-- Breadcrumb items will be dynamically generated here --&amp;gt;
+    &amp;lt;/div&amp;gt;
+  &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/ns2:value&gt;&lt;/ns2:configData&gt;&lt;/ns2:layoutItem&gt;&lt;/ns2:layout&gt;</layout>
+        <paletteIcon isNull="true" />
+        <previewImage isNull="true" />
+        <hasLabel>false</hasLabel>
+        <labelPosition>0</labelPosition>
+        <nineSliceX1Coord>0</nineSliceX1Coord>
+        <nineSliceX2Coord>0</nineSliceX2Coord>
+        <nineSliceY1Coord>0</nineSliceY1Coord>
+        <nineSliceY2Coord>0</nineSliceY2Coord>
+        <emitBoundary>false</emitBoundary>
+        <isPrototypeFunc>false</isPrototypeFunc>
+        <enableDevMode>false</enableDevMode>
+        <isMobileReady>false</isMobileReady>
+        <loadJsFunction isNull="true" />
+        <unloadJsFunction isNull="true" />
+        <viewJsFunction isNull="true" />
+        <changeJsFunction isNull="true" />
+        <collaborationJsFunction isNull="true" />
+        <description></description>
+        <validateJsFunction isNull="true" />
+        <previewAdvHtml>/61.7d9f1019-7041-49a0-90d4-bb7c9fc9ffa3</previewAdvHtml>
+        <previewAdvJs>/61.268711c5-e79e-43d4-8f8c-5d61149e74bb</previewAdvJs>
+        <useUrlBinding>false</useUrlBinding>
+        <guid>guid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7274</guid>
+        <versionId>ba003172-bc31-439d-bed5-957337a46fba</versionId>
+        <field1 isNull="true" />
+        <field2 isNull="true" />
+        <field3>0</field3>
+        <field4 isNull="true" />
+        <field5>false</field5>
+        <clobField1 isNull="true" />
+        <bindingType name="BreadcrumbItems">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewBindingTypeId>65.d3d2e872-ead0-4733-a1c7-e4a8f92cadb5</coachViewBindingTypeId>
+            <coachViewId>64.aa82916a-4d0c-40f6-ab5f-99e7039bbc8a</coachViewId>
+            <isList>true</isList>
+            <classId>/12.458799b8-f858-4758-bc01-eb9efcab6d1e</classId>
+            <seq>0</seq>
+            <description isNull="true" />
+            <guid>guid:d3d2e872-ead0-4733-a1c7-e4a8f92cadb5</guid>
+            <versionId>1b879f07-68e5-4994-ad6c-3dfc5c03b2a1</versionId>
+        </bindingType>
+        <configOption name="maxItems">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewConfigOptionId>66.96a08365-e560-4491-a91c-d993d7fa437e</coachViewConfigOptionId>
+            <coachViewId>64.aa82916a-4d0c-40f6-ab5f-99e7039bbc8a</coachViewId>
+            <isList>false</isList>
+            <propertyType>OBJECT</propertyType>
+            <label></label>
+            <classId>0594de47-b0cd-452b-a221-95dc16247e72/12.3fa0d7a0-828a-4d60-99cc-db5ed143fc2d</classId>
+            <processId isNull="true" />
+            <actionflowId isNull="true" />
+            <isAdaptive>false</isAdaptive>
+            <seq>0</seq>
+            <description></description>
+            <groupName></groupName>
+            <guid>guid:96a08365-e560-4491-a91c-d993d7fa437e</guid>
+            <versionId>05b8557a-759f-487e-9191-90cf6fd78801</versionId>
+        </configOption>
+        <configOption name="showNumbering">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewConfigOptionId>66.d873bd26-6f56-4f58-9715-d9e49930fe6b</coachViewConfigOptionId>
+            <coachViewId>64.aa82916a-4d0c-40f6-ab5f-99e7039bbc8a</coachViewId>
+            <isList>false</isList>
+            <propertyType>OBJECT</propertyType>
+            <label></label>
+            <classId>0594de47-b0cd-452b-a221-95dc16247e72/12.83ff975e-8dbc-42e5-b738-fa8bc08274a2</classId>
+            <processId isNull="true" />
+            <actionflowId isNull="true" />
+            <isAdaptive>false</isAdaptive>
+            <seq>1</seq>
+            <description></description>
+            <groupName></groupName>
+            <guid>guid:d873bd26-6f56-4f58-9715-d9e49930fe6b</guid>
+            <versionId>b376ec82-088b-4847-a79b-bb85dd1ce134</versionId>
+        </configOption>
+        <configOption name="onClick">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewConfigOptionId>66.ea20e1c4-fe44-4299-9c51-20fe39ab8ec1</coachViewConfigOptionId>
+            <coachViewId>64.aa82916a-4d0c-40f6-ab5f-99e7039bbc8a</coachViewId>
+            <isList>false</isList>
+            <propertyType>EVENT</propertyType>
+            <label>onClick</label>
+            <classId>0594de47-b0cd-452b-a221-95dc16247e72/12.db884a3c-c533-44b7-bb2d-47bec8ad4022</classId>
+            <processId isNull="true" />
+            <actionflowId isNull="true" />
+            <isAdaptive>false</isAdaptive>
+            <seq>2</seq>
+            <description></description>
+            <groupName></groupName>
+            <guid>guid:ea20e1c4-fe44-4299-9c51-20fe39ab8ec1</guid>
+            <versionId>fb8943b7-f89d-4b47-89e5-1becabd6b3cb</versionId>
+        </configOption>
+        <inlineScript name="Inline Javascript">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewInlineScriptId>68.37188d95-782e-459c-9504-e7b133023936</coachViewInlineScriptId>
+            <coachViewId>64.aa82916a-4d0c-40f6-ab5f-99e7039bbc8a</coachViewId>
+            <scriptType>JS</scriptType>
+            <scriptBlock>// Get the breadcrumb data (array of breadcrumb items)
+var breadcrumbData = this.getData().items;
+// Get configuration options
+var showNumbering = this.getOption("showNumbering") !== false; // Default true
+var maxItems = this.getOption("maxItems") || 0; // 0 means no limit
+// Register events
+this.registerEventHandlingFunction(this, "onClick",      "data");
+
+
+// Get the breadcrumb container elements
+var breadcrumbContainer = this.context.element.querySelector(".breadcrumb_maincontentbox");
+var breadcrumbList = breadcrumbContainer.querySelector(".breadcrumb-list");
+
+
+
+// Clear existing breadcrumb items
+breadcrumbList.innerHTML = "";
+
+// Function to create a breadcrumb item
+function createBreadcrumbItem(item, index, isLast, totalItems) {
+  var div = document.createElement("div");
+  div.className = "breadcrumb-item";
+  
+  // Add status class if providedx
+  var status = item.status;
+  if (!status) {
+    // Auto-determine status based on position
+    if (index &lt; totalItems - 1) {
+      status = "completed";
+    } else if (isLast) {
+      status = "working";
+    } else {
+      status = "notyetstarted";
+    }
+  }
+  
+  // Add status class to the div for CSS styling
+  div.classList.add(status);
+  
+  if (isLast) {
+    div.classList.add("current");
+  }
+  
+  var link = document.createElement("a");
+  link.className = "breadcrumb-link";
+ // link.href = item.href || "#";
+  
+  // Add status icon - directly use status value with breadcrumb_ prefix
+  var iconDiv = document.createElement("div");
+  iconDiv.className = "breadcrumb_" + status;
+  link.appendChild(iconDiv);
+  
+  // Add text with optional numbering
+  var textSpan = document.createElement("span");
+  var labelText = item.label || item.text || "";
+  if (showNumbering) {
+    labelText = (index + 1) + ". " + labelText;
+  }
+  textSpan.textContent = labelText;
+  link.appendChild(textSpan);
+  
+  // Add click event handler if provided
+  if (item.onClick &amp;&amp; typeof item.onClick === "function") {
+    link.addEventListener("click", function(e) {
+      e.preventDefault();
+     
+      item.onClick(item, index);
+    });
+  }
+  
+  div.appendChild(link);
+  return div;
+}
+
+// Render breadcrumb items
+if (breadcrumbData &amp;&amp; Array.isArray(breadcrumbData) &amp;&amp; breadcrumbData.length &gt; 0) {
+  var itemsToRender = breadcrumbData;
+  
+  // Apply max items limit if configured
+  if (maxItems &gt; 0 &amp;&amp; breadcrumbData.length &gt; maxItems) {
+    // Keep first items up to maxItems
+    itemsToRender = breadcrumbData.slice(0, maxItems);
+  }
+  
+  // Calculate width percentage for each item
+  var itemWidth = 100 / itemsToRender.length;
+  
+  // Render each breadcrumb item
+  itemsToRender.forEach(function(item, index) {
+    var isLast = index === itemsToRender.length - 1;
+    var breadcrumbItem = createBreadcrumbItem(item, index, isLast, itemsToRender.length);
+    breadcrumbItem.style.width = itemWidth + "%";
+    breadcrumbList.appendChild(breadcrumbItem);
+  });
+} else {
+  // If no data, show a default breadcrumb
+  var defaultItem = createBreadcrumbItem({ label: "Home", href: "#" }, 0, true, 1);
+  defaultItem.style.width = "100%";
+  breadcrumbList.appendChild(defaultItem);
+}
+
+// Made with Bob
+</scriptBlock>
+            <seq>0</seq>
+            <description></description>
+            <guid>guid:37188d95-782e-459c-9504-e7b133023936</guid>
+            <versionId>980327be-878a-4764-b150-9067f9718d43</versionId>
+        </inlineScript>
+        <inlineScript name="Inline CSS">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewInlineScriptId>68.e1889718-a634-48cf-ba3d-474c521083fc</coachViewInlineScriptId>
+            <coachViewId>64.aa82916a-4d0c-40f6-ab5f-99e7039bbc8a</coachViewId>
+            <scriptType>CSS</scriptType>
+            <scriptBlock>/* Breadcrumb Widget Styles - Aligned with Advance Preview */
+
+.breadcrumb_maincontentbox {
+	width: 100%;
+	min-height: 35px;
+	overflow: hidden;
+}
+
+.breadcrumb_maincontentbox .breadcrumb-nav{
+	display: table;
+	width: 100%;
+}
+
+.breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list{
+	display: flex;
+	flex-direction: row;
+}
+
+.breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item{
+	border-top: 2px solid #e0e0e0;
+	width: 25%;
+}
+
+/* Status-based border colors - JavaScript adds these classes */
+.breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item.completed{
+	border-top-color: #0f62fe;
+}
+
+.breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item.working{
+	border-top-color: #0f62fe;
+}
+
+
+
+.breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item .breadcrumb-link{
+	background: transparent;
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: #0f62fe;
+	outline: 2px solid transparent;
+	outline-offset: -2px;
+	transition: color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+}
+
+.breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item .breadcrumb-link:hover {
+	color: #0043ce;
+	text-decoration: underline;
+}
+
+.breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item .breadcrumb-link:focus {
+	outline: 2px solid #0f62fe;
+	outline-offset: 2px;
+}
+
+.breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item .breadcrumb-link &gt; span {
+	padding-top: 3px;
+}
+
+.breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item.current .breadcrumb-link {
+	color: #161616;
+	cursor: default;
+	pointer-events: none;
+	font-weight: 600;
+}
+
+.breadcrumb_completed{
+	background-image:url("data:image/svg+xml;utf8,%3Csvg%20id%3D%22icon%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%20%20.cls-1%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20none%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%3C%2Fstyle%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%2214%2021.414%209%2016.413%2010.413%2015%2014%2018.586%2021.585%2011%2023%2012.415%2014%2021.414%22%20style%3D%22fill%3A%231446c6%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M16%2C2A14%2C14%2C0%2C1%2C0%2C30%2C16%2C14%2C14%2C0%2C0%2C0%2C16%2C2Zm0%2C26A12%2C12%2C0%2C1%2C1%2C28%2C16%2C12%2C12%2C0%2C0%2C1%2C16%2C28Z%22%20style%3D%22fill%3A%231446c6%22%2F%3E%0A%20%20%3Crect%20id%3D%22_Transparent_Rectangle_%22%20data-name%3D%22%26lt%3BTransparent%20Rectangle%26gt%3B%22%20class%3D%22cls-1%22%20width%3D%2232%22%20height%3D%2232%22%2F%3E%0A%3C%2Fsvg%3E");
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+	background-size: 16px 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-right: 8px;
+}
+
+.breadcrumb_working{
+	background-image: url("data:image/svg+xml;utf8,%3Csvg%20id%3D%22icon%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20d%3D%22M23.7642%2C6.8593l1.2851-1.5315A13.976%2C13.976%2C0%2C0%2C0%2C20.8672%2C2.887l-.6836%2C1.8776A11.9729%2C11.9729%2C0%2C0%2C1%2C23.7642%2C6.8593Z%22%20fill%3D%22%231446c6%22%2F%3E%3Cpath%20d%3D%22M27.81%2C14l1.9677-.4128A13.8888%2C13.8888%2C0%2C0%2C0%2C28.14%2C9.0457L26.4087%2C10A12.52%2C12.52%2C0%2C0%2C1%2C27.81%2C14Z%22%20fill%3D%22%231446c6%22%2F%3E%3Cpath%20d%3D%22M20.1836%2C27.2354l.6836%2C1.8776a13.976%2C13.976%2C0%2C0%2C0%2C4.1821-2.4408l-1.2851-1.5315A11.9729%2C11.9729%2C0%2C0%2C1%2C20.1836%2C27.2354Z%22%20fill%3D%22%231446c6%22%2F%3E%3Cpath%20d%3D%22M16%2C30V2a14%2C14%2C0%2C0%2C0%2C0%2C28Z%22%20fill%3D%22%231446c6%22%2F%3E%3C%2Fsvg%3E");
+ 	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+	background-size: 16px 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-right: 8px;
+	animation: spin 1s linear infinite;
+}
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+.breadcrumb_notyetstarted{
+	background-image:url("data:image/svg+xml;utf8,%3Csvg%20id%3D%22icon%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23161616%3B%7D.cls-2%7Bfill%3Anone%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3Ecircle--dash%3C%2Ftitle%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M7.7%2C4.7a14.7%2C14.7%2C0%2C0%2C0-3%2C3.1L6.3%2C9A13.26%2C13.26%2C0%2C0%2C1%2C8.9%2C6.3Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M4.6%2C12.3l-1.9-.6A12.51%2C12.51%2C0%2C0%2C0%2C2%2C16H4A11.48%2C11.48%2C0%2C0%2C1%2C4.6%2C12.3Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M2.7%2C20.4a14.4%2C14.4%2C0%2C0%2C0%2C2%2C3.9l1.6-1.2a12.89%2C12.89%2C0%2C0%2C1-1.7-3.3Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M7.8%2C27.3a14.4%2C14.4%2C0%2C0%2C0%2C3.9%2C2l.6-1.9A12.89%2C12.89%2C0%2C0%2C1%2C9%2C25.7Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M11.7%2C2.7l.6%2C1.9A11.48%2C11.48%2C0%2C0%2C1%2C16%2C4V2A12.51%2C12.51%2C0%2C0%2C0%2C11.7%2C2.7Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M24.2%2C27.3a15.18%2C15.18%2C0%2C0%2C0%2C3.1-3.1L25.7%2C23A11.53%2C11.53%2C0%2C0%2C1%2C23%2C25.7Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M27.4%2C19.7l1.9.6A15.47%2C15.47%2C0%2C0%2C0%2C30%2C16H28A11.48%2C11.48%2C0%2C0%2C1%2C27.4%2C19.7Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M29.2%2C11.6a14.4%2C14.4%2C0%2C0%2C0-2-3.9L25.6%2C8.9a12.89%2C12.89%2C0%2C0%2C1%2C1.7%2C3.3Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M24.1%2C4.6a14.4%2C14.4%2C0%2C0%2C0-3.9-2l-.6%2C1.9a12.89%2C12.89%2C0%2C0%2C1%2C3.3%2C1.7Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M20.3%2C29.3l-.6-1.9A11.48%2C11.48%2C0%2C0%2C1%2C16%2C28v2A21.42%2C21.42%2C0%2C0%2C0%2C20.3%2C29.3Z%22%2F%3E%3Crect%20id%3D%22_Transparent_Rectangle_%22%20data-name%3D%22%26lt%3BTransparent%20Rectangle%26gt%3B%22%20class%3D%22cls-2%22%20width%3D%2232%22%20height%3D%2232%22%2F%3E%3C%2Fsvg%3E");
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+	background-size: 16px 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-right: 8px;
+}
+/* Alias classes for different status naming conventions */
+.breadcrumb_inprogress,
+.breadcrumb_in-progress {
+	background-image: url("data:image/svg+xml;utf8,%3Csvg%20id%3D%22icon%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20d%3D%22M23.7642%2C6.8593l1.2851-1.5315A13.976%2C13.976%2C0%2C0%2C0%2C20.8672%2C2.887l-.6836%2C1.8776A11.9729%2C11.9729%2C0%2C0%2C1%2C23.7642%2C6.8593Z%22%20fill%3D%22%231446c6%22%2F%3E%3Cpath%20d%3D%22M27.81%2C14l1.9677-.4128A13.8888%2C13.8888%2C0%2C0%2C0%2C28.14%2C9.0457L26.4087%2C10A12.52%2C12.52%2C0%2C0%2C1%2C27.81%2C14Z%22%20fill%3D%22%231446c6%22%2F%3E%3Cpath%20d%3D%22M20.1836%2C27.2354l.6836%2C1.8776a13.976%2C13.976%2C0%2C0%2C0%2C4.1821-2.4408l-1.2851-1.5315A11.9729%2C11.9729%2C0%2C0%2C1%2C20.1836%2C27.2354Z%22%20fill%3D%22%231446c6%22%2F%3E%3Cpath%20d%3D%22M16%2C30V2a14%2C14%2C0%2C0%2C0%2C0%2C28Z%22%20fill%3D%22%231446c6%22%2F%3E%3C%2Fsvg%3E");
+ 	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+	background-size: 16px 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-right: 8px;
+	animation: spin 1s linear infinite;
+}
+
+.breadcrumb_pending,
+.breadcrumb_notstarted,
+.breadcrumb_not-started {
+	background-image:url("data:image/svg+xml;utf8,%3Csvg%20id%3D%22icon%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23161616%3B%7D.cls-2%7Bfill%3Anone%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3Ecircle--dash%3C%2Ftitle%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M7.7%2C4.7a14.7%2C14.7%2C0%2C0%2C0-3%2C3.1L6.3%2C9A13.26%2C13.26%2C0%2C0%2C1%2C8.9%2C6.3Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M4.6%2C12.3l-1.9-.6A12.51%2C12.51%2C0%2C0%2C0%2C2%2C16H4A11.48%2C11.48%2C0%2C0%2C1%2C4.6%2C12.3Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M2.7%2C20.4a14.4%2C14.4%2C0%2C0%2C0%2C2%2C3.9l1.6-1.2a12.89%2C12.89%2C0%2C0%2C1-1.7-3.3Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M7.8%2C27.3a14.4%2C14.4%2C0%2C0%2C0%2C3.9%2C2l.6-1.9A12.89%2C12.89%2C0%2C0%2C1%2C9%2C25.7Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M11.7%2C2.7l.6%2C1.9A11.48%2C11.48%2C0%2C0%2C1%2C16%2C4V2A12.51%2C12.51%2C0%2C0%2C0%2C11.7%2C2.7Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M24.2%2C27.3a15.18%2C15.18%2C0%2C0%2C0%2C3.1-3.1L25.7%2C23A11.53%2C11.53%2C0%2C0%2C1%2C23%2C25.7Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M27.4%2C19.7l1.9.6A15.47%2C15.47%2C0%2C0%2C0%2C30%2C16H28A11.48%2C11.48%2C0%2C0%2C1%2C27.4%2C19.7Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M29.2%2C11.6a14.4%2C14.4%2C0%2C0%2C0-2-3.9L25.6%2C8.9a12.89%2C12.89%2C0%2C0%2C1%2C1.7%2C3.3Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M24.1%2C4.6a14.4%2C14.4%2C0%2C0%2C0-3.9-2l-.6%2C1.9a12.89%2C12.89%2C0%2C0%2C1%2C3.3%2C1.7Z%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M20.3%2C29.3l-.6-1.9A11.48%2C11.48%2C0%2C0%2C1%2C16%2C28v2A21.42%2C21.42%2C0%2C0%2C0%2C20.3%2C29.3Z%22%2F%3E%3Crect%20id%3D%22_Transparent_Rectangle_%22%20data-name%3D%22%26lt%3BTransparent%20Rectangle%26gt%3B%22%20class%3D%22cls-2%22%20width%3D%2232%22%20height%3D%2232%22%2F%3E%3C%2Fsvg%3E");
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+	background-size: 16px 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-right: 8px;
+}
+
+
+
+/* Made with Bob */
+ </scriptBlock>
+            <seq>1</seq>
+            <description></description>
+            <guid>guid:e1889718-a634-48cf-ba3d-474c521083fc</guid>
+            <versionId>06247d78-06e2-482b-8d6c-62c504043ae0</versionId>
+        </inlineScript>
+    </coachView>
+</teamworks>
+

@@ -1,0 +1,209 @@
+<!--
+ #BEGIN COPYRIGHT 
+
+ Licensed Materials - Property of IBM
+ 5725-C95
+ (C) Copyright IBM Corporation 2025. All Rights Reserved.
+ US Government Users Restricted Rights- Use, duplication or disclosure
+ restricted by GSA ADP Schedule Contract with IBM Corp.
+
+ #END COPYRIGHT 
+-->
+
+<style>
+.stepper-heading {
+    padding-bottom: 4px;
+}
+
+.stepper_maincontentbox {
+	width: 100%;
+	min-height: 80px;
+	overflow: hidden;
+	padding: 1rem 0;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container {
+	display: table;
+	width: 100%;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	position: relative;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	position: relative;
+	width: 100%;
+	min-height: 60px;
+	padding-bottom: 1rem;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item:not(:last-child)::after {
+	content: '';
+	position: absolute;
+	top: 32px;
+	left: 16px;
+	width: 2px;
+	height: calc(100% - 32px);
+	background-color: #e0e0e0;
+	z-index: 0;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item.completed:not(:last-child)::after {
+	background-color: #0f62fe;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item .step-circle {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #ffffff;
+	border: 2px solid #e0e0e0;
+	position: relative;
+	z-index: 1;
+	transition: all 0.3s ease;
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: #525252;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item.completed .step-circle {
+	background-color: #0f62fe;
+	border-color: #0f62fe;
+	color: #ffffff;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item.current .step-circle {
+	border-color: #0f62fe;
+	border-width: 3px;
+	color: #0f62fe;
+	box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.1);
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item.error .step-circle {
+	background-color: #da1e28;
+	border-color: #da1e28;
+	color: #ffffff;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item.pending .step-circle {
+	background-color: #ffffff;
+	border-color: #e0e0e0;
+	color: #525252;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item .step-content {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item .step-label {
+	margin-top: 0;
+	margin-left: 1rem;
+	text-align: left;
+	font-size: 0.875rem;
+	color: #525252;
+	font-weight: 400;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item.current .step-label {
+	color: #161616;
+	font-weight: 600;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item.completed .step-label {
+	color: #161616;
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item .step-description {
+	margin-top: 0.25rem;
+	margin-left: 1rem;
+	text-align: left;
+	font-size: 1rem;
+	color: #8d8d8d;
+}
+
+.stepper_icon_completed {
+	background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M6.5%2011.5l-3-3%201-1%202%202%205-5%201%201z%22%2F%3E%3C%2Fsvg%3E");
+	width: 16px;
+	height: 16px;
+	background-size: 16px 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+@keyframes stepPulse {
+	0%, 100% {
+		box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.1);
+	}
+	50% {
+		box-shadow: 0 0 0 8px rgba(15, 98, 254, 0.05);
+	}
+}
+
+.stepper_maincontentbox .DesignContentBox .stepper-container .stepper-list .stepper-item.current .step-circle {
+	animation: stepPulse 2s ease-in-out infinite;
+}
+
+</style>
+<div class="SPARKPanel panel">
+	<div class="stepper-heading">
+		<span class="stepper-title"></span>		
+	</div>
+	<div class="stepper-body">
+		<div class="stepper_maincontentbox">
+			<div class="DesignContentBox layoutSec valignMiddle hChild">
+				<div class="DesignContentBox stepper-container">
+					<div class="DesignContentBox stepper-list">
+						<div class="DesignContentBox stepper-item completed">
+							<div class="step-circle">
+								<div class="stepper_icon_completed"></div>
+							</div>
+							<div class="step-content">
+								<div class="step-label">Order Placed</div>
+								<div class="step-description">December 15, 2024 at 10:30 AM</div>
+							</div>
+						</div>
+						<div class="DesignContentBox stepper-item completed">
+							<div class="step-circle">
+								<div class="stepper_icon_completed"></div>
+							</div>
+							<div class="step-content">
+								<div class="step-label">Processing</div>
+								<div class="step-description">Order confirmed and being prepared</div>
+							</div>
+						</div>
+						<div class="DesignContentBox stepper-item current">
+							<div class="step-circle">
+								<span>3</span>
+							</div>
+							<div class="step-content">
+								<div class="step-label">Shipped</div>
+								<div class="step-description">In transit - Estimated delivery: Dec 18</div>
+							</div>
+						</div>
+						<div class="DesignContentBox stepper-item pending">
+							<div class="step-circle">
+								<span>4</span>
+							</div>
+							<div class="step-content">
+								<div class="step-label">Delivered</div>
+								<div class="step-description">Package delivered to your address</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

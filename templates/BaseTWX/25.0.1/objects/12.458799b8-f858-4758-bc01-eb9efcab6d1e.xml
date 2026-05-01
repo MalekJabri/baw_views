@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamworks>
+    <twClass id="12.458799b8-f858-4758-bc01-eb9efcab6d1e" name="BreadcrumbItem">
+        <lastModified>1777528365025</lastModified>
+        <lastModifiedBy>cpmanager</lastModifiedBy>
+        <tenantId isNull="true" />
+        <classId>12.458799b8-f858-4758-bc01-eb9efcab6d1e</classId>
+        <type>1</type>
+        <isSystem>false</isSystem>
+        <shared>false</shared>
+        <isShadow>true</isShadow>
+        <globalLifetime>false</globalLifetime>
+        <internalName isNull="true" />
+        <extensionType isNull="true" />
+        <saveServiceRef isNull="true" />
+        <bpmn2Data isNull="true" />
+        <externalId>itm.12.458799b8-f858-4758-bc01-eb9efcab6d1e</externalId>
+        <dependencySummary>&lt;dependencySummary id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-721f"&gt;
+  &lt;artifactReference id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-721e"&gt;
+    &lt;refId&gt;/6023.b17db097-f9f7-429c-9db5-a67b10049ac0&lt;/refId&gt;
+    &lt;refType&gt;1&lt;/refType&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-721d"&gt;
+      &lt;name&gt;externalId&lt;/name&gt;
+      &lt;value&gt;http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/xsd/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-721c"&gt;
+      &lt;name&gt;mimeType&lt;/name&gt;
+      &lt;value&gt;xsd&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+  &lt;/artifactReference&gt;
+&lt;/dependencySummary&gt;</dependencySummary>
+        <jsonData>{"attributeFormDefault":"unqualified","elementFormDefault":"unqualified","targetNamespace":"http:\/\/www.ibm.com\/xmlns\/prod\/bpm\/bpmn\/ext\/externalservice\/swagger\/xsd\/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd","complexType":[{"annotation":{"documentation":[{"content":["A single breadcrumb item in the navigation path"]}],"appinfo":[{"shared":[false],"advancedProperties":[{"namespace":"http:\/\/www.ibm.com\/xmlns\/prod\/bpm\/bpmn\/ext\/externalservice\/swagger\/xsd\/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd","typeName":"BreadcrumbItem"}],"shadow":[true],"allowAdditionalProperties":[false]}]},"sequence":{"element":[{"annotation":{"documentation":[{"content":["Display text for the breadcrumb item"]}],"appinfo":[{"propertyName":["label"],"propertyRequired":[false],"propertyHidden":[false],"advancedParameterProperties":[{"typeNamespace":"http:\/\/www.w3.org\/2001\/XMLSchema","_minOccurs":0,"typeName":"string","_nillable":false,"nodeType":1,"_maxOccurs":1,"order":1}]}]},"name":"label","type":"{http:\/\/lombardi.ibm.com\/schema\/}String","otherAttributes":{"{http:\/\/www.ibm.com\/bpmsdk}refid":"12.db884a3c-c533-44b7-bb2d-47bec8ad4022"}},{"annotation":{"documentation":[{"content":["Alternative to 'label' - display text for the breadcrumb item"]}],"appinfo":[{"propertyName":["text"],"propertyRequired":[false],"propertyHidden":[false],"advancedParameterProperties":[{"typeNamespace":"http:\/\/www.w3.org\/2001\/XMLSchema","_minOccurs":0,"typeName":"string","_nillable":false,"nodeType":1,"_maxOccurs":1,"order":2}]}]},"name":"text","type":"{http:\/\/lombardi.ibm.com\/schema\/}String","otherAttributes":{"{http:\/\/www.ibm.com\/bpmsdk}refid":"12.db884a3c-c533-44b7-bb2d-47bec8ad4022"}},{"annotation":{"documentation":[{"content":["URL or route for the breadcrumb link"]}],"appinfo":[{"propertyName":["href"],"propertyRequired":[false],"propertyHidden":[false],"advancedParameterProperties":[{"typeNamespace":"http:\/\/www.w3.org\/2001\/XMLSchema","_minOccurs":0,"typeName":"string","_nillable":false,"nodeType":1,"_maxOccurs":1,"order":3}]}]},"name":"href","type":"{http:\/\/lombardi.ibm.com\/schema\/}String","otherAttributes":{"{http:\/\/www.ibm.com\/bpmsdk}refid":"12.db884a3c-c533-44b7-bb2d-47bec8ad4022"}},{"annotation":{"documentation":[{"content":["Status of the Item: completed, working, notyetstarted "]}],"appinfo":[{"propertyName":["status"],"propertyRequired":[false],"propertyHidden":[false],"advancedParameterProperties":[{"typeNamespace":"http:\/\/www.w3.org\/2001\/XMLSchema","_minOccurs":0,"typeName":"string","_nillable":false,"nodeType":1,"_maxOccurs":1,"order":4}]}]},"name":"status","type":"{http:\/\/lombardi.ibm.com\/schema\/}String","otherAttributes":{"{http:\/\/www.ibm.com\/bpmsdk}refid":"12.db884a3c-c533-44b7-bb2d-47bec8ad4022"}}]},"name":"BreadcrumbItem"}],"id":"_12.458799b8-f858-4758-bc01-eb9efcab6d1e"}</jsonData>
+        <dataName isNull="true" />
+        <allowAdditionalProperties>false</allowAdditionalProperties>
+        <description>A single breadcrumb item in the navigation path</description>
+        <guid>guid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7271</guid>
+        <versionId>414e133c-29ce-435f-84d9-ea841a1902bd</versionId>
+        <definition>
+            <property>
+                <name>label</name>
+                <description>Display text for the breadcrumb item</description>
+                <classRef>0594de47-b0cd-452b-a221-95dc16247e72/12.db884a3c-c533-44b7-bb2d-47bec8ad4022</classRef>
+                <arrayProperty>false</arrayProperty>
+                <propertyDefault isNull="true" />
+                <propertyRequired>false</propertyRequired>
+                <propertyHidden>false</propertyHidden>
+                <annotation type="com.lombardisoftware.core.xml.XMLFieldAnnotation" version="2.0">
+                    <exclude isNull="true" />
+                    <nodeType>1</nodeType>
+                    <name isNull="true" />
+                    <namespace isNull="true" />
+                    <typeName>string</typeName>
+                    <typeNamespace>http://www.w3.org/2001/XMLSchema</typeNamespace>
+                    <minOccurs>0</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                    <nillable>false</nillable>
+                    <order>1</order>
+                    <wrapArray isNull="true" />
+                    <arrayTypeName isNull="true" />
+                    <arrayTypeAnonymous isNull="true" />
+                    <arrayItemName isNull="true" />
+                    <arrayItemWildcard isNull="true" />
+                    <wildcard isNull="true" />
+                    <wildcardVariety isNull="true" />
+                    <wildcardMode isNull="true" />
+                    <wildcardNamespace isNull="true" />
+                    <parentModelGroupCompositor isNull="true" />
+                    <timeZone isNull="true" />
+                </annotation>
+            </property>
+            <property>
+                <name>text</name>
+                <description>Alternative to 'label' - display text for the breadcrumb item</description>
+                <classRef>0594de47-b0cd-452b-a221-95dc16247e72/12.db884a3c-c533-44b7-bb2d-47bec8ad4022</classRef>
+                <arrayProperty>false</arrayProperty>
+                <propertyDefault isNull="true" />
+                <propertyRequired>false</propertyRequired>
+                <propertyHidden>false</propertyHidden>
+                <annotation type="com.lombardisoftware.core.xml.XMLFieldAnnotation" version="2.0">
+                    <exclude isNull="true" />
+                    <nodeType>1</nodeType>
+                    <name isNull="true" />
+                    <namespace isNull="true" />
+                    <typeName>string</typeName>
+                    <typeNamespace>http://www.w3.org/2001/XMLSchema</typeNamespace>
+                    <minOccurs>0</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                    <nillable>false</nillable>
+                    <order>2</order>
+                    <wrapArray isNull="true" />
+                    <arrayTypeName isNull="true" />
+                    <arrayTypeAnonymous isNull="true" />
+                    <arrayItemName isNull="true" />
+                    <arrayItemWildcard isNull="true" />
+                    <wildcard isNull="true" />
+                    <wildcardVariety isNull="true" />
+                    <wildcardMode isNull="true" />
+                    <wildcardNamespace isNull="true" />
+                    <parentModelGroupCompositor isNull="true" />
+                    <timeZone isNull="true" />
+                </annotation>
+            </property>
+            <property>
+                <name>href</name>
+                <description>URL or route for the breadcrumb link</description>
+                <classRef>0594de47-b0cd-452b-a221-95dc16247e72/12.db884a3c-c533-44b7-bb2d-47bec8ad4022</classRef>
+                <arrayProperty>false</arrayProperty>
+                <propertyDefault isNull="true" />
+                <propertyRequired>false</propertyRequired>
+                <propertyHidden>false</propertyHidden>
+                <annotation type="com.lombardisoftware.core.xml.XMLFieldAnnotation" version="2.0">
+                    <exclude isNull="true" />
+                    <nodeType>1</nodeType>
+                    <name isNull="true" />
+                    <namespace isNull="true" />
+                    <typeName>string</typeName>
+                    <typeNamespace>http://www.w3.org/2001/XMLSchema</typeNamespace>
+                    <minOccurs>0</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                    <nillable>false</nillable>
+                    <order>3</order>
+                    <wrapArray isNull="true" />
+                    <arrayTypeName isNull="true" />
+                    <arrayTypeAnonymous isNull="true" />
+                    <arrayItemName isNull="true" />
+                    <arrayItemWildcard isNull="true" />
+                    <wildcard isNull="true" />
+                    <wildcardVariety isNull="true" />
+                    <wildcardMode isNull="true" />
+                    <wildcardNamespace isNull="true" />
+                    <parentModelGroupCompositor isNull="true" />
+                    <timeZone isNull="true" />
+                </annotation>
+            </property>
+            <property>
+                <name>status</name>
+                <description>Status of the Item: completed, working, notyetstarted </description>
+                <classRef>0594de47-b0cd-452b-a221-95dc16247e72/12.db884a3c-c533-44b7-bb2d-47bec8ad4022</classRef>
+                <arrayProperty>false</arrayProperty>
+                <propertyDefault isNull="true" />
+                <propertyRequired>false</propertyRequired>
+                <propertyHidden>false</propertyHidden>
+                <annotation type="com.lombardisoftware.core.xml.XMLFieldAnnotation" version="2.0">
+                    <exclude isNull="true" />
+                    <nodeType>1</nodeType>
+                    <name isNull="true" />
+                    <namespace isNull="true" />
+                    <typeName>string</typeName>
+                    <typeNamespace>http://www.w3.org/2001/XMLSchema</typeNamespace>
+                    <minOccurs>0</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                    <nillable>false</nillable>
+                    <order>4</order>
+                    <wrapArray isNull="true" />
+                    <arrayTypeName isNull="true" />
+                    <arrayTypeAnonymous isNull="true" />
+                    <arrayItemName isNull="true" />
+                    <arrayItemWildcard isNull="true" />
+                    <wildcard isNull="true" />
+                    <wildcardVariety isNull="true" />
+                    <wildcardMode isNull="true" />
+                    <wildcardNamespace isNull="true" />
+                    <parentModelGroupCompositor isNull="true" />
+                    <timeZone isNull="true" />
+                </annotation>
+            </property>
+            <validator>
+                <className isNull="true" />
+                <errorMessage isNull="true" />
+                <webWidgetJavaClass isNull="true" />
+                <externalType isNull="true" />
+                <configData>
+                    <schema>
+                        <simpleType name="BreadcrumbItem">
+                            <restriction base="String" />
+                        </simpleType>
+                    </schema>
+                </configData>
+            </validator>
+            <annotation type="com.lombardisoftware.core.xml.XMLTypeAnnotation" version="2.0">
+                <exclude isNull="true" />
+                <anonymous isNull="true" />
+                <local isNull="true" />
+                <name>BreadcrumbItem</name>
+                <namespace>http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/xsd/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd</namespace>
+                <elementName isNull="true" />
+                <elementNamespace isNull="true" />
+                <protoTypeName isNull="true" />
+                <baseTypeName isNull="true" />
+                <specialType isNull="true" />
+                <contentTypeVariety isNull="true" />
+                <xscRef isNull="true" />
+            </annotation>
+        </definition>
+    </twClass>
+</teamworks>
+

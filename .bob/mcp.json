@@ -1,1 +1,1 @@
-{"mcpServers":{}}
+{"mcpServers":{"baw-admin":{"command":"uvx","args":["--from","git+https://github.com/MalekJabri/baw-admin-mcp-server","baw-admin-mcp-server"],"env":{"MCP_TRANSPORT":"stdio","BAW_BASE_URL":"https://cpd-cp4ba.apps.itz-75edvg.hub01-lb.techzone.ibm.com/bas/ops","BAW_USERNAME":"cpmanager","BAW_PASSWORD":"dIhoF-ZNKNI-TtWzJ-mFTwg","LOG_LEVEL":"INFO"},"alwaysAllow":["get_container","count_containers","check_orphaned_containers","get_queue_status","install_container","list_containers","login"]}}}

@@ -1,0 +1,31 @@
+{
+  "name": "BreadcrumbItem",
+  "type": "businessObject",
+  "description": "Business object representing a single breadcrumb item in the navigation path",
+  "properties": [
+    {
+      "name": "label",
+      "type": "String",
+      "required": false,
+      "description": "Display text for the breadcrumb item"
+    },
+    {
+      "name": "text",
+      "type": "String",
+      "required": false,
+      "description": "Alternative to 'label' - display text for the breadcrumb item"
+    },
+    {
+      "name": "href",
+      "type": "String",
+      "required": false,
+      "description": "URL or route for the breadcrumb link"
+    },
+    {
+      "name": "status",
+      "type": "String",
+      "required": false,
+      "description": "Status of the item: completed, working, notyetstarted"
+    }
+  ]
+}

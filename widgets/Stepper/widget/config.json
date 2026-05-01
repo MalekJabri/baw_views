@@ -1,0 +1,53 @@
+{
+  "name": "Stepper",
+  "description": "Vertical multi-step process indicator widget for IBM Business Automation Workflow",
+  "bindingType": {
+    "name": "StepperData",
+    "isList": true,
+    "classId": "String"
+  },
+  "configOptions": [
+    {
+      "name": "showNumbers",
+      "type": "Boolean",
+      "label": "Show Numbers",
+      "description": "Display step numbers in circles (hidden when status icons are shown)",
+      "default": true
+    },
+    {
+      "name": "showIcons",
+      "type": "Boolean",
+      "label": "Show Icons",
+      "description": "Display status icons (checkmark for completed, error/warning icons)",
+      "default": true
+    },
+    {
+      "name": "clickable",
+      "type": "Boolean",
+      "label": "Clickable",
+      "description": "Enable click interaction on steps (disabled steps are never clickable)",
+      "default": false
+    },
+    {
+      "name": "currentStep",
+      "type": "Integer",
+      "label": "Current Step",
+      "description": "Index of the current step (0-based). Used for auto-determining status when status is not provided",
+      "default": 0
+    },
+    {
+      "name": "stepClicked",
+      "type": "Event",
+      "label": "Step Clicked",
+      "description": "Event fired when a step is clicked",
+      "parameterName": "index"
+    }
+  ],
+  "businessObjects": [
+    {
+      "name": "StepItem",
+      "file": "StepItem.json"
+    }
+  ],
+  "changeFunction": true
+}

@@ -1,0 +1,46 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Breadcrumb Widget API",
+    "description": "OpenAPI specification for the Breadcrumb widget business objects and configuration options used in IBM Business Automation Workflow",
+    "version": "1.0.0",
+    "contact": {
+      "name": "IBM BAW Custom Widgets"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "components": {
+    "schemas": {
+      "BreadcrumbItem": {
+        "type": "object",
+        "description": "A single breadcrumb item in the navigation path",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Display text for the breadcrumb item",
+            "example": "Products"
+          },
+          "text": {
+            "type": "string",
+            "description": "Alternative to 'label' - display text for the breadcrumb item",
+            "example": "Products"
+          },
+          "href": {
+            "type": "string",
+            "description": "URL or route for the breadcrumb link",
+            "default": "#",
+            "example": "/products"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the Item: completed, working, notyetstarted ",
+            "example": "handleBreadcrumbClick"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamworks>
+    <process id="1.27eaac56-0fe7-4286-b7fe-e952287d3c24" name="BreadcrumbItem.json">
+        <lastModified>1777528364978</lastModified>
+        <lastModifiedBy>cpmanager</lastModifiedBy>
+        <tenantId isNull="true" />
+        <processId>1.27eaac56-0fe7-4286-b7fe-e952287d3c24</processId>
+        <image isNull="true" />
+        <tabGroup isNull="true" />
+        <startingProcessItemId isNull="true" />
+        <isRootProcess>false</isRootProcess>
+        <processType>16</processType>
+        <isErrorHandlerEnabled>false</isErrorHandlerEnabled>
+        <errorHandlerItemId isNull="true" />
+        <isLoggingVariables>false</isLoggingVariables>
+        <isTransactional>false</isTransactional>
+        <processTimingLevel isNull="true" />
+        <participantRef isNull="true" />
+        <exposedType isNull="true" />
+        <isTrackingEnabled>true</isTrackingEnabled>
+        <xmlData isNull="true" />
+        <cachingType>false</cachingType>
+        <itemLabel isNull="true" />
+        <cacheLength isNull="true" />
+        <mobileReady>false</mobileReady>
+        <sboSyncEnabled>true</sboSyncEnabled>
+        <externalId>{http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/22e12a00-ad6e-4ee0-baa7-da6fd01919b9Service}_d6996c10-6129-4b57-ad13-9aaccb2c8431</externalId>
+        <isSecured>false</isSecured>
+        <isAjaxExposed>false</isAjaxExposed>
+        <isInvokedAsynchronously>false</isInvokedAsynchronously>
+        <isTransactionalFlow>false</isTransactionalFlow>
+        <description isNull="true" />
+        <guid>guid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7233</guid>
+        <versionId>9da215c7-673e-464c-968e-d2c7967d493a</versionId>
+        <dependencySummary>&lt;dependencySummary id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7230"&gt;
+  &lt;artifactReference id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-722f"&gt;
+    &lt;refId&gt;/6023.55bf0f38-6528-464d-93e2-89b3113df776&lt;/refId&gt;
+    &lt;refType&gt;1&lt;/refType&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-722e"&gt;
+      &lt;name&gt;externalId&lt;/name&gt;
+      &lt;value&gt;http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/22e12a00-ad6e-4ee0-baa7-da6fd01919b9Service&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-722d"&gt;
+      &lt;name&gt;mimeType&lt;/name&gt;
+      &lt;value&gt;swagger&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+  &lt;/artifactReference&gt;
+  &lt;artifactReference id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-722c"&gt;
+    &lt;refId&gt;/6023.b17db097-f9f7-429c-9db5-a67b10049ac0&lt;/refId&gt;
+    &lt;refType&gt;1&lt;/refType&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-722b"&gt;
+      &lt;name&gt;externalId&lt;/name&gt;
+      &lt;value&gt;http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/xsd/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-722a"&gt;
+      &lt;name&gt;mimeType&lt;/name&gt;
+      &lt;value&gt;xsd&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+  &lt;/artifactReference&gt;
+  &lt;artifactReference id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7229"&gt;
+    &lt;refId&gt;/12.a7ff63fb-56cf-44d6-ba2e-1a3842724a54&lt;/refId&gt;
+    &lt;refType&gt;1&lt;/refType&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7228"&gt;
+      &lt;name&gt;externalId&lt;/name&gt;
+      &lt;value&gt;{http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/22e12a00-ad6e-4ee0-baa7-da6fd01919b9Service}Import_BreadcrumbItem.json_operationRequestMsg&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7227"&gt;
+      &lt;name&gt;mimeType&lt;/name&gt;
+      &lt;value&gt;msg&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+  &lt;/artifactReference&gt;
+  &lt;artifactReference id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7226"&gt;
+    &lt;refId&gt;/12.67644eab-0982-41e8-951b-753ac71c3f41&lt;/refId&gt;
+    &lt;refType&gt;1&lt;/refType&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7225"&gt;
+      &lt;name&gt;externalId&lt;/name&gt;
+      &lt;value&gt;{http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/22e12a00-ad6e-4ee0-baa7-da6fd01919b9Service}Import_BreadcrumbItem.json_operationResponseMsg&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+    &lt;nameValuePair id="bpdid:b24bc31db4610d6b:-498c9a5d:19dd94d396e:-7224"&gt;
+      &lt;name&gt;mimeType&lt;/name&gt;
+      &lt;value&gt;msg&lt;/value&gt;
+    &lt;/nameValuePair&gt;
+  &lt;/artifactReference&gt;
+&lt;/dependencySummary&gt;</dependencySummary>
+        <jsonData isNull="true" />
+        <businessDataAliases isNull="true" />
+        <field1 isNull="true" />
+        <field2 isNull="true" />
+        <field3>0</field3>
+        <field4 isNull="true" />
+        <field5>false</field5>
+        <clobField1 isNull="true" />
+        <blobField1 isNull="true" />
+        <startingProcessItemId isNull="true" />
+        <errorHandlerItemId isNull="true" />
+        <layoutData noConversion="true">
+            <errorLink>
+                <controlPoints />
+                <showEndState>false</showEndState>
+                <showName>false</showName>
+            </errorLink>
+        </layoutData>
+        <startPoint>
+            <layoutData x="0" y="0">
+                <errorLink>
+                    <controlPoints />
+                    <showEndState>false</showEndState>
+                    <showName>false</showName>
+                </errorLink>
+            </layoutData>
+        </startPoint>
+        <startLink>
+            <fromPort locationId="rightCenter" portType="1" />
+            <toPort locationId="rightCenter" portType="2" />
+            <layoutData>
+                <controlPoints />
+                <showEndState>false</showEndState>
+                <showName>false</showName>
+            </layoutData>
+        </startLink>
+        <bpmn2Model>
+            <ns14:definitions xmlns:ns14="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:ns2="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/team" xmlns:ns3="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/process" xmlns:ns4="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/process/wle" xmlns:ns5="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/process/case" xmlns:ns6="http://www.ibm.com/bpm/Extensions" xmlns:ns7="http://www.ibm.com/xmlns/prod/bpm/uca" xmlns:ns8="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/trackinggroup" xmlns:ns9="http://www.ibm.com/xmlns/bpmnx/20100524/v1/BusinessVocabulary" xmlns:ns10="http://www.omg.org/spec/DD/20100524/DI" xmlns:ns11="http://www.omg.org/spec/DD/20100524/DC" xmlns:ns12="http://www.omg.org/spec/BPMN/20100524/BPMNDI" xmlns:ns13="http://www.ibm.com/xmlns/prod/bpm/graph" xmlns:ns15="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/extservice" xmlns:ns16="http://www.ibm.com/bpm/processappsettings" xmlns:ns17="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/process/auth" xmlns:ns18="http://www.ibm.com/xmlns/links" xmlns:ns19="http://www.ibm.com/bpm/uitheme" xmlns:ns20="http://www.ibm.com/xmlns/tagging" id="_98640672-3a2d-4bfb-8409-b3ca730a017c" targetNamespace="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/22e12a00-ad6e-4ee0-baa7-da6fd01919b9Service" expressionLanguage="http://www.ibm.com/xmlns/prod/bpm/expression-lang/javascript">
+                <ns14:interface name="IFace.cf7b325a-173c-485c-8e1f-f85cba5fd97b" id="_06b48bfb-cc87-42ff-8981-e35ba539e5d8">
+                    <ns14:documentation>OpenAPI specification for the Breadcrumb widget business objects and configuration options used in IBM Business Automation Workflow</ns14:documentation>
+                    <ns14:operation name="Import_BreadcrumbItem.json_operation" id="_c9888271-dede-4456-85db-a3ac5fd559c4">
+                        <ns14:documentation />
+                        <ns14:extensionElements>
+                            <ns3:inMessageRefPO>12.a7ff63fb-56cf-44d6-ba2e-1a3842724a54</ns3:inMessageRefPO>
+                            <ns3:outMessageRefPO>12.67644eab-0982-41e8-951b-753ac71c3f41</ns3:outMessageRefPO>
+                            <ns17:businessSignature>
+                                <ns17:input id="_bcd4d88d-8b62-4cad-b8f8-96c10801b8f4">
+                                    <ns17:name>BreadcrumbItem</ns17:name>
+                                    <ns17:typeRef>{http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/xsd/22e12a00-ad6e-4ee0-baa7-da6fd01919b9.xsd}BreadcrumbItem</ns17:typeRef>
+                                    <ns17:typeRefPO>itm.12.458799b8-f858-4758-bc01-eb9efcab6d1e</ns17:typeRefPO>
+                                    <ns17:path>BreadcrumbItem</ns17:path>
+                                    <ns17:isCollection>false</ns17:isCollection>
+                                    <ns17:isOptional>true</ns17:isOptional>
+                                </ns17:input>
+                            </ns17:businessSignature>
+                        </ns14:extensionElements>
+                        <ns14:inMessageRef xmlns:ns21="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/22e12a00-ad6e-4ee0-baa7-da6fd01919b9Service">ns21:Import_BreadcrumbItem.json_operationRequestMsg</ns14:inMessageRef>
+                        <ns14:outMessageRef xmlns:ns21="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/22e12a00-ad6e-4ee0-baa7-da6fd01919b9Service">ns21:Import_BreadcrumbItem.json_operationResponseMsg</ns14:outMessageRef>
+                    </ns14:operation>
+                </ns14:interface>
+                <ns14:endPoint>
+                    <ns14:extensionElements>
+                        <ns15:externalService interfaceRef="_06b48bfb-cc87-42ff-8981-e35ba539e5d8" name="BreadcrumbItem.json" id="_d6996c10-6129-4b57-ad13-9aaccb2c8431">
+                            <ns15:restBinding xmlns:ns21="http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/externalservice/swagger/22e12a00-ad6e-4ee0-baa7-da6fd01919b9Service" swaggerRef="ns21:6023.55bf0f38-6528-464d-93e2-89b3113df776" openAPIVersion="v3" descriptorSrcLocation="BreadcrumbItem.json" bindingRefV2="62.8eecea8b-ca17-4a58-b21a-08633f4b467a" />
+                            <ns15:cachingType>false</ns15:cachingType>
+                        </ns15:externalService>
+                    </ns14:extensionElements>
+                </ns14:endPoint>
+            </ns14:definitions>
+        </bpmn2Model>
+    </process>
+</teamworks>
+

@@ -1,0 +1,153 @@
+{
+  "name": "FolderTree",
+  "description": "File and folder manager widget with hierarchical structure and bulk metadata editing for IBM Business Automation Workflow",
+  "bindingType": {
+    "name": "FilesData",
+    "isList": false,
+    "classId": "String"
+  },
+  "configOptions": [
+    {
+      "name": "graphqlEndpoint",
+      "type": "String",
+      "label": "GraphQL Endpoint",
+      "description": "Full URL of the FileNet Content Engine GraphQL API endpoint",
+      "required": true
+    },
+    {
+      "name": "repositoryIdentifier",
+      "type": "String",
+      "label": "Repository Identifier",
+      "description": "FileNet repository identifier (e.g., 'OS1')",
+      "required": true
+    },
+    {
+      "name": "rootFolderPath",
+      "type": "String",
+      "label": "Root Folder Path",
+      "description": "FileNet folder path to start browsing from",
+      "default": "/"
+    },
+    {
+      "name": "showDocumentDetails",
+      "type": "Boolean",
+      "label": "Show Document Details",
+      "description": "Show document version and file size details in the list",
+      "default": true
+    },
+    {
+      "name": "allowMultiSelect",
+      "type": "Boolean",
+      "label": "Allow Multi-Select",
+      "description": "Allow multiple files to be selected simultaneously for bulk operations",
+      "default": true
+    },
+    {
+      "name": "showFileActions",
+      "type": "Boolean",
+      "label": "Show File Actions",
+      "description": "Show copy and delete action buttons for individual files",
+      "default": true
+    },
+    {
+      "name": "updateAbleFields",
+      "type": "String",
+      "label": "Updateable Fields",
+      "description": "Comma-separated list of updateable field names (e.g., 'author,department,status')",
+      "default": ""
+    },
+    {
+      "name": "enableFolderExpansion",
+      "type": "Boolean",
+      "label": "Enable Folder Expansion",
+      "description": "Allow folders to be expanded/collapsed to show nested contents",
+      "default": true
+    },
+    {
+      "name": "showSelectionControls",
+      "type": "Boolean",
+      "label": "Show Selection Controls",
+      "description": "Show 'Select all / Unselect all' controls at the top",
+      "default": true
+    },
+    {
+      "name": "showFileCount",
+      "type": "Boolean",
+      "label": "Show File Count",
+      "description": "Display the total number of files in the list",
+      "default": true
+    },
+    {
+      "name": "autoSave",
+      "type": "Boolean",
+      "label": "Auto Save",
+      "description": "Automatically save changes when metadata is modified",
+      "default": false
+    },
+    {
+      "name": "PropertyOne",
+      "type": "String",
+      "label": "Property One",
+      "description": "Custom property name for Label One (e.g., 'DocumentLanguage')",
+      "default": "language"
+    },
+    {
+      "name": "PropertyTwo",
+      "type": "String",
+      "label": "Property Two",
+      "description": "Custom property name for Label Two (e.g., 'DocumentType')",
+      "default": "documentType"
+    },
+    {
+      "name": "enableDebugLogging",
+      "type": "Boolean",
+      "label": "Enable Debug Logging",
+      "description": "Enable console logging for debugging",
+      "default": false
+    },
+    {
+      "name": "dateFormat",
+      "type": "String",
+      "label": "Date Format",
+      "description": "Date format string (e.g., 'YYYY-MM-DD', 'DD/MM/YYYY')",
+      "default": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "showDetailsPanel",
+      "type": "Boolean",
+      "label": "Show Details Panel",
+      "description": "Show or hide the details/update panel on the right side",
+      "default": true
+    },
+    {
+      "name": "onSelectionChange",
+      "type": "Event",
+      "label": "On Selection Change",
+      "description": "Event fired when file selection changes",
+      "parameterName": "selectionInfo"
+    },
+    {
+      "name": "onSave",
+      "type": "Event",
+      "label": "On Save",
+      "description": "Event fired when Save button is clicked",
+      "parameterName": "saveInfo"
+    },
+    {
+      "name": "onCopyFile",
+      "type": "Event",
+      "label": "On Copy File",
+      "description": "Event fired when copy button is clicked",
+      "parameterName": "fileInfo"
+    },
+    {
+      "name": "onDeleteFile",
+      "type": "Event",
+      "label": "On Delete File",
+      "description": "Event fired when delete button is clicked",
+      "parameterName": "fileInfo"
+    }
+  ],
+  "businessObjects": [],
+  "changeFunction": false
+}

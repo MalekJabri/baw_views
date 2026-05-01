@@ -1,0 +1,31 @@
+{
+  "name": "StepItem",
+  "type": "businessObject",
+  "description": "Business object representing a single step in the Stepper widget",
+  "properties": [
+    {
+      "name": "label",
+      "type": "String",
+      "required": false,
+      "description": "Display text for the step"
+    },
+    {
+      "name": "text",
+      "type": "String",
+      "required": false,
+      "description": "Alternative to 'label' - display text for the step"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "required": false,
+      "description": "Optional description text for the step"
+    },
+    {
+      "name": "status",
+      "type": "String",
+      "required": false,
+      "description": "Step status: completed, current, pending, error, warning, or disabled"
+    }
+  ]
+}
