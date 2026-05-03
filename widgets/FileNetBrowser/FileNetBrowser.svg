@@ -1,0 +1,55 @@
+<svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="120" height="120" fill="#ffffff"/>
+  
+  <!-- Dual-pane browser interface -->
+  <g transform="translate(10, 20)">
+    
+    <!-- Left pane - Folder tree -->
+    <rect x="0" y="0" width="45" height="80" rx="4" fill="#f4f4f4" stroke="#8d8d8d" stroke-width="1"/>
+    
+    <!-- Folder tree items -->
+    <g transform="translate(5, 10)">
+      <!-- Root folder -->
+      <path d="M 0 0 L 0 6 L 8 6 L 8 0 L 2 0 L 2 -2 L 6 -2 L 8 0" fill="#0f62fe" stroke="#0f62fe" stroke-width="0.5"/>
+      <text x="12" y="5" font-family="IBM Plex Sans, Arial, sans-serif" font-size="8" fill="#161616">Root</text>
+      
+      <!-- Subfolder 1 -->
+      <path d="M 5 12 L 5 18 L 13 18 L 13 12 L 7 12 L 7 10 L 11 10 L 13 12" fill="#525252" stroke="#525252" stroke-width="0.5"/>
+      <text x="17" y="17" font-family="IBM Plex Sans, Arial, sans-serif" font-size="7" fill="#525252">Docs</text>
+      
+      <!-- Subfolder 2 -->
+      <path d="M 5 24 L 5 30 L 13 30 L 13 24 L 7 24 L 7 22 L 11 22 L 13 24" fill="#525252" stroke="#525252" stroke-width="0.5"/>
+      <text x="17" y="29" font-family="IBM Plex Sans, Arial, sans-serif" font-size="7" fill="#525252">Files</text>
+    </g>
+    
+    <!-- Right pane - Content list -->
+    <rect x="50" y="0" width="50" height="80" rx="4" fill="#ffffff" stroke="#8d8d8d" stroke-width="1"/>
+    
+    <!-- Document items -->
+    <g transform="translate(55, 10)">
+      <!-- Document 1 -->
+      <rect x="0" y="0" width="6" height="8" fill="#ffffff" stroke="#0f62fe" stroke-width="0.5"/>
+      <line x1="1" y1="2" x2="5" y2="2" stroke="#0f62fe" stroke-width="0.3"/>
+      <line x1="1" y1="4" x2="5" y2="4" stroke="#0f62fe" stroke-width="0.3"/>
+      <line x1="1" y1="6" x2="4" y2="6" stroke="#0f62fe" stroke-width="0.3"/>
+      <text x="9" y="6" font-family="IBM Plex Sans, Arial, sans-serif" font-size="7" fill="#161616">Doc1.pdf</text>
+      
+      <!-- Document 2 -->
+      <rect x="0" y="12" width="6" height="8" fill="#ffffff" stroke="#525252" stroke-width="0.5"/>
+      <line x1="1" y1="14" x2="5" y2="14" stroke="#525252" stroke-width="0.3"/>
+      <line x1="1" y1="16" x2="5" y2="16" stroke="#525252" stroke-width="0.3"/>
+      <line x1="1" y1="18" x2="4" y2="18" stroke="#525252" stroke-width="0.3"/>
+      <text x="9" y="18" font-family="IBM Plex Sans, Arial, sans-serif" font-size="7" fill="#525252">Doc2.pdf</text>
+    </g>
+    
+    <!-- Navigation breadcrumb -->
+    <text x="50" y="-5" font-family="IBM Plex Sans, Arial, sans-serif" font-size="7" fill="#0f62fe">Root / Docs</text>
+    
+  </g>
+  
+  <!-- Label -->
+  <text x="60" y="110" font-family="IBM Plex Sans, Arial, sans-serif" font-size="8" fill="#525252" text-anchor="middle">FileNet Browser</text>
+</svg>
+
+<!-- Made with Bob -->

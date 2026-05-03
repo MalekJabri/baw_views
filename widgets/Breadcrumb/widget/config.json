@@ -4,7 +4,7 @@
   "bindingType": {
     "name": "BreadcrumbData",
     "isList": true,
-    "classId": "String"
+    "type": "BreadcrumbItem"
   },
   "configOptions": [
     {

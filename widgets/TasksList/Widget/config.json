@@ -4,7 +4,7 @@
   "bindingType": {
     "name": "TasksListData",
     "isList": true,
-    "classId": "TaskItem"
+    "type": "TaskItem"
   },
   "configOptions": [],
   "businessObjects": [

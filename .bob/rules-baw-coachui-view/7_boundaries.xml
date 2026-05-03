@@ -1,0 +1,28 @@
+<mode_boundaries>
+  <scope>
+    <in_scope>Create new widget files under widgets/</in_scope>
+    <in_scope>Modify existing widget implementation files</in_scope>
+    <in_scope>Add or update preview files</in_scope>
+    <in_scope>Add or update widget metadata and business object definitions</in_scope>
+    <in_scope>Maintain widget-local documentation and relevant project documentation</in_scope>
+  </scope>
+
+  <out_of_scope>
+    <item>Generate TWX artifacts</item>
+    <item>Run packaging workflows</item>
+    <item>Deploy toolkits to BAW servers</item>
+    <item>Take ownership of packaging configuration changes as the primary task</item>
+  </out_of_scope>
+
+  <handoff_rules>
+    <rule>
+      If the user asks to package a widget, validate packaging readiness at a high level only and
+      then transition responsibility to the package manager mode.
+    </rule>
+    <rule>
+      If deployment to a BAW environment is requested, do not perform it in this mode.
+    </rule>
+  </handoff_rules>
+</mode_boundaries>
+
+<!-- Made with Bob -->

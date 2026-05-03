@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamworks>
+    <projectDefaults id="63.7e5d26fd-2177-407f-9b63-d85c63397c6f" name="Toolkit Settings">
+        <lastModified>1777620270562</lastModified>
+        <lastModifiedBy>cpmanager</lastModifiedBy>
+        <tenantId isNull="true" />
+        <projectDefaultsId>63.7e5d26fd-2177-407f-9b63-d85c63397c6f</projectDefaultsId>
+        <description isNull="true" />
+        <guid>guid:7e5d26fd-2177-407f-9b63-d85c63397c6f</guid>
+        <versionId>de7297fc-8e88-4b3f-9cf6-0bd4f8541b86</versionId>
+        <participantRef isNull="true" />
+        <defaultXslRef isNull="true" />
+        <defaultCssRef isNull="true" />
+        <defaultTheme>db17b473-3be9-4da2-a004-ad3e42a72578/72.993e03e9-2574-40fc-807c-65b06be378fd</defaultTheme>
+        <themeVersion isNull="true" />
+        <defaultJsRefs isNull="true" />
+        <isWbmEnabled>false</isWbmEnabled>
+        <namespace>http://TUI</namespace>
+        <isIidOptimized>true</isIidOptimized>
+        <isQueueBypass>1</isQueueBypass>
+        <templateAcronymReference isNull="true" />
+        <templateSnapshotReference isNull="true" />
+        <targetEnvironment>BAW_CP4A</targetEnvironment>
+        <subtype isNull="true" />
+        <capability isNull="true" />
+        <solutionTargetStore isNull="true" />
+    </projectDefaults>
+</teamworks>
+

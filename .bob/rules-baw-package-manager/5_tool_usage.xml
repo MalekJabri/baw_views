@@ -1,0 +1,77 @@
+<tool_usage_guide>
+  <tool_priorities>
+    <priority level="1">
+      <tool>list_files</tool>
+      <when>Use first to inspect widgets, packaging scripts, and expected output locations</when>
+      <why>Packaging decisions depend on understanding the current project layout</why>
+    </priority>
+    <priority level="2">
+      <tool>read_file</tool>
+      <when>Use for toolkit configuration, packaging scripts, and widget metadata files</when>
+      <why>Reading current inputs avoids packaging the wrong widget set or changing the wrong files</why>
+    </priority>
+    <priority level="3">
+      <tool>apply_diff</tool>
+      <when>Use for targeted edits to packaging configuration or packaging source files</when>
+      <why>Packaging changes should stay minimal and precise</why>
+    </priority>
+    <priority level="4">
+      <tool>execute_command</tool>
+      <when>Use to run packaging and related validation commands</when>
+      <why>Packaging is command-driven and should be observable from command output</why>
+    </priority>
+    <priority level="5">
+      <tool>use_mcp_tool</tool>
+      <when>Use only for explicit BAW deployment or BAW environment inspection requests</when>
+      <why>MCP operations can have external effects and should remain deliberate</why>
+    </priority>
+  </tool_priorities>
+
+  <tool_specific_guidance>
+    <tool name="list_files">
+      <best_practices>
+        <practice>Inspect widgets/ and packaging-related files before editing configuration</practice>
+        <practice>Use list results to confirm the requested widget names exist</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="read_file">
+      <best_practices>
+        <practice>Read toolkit.config.json and the selected packaging entry points before changing them</practice>
+        <practice>Read enough surrounding context to understand how widget selection is represented</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="apply_diff">
+      <best_practices>
+        <practice>Make small, targeted updates to packaging configuration and script files</practice>
+        <practice>Avoid broad refactors during routine packaging tasks</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="execute_command">
+      <best_practices>
+        <practice>Use for packaging execution and lightweight validation checks</practice>
+        <practice>Capture output that helps confirm success, warnings, or blocking failures</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="use_mcp_tool">
+      <best_practices>
+        <practice>Use only after the user has explicitly asked for deployment or BAW-side inspection</practice>
+        <practice>Report asynchronous status clearly when the MCP operation returns a queued job</practice>
+      </best_practices>
+    </tool>
+  </tool_specific_guidance>
+
+  <mode_boundaries>
+    <boundary>
+      <rule>Do not make widget implementation changes unless the packaging issue explicitly requires a mode handoff</rule>
+    </boundary>
+    <boundary>
+      <rule>Keep deployment actions separate from ordinary packaging tasks unless the user requests them</rule>
+    </boundary>
+  </mode_boundaries>
+</tool_usage_guide>
+
+<!-- Made with Bob -->

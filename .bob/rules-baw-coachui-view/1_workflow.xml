@@ -1,0 +1,77 @@
+<workflow_instructions>
+  <mode_overview>
+    This mode creates and modifies IBM Business Automation Workflow coach widgets.
+    It focuses on widget implementation, preview assets, widget metadata, and widget documentation.
+    It does not package widgets into TWX artifacts.
+  </mode_overview>
+
+  <initialization_steps>
+    <step number="1">
+      <action>Understand the widget request</action>
+      <details>
+        Identify whether the user wants to create a new widget, update an existing widget,
+        add preview assets, define configuration metadata, or document widget behavior.
+      </details>
+    </step>
+
+    <step number="2">
+      <action>Inspect existing project conventions</action>
+      <details>
+        Review nearby widgets before making changes. Prefer examples that are structurally similar
+        to the requested widget, such as simple display widgets, list-based widgets, or widgets with
+        business object definitions and events.
+      </details>
+    </step>
+
+    <step number="3">
+      <action>Confirm implementation boundaries</action>
+      <details>
+        Stay within widget creation and modification work. If the request moves into TWX generation,
+        packaging validation, or deployment, hand off to the package manager mode.
+      </details>
+    </step>
+  </initialization_steps>
+
+  <main_workflow>
+    <phase name="analysis">
+      <description>Analyze requirements and project patterns before editing</description>
+      <steps>
+        <step>Identify the widget name and target folder under widgets/</step>
+        <step>Check whether similar widgets already exist and can be used as references</step>
+        <step>Determine required and optional files for the requested behavior</step>
+      </steps>
+    </phase>
+
+    <phase name="implementation">
+      <description>Implement or update the widget files</description>
+      <steps>
+        <step>Create or update Layout.html with semantic structure and accessibility attributes</step>
+        <step>Create or update InlineCSS.css with scoped styling</step>
+        <step>Create or update inlineJavascript.js with BAW data and option access patterns</step>
+        <step>Create or update config.json and business object files when the widget needs metadata or complex types</step>
+        <step>Create event handler files in widget/events/ folder ONLY when the widget requires specific BAW events (load, change, view, validate, unload). Not all widgets need event handlers - create only what's necessary for the widget's functionality</step>
+        <step>Create or update preview files when the widget should be testable outside the BAW runtime</step>
+        <step>Keep documentation aligned with the implemented behavior</step>
+        <step>Create a palette icon SVG (120x120px square) named {WidgetName}.svg in the widget folder for catalog display</step>
+      </steps>
+    </phase>
+
+    <phase name="validation">
+      <description>Verify the widget implementation is coherent</description>
+      <steps>
+        <step>Check naming consistency across widget folder, preview files, and metadata</step>
+        <step>Ensure documentation matches the actual widget inputs, options, and events</step>
+        <step>Confirm the mode stops at the packaging boundary</step>
+      </steps>
+    </phase>
+  </main_workflow>
+
+  <completion_criteria>
+    <criterion>The requested widget files have been created or updated consistently</criterion>
+    <criterion>The widget follows repository naming and structure conventions</criterion>
+    <criterion>Preview and documentation are aligned with the implementation when applicable</criterion>
+    <criterion>The response stays within widget-authoring scope and does not perform packaging work</criterion>
+  </completion_criteria>
+</workflow_instructions>
+
+<!-- Made with Bob -->

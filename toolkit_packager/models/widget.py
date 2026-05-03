@@ -238,6 +238,38 @@ class Widget:
         js_files = list(self.preview_path.glob("*.js"))
         return js_files[0] if js_files else None
     
+    def has_icon(self) -> bool:
+        """
+        Check if widget has an SVG icon file.
+        
+        Returns:
+            True if {WidgetName}.svg exists in widget directory
+        """
+        icon_path = self.path / f"{self.name}.svg"
+        return icon_path.exists()
+    
+    def get_icon_path(self) -> Optional[Path]:
+        """
+        Get path to widget icon SVG file.
+        
+        Returns:
+            Path to {WidgetName}.svg or None if not found
+        """
+        icon_path = self.path / f"{self.name}.svg"
+        return icon_path if icon_path.exists() else None
+    
+    def get_icon_content(self) -> Optional[str]:
+        """
+        Get widget icon SVG content.
+        
+        Returns:
+            SVG content or None if icon doesn't exist
+        """
+        icon_path = self.get_icon_path()
+        if icon_path:
+            return icon_path.read_text(encoding='utf-8')
+        return None
+    
     def list_all_files(self) -> List[Path]:
         """
         List all files associated with this widget.

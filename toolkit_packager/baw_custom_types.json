@@ -25,6 +25,14 @@
         "TasksList"
       ],
       "created": "2026-05-01T06:09:55.822025Z"
+    },
+    "ProgressData": {
+      "classId": "/12.534faa11-5ec3-450b-9628-4e6b83e32688",
+      "description": "Business object representing progress bar data",
+      "widgets": [
+        "ProgressBar"
+      ],
+      "created": "2026-05-01T21:21:03.839127Z"
     }
   },
   "notes": {

@@ -1,0 +1,77 @@
+<tool_usage_guide>
+  <tool_priorities>
+    <priority level="1">
+      <tool>list_files</tool>
+      <when>Use first to understand the widget directory and discover comparable examples</when>
+      <why>Project structure should guide widget creation and modification decisions</why>
+    </priority>
+    <priority level="2">
+      <tool>read_file</tool>
+      <when>Use after locating candidate widgets or metadata files</when>
+      <why>Reading real examples prevents inconsistent widget generation</why>
+    </priority>
+    <priority level="3">
+      <tool>apply_diff</tool>
+      <when>Use for precise edits to existing widget files</when>
+      <why>Targeted edits preserve surrounding implementation details</why>
+    </priority>
+    <priority level="4">
+      <tool>write_to_file</tool>
+      <when>Use for new widget files or full file rewrites only when intentional</when>
+      <why>New files and complete rewrites require explicit and complete content</why>
+    </priority>
+    <priority level="5">
+      <tool>execute_command</tool>
+      <when>Use for scaffold generation or project-local validation commands</when>
+      <why>Commands are useful for repeatable scaffolding and lightweight checks</why>
+    </priority>
+  </tool_priorities>
+
+  <tool_specific_guidance>
+    <tool name="list_files">
+      <best_practices>
+        <practice>Inspect widgets/ before creating a new widget</practice>
+        <practice>Use surrounding widgets as reference points for naming and support files</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="read_file">
+      <best_practices>
+        <practice>Read comparable widget files together whenever possible</practice>
+        <practice>Compare structure, metadata, preview assets, and documentation before editing</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="apply_diff">
+      <best_practices>
+        <practice>Prefer apply_diff for surgical changes to existing widget files</practice>
+        <practice>Read the current file first to match exact content and indentation</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="write_to_file">
+      <best_practices>
+        <practice>Use for creating new files in widgets/ or for intentional full rewrites</practice>
+        <practice>Write complete file contents and do not omit unchanged sections in rewrites</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="execute_command">
+      <best_practices>
+        <practice>Use local commands such as scaffold generation only when they support the widget-authoring workflow</practice>
+        <practice>Do not use packaging commands in this mode</practice>
+      </best_practices>
+    </tool>
+  </tool_specific_guidance>
+
+  <mode_boundaries>
+    <boundary>
+      <rule>Do not package widgets into TWX artifacts in this mode</rule>
+    </boundary>
+    <boundary>
+      <rule>When the task shifts to packaging or deployment, hand off to the package manager mode</rule>
+    </boundary>
+  </mode_boundaries>
+</tool_usage_guide>
+
+<!-- Made with Bob -->

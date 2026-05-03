@@ -1,0 +1,249 @@
+<mode_switching_guide>
+  <overview>
+    This mode focuses on packaging and deployment. When packaging reveals widget
+    implementation issues, explicit handoff to the widget authoring mode is required.
+  </overview>
+
+  <when_to_switch_modes>
+    <scenario>
+      <trigger>Packaging fails due to missing or invalid widget files</trigger>
+      <target_mode>baw-coachui-view</target_mode>
+      <reason>
+        Widget structure problems require widget implementation expertise, not
+        packaging expertise. The widget mode should fix the source files.
+      </reason>
+      <example_issues>
+        <issue>Missing required widget files (Layout.html, config.json)</issue>
+        <issue>Invalid widget metadata structure</issue>
+        <issue>Malformed business object definitions</issue>
+        <issue>Inconsistent naming across widget files</issue>
+      </example_issues>
+      <switch_pattern>
+        <![CDATA[
+<switch_mode>
+<mode_slug>baw-coachui-view</mode_slug>
+<reason>Packaging validation revealed widget structure issues that require implementation fixes.</reason>
+</switch_mode>
+        ]]>
+      </switch_pattern>
+    </scenario>
+
+    <scenario>
+      <trigger>User requests widget implementation changes during packaging workflow</trigger>
+      <target_mode>baw-coachui-view</target_mode>
+      <reason>
+        Widget source modifications belong to the widget authoring mode, even if
+        discovered during packaging.
+      </reason>
+      <example_phrases>
+        <phrase>"Fix the widget's Layout.html before packaging"</phrase>
+        <phrase>"Update the widget's config.json"</phrase>
+        <phrase>"Add a new event handler to the widget"</phrase>
+        <phrase>"Modify the widget's CSS"</phrase>
+      </example_phrases>
+    </scenario>
+
+    <scenario>
+      <trigger>User wants to create a new widget before packaging</trigger>
+      <target_mode>baw-coachui-view</target_mode>
+      <reason>
+        New widget creation is widget authoring work. Package after creation is complete.
+      </reason>
+      <example_phrases>
+        <phrase>"Create a new widget and then package it"</phrase>
+        <phrase>"Add a widget to the toolkit"</phrase>
+        <phrase>"Build a new component first"</phrase>
+      </example_phrases>
+    </scenario>
+
+    <scenario>
+      <trigger>Packaging validation reveals documentation gaps</trigger>
+      <target_mode>baw-coachui-view</target_mode>
+      <reason>
+        Widget documentation (README, datamodel.md, eventHandler.md) is maintained
+        by the widget authoring mode.
+      </reason>
+      <example_issues>
+        <issue>Missing or outdated README.md</issue>
+        <issue>Incomplete datamodel.md documentation</issue>
+        <issue>Missing event handler descriptions</issue>
+      </example_issues>
+    </scenario>
+  </when_to_switch_modes>
+
+  <when_to_stay_in_mode>
+    <scenario>
+      <description>Packaging configuration updates</description>
+      <examples>
+        <example>Updating toolkit.config.json</example>
+        <example>Modifying widget selection for packaging</example>
+        <example>Adjusting packaging script parameters</example>
+      </examples>
+    </scenario>
+
+    <scenario>
+      <description>Running packaging workflows</description>
+      <examples>
+        <example>Executing packaging scripts</example>
+        <example>Generating TWX artifacts</example>
+        <example>Validating packaging outputs</example>
+      </examples>
+    </scenario>
+
+    <scenario>
+      <description>Deployment coordination</description>
+      <examples>
+        <example>Using MCP tools to deploy to BAW</example>
+        <example>Verifying deployment success</example>
+        <example>Troubleshooting deployment issues</example>
+      </examples>
+    </scenario>
+
+    <scenario>
+      <description>Packaging troubleshooting (non-widget issues)</description>
+      <examples>
+        <example>Fixing packaging script errors</example>
+        <example>Resolving TWX generation problems</example>
+        <example>Addressing toolkit configuration issues</example>
+      </examples>
+    </scenario>
+  </when_to_stay_in_mode>
+
+  <handoff_best_practices>
+    <practice>
+      <name>Report widget issues clearly before switching</name>
+      <description>
+        When packaging reveals widget problems, provide a clear summary of what's
+        wrong and which widgets are affected before switching modes.
+      </description>
+      <good_example>
+        "Packaging failed: Stepper widget missing config.json. Switching to widget mode to fix structure."
+      </good_example>
+      <bad_example>
+        "There's a problem. Switching modes."
+      </bad_example>
+    </practice>
+
+    <practice>
+      <name>Don't attempt widget fixes in packaging mode</name>
+      <description>
+        Even for "simple" widget issues, switch to the widget mode rather than
+        making quick fixes. This maintains clear responsibility boundaries.
+      </description>
+    </practice>
+
+    <practice>
+      <name>Preserve packaging context when switching</name>
+      <description>
+        When switching to widget mode, explain what packaging operation was being
+        attempted so the widget mode understands the full context.
+      </description>
+      <good_example>
+        "Attempting to package Stepper and DateOutput widgets. Stepper has invalid metadata. Switching to fix."
+      </good_example>
+    </practice>
+
+    <practice>
+      <name>Return to packaging after widget fixes</name>
+      <description>
+        After widget mode completes fixes, the user may need to explicitly return
+        to packaging mode or the Orchestrator may route back automatically.
+      </description>
+    </practice>
+  </handoff_best_practices>
+
+  <decision_flowchart>
+    <decision>
+      <question>Is the issue in widget source files?</question>
+      <yes>Switch to baw-coachui-view mode</yes>
+      <no>Continue to next decision</no>
+    </decision>
+
+    <decision>
+      <question>Is the issue in packaging configuration or scripts?</question>
+      <yes>Stay in baw-package-manager mode</yes>
+      <no>Continue to next decision</no>
+    </decision>
+
+    <decision>
+      <question>Does the user want to modify widget implementation?</question>
+      <yes>Switch to baw-coachui-view mode</yes>
+      <no>Continue to next decision</no>
+    </decision>
+
+    <decision>
+      <question>Is this a packaging, validation, or deployment task?</question>
+      <yes>Stay in baw-package-manager mode</yes>
+      <no>Consider if another mode is more appropriate</no>
+    </decision>
+  </decision_flowchart>
+
+  <common_boundary_questions>
+    <question>
+      <q>Should I fix minor widget issues to unblock packaging?</q>
+      <a>
+        No. Always switch to widget mode for widget fixes, even if they seem minor.
+        This maintains clear boundaries and prevents scope creep.
+      </a>
+    </question>
+
+    <question>
+      <q>Can I validate widget structure in packaging mode?</q>
+      <a>
+        Yes, validation is part of packaging workflow. But if validation reveals
+        issues, switch to widget mode for fixes rather than fixing them yourself.
+      </a>
+    </question>
+
+    <question>
+      <q>What if packaging succeeds but the user wants widget changes?</q>
+      <a>
+        Switch to widget mode for the changes, then return to packaging mode to
+        regenerate the TWX with the updated widgets.
+      </a>
+    </question>
+
+    <question>
+      <q>Should I update widget documentation during packaging?</q>
+      <a>
+        No. Documentation updates are widget authoring work. Switch to widget mode
+        if documentation needs updating.
+      </a>
+    </question>
+  </common_boundary_questions>
+
+  <anti_patterns>
+    <anti_pattern>
+      <name>Quick-fixing widget files to unblock packaging</name>
+      <why_bad>
+        Blurs mode responsibilities and can lead to inconsistent widget state
+      </why_bad>
+      <correct_approach>
+        Switch to widget mode, fix properly, then return to packaging
+      </correct_approach>
+    </anti_pattern>
+
+    <anti_pattern>
+      <name>Assuming packaging failures are always packaging issues</name>
+      <why_bad>
+        Many packaging failures are actually widget structure problems
+      </why_bad>
+      <correct_approach>
+        Analyze the error, identify if it's widget or packaging related, then
+        switch modes if needed
+      </correct_approach>
+    </anti_pattern>
+
+    <anti_pattern>
+      <name>Staying in packaging mode for "just one more widget change"</name>
+      <why_bad>
+        Incremental scope creep leads to the wrong mode handling implementation
+      </why_bad>
+      <correct_approach>
+        Switch to widget mode as soon as widget changes are requested
+      </correct_approach>
+    </anti_pattern>
+  </anti_patterns>
+</mode_switching_guide>
+
+<!-- Made with Bob -->

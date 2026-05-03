@@ -10,6 +10,7 @@ from .base_generator import BaseGenerator
 from ..models import Widget, TWXObject
 from ..core import generate_object_id, generate_version_id, escape_xml
 from ..utils import get_logger
+from ..utils.coach_view_registry import get_coach_view_registry
 
 logger = get_logger(__name__)
 
@@ -49,11 +50,18 @@ class ManagedAssetGenerator(BaseGenerator):
             if js_asset:
                 assets.append(js_asset)
         
+        # Generate icon asset if exists
+        if self.widget.has_icon():
+            icon_asset = self.generate_icon_asset()
+            if icon_asset:
+                assets.append(icon_asset)
+        
         return assets
     
     def generate_preview_html_asset(self) -> Optional[TWXObject]:
         """
         Generate managed asset for preview HTML file.
+        Uses registry to maintain stable asset IDs.
         
         Returns:
             TWXObject for HTML asset or None
@@ -65,9 +73,17 @@ class ManagedAssetGenerator(BaseGenerator):
         html_path = self.widget.get_preview_html_path()
         asset_name = html_path.name if html_path else f"{self.widget.name}.html"
         
+        # Get asset ID from object_ids (set by coach_view_generator)
         asset_id = self.object_ids.get('preview_html_id')
         if not asset_id:
-            asset_id = generate_object_id(f'{self.widget.name}_preview_html', '61')
+            # Fallback: get from registry or generate new
+            registry = get_coach_view_registry()
+            asset_id = registry.get_preview_html_id(self.widget.name)
+            if not asset_id:
+                asset_id = generate_object_id(f'{self.widget.name}_preview_html', '61')
+                logger.info(f"Generated new preview HTML ID for '{self.widget.name}': {asset_id}")
+            else:
+                logger.info(f"Reusing existing preview HTML ID for '{self.widget.name}': {asset_id}")
         
         file_id = generate_version_id()
         
@@ -96,6 +112,7 @@ class ManagedAssetGenerator(BaseGenerator):
     def generate_preview_js_asset(self) -> Optional[TWXObject]:
         """
         Generate managed asset for preview JavaScript file.
+        Uses registry to maintain stable asset IDs.
         
         Returns:
             TWXObject for JS asset or None
@@ -107,9 +124,17 @@ class ManagedAssetGenerator(BaseGenerator):
         js_path = self.widget.get_preview_js_path()
         asset_name = js_path.name if js_path else f"{self.widget.name}Snippet.js"
         
+        # Get asset ID from object_ids (set by coach_view_generator)
         asset_id = self.object_ids.get('preview_js_id')
         if not asset_id:
-            asset_id = generate_object_id(f'{self.widget.name}_preview_js', '61')
+            # Fallback: get from registry or generate new
+            registry = get_coach_view_registry()
+            asset_id = registry.get_preview_js_id(self.widget.name)
+            if not asset_id:
+                asset_id = generate_object_id(f'{self.widget.name}_preview_js', '61')
+                logger.info(f"Generated new preview JS ID for '{self.widget.name}': {asset_id}")
+            else:
+                logger.info(f"Reusing existing preview JS ID for '{self.widget.name}': {asset_id}")
         
         file_id = generate_version_id()
         
@@ -133,6 +158,55 @@ class ManagedAssetGenerator(BaseGenerator):
         )
         
         self.log_generation("Managed Asset (JS)", asset_id)
+        return twx_obj
+    
+    def generate_icon_asset(self) -> Optional[TWXObject]:
+        """
+        Generate managed asset for widget icon SVG file.
+        Uses registry to maintain stable asset IDs.
+        
+        Returns:
+            TWXObject for icon asset or None
+        """
+        icon_content = self.widget.get_icon_content()
+        if not icon_content:
+            return None
+        
+        icon_path = self.widget.get_icon_path()
+        asset_name = icon_path.name if icon_path else f"{self.widget.name}.svg"
+        
+        # Get or generate icon asset ID from registry
+        registry = get_coach_view_registry()
+        asset_id = registry.get_icon_id(self.widget.name)
+        if not asset_id:
+            asset_id = generate_object_id(f'{self.widget.name}_icon', '61')
+            registry.register_icon_id(self.widget.name, asset_id)
+            logger.info(f"Generated new icon ID for '{self.widget.name}': {asset_id}")
+        else:
+            logger.info(f"Reusing existing icon ID for '{self.widget.name}': {asset_id}")
+        
+        file_id = generate_version_id()
+        
+        xml_content = self.generate_managed_asset_xml(
+            asset_id=asset_id,
+            asset_name=asset_name,
+            file_content=icon_content,
+            file_id=file_id,
+            mime_type="image/svg+xml"
+        )
+        
+        twx_obj = self.create_twx_object(
+            object_id=asset_id,
+            name=asset_name,
+            object_type="managedAsset",
+            xml_content=xml_content,
+            file_references=[{
+                'file_id': file_id,
+                'content': icon_content
+            }]
+        )
+        
+        self.log_generation("Managed Asset (Icon)", asset_id)
         return twx_obj
     
     def generate_managed_asset_xml(

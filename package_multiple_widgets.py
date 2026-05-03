@@ -13,6 +13,7 @@ from toolkit_packager import (
     setup_logger,
     get_logger,
 )
+from toolkit_packager.utils import increment_toolkit_version
 
 # Configuration
 WIDGET_NAMES = [
@@ -24,6 +25,7 @@ WIDGET_NAMES = [
     "MarkdownViewer",
     "MultiSelect",
     "ProcessCircle",
+    "ProgressBar",
     "Stepper",
     "TasksList"
 ]
@@ -43,7 +45,12 @@ def main():
         logger.info(f"📦 Packaging {len(WIDGET_NAMES)} widgets: {', '.join(WIDGET_NAMES)}")
         print("=" * 70)
         
-        # Load configuration
+        # Auto-increment version before packaging
+        logger.info("🔢 Auto-incrementing toolkit version...")
+        old_version, new_version = increment_toolkit_version(CONFIG_FILE, increment_type="patch")
+        logger.info(f"✓ Version updated: {old_version} → {new_version}")
+        
+        # Load configuration (with updated version)
         logger.info("📄 Loading configuration...")
         config = load_config(CONFIG_FILE)
         logger.info(f"✓ Config loaded: {config.name} v{config.version}")

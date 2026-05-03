@@ -1,0 +1,30 @@
+<svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="120" height="120" fill="#ffffff"/>
+  
+  <!-- Vertical stepper -->
+  <g transform="translate(35, 20)">
+    
+    <!-- Step 1 - Completed -->
+    <circle cx="10" cy="10" r="8" fill="#24a148" stroke="#24a148" stroke-width="2"/>
+    <path d="M 6 10 L 9 13 L 14 7" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <text x="25" y="14" font-family="IBM Plex Sans, Arial, sans-serif" font-size="11" fill="#161616" font-weight="500">Step 1</text>
+    <line x1="10" y1="18" x2="10" y2="32" stroke="#24a148" stroke-width="2"/>
+    
+    <!-- Step 2 - Current (with pulse) -->
+    <circle cx="10" cy="40" r="8" fill="#0f62fe" stroke="#0f62fe" stroke-width="2">
+      <animate attributeName="opacity" values="1;0.6;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="10" y="44" font-family="IBM Plex Sans, Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="600" text-anchor="middle">2</text>
+    <text x="25" y="44" font-family="IBM Plex Sans, Arial, sans-serif" font-size="11" fill="#0f62fe" font-weight="600">Step 2</text>
+    <line x1="10" y1="48" x2="10" y2="62" stroke="#e0e0e0" stroke-width="2"/>
+    
+    <!-- Step 3 - Pending -->
+    <circle cx="10" cy="70" r="8" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+    <text x="10" y="74" font-family="IBM Plex Sans, Arial, sans-serif" font-size="10" fill="#525252" font-weight="400" text-anchor="middle">3</text>
+    <text x="25" y="74" font-family="IBM Plex Sans, Arial, sans-serif" font-size="11" fill="#525252" font-weight="400">Step 3</text>
+    
+  </g>
+</svg>
+
+<!-- Made with Bob -->

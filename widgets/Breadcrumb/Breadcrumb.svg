@@ -1,0 +1,32 @@
+<svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="120" height="120" fill="#ffffff"/>
+  
+  <!-- Breadcrumb navigation -->
+  <g transform="translate(10, 45)">
+    
+    <!-- Home icon (first item) -->
+    <path d="M 5 10 L 12 3 L 19 10 L 19 18 L 5 18 Z" fill="#0f62fe" stroke="#0f62fe" stroke-width="1"/>
+    
+    <!-- Separator 1 -->
+    <text x="24" y="14" font-family="IBM Plex Sans, Arial, sans-serif" font-size="14" fill="#525252">/</text>
+    
+    <!-- Link 1 -->
+    <text x="30" y="14" font-family="IBM Plex Sans, Arial, sans-serif" font-size="11" fill="#0f62fe" font-weight="400">Products</text>
+    
+    <!-- Separator 2 -->
+    <text x="72" y="14" font-family="IBM Plex Sans, Arial, sans-serif" font-size="14" fill="#525252">/</text>
+    
+    <!-- Current page -->
+    <text x="78" y="14" font-family="IBM Plex Sans, Arial, sans-serif" font-size="11" fill="#161616" font-weight="600">Laptops</text>
+    
+    <!-- Underline on hover effect (decorative) -->
+    <line x1="30" y1="16" x2="68" y2="16" stroke="#0f62fe" stroke-width="0.5" opacity="0.3"/>
+    
+  </g>
+  
+  <!-- Label -->
+  <text x="60" y="75" font-family="IBM Plex Sans, Arial, sans-serif" font-size="9" fill="#525252" text-anchor="middle">Navigation Path</text>
+</svg>
+
+<!-- Made with Bob -->

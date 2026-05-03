@@ -1,0 +1,339 @@
+<event_handler_guidance>
+  <overview>
+    BAW Coach Widgets support five lifecycle events that can be handled through individual JavaScript files
+    in the widget/events/ folder. Event handlers are OPTIONAL - only create them when the widget's
+    functionality requires specific event handling logic.
+  </overview>
+
+  <available_events>
+    <event name="load">
+      <file>widget/events/load.js</file>
+      <timing>Executed when the widget is first loaded and initialized</timing>
+      <common_uses>
+        <use>Initialize widget state and variables</use>
+        <use>Register custom event handlers with bpmext.ui.registerEventHandlingFunction()</use>
+        <use>Perform initial data processing or rendering</use>
+        <use>Set up timers, intervals, or external listeners</use>
+      </common_uses>
+      <when_to_create>
+        Create load.js when the widget needs initialization logic beyond what's in inlineJavascript.js,
+        or when it needs to register custom BAW event handlers.
+      </when_to_create>
+      <template><![CDATA[
+// WidgetName - Load Event Handler
+// Executed when the widget is first loaded
+var _this = this;
+
+// Initialize widget
+var data = _this.getData();
+var options = _this.getOption();
+
+console.log('WidgetName widget loaded', data);
+
+// Register any custom event handlers
+// Example: bpmext.ui.registerEventHandlingFunction(this, "CustomEvent", "eventName");
+
+// Perform initial rendering or setup
+// render();
+      ]]></template>
+    </event>
+
+    <event name="change">
+      <file>widget/events/change.js</file>
+      <timing>Executed when the widget's bound data changes</timing>
+      <common_uses>
+        <use>Update widget display based on new data</use>
+        <use>Re-render dynamic content</use>
+        <use>Trigger dependent calculations or updates</use>
+        <use>Fire custom events to notify other components</use>
+      </common_uses>
+      <when_to_create>
+        Create change.js when the widget needs to respond to data changes and update its display.
+        This is one of the most commonly used event handlers.
+      </when_to_create>
+      <template><![CDATA[
+// WidgetName - Change Event Handler
+// Executed when the widget data changes
+var _this = this;
+
+// Get the updated data
+var data = _this.getData();
+
+console.log('WidgetName data changed:', data);
+
+// Update the widget display based on new data
+// render();
+      ]]></template>
+    </event>
+
+    <event name="view">
+      <file>widget/events/view.js</file>
+      <timing>Executed when the widget becomes visible (e.g., tab switch, visibility toggle)</timing>
+      <common_uses>
+        <use>Refresh widget display when it becomes visible</use>
+        <use>Resume animations or updates</use>
+        <use>Recalculate dimensions or layout</use>
+        <use>Load deferred content</use>
+      </common_uses>
+      <when_to_create>
+        Create view.js when the widget needs to refresh or update when it becomes visible,
+        especially for widgets in tabs or collapsible sections.
+      </when_to_create>
+      <template><![CDATA[
+// WidgetName - View Event Handler
+// Executed when the widget becomes visible
+var _this = this;
+
+// Refresh widget display
+var data = _this.getData();
+
+console.log('WidgetName widget now visible');
+
+// Re-render or refresh the widget
+// render();
+      ]]></template>
+    </event>
+
+    <event name="validate">
+      <file>widget/events/validate.js</file>
+      <timing>Executed during form validation (e.g., before form submission)</timing>
+      <common_uses>
+        <use>Validate widget data against business rules</use>
+        <use>Check required fields</use>
+        <use>Validate data format or constraints</use>
+        <use>Display validation error messages</use>
+      </common_uses>
+      <when_to_create>
+        Create validate.js when the widget needs custom validation logic beyond standard HTML5 validation.
+      </when_to_create>
+      <template><![CDATA[
+// WidgetName - Validate Event Handler
+// Executed during form validation
+var _this = this;
+
+// Get current data
+var data = _this.getData();
+
+// Perform validation logic
+var isValid = true;
+var errorMessage = "";
+
+// Example validation
+if (!data || !data.requiredField) {
+    isValid = false;
+    errorMessage = "Required field is missing";
+}
+
+// Return validation result
+if (!isValid) {
+    console.error('WidgetName validation failed:', errorMessage);
+    // You can set error state on the widget
+    // _this.context.element.classList.add('validation-error');
+}
+
+// Return true if valid, false if invalid
+return isValid;
+      ]]></template>
+    </event>
+
+    <event name="unload">
+      <file>widget/events/unload.js</file>
+      <timing>Executed when the widget is being removed or destroyed</timing>
+      <common_uses>
+        <use>Clear timers and intervals</use>
+        <use>Remove event listeners</use>
+        <use>Release memory references</use>
+        <use>Unregister custom handlers</use>
+        <use>Clean up external resources</use>
+      </common_uses>
+      <when_to_create>
+        Create unload.js when the widget creates resources that need explicit cleanup
+        (timers, listeners, external connections).
+      </when_to_create>
+      <template><![CDATA[
+// WidgetName - Unload Event Handler
+// Executed when the widget is being removed or destroyed
+var _this = this;
+
+console.log('WidgetName widget unloading');
+
+// Cleanup resources
+// - Remove event listeners
+// - Clear timers/intervals
+// - Release memory references
+// - Unregister custom handlers
+
+// Example cleanup:
+// if (window.myWidgetTimer) {
+//     clearInterval(window.myWidgetTimer);
+// }
+      ]]></template>
+    </event>
+  </available_events>
+
+  <decision_guide>
+    <question>Does the widget need initialization logic or custom event registration?</question>
+    <answer>Yes → Create load.js</answer>
+    <answer>No → Skip load.js</answer>
+
+    <question>Does the widget need to update its display when data changes?</question>
+    <answer>Yes → Create change.js</answer>
+    <answer>No → Skip change.js</answer>
+
+    <question>Does the widget need to refresh when becoming visible?</question>
+    <answer>Yes → Create view.js</answer>
+    <answer>No → Skip view.js</answer>
+
+    <question>Does the widget need custom validation logic?</question>
+    <answer>Yes → Create validate.js</answer>
+    <answer>No → Skip validate.js</answer>
+
+    <question>Does the widget create resources that need cleanup?</question>
+    <answer>Yes → Create unload.js</answer>
+    <answer>No → Skip unload.js</answer>
+  </decision_guide>
+
+  <real_world_examples>
+    <example widget="TasksList">
+      <events_used>load.js, change.js</events_used>
+      <rationale>
+        Needs load.js to register custom event handlers with bpmext.ui.registerEventHandlingFunction().
+        Needs change.js to re-render the task list when data changes.
+      </rationale>
+    </example>
+
+    <example widget="Breadcrumb">
+      <events_used>change.js</events_used>
+      <rationale>
+        Only needs change.js to update the breadcrumb navigation when the path changes.
+        No initialization or cleanup required.
+      </rationale>
+    </example>
+
+    <example widget="MarkdownViewer">
+      <events_used>change.js</events_used>
+      <rationale>
+        Only needs change.js to re-parse and render markdown when content changes.
+        Simple display widget with no special lifecycle needs.
+      </rationale>
+    </example>
+
+    <example widget="DateOutput">
+      <events_used>none</events_used>
+      <rationale>
+        Simple display widget that formats dates. All logic is in inlineJavascript.js.
+        No event handlers needed - the events/ folder exists but is empty.
+      </rationale>
+    </example>
+  </real_world_examples>
+
+  <best_practices>
+    <practice priority="high">
+      <rule>Only create event handlers that the widget actually needs</rule>
+      <rationale>
+        Unnecessary event handlers add complexity and maintenance burden without providing value.
+        Start with no event handlers and add them only when functionality requires them.
+      </rationale>
+    </practice>
+
+    <practice priority="high">
+      <rule>Always use var _this = this; at the start of event handlers</rule>
+      <rationale>
+        Ensures consistent access to the widget context across all event handler code.
+        This is the BAW convention used in all existing widgets.
+      </rationale>
+    </practice>
+
+    <practice priority="medium">
+      <rule>Keep event handlers focused on their specific lifecycle concern</rule>
+      <rationale>
+        load.js for initialization, change.js for data updates, etc.
+        Don't mix concerns across event handlers.
+      </rationale>
+    </practice>
+
+    <practice priority="medium">
+      <rule>Use console.log() for debugging but consider removing in production</rule>
+      <rationale>
+        Helpful during development but can clutter the console in production environments.
+      </rationale>
+    </practice>
+
+    <practice priority="low">
+      <rule>Document complex event handler logic with comments</rule>
+      <rationale>
+        Event handlers can contain complex business logic that benefits from explanation.
+      </rationale>
+    </practice>
+  </best_practices>
+
+  <common_patterns>
+    <pattern name="data_driven_rendering">
+      <description>Widget updates its display based on data changes</description>
+      <required_events>change.js</required_events>
+      <example>
+        Most list-based widgets (TasksList, Breadcrumb) follow this pattern.
+        The change.js handler gets the new data and updates the DOM accordingly.
+      </example>
+    </pattern>
+
+    <pattern name="custom_event_integration">
+      <description>Widget registers and responds to custom BAW events</description>
+      <required_events>load.js</required_events>
+      <example>
+        TasksList uses load.js to register "UpdateEvent" with bpmext.ui.registerEventHandlingFunction().
+        This allows the widget to respond to custom events from other components.
+      </example>
+    </pattern>
+
+    <pattern name="resource_lifecycle">
+      <description>Widget creates resources that need cleanup</description>
+      <required_events>load.js, unload.js</required_events>
+      <example>
+        A widget that creates timers in load.js should clear them in unload.js.
+        A widget that adds event listeners should remove them in unload.js.
+      </example>
+    </pattern>
+
+    <pattern name="visibility_dependent">
+      <description>Widget needs to refresh when becoming visible</description>
+      <required_events>view.js</required_events>
+      <example>
+        Widgets in tabs or collapsible sections that need to recalculate layout
+        or refresh content when the user switches to their tab.
+      </example>
+    </pattern>
+
+    <pattern name="form_validation">
+      <description>Widget participates in form validation</description>
+      <required_events>validate.js</required_events>
+      <example>
+        Input widgets that need to validate data format, required fields,
+        or business rules before form submission.
+      </example>
+    </pattern>
+  </common_patterns>
+
+  <tool_integration>
+    <create_widget_template>
+      <description>
+        The create_widget_template.py script supports optional event handler generation
+        via the --events command-line flag.
+      </description>
+      <usage>
+        <command>python3 create_widget_template.py WidgetName "Description"</command>
+        <result>Creates widget with empty events/ folder</result>
+      </usage>
+      <usage>
+        <command>python3 create_widget_template.py WidgetName "Description" --events load,change</command>
+        <result>Creates widget with load.js and change.js event handlers</result>
+      </usage>
+      <usage>
+        <command>python3 create_widget_template.py WidgetName "Description" --events all</command>
+        <result>Creates widget with all five event handlers</result>
+      </usage>
+    </create_widget_template>
+  </tool_integration>
+</event_handler_guidance>
+
+<!-- Made with Bob -->

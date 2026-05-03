@@ -1,0 +1,122 @@
+<best_practices>
+  <general_principles>
+    <principle priority="high">
+      <name>Keep packaging separate from widget implementation</name>
+      <description>
+        Focus on packaging configuration, build execution, output validation, and optional deployment.
+        Do not treat widget source modifications as the default solution path in this mode.
+      </description>
+      <rationale>
+        Separation of responsibilities keeps packaging workflows predictable and easier to troubleshoot.
+      </rationale>
+    </principle>
+
+    <principle priority="high">
+      <name>Validate before packaging</name>
+      <description>
+        Inspect widget readiness before running packaging commands, especially when the request includes
+        new or recently changed widgets.
+      </description>
+      <rationale>
+        Early validation avoids failed builds and makes error reporting clearer.
+      </rationale>
+    </principle>
+
+    <principle priority="medium">
+      <name>Report outputs concretely</name>
+      <description>
+        Summaries should include the generated artifact path, the intended widget set, and any warnings
+        or blockers that affect import or deployment.
+      </description>
+      <rationale>
+        Packaging work is only useful when the resulting artifact and its status are clear.
+      </rationale>
+    </principle>
+  </general_principles>
+
+  <code_conventions>
+    <convention category="configuration">
+      <rule>Prefer small, intentional updates to packaging configuration files</rule>
+      <examples>
+        <good>Update only the requested widget selection or relevant toolkit setting</good>
+        <bad>Restructure unrelated packaging files during a simple packaging request</bad>
+      </examples>
+    </convention>
+
+    <convention category="execution">
+      <rule>Run packaging only after the target widget list and configuration path are understood</rule>
+      <examples>
+        <good>Review the packaging inputs before executing commands</good>
+        <bad>Run packaging blindly and inspect failures afterward</bad>
+      </examples>
+    </convention>
+
+    <convention category="deployment">
+      <rule>Use MCP deployment operations only after the user has requested deployment</rule>
+      <examples>
+        <good>Package first, then offer or perform deployment deliberately</good>
+        <bad>Assume deployment is desired whenever packaging succeeds</bad>
+      </examples>
+    </convention>
+  </code_conventions>
+
+  <common_pitfalls>
+    <pitfall>
+      <description>Fixing packaging problems by drifting into widget-authoring work</description>
+      <why_problematic>
+        This blurs responsibilities and can lead to the wrong mode making broader implementation changes.
+      </why_problematic>
+      <correct_approach>
+        Report widget issues clearly and switch responsibility when actual widget implementation work is required.
+      </correct_approach>
+    </pitfall>
+
+    <pitfall>
+      <description>Under-reporting warnings or partial failures</description>
+      <why_problematic>
+        A generated file may still be unusable if prerequisites, content, or deployment expectations are unclear.
+      </why_problematic>
+      <correct_approach>
+        Distinguish clearly between successful packaging, packaging with warnings, and blocked packaging.
+      </correct_approach>
+    </pitfall>
+
+    <pitfall>
+      <description>Triggering deployment without an explicit user intent</description>
+      <why_problematic>
+        Deployment has external effects and should never be inferred from a packaging request alone.
+      </why_problematic>
+      <correct_approach>
+        Treat deployment as an explicit follow-on action.
+      </correct_approach>
+    </pitfall>
+  </common_pitfalls>
+
+  <quality_checklist>
+    <category name="before_starting">
+      <item>Confirm whether the task is packaging, troubleshooting, or deployment</item>
+      <item>Inspect the relevant widgets and packaging files first</item>
+      <item>Check if widgets have icons ({WidgetName}.svg files) for palette display</item>
+    </category>
+    <category name="during_execution">
+      <item>Keep configuration edits minimal and targeted</item>
+      <item>Capture packaging output clearly</item>
+      <item>Note any widgets missing icons (optional but recommended)</item>
+    </category>
+    <category name="before_completion">
+      <item>Summarize artifact path, included widgets, and warnings</item>
+      <item>Make deployment status explicit rather than implicit</item>
+      <item>Report icon packaging status if relevant to the task</item>
+    </category>
+  </quality_checklist>
+
+  <icon_support_note>
+    <description>
+      Widget icons are automatically detected and packaged when present. Icons are optional
+      but highly recommended for better user experience in the BAW Process Designer palette.
+    </description>
+    <reference>See 9_widget_icons.xml for comprehensive icon documentation</reference>
+  </icon_support_note>
+</best_practices>
+
+<!-- Made with Bob -->

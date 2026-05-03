@@ -4,7 +4,7 @@
   "bindingType": {
     "name": "StepperData",
     "isList": true,
-    "classId": "String"
+    "type": "StepItem"
   },
   "configOptions": [
     {

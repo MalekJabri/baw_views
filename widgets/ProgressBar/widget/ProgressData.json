@@ -1,0 +1,25 @@
+{
+  "name": "ProgressData",
+  "type": "businessObject",
+  "description": "Business object representing progress bar data",
+  "properties": [
+    {
+      "name": "value",
+      "type": "Integer",
+      "required": true,
+      "description": "Progress value from 0 to 100 representing percentage complete"
+    },
+    {
+      "name": "percentage",
+      "type": "Integer",
+      "required": false,
+      "description": "Alternative to 'value' - progress percentage from 0 to 100"
+    },
+    {
+      "name": "status",
+      "type": "String",
+      "required": false,
+      "description": "Optional custom status message to display"
+    }
+  ]
+}
