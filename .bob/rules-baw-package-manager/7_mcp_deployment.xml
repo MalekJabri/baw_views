@@ -1,0 +1,153 @@
+<mcp_deployment_guidance>
+  <overview>
+    This file defines how the package manager mode should approach BAW deployment tasks using MCP tools.
+    After successful packaging, deployment should be offered as a suggested next step.
+  </overview>
+
+  <deployment_principles>
+    <principle priority="high">
+      <statement>After successful packaging, offer deployment to BAW server as a suggested follow-up action</statement>
+    </principle>
+    <principle priority="high">
+      <statement>ALWAYS establish a login session BEFORE performing any other MCP operations</statement>
+    </principle>
+    <principle priority="high">
+      <statement>BAW login sessions have limited lifetime - always login first for each deployment workflow</statement>
+    </principle>
+    <principle priority="medium">
+      <statement>When deployment returns an asynchronous job or queue identifier, track status and report results</statement>
+    </principle>
+  </deployment_principles>
+
+  <deployment_workflow>
+    <step number="1">
+      <action>Offer deployment after packaging</action>
+      <details>
+        After successful packaging, use ask_followup_question to offer deployment:
+        - Suggest "Yes, deploy to BAW server" as the first option
+        - Suggest "No, just keep the local TWX file" as the second option
+      </details>
+      <example><![CDATA[
+<ask_followup_question>
+<question>Package created successfully! Would you like to deploy it to the BAW server?</question>
+<follow_up>
+<suggest>Yes, deploy to BAW server</suggest>
+<suggest>No, just keep the local TWX file</suggest>
+</follow_up>
+</ask_followup_question>
+      ]]></example>
+    </step>
+
+    <step number="2">
+      <action>Establish BAW login session</action>
+      <details>
+        CRITICAL: Before any deployment operation, ALWAYS call the login MCP tool first.
+        This establishes a session with CSRF token that is required for all subsequent operations.
+      </details>
+      <example><![CDATA[
+<use_mcp_tool>
+<server_name>baw-admin</server_name>
+<tool_name>login</tool_name>
+<arguments>
+{
+  "refresh_groups": false
+}
+</arguments>
+</use_mcp_tool>
+      ]]></example>
+    </step>
+
+    <step number="3">
+      <action>Confirm artifact readiness</action>
+      <details>Ensure the toolkit artifact exists and is the correct deployment candidate.</details>
+    </step>
+
+    <step number="4">
+      <action>Deploy to BAW server</action>
+      <details>
+        Use the install_container MCP tool with the TWX file path.
+        Set inactive to false to activate the toolkit immediately.
+      </details>
+      <example><![CDATA[
+<use_mcp_tool>
+<server_name>baw-admin</server_name>
+<tool_name>install_container</tool_name>
+<arguments>
+{
+  "file_path": "output/Custom_Widgets_1.0.17.twx",
+  "inactive": false
+}
+</arguments>
+</use_mcp_tool>
+      ]]></example>
+    </step>
+
+    <step number="5">
+      <action>Track deployment status</action>
+      <details>
+        The deployment returns an operation_id and authorization_key.
+        Use get_queue_status to monitor the deployment progress.
+      </details>
+      <example><![CDATA[
+<use_mcp_tool>
+<server_name>baw-admin</server_name>
+<tool_name>get_queue_status</tool_name>
+<arguments>
+{
+  "operation_id": "31",
+  "authorization_key": "aa0e9f3a47ed56f97fec4a67113df3db"
+}
+</arguments>
+</use_mcp_tool>
+      ]]></example>
+    </step>
+
+    <step number="6">
+      <action>Report deployment results</action>
+      <details>
+        Provide a clear summary including:
+        - Deployment status (success/pending/failed)
+        - Toolkit name and version
+        - Deployment timestamp
+        - Any errors or warnings
+      </details>
+    </step>
+  </deployment_workflow>
+
+  <session_management>
+    <critical_rule>
+      ALWAYS call the login MCP tool BEFORE any other BAW MCP operations.
+      The login establishes a session with CSRF token that expires after a period of inactivity.
+    </critical_rule>
+    <workflow_pattern>
+      1. Call login MCP tool
+      2. Perform deployment operations (install_container, get_queue_status, etc.)
+      3. If session expires, call login again before retrying
+    </workflow_pattern>
+  </session_management>
+
+  <reporting_requirements>
+    <item>Report the artifact that was targeted for deployment</item>
+    <item>Report whether the deployment is complete or asynchronous</item>
+    <item>Report any identifiers needed for later status checks</item>
+    <item>Report blocking errors in actionable language</item>
+    <item>Include deployment timestamp when available</item>
+  </reporting_requirements>
+
+  <error_handling>
+    <error type="session_expired">
+      <symptom>Authentication or CSRF token errors</symptom>
+      <solution>Call login MCP tool again to establish a new session</solution>
+    </error>
+    <error type="file_not_found">
+      <symptom>Cannot find TWX file for deployment</symptom>
+      <solution>Verify the output path and ensure packaging completed successfully</solution>
+    </error>
+    <error type="deployment_failed">
+      <symptom>Deployment returns error status</symptom>
+      <solution>Check the error details and suggest corrective actions</solution>
+    </error>
+  </error_handling>
+</mcp_deployment_guidance>
+
+<!-- Made with Bob -->

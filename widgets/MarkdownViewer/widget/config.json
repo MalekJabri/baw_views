@@ -4,7 +4,7 @@
   "bindingType": {
     "name": "MarkdownText",
     "isList": false,
-    "classId": "String"
+    "type": "String"
   },
   "configOptions": [
     {

@@ -1,0 +1,168 @@
+<automatic_widget_detection>
+  <overview>
+    This file defines how the BAW Package Manager mode automatically detects new widgets
+    and updates the packaging configuration to include them.
+  </overview>
+
+  <detection_workflow>
+    <step number="1">
+      <action>Scan the widgets directory</action>
+      <details>
+        Use list_files tool to get all directories in the widgets folder.
+        Each directory that contains a widget/config.json file is a valid widget.
+      </details>
+      <example><![CDATA[
+<list_files>
+<path>widgets</path>
+<recursive>false</recursive>
+</list_files>
+      ]]></example>
+    </step>
+
+    <step number="2">
+      <action>Validate widget structure</action>
+      <details>
+        For each directory found, check if it contains the required widget/config.json file.
+        This confirms it's a valid widget ready for packaging.
+      </details>
+    </step>
+
+    <step number="3">
+      <action>Read current packaging configuration</action>
+      <details>
+        Read package_multiple_widgets.py to get the current WIDGET_NAMES list.
+        This shows which widgets are already configured for packaging.
+      </details>
+      <example><![CDATA[
+<read_file>
+<args>
+  <file>
+    <path>package_multiple_widgets.py</path>
+    <line_range>19-30</line_range>
+  </file>
+</args>
+</read_file>
+      ]]></example>
+    </step>
+
+    <step number="4">
+      <action>Identify new widgets</action>
+      <details>
+        Compare the list of valid widgets found in the widgets directory with the
+        WIDGET_NAMES list in package_multiple_widgets.py. Any widget not in the list
+        is considered new and should be added.
+      </details>
+    </step>
+
+    <step number="5">
+      <action>Update packaging configuration</action>
+      <details>
+        If new widgets are found, update the WIDGET_NAMES list in package_multiple_widgets.py.
+        Add new widgets in alphabetical order to maintain consistency.
+      </details>
+      <example><![CDATA[
+<apply_diff>
+<path>package_multiple_widgets.py</path>
+<diff>
+<<<<<<< SEARCH
+:start_line:19
+-------
+WIDGET_NAMES = [
+    "Breadcrumb",
+    "DateOutput",
+    "MultiSelect"
+]
+=======
+WIDGET_NAMES = [
+    "Breadcrumb",
+    "DateOutput",
+    "MultiSelect",
+    "NewWidget"
+]
+>>>>>>> REPLACE
+</diff>
+</apply_diff>
+      ]]></example>
+    </step>
+
+    <step number="6">
+      <action>Report detected widgets</action>
+      <details>
+        Inform the user about any new widgets that were detected and added to the
+        packaging configuration. This provides transparency about what will be included.
+      </details>
+    </step>
+  </detection_workflow>
+
+  <widget_validation_criteria>
+    <criterion>Directory exists in widgets folder</criterion>
+    <criterion>Contains widget/config.json file</criterion>
+    <criterion>config.json is valid JSON with required fields (name, description, etc.)</criterion>
+    <criterion>Optional: Contains {WidgetName}.svg icon file for BAW palette display</criterion>
+  </widget_validation_criteria>
+
+  <icon_detection>
+    <description>
+      Widget palette icons are automatically detected and packaged when present.
+      Icons enhance the user experience by providing visual identification in the BAW Process Designer palette.
+    </description>
+    <file_naming>
+      Icon files must be named exactly as {WidgetName}.svg and placed in the widget root directory.
+      Example: For a widget named "ProgressBar", the icon file should be "ProgressBar.svg"
+    </file_naming>
+    <behavior>
+      <when_present>Icon is automatically packaged as a managed asset and linked to the coach view</when_present>
+      <when_missing>Widget packages successfully but appears without an icon in the BAW palette</when_missing>
+    </behavior>
+    <note>
+      Icon detection and packaging is fully automatic. No configuration changes are needed.
+      See 9_widget_icons.xml for detailed icon requirements and best practices.
+    </note>
+  </icon_detection>
+
+  <alphabetical_ordering>
+    <description>
+      When adding new widgets to WIDGET_NAMES, maintain alphabetical order for consistency
+      and easier maintenance. This makes it easier to spot missing widgets and keeps the
+      configuration organized.
+    </description>
+    <example>
+      Correct order: ["Breadcrumb", "DateOutput", "MultiSelect", "ProgressBar", "Stepper"]
+      Incorrect order: ["Breadcrumb", "ProgressBar", "DateOutput", "Stepper", "MultiSelect"]
+    </example>
+  </alphabetical_ordering>
+
+  <when_to_detect>
+    <trigger>User requests packaging of widgets</trigger>
+    <trigger>User asks to "package all widgets"</trigger>
+    <trigger>User mentions creating or adding a new widget and wants to package</trigger>
+    <trigger>User explicitly asks to update the packaging configuration</trigger>
+  </when_to_detect>
+
+  <reporting_format>
+    <new_widgets_found>
+      Report: "Detected N new widget(s): [widget names]"
+      Report: "Adding to packaging configuration..."
+      Report: "Updated package_multiple_widgets.py"
+    </new_widgets_found>
+    <no_new_widgets>
+      Report: "All widgets already configured for packaging"
+      Report: "Proceeding with packaging..."
+    </no_new_widgets>
+  </reporting_format>
+
+  <error_handling>
+    <error type="invalid_widget_structure">
+      <symptom>Directory exists but missing widget/config.json</symptom>
+      <action>Skip the directory and report it as invalid</action>
+      <message>Warning: Directory 'X' does not contain a valid widget structure</message>
+    </error>
+    <error type="malformed_config">
+      <symptom>config.json exists but is not valid JSON</symptom>
+      <action>Skip the widget and report the error</action>
+      <message>Warning: Widget 'X' has malformed config.json</message>
+    </error>
+  </error_handling>
+</automatic_widget_detection>
+
+<!-- Made with Bob -->

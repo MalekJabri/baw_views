@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:package buildId="BPM8600-20251126-121712" buildVersion="8.6.10" buildDescription="IBM Business Process Manager V8.6.10.25010 - 20251126_1440 - BPM8600-20251126-121712" fixPack="25010" containsECM="false" containsBPMN2="false" xmlns:p="http://lombardisoftware.com/schema/teamworks/7.0.0/package.xsd">
+    <target>
+        <project id="2066.a0712f48-d324-4e2b-8dae-d25aa6ae8b40" name="testUI" description="" shortName="TUI" isToolkit="true" isHidden="false" isSystem="false" solutionID="" solutionServerName="" solutionPrefix="" type="" isTemplate="false" isIconSet="false" caseDisplayName=""/>
+        <branch id="2063.e65fe958-e411-479e-a146-eef40cd86044" name="Main" acronym="Main" description=""/>
+        <snapshot id="2064.b07e6260-07b9-4f3e-9d78-783c79b71ffd" name="2" acronym="2" originalCreationDate="2026-05-02T23:54:29.672Z" description=""/>
+    </target>
+    <dependencies>
+        <dependency rank="2" isManaged="false" id="2069.7693e51e-e6f3-47d2-8ee6-e14f8fb7c5f1">
+            <project id="2066.cebc1c06-68a5-4d2e-986a-aaae3072ceeb" name="Custom Widgets" shortName="CW" isToolkit="true" isHidden="false" isSystem="false"/>
+            <branch id="2063.58d1876b-64f7-4b1a-b064-e0c97b073a8b" name="Main"/>
+            <snapshot id="2064.b6502e5a-20f4-4d1e-a95f-55ceef6fc34a" name="1.0.26" originalCreationDate="2026-05-02T22:35:27.513Z"/>
+        </dependency>
+        <dependency rank="1" isManaged="false" id="2069.ce573402-01cc-489e-929a-de5aff9babf4">
+            <project id="2066.ec5973da-aebe-40f6-aa02-a77962288f52" name="UI Toolkit" shortName="SYSBPMUI" isToolkit="true" isHidden="false" isSystem="true"/>
+            <branch id="2063.83ee2bb2-72b4-4a4d-b8ae-37ecd983c05e" name="Main"/>
+            <snapshot id="2064.304ac881-16c3-47d2-97d5-6e4c4a893177" name="8.6.0.0" originalCreationDate="2017-05-24T23:23:53.574Z"/>
+        </dependency>
+        <dependency rank="0" isManaged="false" id="2069.db17b473-3be9-4da2-a004-ad3e42a72578">
+            <project id="2066.1b351583-e5cb-43b7-baee-340a63130ea7" name="System Data" shortName="TWSYS" isToolkit="true" isHidden="false" isSystem="true"/>
+            <branch id="2063.0798815e-0346-4ef4-8946-ab4301c9f340" name="Main"/>
+            <snapshot id="2064.1080ded6-d153-4654-947c-2d16fce170db" name="8.6.0.0_TC" originalCreationDate="2015-08-25T00:00:00.000Z"/>
+        </dependency>
+    </dependencies>
+    <objects>
+        <object id="1.7a20d4f7-74bb-4863-a6ac-fa970df26007" versionId="ab366873-9484-4470-ba72-363546b7918c" name="Deployment service flow" type="process"/>
+        <object id="1.c01759ed-6bc0-4a8b-8923-022b9a6be086" versionId="777c0b13-1c87-4cc0-94db-0dbd2e48b529" name="My First Coach" type="process"/>
+        <object id="25.e2c4a932-296e-4d8c-abe8-44e00c5ee46d" versionId="d74fd77f-1822-424b-92cc-7f5cb2743980" name="My First Process" type="bpd"/>
+        <object id="61.e4ad887b-e469-43a4-97d5-61f1df9ec8b9" versionId="fac3aae2-27d7-4407-967c-8700b36fca37" name="993e03e9-2574-40fc-807c-65b06be378fd.zip" type="managedAsset"/>
+        <object id="62.cda9fcc0-ada0-4482-9a83-e26b041e8731" versionId="7558f0e0-52e8-4a80-ae2b-538755d25a88" name="Environment Variables" type="environmentVariableSet"/>
+        <object id="63.7e5d26fd-2177-407f-9b63-d85c63397c6f" versionId="de7297fc-8e88-4b3f-9cf6-0bd4f8541b86" name="Toolkit Settings" type="projectDefaults"/>
+    </objects>
+    <files>
+        <file path="1892606e-d1a3-4fd6-b0b7-c1f50ceaa35a" id="61.e4ad887b-e469-43a4-97d5-61f1df9ec8b9"/>
+    </files>
+    <migrationPolicies/>
+</p:package>

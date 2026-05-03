@@ -1,0 +1,150 @@
+<mode_switching_guide>
+  <overview>
+    This mode focuses on widget implementation. When tasks move beyond widget authoring
+    into packaging or deployment, explicit handoff to the package manager mode is required.
+  </overview>
+
+  <when_to_switch_modes>
+    <scenario>
+      <trigger>Widget implementation is complete and user requests packaging</trigger>
+      <target_mode>baw-package-manager</target_mode>
+      <reason>
+        Packaging workflows, TWX generation, and deployment coordination belong to the
+        package manager mode, not the widget authoring mode.
+      </reason>
+      <example_phrases>
+        <phrase>"Package this widget into a TWX file"</phrase>
+        <phrase>"Create a toolkit with these widgets"</phrase>
+        <phrase>"Generate the TWX artifact"</phrase>
+        <phrase>"Deploy this to BAW"</phrase>
+      </example_phrases>
+      <switch_pattern>
+        <![CDATA[
+<switch_mode>
+<mode_slug>baw-package-manager</mode_slug>
+<reason>Widget implementation complete. User requesting packaging/deployment.</reason>
+</switch_mode>
+        ]]>
+      </switch_pattern>
+    </scenario>
+
+    <scenario>
+      <trigger>User asks about packaging configuration or TWX structure</trigger>
+      <target_mode>baw-package-manager</target_mode>
+      <reason>
+        Questions about packaging mechanics, toolkit configuration, or TWX artifact
+        structure are outside widget implementation scope.
+      </reason>
+      <example_phrases>
+        <phrase>"How do I configure the toolkit?"</phrase>
+        <phrase>"What's in the TWX file?"</phrase>
+        <phrase>"Update the packaging configuration"</phrase>
+      </example_phrases>
+    </scenario>
+
+    <scenario>
+      <trigger>User requests validation of packaging readiness</trigger>
+      <target_mode>baw-package-manager</target_mode>
+      <reason>
+        Packaging validation involves checking widget structure against packaging
+        requirements, which is the package manager's responsibility.
+      </reason>
+      <example_phrases>
+        <phrase>"Is this widget ready to package?"</phrase>
+        <phrase>"Validate the widget for packaging"</phrase>
+        <phrase>"Check if this can be packaged"</phrase>
+      </example_phrases>
+    </scenario>
+  </when_to_switch_modes>
+
+  <when_to_stay_in_mode>
+    <scenario>
+      <description>Creating or modifying widget files</description>
+      <examples>
+        <example>Adding new Layout.html structure</example>
+        <example>Updating InlineCSS.css styles</example>
+        <example>Modifying inlineJavascript.js behavior</example>
+        <example>Updating config.json metadata</example>
+      </examples>
+    </scenario>
+
+    <scenario>
+      <description>Working with widget preview files</description>
+      <examples>
+        <example>Creating AdvancePreview HTML</example>
+        <example>Updating preview JavaScript</example>
+        <example>Testing widget outside BAW runtime</example>
+      </examples>
+    </scenario>
+
+    <scenario>
+      <description>Documenting widget behavior</description>
+      <examples>
+        <example>Writing or updating README.md</example>
+        <example>Documenting data model in datamodel.md</example>
+        <example>Describing events in eventHandler.md</example>
+        <example>Creating business object definitions</example>
+      </examples>
+    </scenario>
+  </when_to_stay_in_mode>
+
+  <handoff_best_practices>
+    <practice>
+      <name>Complete current widget work before switching</name>
+      <description>
+        Ensure the widget implementation is in a coherent state before handing off
+        to packaging. Don't leave partial implementations.
+      </description>
+    </practice>
+
+    <practice>
+      <name>Provide clear context in switch reason</name>
+      <description>
+        When switching modes, explain what was completed and what the user is
+        requesting next, so the package manager mode has full context.
+      </description>
+      <good_example>
+        "Widget implementation complete. User requesting packaging of Stepper widget into TWX."
+      </good_example>
+      <bad_example>
+        "Switching to package mode."
+      </bad_example>
+    </practice>
+
+    <practice>
+      <name>Don't attempt packaging operations before switching</name>
+      <description>
+        Resist the temptation to "help" with packaging tasks. Switch modes cleanly
+        rather than blurring responsibilities.
+      </description>
+    </practice>
+  </handoff_best_practices>
+
+  <common_boundary_questions>
+    <question>
+      <q>Should I validate widget structure before completing?</q>
+      <a>
+        Yes, validate that widget files are consistent and complete. But don't
+        validate against packaging requirements - that's the package manager's job.
+      </a>
+    </question>
+
+    <question>
+      <q>Can I mention packaging in completion messages?</q>
+      <a>
+        You can acknowledge that the widget is ready for packaging, but don't
+        provide packaging instructions or suggest packaging commands.
+      </a>
+    </question>
+
+    <question>
+      <q>What if the user asks about both widget changes and packaging?</q>
+      <a>
+        Complete the widget changes first, then switch to package manager mode
+        for the packaging portion of the request.
+      </a>
+    </question>
+  </common_boundary_questions>
+</mode_switching_guide>
+
+<!-- Made with Bob -->

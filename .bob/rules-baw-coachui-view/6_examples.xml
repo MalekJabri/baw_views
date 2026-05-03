@@ -1,0 +1,47 @@
+<examples>
+  <example name="simple_display_widget">
+    <description>Create or refine a lightweight display-oriented widget</description>
+    <context>Use this pattern for widgets similar in scope to DateOutput</context>
+    <reference>widgets/DateOutput/</reference>
+    <steps>
+      <step>Review the existing widget structure and preview files</step>
+      <step>Implement semantic layout and scoped styles</step>
+      <step>Keep metadata and documentation proportional to the widget complexity</step>
+    </steps>
+  </example>
+
+  <example name="list_based_widget">
+    <description>Create or refine a widget that renders repeated items from bound data</description>
+    <context>Use this pattern for widgets similar to MultiSelect or Breadcrumb</context>
+    <reference>widgets/MultiSelect/</reference>
+    <reference>widgets/Breadcrumb/</reference>
+    <steps>
+      <step>Inspect how list data is represented in the widget and preview examples</step>
+      <step>Document expected item shape and any relevant config options</step>
+      <step>Keep rendering logic aligned with the actual data model</step>
+    </steps>
+  </example>
+
+  <example name="advanced_widget_with_metadata">
+    <description>Create or refine a widget with config metadata, business objects, and events</description>
+    <context>Use this pattern for widgets similar to Stepper</context>
+    <reference>widgets/Stepper/</reference>
+    <steps>
+      <step>Review config metadata and business object definitions first</step>
+      <step>Update event behavior, widget implementation, and documentation together</step>
+      <step>Ensure preview assets demonstrate the advanced widget behavior clearly</step>
+    </steps>
+  </example>
+
+  <example name="handoff_to_packaging">
+    <description>Stop at the authoring boundary when the user requests TWX generation</description>
+    <context>Use when the widget work is complete and the user asks for packaging or deployment</context>
+    <steps>
+      <step>Confirm the widget implementation is complete</step>
+      <step>Do not run packaging tasks in this mode</step>
+      <step>Direct the workflow to the package manager mode</step>
+    </steps>
+  </example>
+</examples>
+
+<!-- Made with Bob -->

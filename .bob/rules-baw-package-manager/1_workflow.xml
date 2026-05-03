@@ -1,0 +1,116 @@
+<workflow_instructions>
+  <mode_overview>
+    This mode validates widget packaging readiness, automatically detects new widgets,
+    updates packaging configuration, runs TWX packaging workflows, verifies generated
+    artifacts, and coordinates deployment to BAW servers. It does not serve as the
+    primary mode for widget implementation.
+  </mode_overview>
+
+  <initialization_steps>
+    <step number="1">
+      <action>Understand the packaging request</action>
+      <details>
+        Determine whether the user wants to validate widgets, package one or more widgets,
+        troubleshoot packaging issues, or deploy a generated toolkit.
+      </details>
+    </step>
+
+    <step number="2">
+      <action>Inspect the packaging context</action>
+      <details>
+        Review the available widgets, packaging scripts, toolkit configuration, and any
+        existing output expectations before running commands.
+      </details>
+    </step>
+
+    <step number="3">
+      <action>Detect new widgets automatically</action>
+      <details>
+        When packaging is requested, scan the widgets directory to identify any new widgets
+        that are not yet in the package_multiple_widgets.py WIDGET_NAMES list. Automatically
+        add them to ensure all widgets are included in the package.
+      </details>
+    </step>
+
+    <step number="4">
+      <action>Preserve mode boundaries</action>
+      <details>
+        Do not take ownership of widget implementation changes unless the task is explicitly
+        handed to a widget-authoring mode.
+      </details>
+    </step>
+  </initialization_steps>
+
+  <main_workflow>
+    <phase name="analysis">
+      <description>Analyze packaging readiness and detect new widgets</description>
+      <steps>
+        <step>Scan the widgets directory to identify all available widgets</step>
+        <step>Compare with the current WIDGET_NAMES list in package_multiple_widgets.py</step>
+        <step>Identify any new widgets that need to be added to the packaging configuration</step>
+        <step>Validate that all widgets appear structurally ready for packaging</step>
+      </steps>
+    </phase>
+
+    <phase name="configuration_update">
+      <description>Update packaging configuration with new widgets</description>
+      <steps>
+        <step>If new widgets are detected, update package_multiple_widgets.py WIDGET_NAMES list</step>
+        <step>Add new widgets in alphabetical order for consistency</step>
+        <step>Confirm the update was successful</step>
+      </steps>
+    </phase>
+
+    <phase name="packaging">
+      <description>Run the packaging workflow</description>
+      <steps>
+        <step>Execute package_multiple_widgets.py to generate the TWX artifact</step>
+        <step>Capture the resulting output path and artifact summary</step>
+        <step>Verify the package was created successfully</step>
+      </steps>
+    </phase>
+
+    <phase name="deployment_prompt">
+      <description>Offer deployment to BAW server</description>
+      <steps>
+        <step>After successful packaging, ask if the user wants to deploy to the BAW server</step>
+        <step>Provide deployment as a suggested follow-up action</step>
+        <step>If user confirms deployment, proceed to deployment phase</step>
+      </steps>
+    </phase>
+
+    <phase name="deployment">
+      <description>Deploy toolkit to BAW server (if requested)</description>
+      <steps>
+        <step>Establish BAW session using login MCP tool</step>
+        <step>Deploy the TWX artifact using install_container MCP tool</step>
+        <step>Monitor deployment status using get_queue_status MCP tool</step>
+        <step>Report deployment results</step>
+      </steps>
+    </phase>
+  </main_workflow>
+
+  <automatic_widget_detection>
+    <description>
+      When packaging is requested, automatically detect and include new widgets
+    </description>
+    <steps>
+      <step>List all directories in the widgets folder</step>
+      <step>For each directory, check if it contains a widget/config.json file</step>
+      <step>Compare the list of valid widgets with WIDGET_NAMES in package_multiple_widgets.py</step>
+      <step>Add any missing widgets to WIDGET_NAMES in alphabetical order</step>
+      <step>Inform the user about newly detected widgets being added</step>
+    </steps>
+  </automatic_widget_detection>
+
+  <completion_criteria>
+    <criterion>All available widgets are detected and included in packaging configuration</criterion>
+    <criterion>The packaging workflow completes successfully</criterion>
+    <criterion>Output artifacts are clearly reported with file location and size</criterion>
+    <criterion>Deployment option is offered after successful packaging</criterion>
+    <criterion>If deployment is performed, status is tracked and reported</criterion>
+    <criterion>Widget-authoring work is not mixed into the packaging workflow</criterion>
+  </completion_criteria>
+</workflow_instructions>
+
+<!-- Made with Bob -->

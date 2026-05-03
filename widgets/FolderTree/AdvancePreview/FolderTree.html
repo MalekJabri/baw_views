@@ -11,25 +11,29 @@
 -->
 
 <style>
-.folder-tree-widget {
-    display: inline-block;
-    max-width: 450px;
+.foldertree-heading {
+    padding-bottom: 4px;
 }
 
-.ufm-widget {
+.foldertree_maincontentbox {
+    width: 100%;
+    min-height: 300px;
+    padding: 1rem;
     font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.foldertree_maincontentbox .ufm-widget {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
-    display: inline-block;
-    min-width: 280px;
+    width: 100%;
 }
 
-.ufm-container {
+.foldertree_maincontentbox .ufm-container {
     display: block;
 }
 
-.ufm-files-panel {
+.foldertree_maincontentbox .ufm-files-panel {
     width: 100%;
     padding: 16px;
 }
@@ -38,20 +42,20 @@
     display: none;
 }
 
-.ufm-files-header {
+.foldertree_maincontentbox .ufm-files-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
 }
 
-.ufm-files-title {
+.foldertree_maincontentbox .ufm-files-title {
     font-size: 16px;
     font-weight: 600;
     color: #161616;
 }
 
-.ufm-refresh-btn {
+.foldertree_maincontentbox .ufm-refresh-btn {
     background: transparent;
     border: none;
     cursor: pointer;
@@ -59,7 +63,7 @@
     color: #0f62fe;
 }
 
-.ufm-selection-controls {
+.foldertree_maincontentbox .ufm-selection-controls {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -67,8 +71,8 @@
     font-size: 14px;
 }
 
-.ufm-select-all-btn,
-.ufm-unselect-all-btn {
+.foldertree_maincontentbox .ufm-select-all-btn,
+.foldertree_maincontentbox .ufm-unselect-all-btn {
     background: transparent;
     border: none;
     color: #0f62fe;
@@ -76,18 +80,18 @@
     padding: 4px 8px;
 }
 
-.ufm-file-count {
+.foldertree_maincontentbox .ufm-file-count {
     margin-left: auto;
     color: #525252;
 }
 
-.ufm-files-list {
+.foldertree_maincontentbox .ufm-files-list {
     overflow-y: auto;
     max-height: 300px;
     width: 100%;
 }
 
-.ufm-file-item {
+.foldertree_maincontentbox .ufm-file-item {
     padding: 8px;
     border: 1px solid #e0e0e0;
     margin-bottom: 4px;
@@ -95,17 +99,22 @@
     cursor: pointer;
 }
 
-.ufm-file-item:hover {
+.foldertree_maincontentbox .ufm-file-item:hover {
     background-color: #f4f4f4;
 }
 
 </style>
 
-<div class="SPARKPanel panel folder-tree-widget">
-    <div class="ufm-widget" role="region" aria-label="Folder Tree Manager">
-        <div class="ufm-container">
-            <!-- Left Panel: Files List -->
-            <div class="ufm-files-panel" role="main" aria-label="Files and folders">
+<div class="SPARKPanel panel">
+    <div class="foldertree-heading">
+        <span class="foldertree-title">Folder Tree Widget Preview</span>
+    </div>
+    <div class="foldertree-body">
+        <div class="foldertree_maincontentbox">
+            <div class="ufm-widget" role="region" aria-label="Folder Tree Manager">
+                <div class="ufm-container">
+                    <!-- Left Panel: Files List -->
+                    <div class="ufm-files-panel" role="main" aria-label="Files and folders">
                 <div class="ufm-files-header">
                     <h2 class="ufm-files-title">Uploaded files</h2>
                     <button class="ufm-refresh-btn" type="button" aria-label="Refresh file list" title="Refresh">
@@ -146,9 +155,11 @@
                         <input type="checkbox" aria-label="Select file">
                         <span>🖼️ Photo1.jpg</span>
                     </div>
+                    </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </div>
+
+<!-- Made with Bob -->

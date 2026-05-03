@@ -1,0 +1,52 @@
+{
+  "name": "ProgressBar",
+  "description": "Animated horizontal progress bar with color-coded states and real-time percentage display for IBM Business Automation Workflow",
+  "bindingType": {
+    "name": "ProgressData",
+    "type": "ProgressData"
+  },
+  "configOptions": [
+    {
+      "name": "showPercentage",
+      "type": "Boolean",
+      "label": "Show Percentage",
+      "description": "Display the percentage value above the progress bar",
+      "default": true
+    },
+    {
+      "name": "showStatus",
+      "type": "Boolean",
+      "label": "Show Status",
+      "description": "Display status message below the progress bar",
+      "default": true
+    },
+    {
+      "name": "animated",
+      "type": "Boolean",
+      "label": "Animated",
+      "description": "Enable smooth transition animations for progress changes",
+      "default": true
+    },
+    {
+      "name": "customMessages",
+      "type": "Object",
+      "label": "Custom Messages",
+      "description": "Custom status messages (object with notStarted, inProgress, complete properties)",
+      "default": null
+    },
+    {
+      "name": "progressChanged",
+      "type": "Event",
+      "label": "Progress Changed",
+      "description": "Event fired when progress value changes",
+      "parameterName": "value"
+    }
+  ],
+  "businessObjects": [
+    {
+      "name": "ProgressData",
+      "file": "ProgressData.json"
+    }
+  ],
+  "changeFunction": true
+}

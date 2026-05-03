@@ -1,0 +1,352 @@
+<widget_icons>
+  <overview>
+    This file documents the automatic widget icon support in the BAW toolkit packager.
+    Icons provide visual identification for widgets in the IBM Business Automation Workflow
+    Process Designer palette, improving user experience and widget discoverability.
+  </overview>
+
+  <icon_requirements>
+    <file_format>
+      <format>SVG (Scalable Vector Graphics)</format>
+      <rationale>SVG format ensures crisp display at any size and keeps file sizes small</rationale>
+      <mime_type>image/svg+xml</mime_type>
+    </file_format>
+
+    <file_naming>
+      <rule>Icon file must be named exactly as {WidgetName}.svg</rule>
+      <case_sensitive>Yes - must match the widget name exactly including capitalization</case_sensitive>
+      <examples>
+        <example>
+          <widget_name>ProgressBar</widget_name>
+          <icon_filename>ProgressBar.svg</icon_filename>
+          <status>✓ Correct</status>
+        </example>
+        <example>
+          <widget_name>ProgressBar</widget_name>
+          <icon_filename>progressbar.svg</icon_filename>
+          <status>✗ Incorrect - case mismatch</status>
+        </example>
+        <example>
+          <widget_name>ProgressBar</widget_name>
+          <icon_filename>ProgressBar_icon.svg</icon_filename>
+          <status>✗ Incorrect - extra suffix</status>
+        </example>
+      </examples>
+    </file_naming>
+
+    <file_location>
+      <location>Widget root directory (same level as widget/ subdirectory)</location>
+      <structure><![CDATA[
+widgets/
+  ProgressBar/
+    ProgressBar.svg          ← Icon file here
+    README.md
+    widget/
+      config.json
+      Layout.html
+      inlineJavascript.js
+      InlineCSS.css
+      ]]></structure>
+    </file_location>
+
+    <recommended_dimensions>
+      <size>120x120 pixels</size>
+      <viewbox>0 0 120 120</viewbox>
+      <rationale>Optimal size for BAW palette display while maintaining clarity</rationale>
+    </recommended_dimensions>
+
+    <design_guidelines>
+      <guideline>Use simple, recognizable shapes that represent the widget's purpose</guideline>
+      <guideline>Maintain good contrast for visibility in both light and dark themes</guideline>
+      <guideline>Keep file size under 10KB for fast loading</guideline>
+      <guideline>Avoid excessive detail that may not be visible at small sizes</guideline>
+      <guideline>Use consistent color palette across related widgets</guideline>
+    </design_guidelines>
+  </icon_requirements>
+
+  <automatic_packaging>
+    <detection_process>
+      <step number="1">
+        <action>Widget scanner checks for {WidgetName}.svg in widget root directory</action>
+        <implementation>Widget.has_icon() method in toolkit_packager/models/widget.py</implementation>
+      </step>
+      <step number="2">
+        <action>If icon exists, generate unique managed asset ID from registry</action>
+        <implementation>CoachViewRegistry.get_icon_id() or generate new ID</implementation>
+      </step>
+      <step number="3">
+        <action>Package icon as managed asset (type 61) with MIME type image/svg+xml</action>
+        <implementation>ManagedAssetGenerator.generate_icon_asset()</implementation>
+      </step>
+      <step number="4">
+        <action>Link icon to coach view via paletteIcon element</action>
+        <implementation>CoachViewGenerator.generate_coach_view_xml()</implementation>
+      </step>
+      <step number="5">
+        <action>Register icon ID in registry for stable versioning</action>
+        <implementation>CoachViewRegistry.register_coach_view() with icon_id parameter</implementation>
+      </step>
+    </detection_process>
+
+    <no_configuration_needed>
+      Icon detection and packaging is completely automatic. No changes to configuration
+      files or packaging scripts are required. Simply place the correctly named SVG file
+      in the widget directory and it will be included in the next package build.
+    </no_configuration_needed>
+
+    <registry_tracking>
+      <description>
+        Icon IDs are tracked in toolkit_packager/baw_coach_views.json registry to maintain
+        stable IDs across packaging operations. This ensures proper version control and
+        prevents ID conflicts when updating toolkits.
+      </description>
+      <registry_entry><![CDATA[
+{
+  "ProgressBar": {
+    "coachViewId": "64.db824ed3-93e7-4eb6-a583-56a0a2bf25c0",
+    "iconId": "61.19d8bd43-d600-41db-a9ca-5a6ee876a762",
+    "previewHtmlId": "61.bdad09c2-170a-489d-a449-4b8bebabd689",
+    "previewJsId": "61.446a7cc8-aeda-4105-81ae-9d672398c3bd"
+  }
+}
+      ]]></registry_entry>
+    </registry_tracking>
+  </automatic_packaging>
+
+  <twx_package_structure>
+    <description>
+      Icons are packaged as managed assets in the TWX file structure
+    </description>
+    <structure><![CDATA[
+Custom_Widgets_1.0.28.twx
+├── META-INF/
+│   ├── package.xml          ← Lists icon as managed asset object
+│   └── metadata.xml
+├── objects/
+│   ├── 64.xxx.xml          ← Coach view with paletteIcon reference
+│   └── 61.yyy.xml          ← Icon managed asset definition
+└── files/
+    └── 61.yyy/
+        └── {hash}          ← Actual SVG file content
+    ]]></structure>
+
+    <coach_view_reference>
+      <description>Icons are linked in coach view XML via paletteIcon element</description>
+      <example><![CDATA[
+<coachView id="64.db824ed3-93e7-4eb6-a583-56a0a2bf25c0" name="ProgressBar">
+  ...
+  <paletteIcon>/61.19d8bd43-d600-41db-a9ca-5a6ee876a762</paletteIcon>
+  ...
+</coachView>
+      ]]></example>
+    </coach_view_reference>
+
+    <managed_asset_definition>
+      <description>Icon managed asset XML defines the SVG file</description>
+      <example><![CDATA[
+<managedAsset id="61.19d8bd43-d600-41db-a9ca-5a6ee876a762" name="ProgressBar.svg">
+  <assetType>W</assetType>
+  <mimeType>image/svg+xml</mimeType>
+  <fileName>ProgressBar.svg</fileName>
+  ...
+</managedAsset>
+      ]]></example>
+    </managed_asset_definition>
+  </twx_package_structure>
+
+  <troubleshooting>
+    <issue name="icon_not_appearing">
+      <symptom>Widget packages successfully but icon doesn't appear in BAW palette</symptom>
+      <possible_causes>
+        <cause>Icon file name doesn't exactly match widget name (case-sensitive)</cause>
+        <cause>Icon file is not in widget root directory</cause>
+        <cause>Icon file is not valid SVG format</cause>
+        <cause>Previous toolkit version is cached in BAW</cause>
+      </possible_causes>
+      <diagnostic_steps>
+        <step>Verify icon file exists: widgets/{WidgetName}/{WidgetName}.svg</step>
+        <step>Check file name matches widget name exactly (case-sensitive)</step>
+        <step>Validate SVG file opens correctly in a browser or SVG viewer</step>
+        <step>Extract TWX package and verify icon is included in objects/ directory</step>
+        <step>Check coach view XML contains paletteIcon reference (not isNull="true")</step>
+        <step>Clear BAW cache or increment toolkit version number</step>
+      </diagnostic_steps>
+    </issue>
+
+    <issue name="icon_id_conflicts">
+      <symptom>Packaging fails with icon ID conflicts or duplicate IDs</symptom>
+      <possible_causes>
+        <cause>Registry file (baw_coach_views.json) is corrupted or out of sync</cause>
+        <cause>Manual edits to registry file introduced invalid IDs</cause>
+      </possible_causes>
+      <resolution>
+        <step>Backup current baw_coach_views.json</step>
+        <step>Remove the iconId entry for the affected widget</step>
+        <step>Re-run packaging to generate fresh icon ID</step>
+        <step>If problem persists, regenerate entire registry from scratch</step>
+      </resolution>
+    </issue>
+
+    <issue name="icon_file_too_large">
+      <symptom>TWX package size is unexpectedly large</symptom>
+      <possible_causes>
+        <cause>SVG file contains embedded raster images</cause>
+        <cause>SVG has excessive detail or unoptimized paths</cause>
+      </possible_causes>
+      <resolution>
+        <step>Optimize SVG using tools like SVGO or Inkscape</step>
+        <step>Remove embedded images and use pure vector graphics</step>
+        <step>Simplify complex paths and reduce number of nodes</step>
+        <step>Target file size under 10KB per icon</step>
+      </resolution>
+    </issue>
+  </troubleshooting>
+
+  <verification_checklist>
+    <before_packaging>
+      <item>Icon file exists in widget root directory</item>
+      <item>Icon filename exactly matches widget name (case-sensitive)</item>
+      <item>Icon is valid SVG format</item>
+      <item>Icon file size is reasonable (under 10KB recommended)</item>
+    </before_packaging>
+
+    <after_packaging>
+      <item>Check packaging log confirms icon was detected and packaged</item>
+      <item>Verify TWX package contains icon managed asset (61.xxx.xml)</item>
+      <item>Confirm coach view XML has paletteIcon reference (not isNull)</item>
+      <item>Extract and inspect actual SVG file content in TWX package</item>
+    </after_packaging>
+
+    <after_deployment>
+      <item>Open BAW Process Designer and check widget palette</item>
+      <item>Verify icon appears next to widget name</item>
+      <item>Confirm icon displays clearly at palette size</item>
+      <item>Test icon visibility in both light and dark themes (if applicable)</item>
+    </after_deployment>
+  </verification_checklist>
+
+  <best_practices>
+    <practice priority="high">
+      <name>Create icons for all widgets</name>
+      <description>
+        While icons are optional, they significantly improve user experience by making
+        widgets easier to identify and distinguish in the palette.
+      </description>
+    </practice>
+
+    <practice priority="high">
+      <name>Use consistent design language</name>
+      <description>
+        Maintain visual consistency across all widget icons in your toolkit. Use similar
+        styles, colors, and design patterns to create a cohesive set.
+      </description>
+    </practice>
+
+    <practice priority="medium">
+      <name>Test icons at actual size</name>
+      <description>
+        View icons at the size they'll appear in the BAW palette (typically 24-32px) to
+        ensure they remain clear and recognizable when scaled down.
+      </description>
+    </practice>
+
+    <practice priority="medium">
+      <name>Keep SVG code clean</name>
+      <description>
+        Use optimized SVG code without unnecessary metadata, comments, or hidden elements.
+        This reduces file size and improves loading performance.
+      </description>
+    </practice>
+
+    <practice priority="low">
+      <name>Version control icon files</name>
+      <description>
+        Track icon files in version control alongside widget code. This maintains history
+        and allows reverting to previous icon designs if needed.
+      </description>
+    </practice>
+  </best_practices>
+
+  <example_workflow>
+    <scenario>Adding an icon to an existing widget</scenario>
+    <steps>
+      <step number="1">
+        <action>Create or obtain SVG icon file (120x120px recommended)</action>
+        <command>Design icon using vector graphics tool or download from icon library</command>
+      </step>
+
+      <step number="2">
+        <action>Name icon file to match widget name exactly</action>
+        <command>Save as: widgets/ProgressBar/ProgressBar.svg</command>
+      </step>
+
+      <step number="3">
+        <action>Verify icon file is valid SVG</action>
+        <command>Open ProgressBar.svg in browser to confirm it displays correctly</command>
+      </step>
+
+      <step number="4">
+        <action>Package toolkit with icon included</action>
+        <command>python3 package_multiple_widgets.py</command>
+        <expected_output>
+          INFO: Reusing existing icon ID for 'ProgressBar': 61.19d8bd43-d600-41db-a9ca-5a6ee876a762
+          (or)
+          INFO: Generated new icon ID for 'ProgressBar': 61.19d8bd43-d600-41db-a9ca-5a6ee876a762
+        </expected_output>
+      </step>
+
+      <step number="5">
+        <action>Verify icon was packaged</action>
+        <command>unzip -l output/Custom_Widgets_1.0.X.twx | grep "ProgressBar.svg"</command>
+        <expected_output>Shows icon managed asset file in package</expected_output>
+      </step>
+
+      <step number="6">
+        <action>Deploy to BAW and verify icon appears in palette</action>
+        <command>Use MCP deployment or manual import</command>
+      </step>
+    </steps>
+  </example_workflow>
+
+  <technical_implementation>
+    <component name="Widget Model">
+      <file>toolkit_packager/models/widget.py</file>
+      <methods>
+        <method>has_icon() -> bool</method>
+        <method>get_icon_path() -> Path</method>
+        <method>get_icon_content() -> str</method>
+      </methods>
+      <description>Provides icon detection and content retrieval for widgets</description>
+    </component>
+
+    <component name="Coach View Generator">
+      <file>toolkit_packager/generators/coach_view_generator.py</file>
+      <methods>
+        <method>generate() -> TWXObject</method>
+        <method>generate_coach_view_xml() -> str</method>
+      </methods>
+      <description>Generates coach view XML with paletteIcon reference</description>
+    </component>
+
+    <component name="Managed Asset Generator">
+      <file>toolkit_packager/generators/managed_asset_generator.py</file>
+      <methods>
+        <method>generate() -> List[TWXObject]</method>
+        <method>generate_icon_asset() -> Optional[TWXObject]</method>
+      </methods>
+      <description>Creates managed asset objects for icon SVG files</description>
+    </component>
+
+    <component name="Coach View Registry">
+      <file>toolkit_packager/utils/coach_view_registry.py</file>
+      <methods>
+        <method>get_icon_id(widget_name: str) -> Optional[str]</method>
+        <method>register_icon_id(widget_name: str, icon_id: str)</method>
+        <method>register_coach_view(..., icon_id: Optional[str])</method>
+      </methods>
+      <description>Tracks icon IDs for stable versioning across builds</description>
+    </component>
+  </technical_implementation>
+</widget_icons>
+
+<!-- Made with Bob -->

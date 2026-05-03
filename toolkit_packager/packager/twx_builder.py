@@ -9,10 +9,11 @@ from datetime import datetime
 from typing import List, Optional, Dict
 
 from ..models import Widget, TWXObject, ToolkitConfig
-from ..core import generate_object_id, generate_version_id, escape_xml
+from ..core import generate_object_id, generate_version_id, generate_guid, escape_xml
 from ..generators import CoachViewGenerator, ManagedAssetGenerator, BusinessObjectGenerator
 from ..utils import get_logger
 from ..utils.custom_type_registry import get_custom_type_registry
+from ..utils.coach_view_registry import get_coach_view_registry
 
 logger = get_logger(__name__)
 
@@ -80,19 +81,20 @@ class TWXBuilder:
         
         # Determine output filename
         if output_filename is None:
-            widget_names = "_".join(w.name for w in self.widgets[:3])
-            if len(self.widgets) > 3:
-                widget_names += f"_and_{len(self.widgets) - 3}_more"
-            output_filename = f"{self.config.short_name}_{self.config.version}_{widget_names}.twx"
+            # Use the filename template from config (with {version} substituted)
+            output_filename = self.config.get_output_filename()
         
         output_path = self.output_dir / output_filename
         
         # Build the TWX file
         self._create_twx_file(output_path)
         
-        # Save custom type registry after successful build
-        registry = get_custom_type_registry()
-        registry.save_registry()
+        # Save registries after successful build
+        custom_type_registry = get_custom_type_registry()
+        custom_type_registry.save_registry()
+        
+        coach_view_registry = get_coach_view_registry()
+        coach_view_registry.save_registry()
         
         logger.info(f"TWX package created: {output_path}")
         logger.info(f"Package size: {output_path.stat().st_size / 1024:.2f} KB")
@@ -269,10 +271,30 @@ class TWXBuilder:
         else:
             template_xml = self._get_default_package_xml_template()
         
-        # Generate package IDs
-        package_project_id = generate_object_id(f"{self.config.short_name}_project", "2066")
-        package_branch_id = generate_object_id(f"{self.config.short_name}_branch", "2063")
-        package_snapshot_id = generate_object_id(f"{self.config.short_name}_snapshot", "2064")
+        # Use persistent toolkit ID if configured, otherwise generate new one
+        if self.config.toolkit_id:
+            package_project_id = self.config.toolkit_id
+            logger.info(f"Using persistent toolkit ID: {package_project_id}")
+        else:
+            package_project_id = generate_object_id(f"{self.config.short_name}_project", "2066")
+            logger.warning(f"No toolkit ID configured, generated new ID: {package_project_id}")
+            logger.warning("Add 'id' field to toolkit.config.json to maintain consistent toolkit identity")
+        
+        # Use persistent branch ID if configured, otherwise generate deterministic one
+        # Branch ID MUST remain constant across versions for upgrade compatibility
+        if hasattr(self.config, 'branch_id') and self.config.branch_id:
+            package_branch_id = self.config.branch_id
+            logger.info(f"Using persistent branch ID: {package_branch_id}")
+        else:
+            # Generate deterministic branch ID using generate_guid (no timestamp)
+            # This ensures the same branch ID across all versions
+            branch_guid = generate_guid(f"{self.config.short_name}_branch_Main")
+            package_branch_id = f"2063.{branch_guid}"
+            logger.info(f"Generated deterministic branch ID: {package_branch_id}")
+            logger.info("Consider adding 'branchId' field to toolkit.config.json for explicit control")
+        
+        # Snapshot ID should change with each version (includes timestamp for uniqueness)
+        package_snapshot_id = generate_object_id(f"{self.config.short_name}_snapshot_{self.config.version}", "2064")
         
         # Replace project info
         package_xml = template_xml

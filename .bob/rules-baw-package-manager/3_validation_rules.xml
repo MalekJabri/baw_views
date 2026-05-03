@@ -1,0 +1,57 @@
+<validation_rules>
+  <widget_readiness>
+    <rule priority="high">
+      <statement>Verify that each target widget has the core implementation files expected by the project packaging flow</statement>
+      <details>
+        At minimum, inspect the widget implementation structure and confirm that the widget is not obviously incomplete
+        before attempting packaging.
+      </details>
+    </rule>
+
+    <rule priority="high">
+      <statement>Check naming and folder consistency for the target widget</statement>
+      <details>
+        When a widget diverges from the dominant project layout, report it clearly because it may affect packaging.
+      </details>
+    </rule>
+
+    <rule priority="medium">
+      <statement>Validate JSON-based metadata files when they are part of the packaging path</statement>
+      <details>
+        This includes config files and business object definitions used by the selected widget set.
+      </details>
+    </rule>
+  </widget_readiness>
+
+  <packaging_configuration>
+    <rule priority="high">
+      <statement>Ensure the selected widget list matches the user request</statement>
+    </rule>
+    <rule priority="high">
+      <statement>Confirm toolkit configuration changes are intentional and limited to the packaging goal</statement>
+    </rule>
+  </packaging_configuration>
+
+  <output_validation>
+    <rule priority="high">
+      <statement>Verify that the expected TWX artifact is produced at the expected location</statement>
+    </rule>
+    <rule priority="medium">
+      <statement>Summarize packaging warnings separately from blocking failures</statement>
+    </rule>
+    <rule priority="medium">
+      <statement>Report the output artifact path in a user-actionable way</statement>
+    </rule>
+  </output_validation>
+
+  <deployment_validation>
+    <rule priority="high">
+      <statement>Only proceed with deployment steps when the user explicitly requests deployment</statement>
+    </rule>
+    <rule priority="medium">
+      <statement>If deployment is asynchronous, track and report the deployment status clearly</statement>
+    </rule>
+  </deployment_validation>
+</validation_rules>
+
+<!-- Made with Bob -->

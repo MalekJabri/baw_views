@@ -12,6 +12,7 @@ from .base_generator import BaseGenerator
 from ..models import Widget, TWXObject
 from ..core import generate_object_id, generate_version_id, escape_xml
 from ..utils import get_logger
+from ..utils.coach_view_registry import get_coach_view_registry
 
 logger = get_logger(__name__)
 
@@ -64,21 +65,66 @@ class CoachViewGenerator(BaseGenerator):
     def generate(self) -> TWXObject:
         """
         Generate coach view TWX object.
+        Uses registry to maintain stable IDs across packaging operations.
         
         Returns:
             TWXObject for coach view
         """
-        coach_view_id = self.object_ids.get('coach_view_id')
+        registry = get_coach_view_registry()
+        
+        # Get or generate coach view ID
+        coach_view_id = registry.get_coach_view_id(self.widget.name)
         if not coach_view_id:
             coach_view_id = generate_object_id(self.widget.name, '64')
+            logger.info(f"Generated new coach view ID for '{self.widget.name}': {coach_view_id}")
+        else:
+            logger.info(f"Reusing existing coach view ID for '{self.widget.name}': {coach_view_id}")
         
-        preview_html_id = self.object_ids.get('preview_html_id', '')
-        preview_js_id = self.object_ids.get('preview_js_id', '')
+        # Get or generate preview HTML ID
+        preview_html_id = registry.get_preview_html_id(self.widget.name)
+        if not preview_html_id and self.widget.has_preview_files():
+            preview_html_id = generate_object_id(f'{self.widget.name}_preview_html', '61')
+            logger.info(f"Generated new preview HTML ID for '{self.widget.name}': {preview_html_id}")
+        elif preview_html_id:
+            logger.info(f"Reusing existing preview HTML ID for '{self.widget.name}': {preview_html_id}")
+        
+        # Get or generate preview JS ID
+        preview_js_id = registry.get_preview_js_id(self.widget.name)
+        if not preview_js_id and self.widget.has_preview_files():
+            preview_js_id = generate_object_id(f'{self.widget.name}_preview_js', '61')
+            logger.info(f"Generated new preview JS ID for '{self.widget.name}': {preview_js_id}")
+        elif preview_js_id:
+            logger.info(f"Reusing existing preview JS ID for '{self.widget.name}': {preview_js_id}")
+        
+        # Get or generate icon ID
+        icon_id = registry.get_icon_id(self.widget.name)
+        if not icon_id and self.widget.has_icon():
+            icon_id = generate_object_id(f'{self.widget.name}_icon', '61')
+            logger.info(f"Generated new icon ID for '{self.widget.name}': {icon_id}")
+        elif icon_id:
+            logger.info(f"Reusing existing icon ID for '{self.widget.name}': {icon_id}")
+        
+        # Register the coach view with all IDs
+        registry.register_coach_view(
+            self.widget.name,
+            coach_view_id,
+            preview_html_id,
+            preview_js_id,
+            self.get_widget_description(),
+            icon_id
+        )
+        
+        # Store IDs in object_ids for use by other generators
+        self.object_ids['coach_view_id'] = coach_view_id
+        self.object_ids['preview_html_id'] = preview_html_id or ''
+        self.object_ids['preview_js_id'] = preview_js_id or ''
+        self.object_ids['icon_id'] = icon_id or ''
         
         xml_content = self.generate_coach_view_xml(
             coach_view_id=coach_view_id,
-            preview_html_id=preview_html_id,
-            preview_js_id=preview_js_id
+            preview_html_id=preview_html_id or '',
+            preview_js_id=preview_js_id or '',
+            icon_id=icon_id or ''
         )
         
         twx_obj = self.create_twx_object(
@@ -95,7 +141,8 @@ class CoachViewGenerator(BaseGenerator):
         self,
         coach_view_id: str,
         preview_html_id: str,
-        preview_js_id: str
+        preview_js_id: str,
+        icon_id: str = ''
     ) -> str:
         """
         Generate complete coach view XML.
@@ -104,6 +151,7 @@ class CoachViewGenerator(BaseGenerator):
             coach_view_id: Coach view object ID
             preview_html_id: Preview HTML managed asset ID
             preview_js_id: Preview JS managed asset ID
+            icon_id: Icon managed asset ID (optional)
             
         Returns:
             Complete XML string
@@ -127,6 +175,10 @@ class CoachViewGenerator(BaseGenerator):
         preview_html_ref = f"/{preview_html_id}" if preview_html_id else ""
         preview_js_ref = f"/{preview_js_id}" if preview_js_id else ""
         
+        # Build icon reference
+        icon_ref = f"/{icon_id}" if icon_id else ""
+        palette_icon_xml = f'<paletteIcon>{icon_ref}</paletteIcon>' if icon_ref else '<paletteIcon isNull="true" />'
+        
         # Get widget description
         description = self.get_widget_description()
         
@@ -139,7 +191,7 @@ class CoachViewGenerator(BaseGenerator):
         <coachViewId>{coach_view_id}</coachViewId>
         <isTemplate>false</isTemplate>
         <layout>{escape_xml(layout_xml)}</layout>
-        <paletteIcon isNull="true" />
+        {palette_icon_xml}
         <previewImage isNull="true" />
         <hasLabel>false</hasLabel>
         <labelPosition>0</labelPosition>
@@ -211,6 +263,7 @@ class CoachViewGenerator(BaseGenerator):
     def generate_binding_types(self, coach_view_id: str) -> str:
         """
         Generate binding type definitions from schema or config.json.
+        Uses registry to maintain stable binding IDs.
         
         Args:
             coach_view_id: Coach view ID
@@ -228,12 +281,23 @@ class CoachViewGenerator(BaseGenerator):
         if not bindings:
             return ""
         
+        registry = get_coach_view_registry()
         binding_xml_parts = []
         for seq, binding in enumerate(bindings):
-            binding_id = generate_object_id(f"{binding['name']}_binding", '65')
-            guid = generate_object_id(f"{binding['name']}_binding_guid", '65').split('.', 1)[1]
+            binding_name = binding['name']
             
-            binding_xml = f'''        <bindingType name="{binding['name']}">
+            # Get or generate binding ID from registry
+            binding_id = registry.get_binding_id(self.widget.name, binding_name)
+            if not binding_id:
+                binding_id = generate_object_id(f"{binding_name}_binding", '65')
+                registry.register_binding_id(self.widget.name, binding_name, binding_id)
+                logger.debug(f"Generated new binding ID for '{self.widget.name}.{binding_name}': {binding_id}")
+            else:
+                logger.debug(f"Reusing existing binding ID for '{self.widget.name}.{binding_name}': {binding_id}")
+            
+            guid = generate_object_id(f"{binding_name}_binding_guid", '65').split('.', 1)[1]
+            
+            binding_xml = f'''        <bindingType name="{binding_name}">
             <lastModified isNull="true" />
             <lastModifiedBy isNull="true" />
             <tenantId isNull="true" />
@@ -254,6 +318,7 @@ class CoachViewGenerator(BaseGenerator):
     def generate_binding_from_config(self, coach_view_id: str, binding_config: dict) -> str:
         """
         Generate binding type XML from config.json binding configuration.
+        Uses registry to maintain stable binding IDs.
         
         Args:
             coach_view_id: Coach view ID
@@ -264,7 +329,8 @@ class CoachViewGenerator(BaseGenerator):
         """
         binding_name = binding_config.get('name', 'Data')
         is_list = str(binding_config.get('isList', False)).lower()
-        class_id_raw = binding_config.get('classId', 'String')
+        # Support both 'type' (new standard) and 'classId' (backward compatibility)
+        class_id_raw = binding_config.get('type') or binding_config.get('classId', 'String')
         
         # Map simple type names to BAW class IDs
         if class_id_raw and not class_id_raw.startswith('0594de47') and not class_id_raw.startswith('/'):
@@ -294,7 +360,16 @@ class CoachViewGenerator(BaseGenerator):
                 class_id = inferred_class_id
                 logger.debug(f"Inferred classId for binding '{binding_name}' from schema: {class_id}")
         
-        binding_id = generate_object_id(f"{binding_name}_binding", '65')
+        # Get or generate binding ID from registry
+        registry = get_coach_view_registry()
+        binding_id = registry.get_binding_id(self.widget.name, binding_name)
+        if not binding_id:
+            binding_id = generate_object_id(f"{binding_name}_binding", '65')
+            registry.register_binding_id(self.widget.name, binding_name, binding_id)
+            logger.debug(f"Generated new binding ID for '{self.widget.name}.{binding_name}': {binding_id}")
+        else:
+            logger.debug(f"Reusing existing binding ID for '{self.widget.name}.{binding_name}': {binding_id}")
+        
         guid = generate_object_id(f"{binding_name}_binding_guid", '65').split('.', 1)[1]
         
         binding_xml = f'''        <bindingType name="{binding_name}">
@@ -316,6 +391,7 @@ class CoachViewGenerator(BaseGenerator):
     def generate_config_options(self, coach_view_id: str) -> str:
         """
         Generate configuration option definitions from schema.
+        Uses registry to maintain stable config option IDs.
         
         Args:
             coach_view_id: Coach view ID
@@ -327,11 +403,21 @@ class CoachViewGenerator(BaseGenerator):
         if not options:
             return ""
         
+        registry = get_coach_view_registry()
         option_xml_parts = []
         for seq, option in enumerate(options):
-            option_id = generate_object_id(f"{option['name']}_option", '66')
+            option_name = option['name']
             
-            option_xml = f'''        <configOption name="{option['name']}">
+            # Get or generate config option ID from registry
+            option_id = registry.get_config_option_id(self.widget.name, option_name)
+            if not option_id:
+                option_id = generate_object_id(f"{option_name}_option", '66')
+                registry.register_config_option_id(self.widget.name, option_name, option_id)
+                logger.debug(f"Generated new config option ID for '{self.widget.name}.{option_name}': {option_id}")
+            else:
+                logger.debug(f"Reusing existing config option ID for '{self.widget.name}.{option_name}': {option_id}")
+            
+            option_xml = f'''        <configOption name="{option_name}">
             <lastModified isNull="true" />
             <lastModifiedBy isNull="true" />
             <tenantId isNull="true" />
@@ -339,7 +425,7 @@ class CoachViewGenerator(BaseGenerator):
             <coachViewId>{coach_view_id}</coachViewId>
             <isList>{str(option.get('is_list', False)).lower()}</isList>
             <propertyType>{option.get('property_type', 'OBJECT')}</propertyType>
-            <label>{escape_xml(option.get('label', option['name']))}</label>
+            <label>{escape_xml(option.get('label', option_name))}</label>
             <classId>{option.get('class_id', '0594de47-b0cd-452b-a221-95dc16247e72/12.db884a3c-c533-44b7-bb2d-47bec8ad4022')}</classId>
             <processId isNull="true" />
             <actionflowId isNull="true" />
@@ -347,7 +433,7 @@ class CoachViewGenerator(BaseGenerator):
             <seq>{seq}</seq>
             <description>{escape_xml(option.get('description', ''))}</description>
             <groupName></groupName>
-            <guid>guid:{coach_view_id.split('.')[1]}-{option['name'].lower()}</guid>
+            <guid>guid:{coach_view_id.split('.')[1]}-{option_name.lower()}</guid>
             <versionId>{generate_version_id()}</versionId>
         </configOption>
 '''

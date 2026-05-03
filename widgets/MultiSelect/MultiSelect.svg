@@ -1,0 +1,40 @@
+<svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="120" height="120" fill="#ffffff"/>
+  
+  <!-- Dropdown container -->
+  <g transform="translate(15, 25)">
+    
+    <!-- Dropdown box -->
+    <rect x="0" y="0" width="90" height="30" rx="4" fill="#ffffff" stroke="#8d8d8d" stroke-width="1.5"/>
+    
+    <!-- Selected tags -->
+    <rect x="5" y="7" width="35" height="16" rx="8" fill="#e0e0e0"/>
+    <text x="22.5" y="17" font-family="IBM Plex Sans, Arial, sans-serif" font-size="9" fill="#161616" text-anchor="middle">Option 1</text>
+    <circle cx="35" cy="15" r="5" fill="#525252"/>
+    <text x="35" y="17.5" font-family="Arial, sans-serif" font-size="8" fill="#ffffff" text-anchor="middle">×</text>
+    
+    <rect x="45" y="7" width="35" height="16" rx="8" fill="#e0e0e0"/>
+    <text x="62.5" y="17" font-family="IBM Plex Sans, Arial, sans-serif" font-size="9" fill="#161616" text-anchor="middle">Option 2</text>
+    <circle cx="75" cy="15" r="5" fill="#525252"/>
+    <text x="75" y="17.5" font-family="Arial, sans-serif" font-size="8" fill="#ffffff" text-anchor="middle">×</text>
+    
+    <!-- Dropdown arrow -->
+    <path d="M 80 12 L 85 17 L 90 12" stroke="#525252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Dropdown list -->
+    <rect x="0" y="35" width="90" height="50" rx="4" fill="#ffffff" stroke="#8d8d8d" stroke-width="1.5"/>
+    
+    <!-- Search input -->
+    <rect x="5" y="40" width="80" height="18" rx="2" fill="#f4f4f4"/>
+    <text x="10" y="51" font-family="IBM Plex Sans, Arial, sans-serif" font-size="9" fill="#8d8d8d">Search...</text>
+    
+    <!-- Checkboxes -->
+    <rect x="8" y="63" width="12" height="12" rx="2" fill="#0f62fe" stroke="#0f62fe" stroke-width="1"/>
+    <path d="M 10 69 L 12 71 L 18 65" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <text x="25" y="72" font-family="IBM Plex Sans, Arial, sans-serif" font-size="9" fill="#161616">Option 1</text>
+    
+  </g>
+</svg>
+
+<!-- Made with Bob -->

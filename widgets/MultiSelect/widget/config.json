@@ -4,7 +4,7 @@
   "bindingType": {
     "name": "SelectedItems",
     "isList": true,
-    "classId": "String"
+    "type": "String"
   },
   "configOptions": [
     {

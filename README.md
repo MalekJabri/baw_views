@@ -29,64 +29,33 @@ This repository contains a suite of production-ready custom view widgets designe
 
 ## 📦 Available Widgets
 
-### 1. **Breadcrumb Widget**
-Navigation breadcrumbs with Carbon Design System styling.
-- Dynamic breadcrumb generation from array data
-- Configurable display options (max items, trailing slash)
-- Custom click handlers for flexible navigation
-- Overflow handling with ellipsis
+This toolkit includes a collection of production-ready custom widgets for IBM Business Automation Workflow. Each widget is designed with:
 
-[📖 Full Documentation](./Breadcrumb/README.md)
+- **Carbon Design System** styling for consistent IBM look and feel
+- **Accessibility** features including ARIA support and keyboard navigation
+- **Responsive design** that works across desktop and mobile devices
+- **Data binding** for seamless BAW integration
+- **Event handling** for interactive workflows
+- **Comprehensive documentation** in each widget's directory
 
-### 2. **CaseStage Widget**
-Case stage visualization for case management workflows.
-- Visual representation of case stages
-- Status indicators and progress tracking
+### Widget Categories
 
-[📁 View Files](./CaseStage/)
+- **Navigation & Layout**: Breadcrumb navigation, folder trees
+- **Data Display**: Date formatting, markdown rendering, progress indicators
+- **Form Controls**: Multi-select dropdowns, file browsers
+- **Process Visualization**: Steppers, progress bars, circular indicators
+- **Content Management**: FileNet integration, task lists
 
-### 3. **DateOutput Widget**
-Customizable date display with visual context indicators.
-- Token-based date formatting (similar to moment.js)
-- Multiple input types (Date objects, ISO strings, timestamps)
-- Color-coded states (past, today, future)
-- Time support with configurable formats
+### Exploring Widgets
 
-[📖 Full Documentation](./DateOutput/README.md)
+Each widget includes:
+- Complete source code in `widgets/{WidgetName}/`
+- README.md with usage examples and API documentation
+- Data model specifications
+- Event handler documentation
+- Preview files for testing
 
-### 4. **GoogleMap Widget**
-Comprehensive Google Maps integration with marker support.
-- Full Google Maps JavaScript API support
-- Dynamic markers with custom icons
-- Interactive events and geocoding
-- ARIA accessible with dark mode support
-
-[📖 Full Documentation](./GoogleMap/README.md)
-
-### 5. **ProcessCircle Widget**
-Animated circular progress indicator with dynamic color-coding.
-- Smooth 3-second animation
-- Color-coded thresholds (green, orange, red)
-- Configurable value ranges
-- Customizable display suffix
-
-[📖 Full Documentation](./ProcessCircle/README.md)
-
-### 6. **Stepper Widget**
-Vertical multi-step process indicator with visual progress tracking.
-- Carbon Design System styling
-- Dynamic step generation from array data
-- Visual status indicators (completed, current, pending, error, warning)
-- Interactive navigation with click handlers
-
-[📖 Full Documentation](./Stepper/README.md)
-
-### 7. **TasksList Widget**
-Task list display and management widget.
-- Task visualization and organization
-- Status tracking and filtering
-
-[📁 View Files](./TasksList/)
+Browse the `widgets/` directory to see all available widgets and their documentation.
 
 ## 🚀 Installation
 
@@ -107,9 +76,11 @@ Task list display and management widget.
 
 1. **Generate TWX Package**
    ```bash
-   # Package all widgets or specific ones
+   # Package all widgets (auto-detected from widgets/ directory)
    python3 package_multiple_widgets.py
    ```
+   
+   The packager automatically detects all widgets in the `widgets/` directory and includes them in the package.
 
 2. **Import into BAW**
    - Open IBM Business Automation Workflow Process Designer
@@ -181,13 +152,10 @@ Task list display and management widget.
 
 ### Post-Installation Configuration
 
-#### For GoogleMap Widget
-- Obtain a Google Maps API key from [Google Cloud Console](https://console.cloud.google.com/)
-- Configure the API key in the widget options
-
 #### For Widgets with External Dependencies
 - Review each widget's README for specific requirements
 - Configure any necessary API keys or external resources
+- Some widgets may require additional BAW configuration
 
 ## 🎬 Quick Start
 
@@ -270,20 +238,38 @@ Each widget includes comprehensive documentation:
 ## 📁 Project Structure
 
 ```
-baw_views/
+BAWCoachMode/
 ├── README.md                    # This file
-├── Breadcrumb/                  # Breadcrumb navigation widget
-├── CaseStage/                   # Case stage visualization
-├── DateOutput/                  # Date formatting widget
-├── ProcessCircle/               # Circular progress indicator
-├── Stepper/                     # Multi-step process indicator
-├── TasksList/                   # Task list management
-├── Loclisation/                 # Localization files
-│   ├── README.md
-│   ├── zip_localisations.sh
-│   └── EtnicProject/
-└── docs/                        # Additional documentation
-    └── images/
+├── STRUCTURE.md                 # Detailed structure documentation
+├── toolkit.config.json          # Toolkit configuration
+├── package_multiple_widgets.py  # Main packaging script
+├── create_widget_template.py    # Widget generator tool
+├── widgets/                     # All widget source code
+│   ├── Breadcrumb/
+│   ├── DateOutput/
+│   ├── FileNetBrowser/
+│   ├── FileNetImport/
+│   ├── FolderTree/
+│   ├── MarkdownViewer/
+│   ├── MultiSelect/
+│   ├── ProcessCircle/
+│   ├── ProgressBar/
+│   ├── Stepper/
+│   └── TasksList/
+├── output/                      # Generated TWX files (gitignored)
+├── toolkit_packager/            # Python packaging tools
+│   ├── core/                    # Core utilities
+│   ├── models/                  # Data models
+│   ├── scanner/                 # Widget discovery
+│   ├── generators/              # XML generators
+│   ├── packager/                # TWX building
+│   └── utils/                   # Utilities
+├── templates/                   # Reference templates
+│   ├── BaseTWX/                 # Base TWX templates
+│   └── Loclisation/             # Localization examples
+└── .bob/                        # Bob AI mode configurations
+    ├── rules-baw-coachui-view/
+    └── rules-baw-package-manager/
 ```
 
 ## 💻 Requirements
@@ -309,11 +295,6 @@ baw_views/
 - **HTML**: HTML5 semantic elements
 
 ### External Dependencies
-
-#### GoogleMap Widget
-- Google Maps JavaScript API key
-- Active Google Cloud Platform account
-- Maps JavaScript API enabled
 
 #### All Widgets
 - IBM Carbon Design System fonts (IBM Plex Sans)
@@ -462,35 +443,43 @@ All widgets MUST follow this structure for toolkit_packager compatibility:
 
 ```
 widgets/[WidgetName]/
+├── [WidgetName].svg                 # OPTIONAL - Widget icon (120x120px recommended)
 ├── widget/                          # MUST be lowercase
 │   ├── Layout.html                  # REQUIRED
 │   ├── InlineCSS.css                # REQUIRED
 │   ├── inlineJavascript.js          # REQUIRED
-│   ├── openapi.json                 # REQUIRED (OpenAPI 3.0 schema)
-│   ├── datamodel.md                 # OPTIONAL
-│   └── eventHandler.md              # OPTIONAL
-├── AdvancePreview/                  # OPTIONAL
+│   ├── config.json                  # REQUIRED - Widget configuration
+│   ├── datamodel.md                 # OPTIONAL - Data model documentation
+│   └── eventHandler.md              # OPTIONAL - Event handler documentation
+├── AdvancePreview/                  # OPTIONAL - Preview for BAW designer
 │   ├── [WidgetName].html
-│   └── [WidgetName].js
-└── README.md                        # RECOMMENDED
+│   └── [WidgetName].js (or [WidgetName]Snippet.js)
+└── README.md                        # RECOMMENDED - Widget documentation
 ```
+
+#### Widget Icons
+- **Optional but recommended**: Add a `{WidgetName}.svg` file in the widget root directory
+- **Size**: 120x120 pixels recommended for optimal display
+- **Format**: SVG for scalability
+- **Purpose**: Appears in BAW Process Designer palette for easy widget identification
+- **Auto-detection**: Icons are automatically detected and packaged when present
 
 ### Packaging Your Widget
 
-1. **Add to Package List**
-   Edit `package_multiple_widgets.py`:
-   ```python
-   WIDGET_NAMES = ["DateOutput", "ProcessCircle", "Stepper", "TasksList", "YourWidget"]
-   ```
+1. **Ensure Proper Structure**
+   - Verify your widget follows the required structure above
+   - Add an optional `.svg` icon for better UX
 
 2. **Generate TWX Package**
    ```bash
    python3 package_multiple_widgets.py
    ```
+   
+   The packager automatically detects all widgets in the `widgets/` directory - no manual configuration needed!
 
 3. **Import into BAW**
    - Find the TWX file in `output/` directory
-   - Import via BAW Process Designer
+   - Import via BAW Process Designer → File → Import
 
 ### Widget Development Workflow
 
@@ -503,7 +492,8 @@ widgets/[WidgetName]/
    - Edit `widgets/MyWidget/widget/Layout.html`
    - Style in `widgets/MyWidget/widget/InlineCSS.css`
    - Add logic in `widgets/MyWidget/widget/inlineJavascript.js`
-   - Define data model in `widgets/MyWidget/widget/openapi.json`
+   - Define configuration in `widgets/MyWidget/widget/config.json`
+   - Optionally create `widgets/MyWidget/MyWidget.svg` icon (120x120px)
 
 3. **Test Locally**
    - Open `widgets/MyWidget/AdvancePreview/MyWidget.html` in browser

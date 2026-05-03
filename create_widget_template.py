@@ -6,7 +6,22 @@ This script generates all required files with proper templates to ensure
 compatibility with the BAW Package Manager toolkit_packager system.
 
 Usage:
-    python3 create_widget_template.py WidgetName "Widget description"
+    python3 create_widget_template.py WidgetName "Widget description" [--events load,change,view]
+    
+Options:
+    --events: Comma-separated list of event handlers to create (load, change, view, validate, unload)
+              If not specified, only creates the events folder without any event files.
+              Use 'all' to create all event handlers.
+
+Examples:
+    # Create widget with no event handlers
+    python3 create_widget_template.py MyWidget "A simple widget"
+    
+    # Create widget with load and change events
+    python3 create_widget_template.py MyWidget "A widget" --events load,change
+    
+    # Create widget with all event handlers
+    python3 create_widget_template.py MyWidget "A widget" --events all
 """
 
 import sys
@@ -15,8 +30,18 @@ from pathlib import Path
 from datetime import datetime
 
 
-def create_widget_structure(widget_name: str, description: str = ""):
-    """Create a complete widget directory structure with all required files."""
+def create_widget_structure(widget_name: str, description: str = "", events = None):
+    """Create a complete widget directory structure with all required files.
+    
+    Args:
+        widget_name: Name of the widget (PascalCase)
+        description: Widget description
+        events: List of event handlers to create (load, change, view, validate, unload)
+                If None or empty, only creates the events folder
+    """
+    
+    if events is None:
+        events = []
     
     if not widget_name:
         print("❌ Error: Widget name is required")
@@ -41,6 +66,8 @@ def create_widget_structure(widget_name: str, description: str = ""):
     
     # Create directories
     widget_path.mkdir(parents=True, exist_ok=True)
+    events_path = widget_path / "events"
+    events_path.mkdir(parents=True, exist_ok=True)
     preview_path.mkdir(parents=True, exist_ok=True)
     
     # 1. Create Layout.html
@@ -244,7 +271,147 @@ console.log('Widget unloading');
     (widget_path / "eventHandler.md").write_text(event_handler_md)
     print("✓ Created eventHandler.md")
     
-    # 7. Create Preview HTML (optional)
+    # 7. Create event handler JavaScript files (optional, based on requirements)
+    events_created = []
+    
+    if 'load' in events:
+        # load.js - Executed when widget is first loaded
+        load_event_js = f"""// {widget_name} - Load Event Handler
+// Executed when the widget is first loaded
+var _this = this;
+
+// Initialize widget
+var data = _this.getData();
+var options = _this.getOption();
+
+console.log('{widget_name} widget loaded', data);
+
+// Register any custom event handlers
+// Example: bpmext.ui.registerEventHandlingFunction(this, "CustomEvent", "eventName");
+
+// Perform initial rendering or setup
+// render();
+"""
+        (events_path / "load.js").write_text(load_event_js)
+        events_created.append("load.js")
+        print("✓ Created events/load.js")
+    
+    if 'change' in events:
+        # change.js - Executed when widget data changes
+        change_event_js = f"""// {widget_name} - Change Event Handler
+// Executed when the widget data changes
+var _this = this;
+
+// Get the updated data
+var data = _this.getData();
+
+console.log('{widget_name} data changed:', data);
+
+// Update the widget display based on new data
+// render();
+"""
+        (events_path / "change.js").write_text(change_event_js)
+        events_created.append("change.js")
+        print("✓ Created events/change.js")
+    
+    if 'view' in events:
+        # view.js - Executed when widget becomes visible
+        view_event_js = f"""// {widget_name} - View Event Handler
+// Executed when the widget becomes visible
+var _this = this;
+
+// Refresh widget display
+var data = _this.getData();
+
+console.log('{widget_name} widget now visible');
+
+// Re-render or refresh the widget
+// render();
+"""
+        (events_path / "view.js").write_text(view_event_js)
+        events_created.append("view.js")
+        print("✓ Created events/view.js")
+    
+    if 'validate' in events:
+        # validate.js - Executed during form validation
+        validate_event_js = f"""// {widget_name} - Validate Event Handler
+// Executed during form validation
+var _this = this;
+
+// Get current data
+var data = _this.getData();
+
+// Perform validation logic
+var isValid = true;
+var errorMessage = "";
+
+// Example validation
+if (!data || !data.message) {{
+    isValid = false;
+    errorMessage = "Message is required";
+}}
+
+// Return validation result
+if (!isValid) {{
+    console.error('{widget_name} validation failed:', errorMessage);
+    // You can set error state on the widget
+    // _this.context.element.classList.add('validation-error');
+}}
+
+// Return true if valid, false if invalid
+return isValid;
+"""
+        (events_path / "validate.js").write_text(validate_event_js)
+        events_created.append("validate.js")
+        print("✓ Created events/validate.js")
+    
+    if 'unload' in events:
+        # unload.js - Executed when widget is being removed
+        unload_event_js = f"""// {widget_name} - Unload Event Handler
+// Executed when the widget is being removed or destroyed
+var _this = this;
+
+console.log('{widget_name} widget unloading');
+
+// Cleanup resources
+// - Remove event listeners
+// - Clear timers/intervals
+// - Release memory references
+// - Unregister custom handlers
+
+// Example cleanup:
+// if (window.myWidgetTimer) {{
+//     clearInterval(window.myWidgetTimer);
+// }}
+"""
+        (events_path / "unload.js").write_text(unload_event_js)
+        events_created.append("unload.js")
+        print("✓ Created events/unload.js")
+    
+    # Print summary of created events
+    if events_created:
+        print(f"✓ Created {len(events_created)} event handler(s): {', '.join(events_created)}")
+    else:
+        print("ℹ️  No event handlers created (events folder is ready for custom events)")
+    
+    # 8. Create config.json for widget configuration
+    config_json = {
+        "name": widget_name,
+        "description": description or f"Custom {widget_name} widget for IBM Business Automation Workflow",
+        "bindingType": {
+            "name": f"{widget_name}Data",
+            "isList": False,
+            "type": "String"
+        },
+        "configOptions": [],
+        "businessObjects": [],
+        "changeFunction": True
+    }
+    
+    (widget_path / "config.json").write_text(json.dumps(config_json, indent=2))
+    print("✓ Created config.json")
+    
+    # 9. Create Preview HTML (optional)
     preview_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -401,9 +568,16 @@ widgets/{widget_name}/
 │   ├── Layout.html           # Widget HTML structure
 │   ├── InlineCSS.css         # Widget styles
 │   ├── inlineJavascript.js   # Widget logic
+│   ├── config.json           # Widget configuration
 │   ├── openapi.json          # Data model schema
 │   ├── datamodel.md          # Data model documentation
-│   └── eventHandler.md       # Event handler documentation
+│   ├── eventHandler.md       # Event handler documentation
+│   └── events/               # BAW event handlers
+│       ├── load.js           # Load event
+│       ├── change.js         # Change event
+│       ├── view.js           # View event
+│       ├── validate.js       # Validate event
+│       └── unload.js         # Unload event
 ├── AdvancePreview/
 │   ├── {widget_name}.html    # Preview HTML
 │   └── {widget_name}.js      # Preview JavaScript
@@ -436,9 +610,18 @@ widgets/{widget_name}/
     print(f"   │   ├── Layout.html")
     print(f"   │   ├── InlineCSS.css")
     print(f"   │   ├── inlineJavascript.js")
+    print(f"   │   ├── config.json")
     print(f"   │   ├── openapi.json")
     print(f"   │   ├── datamodel.md")
-    print(f"   │   └── eventHandler.md")
+    print(f"   │   ├── eventHandler.md")
+    print(f"   │   └── events/")
+    if events_created:
+        for event_file in events_created:
+            is_last = event_file == events_created[-1]
+            prefix = "└──" if is_last else "├──"
+            print(f"   │       {prefix} {event_file}")
+    else:
+        print(f"   │       (empty - add event handlers as needed)")
     print(f"   ├── AdvancePreview/")
     print(f"   │   ├── {widget_name}.html")
     print(f"   │   └── {widget_name}.js")
@@ -458,16 +641,52 @@ widgets/{widget_name}/
 def main():
     """Main entry point."""
     if len(sys.argv) < 2:
-        print("Usage: python3 create_widget_template.py WidgetName [description]")
+        print("Usage: python3 create_widget_template.py WidgetName [description] [--events event1,event2,...]")
         print()
-        print("Example:")
+        print("Options:")
+        print("  --events: Comma-separated list of event handlers to create")
+        print("            Available: load, change, view, validate, unload")
+        print("            Use 'all' to create all event handlers")
+        print()
+        print("Examples:")
         print('  python3 create_widget_template.py MyWidget "A custom widget"')
+        print('  python3 create_widget_template.py MyWidget "A widget" --events load,change')
+        print('  python3 create_widget_template.py MyWidget "A widget" --events all')
         sys.exit(1)
     
     widget_name = sys.argv[1]
-    description = sys.argv[2] if len(sys.argv) > 2 else ""
+    description = ""
+    events = []
     
-    success = create_widget_structure(widget_name, description)
+    # Parse arguments
+    i = 2
+    while i < len(sys.argv):
+        arg = sys.argv[i]
+        if arg == "--events":
+            if i + 1 < len(sys.argv):
+                events_arg = sys.argv[i + 1]
+                if events_arg.lower() == "all":
+                    events = ["load", "change", "view", "validate", "unload"]
+                else:
+                    events = [e.strip().lower() for e in events_arg.split(",")]
+                    # Validate event names
+                    valid_events = ["load", "change", "view", "validate", "unload"]
+                    invalid = [e for e in events if e not in valid_events]
+                    if invalid:
+                        print(f"❌ Error: Invalid event name(s): {', '.join(invalid)}")
+                        print(f"   Valid events: {', '.join(valid_events)}")
+                        sys.exit(1)
+                i += 2
+            else:
+                print("❌ Error: --events requires a value")
+                sys.exit(1)
+        elif not description and not arg.startswith("--"):
+            description = arg
+            i += 1
+        else:
+            i += 1
+    
+    success = create_widget_structure(widget_name, description, events)
     sys.exit(0 if success else 1)
 
 

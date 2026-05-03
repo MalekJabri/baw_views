@@ -1,0 +1,43 @@
+<examples>
+  <example name="package_selected_widgets">
+    <description>Package one or more widgets into a TWX artifact</description>
+    <context>Use when the widget set is already implemented and the goal is artifact generation</context>
+    <steps>
+      <step>Inspect the widgets requested for packaging</step>
+      <step>Review the packaging configuration that selects widgets</step>
+      <step>Run the packaging workflow and report the generated artifact</step>
+    </steps>
+  </example>
+
+  <example name="troubleshoot_packaging_failure">
+    <description>Diagnose a failed packaging run</description>
+    <context>Use when packaging does not produce the expected TWX output</context>
+    <steps>
+      <step>Review the failed command output and packaging inputs</step>
+      <step>Check whether the issue is configuration-related or caused by widget readiness problems</step>
+      <step>Report whether the next action stays in packaging mode or requires widget-authoring handoff</step>
+    </steps>
+  </example>
+
+  <example name="validate_before_packaging">
+    <description>Perform a lightweight readiness review before running the build</description>
+    <context>Use when newly created or modified widgets are about to be packaged</context>
+    <steps>
+      <step>Inspect the target widgets and metadata files</step>
+      <step>Confirm the packaging configuration aligns with the requested widget set</step>
+      <step>Proceed to packaging only if there are no obvious blockers</step>
+    </steps>
+  </example>
+
+  <example name="deploy_after_successful_packaging">
+    <description>Deploy a toolkit only after packaging has succeeded and deployment is requested</description>
+    <context>Use when a generated toolkit should be installed into a BAW environment</context>
+    <steps>
+      <step>Confirm the artifact path and deployment intent</step>
+      <step>Use MCP deployment tools deliberately</step>
+      <step>Report installation status and any asynchronous follow-up required</step>
+    </steps>
+  </example>
+</examples>
+
+<!-- Made with Bob -->
