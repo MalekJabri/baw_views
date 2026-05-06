@@ -1,0 +1,401 @@
+/* Timeline Widget Styles - Modern Carbon Design System */
+/* Font sizes based on @bpm-font-size-base (14px) from Carbon theme */
+
+.timeline_maincontentbox {
+	width: 100%;
+	min-height: 120px;
+	padding: 2rem 0;
+	font-family: 'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px; /* @bpm-font-size-base */
+}
+
+.timeline_maincontentbox .timeline-container {
+	display: block;
+	width: 100%;
+	position: relative;
+	max-width: 100%;
+}
+
+/* Central Timeline Line - Refined */
+.timeline_maincontentbox .timeline-container .timeline-line {
+	position: absolute;
+	left: 24px;
+	top: 0;
+	bottom: 0;
+	width: 2px;
+	background: linear-gradient(180deg, #e0e0e0 0%, #f4f4f4 100%);
+	z-index: 0;
+}
+
+.timeline_maincontentbox .timeline-container .timeline-events {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	z-index: 1;
+	gap: 0;
+}
+
+/* Timeline Event Item - Modern Card Style */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	position: relative;
+	width: 100%;
+	min-height: 80px;
+	padding-bottom: 2rem;
+	transition: all 0.2s cubic-bezier(0.2, 0, 0.38, 0.9);
+}
+
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event:last-child {
+	padding-bottom: 0;
+}
+
+/* Event Marker - Elevated Design */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-marker {
+	width: 48px;
+	height: 48px;
+	min-width: 48px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #ffffff;
+	border: 3px solid #e0e0e0;
+	position: relative;
+	z-index: 2;
+	transition: all 0.3s cubic-bezier(0.2, 0, 0.38, 0.9);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Event Marker - Completed State */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event.completed .event-marker {
+	background: linear-gradient(135deg, #0f62fe 0%, #0353E9 100%);
+	border-color: #0f62fe;
+	box-shadow: 0 4px 12px rgba(15, 98, 254, 0.25);
+}
+
+/* Event Marker - Current State with Pulse */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event.current .event-marker {
+	background: #ffffff;
+	border-color: #0f62fe;
+	border-width: 4px;
+	box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.15), 0 4px 12px rgba(15, 98, 254, 0.2);
+	animation: currentPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes currentPulse {
+	0%, 100% {
+		box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.15), 0 4px 12px rgba(15, 98, 254, 0.2);
+	}
+	50% {
+		box-shadow: 0 0 0 8px rgba(15, 98, 254, 0.08), 0 4px 16px rgba(15, 98, 254, 0.25);
+	}
+}
+
+/* Event Marker - Pending State */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event.pending .event-marker {
+	background: #f4f4f4;
+	border-color: #c6c6c6;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* Event Marker - Error State */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event.error .event-marker {
+	background: linear-gradient(135deg, #da1e28 0%, #ba1b23 100%);
+	border-color: #da1e28;
+	box-shadow: 0 4px 12px rgba(218, 30, 40, 0.25);
+}
+
+/* Event Marker - Warning State */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event.warning .event-marker {
+	background: linear-gradient(135deg, #fdd13a 0%, #cfa102 100%);
+	border-color: #fdd13a;
+	box-shadow: 0 4px 12px rgba(253, 209, 58, 0.25);
+}
+
+/* Event Content Container - Card Style */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-content {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	margin-left: 1.5rem;
+	padding: 0.75rem 1.25rem;
+	background: #ffffff;
+	border-radius: 8px;
+	border: 1px solid #e0e0e0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+	transition: all 0.2s cubic-bezier(0.2, 0, 0.38, 0.9);
+	position: relative;
+	top: 4px;
+}
+
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-content::before {
+	content: '';
+	position: absolute;
+	left: -8px;
+	top: 16px;
+	width: 0;
+	height: 0;
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+	border-right: 8px solid #e0e0e0;
+}
+
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-content::after {
+	content: '';
+	position: absolute;
+	left: -7px;
+	top: 16px;
+	width: 0;
+	height: 0;
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+	border-right: 8px solid #ffffff;
+}
+
+/* Event Date - Refined Typography (12px = @bpm-font-size-small) */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-date {
+	font-size: 12px; /* @bpm-font-size-small: round(@bpm-font-size-base/1.16) */
+	font-weight: 400;
+	color: #6f6f6f;
+	margin-bottom: 0.5rem;
+	letter-spacing: 0.16px;
+	line-height: 1.33;
+}
+
+/* Event Title - Bold and Clear (14px = @bpm-font-size-base) */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-title {
+	font-size: 14px; /* @bpm-font-size-base */
+	font-weight: 600;
+	color: #161616;
+	margin-bottom: 0.5rem;
+	line-height: 1.5;
+	letter-spacing: 0;
+}
+
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event.current .event-title {
+	color: #0f62fe;
+}
+
+/* Event Description - Readable (14px = @bpm-font-size-base) */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-description {
+	font-size: 14px; /* @bpm-font-size-base */
+	font-weight: 400;
+	color: #525252;
+	line-height: 1.57;
+	margin-bottom: 0.5rem;
+	letter-spacing: 0.16px;
+}
+
+/* Event Metadata - Subtle (12px = @bpm-font-size-small) */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-metadata {
+	font-size: 12px; /* @bpm-font-size-small: round(@bpm-font-size-base/1.16) */
+	font-weight: 400;
+	color: #8d8d8d;
+	font-style: italic;
+	margin-top: 0.5rem;
+	padding-top: 0.5rem;
+	border-top: 1px solid #f4f4f4;
+	letter-spacing: 0.16px;
+}
+
+/* Status Icons - Modern SVG Style */
+.timeline_icon_completed {
+	background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M9%2016.17L4.83%2012l-1.42%201.41L9%2019%2021%207l-1.41-1.41z%22%2F%3E%3C%2Fsvg%3E");
+	width: 24px;
+	height: 24px;
+	background-size: 24px 24px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.timeline_icon_current {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #0f62fe;
+	box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.2);
+}
+
+.timeline_icon_pending {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #c6c6c6;
+}
+
+.timeline_icon_error {
+	background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M19%206.41L17.59%205%2012%2010.59%206.41%205%205%206.41%2010.59%2012%205%2017.59%206.41%2019%2012%2013.41%2017.59%2019%2019%2017.59%2013.41%2012z%22%2F%3E%3C%2Fsvg%3E");
+	width: 24px;
+	height: 24px;
+	background-size: 24px 24px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.timeline_icon_warning {
+	background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23161616%22%20d%3D%22M1%2021h22L12%202%201%2021zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z%22%2F%3E%3C%2Fsvg%3E");
+	width: 24px;
+	height: 24px;
+	background-size: 24px 24px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+/* Clickable Events - Enhanced Interaction */
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event.clickable {
+	cursor: pointer;
+}
+
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event.clickable:hover .event-marker {
+	transform: scale(1.08);
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event.clickable:hover .event-content {
+	border-color: #0f62fe;
+	box-shadow: 0 4px 12px rgba(15, 98, 254, 0.15);
+	transform: translateX(4px);
+}
+
+.timeline_maincontentbox .timeline-container .timeline-events .timeline-event.clickable:active .event-content {
+	transform: translateX(2px);
+}
+
+/* Compact Mode - Tighter Spacing */
+.timeline_maincontentbox.compact .timeline-container .timeline-events .timeline-event {
+	min-height: 60px;
+	padding-bottom: 1.25rem;
+}
+
+.timeline_maincontentbox.compact .timeline-container .timeline-events .timeline-event .event-marker {
+	width: 40px;
+	height: 40px;
+	min-width: 40px;
+}
+
+.timeline_maincontentbox.compact .timeline-container .timeline-events .timeline-event .event-content {
+	padding: 0.625rem 1rem;
+}
+
+.timeline_maincontentbox.compact .timeline-container .timeline-events .timeline-event .event-title {
+	font-size: 13px; /* Slightly smaller than base */
+	margin-bottom: 0.25rem;
+}
+
+.timeline_maincontentbox.compact .timeline-container .timeline-events .timeline-event .event-description {
+	font-size: 13px; /* Slightly smaller than base */
+}
+
+/* Alternate Layout - Zigzag Pattern */
+.timeline_maincontentbox.alternate .timeline-container .timeline-line {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.timeline_maincontentbox.alternate .timeline-container .timeline-events .timeline-event {
+	justify-content: flex-start;
+}
+
+.timeline_maincontentbox.alternate .timeline-container .timeline-events .timeline-event:nth-child(even) {
+	flex-direction: row-reverse;
+}
+
+.timeline_maincontentbox.alternate .timeline-container .timeline-events .timeline-event .event-content {
+	max-width: calc(50% - 48px);
+}
+
+.timeline_maincontentbox.alternate .timeline-container .timeline-events .timeline-event:nth-child(odd) .event-content {
+	margin-left: 1.5rem;
+	margin-right: 0;
+}
+
+.timeline_maincontentbox.alternate .timeline-container .timeline-events .timeline-event:nth-child(even) .event-content {
+	margin-left: 0;
+	margin-right: 1.5rem;
+}
+
+.timeline_maincontentbox.alternate .timeline-container .timeline-events .timeline-event:nth-child(even) .event-content::before {
+	left: auto;
+	right: -8px;
+	border-right: none;
+	border-left: 8px solid #e0e0e0;
+}
+
+.timeline_maincontentbox.alternate .timeline-container .timeline-events .timeline-event:nth-child(even) .event-content::after {
+	left: auto;
+	right: -7px;
+	border-right: none;
+	border-left: 8px solid #ffffff;
+}
+
+/* Responsive Design - Mobile Optimization */
+@media (max-width: 672px) {
+	.timeline_maincontentbox {
+		padding: 1.5rem 0;
+	}
+	
+	.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-marker {
+		width: 40px;
+		height: 40px;
+		min-width: 40px;
+	}
+	
+	.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-content {
+		padding: 0.625rem 1rem;
+		margin-left: 1rem;
+	}
+	
+	.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-title {
+		font-size: 13px; /* Slightly smaller for mobile */
+	}
+	
+	.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-description {
+		font-size: 13px; /* Slightly smaller for mobile */
+	}
+	
+	/* Disable alternate layout on mobile */
+	.timeline_maincontentbox.alternate .timeline-container .timeline-line {
+		left: 24px;
+		transform: none;
+	}
+	
+	.timeline_maincontentbox.alternate .timeline-container .timeline-events .timeline-event {
+		flex-direction: row !important;
+	}
+	
+	.timeline_maincontentbox.alternate .timeline-container .timeline-events .timeline-event .event-content {
+		max-width: none;
+		margin-left: 1rem !important;
+		margin-right: 0 !important;
+	}
+	
+	.timeline_maincontentbox.alternate .timeline-container .timeline-events .timeline-event .event-content::before {
+		left: -8px !important;
+		right: auto !important;
+		border-left: none !important;
+		border-right: 8px solid #e0e0e0 !important;
+	}
+	
+	.timeline_maincontentbox.alternate .timeline-container .timeline-events .timeline-event .event-content::after {
+		left: -7px !important;
+		right: auto !important;
+		border-left: none !important;
+		border-right: 8px solid #ffffff !important;
+	}
+}
+
+/* Print Styles */
+@media print {
+	.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-content {
+		box-shadow: none;
+		border: 1px solid #e0e0e0;
+	}
+	
+	.timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-marker {
+		box-shadow: none;
+	}
+}
+
+/* Made with Bob */

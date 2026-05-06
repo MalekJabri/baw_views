@@ -1,6 +1,5 @@
 {
-  "name": "ProgressData",
-  "type": "businessObject",
+  "type": "ProgressData",
   "description": "Business object representing progress bar data",
   "properties": [
     {

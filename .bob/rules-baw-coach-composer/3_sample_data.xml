@@ -1,0 +1,289 @@
+<sample_data_generation>
+  <overview>
+    Guidelines for generating realistic, contextual sample data for BAW widget testing.
+    Sample data should be meaningful, varied, and representative of real-world usage.
+  </overview>
+
+  <core_principles>
+    <principle>Data should match the widget's purpose and context</principle>
+    <principle>Use realistic values, not placeholder text</principle>
+    <principle>Include variety to test different states</principle>
+    <principle>Maintain data consistency across related widgets</principle>
+    <principle>Consider edge cases and boundary conditions</principle>
+  </core_principles>
+
+  <data_generation_strategies>
+    <strategy name="contextual_naming">
+      <description>Generate field values based on field names and semantics</description>
+      <examples>
+        <example>
+          <field>employeeName</field>
+          <good>"Sarah Johnson", "Michael Chen", "Aisha Patel"</good>
+          <bad>"Test User 1", "User 2", "XXX"</bad>
+        </example>
+        <example>
+          <field>orderDate</field>
+          <good>"2026-05-01", "2026-04-28", "2026-05-03"</good>
+          <bad>"2020-01-01", "1999-12-31", "Date"</bad>
+        </example>
+        <example>
+          <field>status</field>
+          <good>"In Progress", "Completed", "Pending Review"</good>
+          <bad>"Status1", "S", "XXX"</bad>
+        </example>
+      </examples>
+    </strategy>
+
+    <strategy name="realistic_ranges">
+      <description>Use appropriate value ranges for numeric data</description>
+      <examples>
+        <example>
+          <field>percentage (0-100)</field>
+          <values>0, 25, 50, 75, 100</values>
+          <avoid>-10, 150, 999</avoid>
+        </example>
+        <example>
+          <field>age</field>
+          <values>25, 34, 42, 58, 67</values>
+          <avoid>0, 200, -5</avoid>
+        </example>
+        <example>
+          <field>price</field>
+          <values>19.99, 149.50, 2499.00</values>
+          <avoid>0.01, 999999.99</avoid>
+        </example>
+      </examples>
+    </strategy>
+
+    <strategy name="state_variety">
+      <description>Generate data representing different states</description>
+      <states>
+        <state>Empty/Initial state</state>
+        <state>Partially complete</state>
+        <state>Fully complete</state>
+        <state>Error/Invalid state</state>
+        <state>Edge cases</state>
+      </states>
+      <example widget="ProgressBar">
+        <state name="not_started">
+          <data>currentStep: 0, totalSteps: 5, percentage: 0</data>
+        </state>
+        <state name="in_progress">
+          <data>currentStep: 3, totalSteps: 5, percentage: 60</data>
+        </state>
+        <state name="complete">
+          <data>currentStep: 5, totalSteps: 5, percentage: 100</data>
+        </state>
+      </example>
+    </strategy>
+
+    <strategy name="relational_consistency">
+      <description>Maintain logical relationships between data fields</description>
+      <examples>
+        <example>
+          <scenario>Progress tracking</scenario>
+          <consistent>
+            currentStep: 3
+            totalSteps: 5
+            percentage: 60 (calculated: 3/5 * 100)
+            label: "Step 3 of 5"
+          </consistent>
+          <inconsistent>
+            currentStep: 3
+            totalSteps: 5
+            percentage: 25 (doesn't match 3/5)
+            label: "Almost done" (doesn't match 60%)
+          </inconsistent>
+        </example>
+      </examples>
+    </strategy>
+  </data_generation_strategies>
+
+  <widget_specific_data>
+    <widget name="ProgressBar">
+      <business_object>ProgressData</business_object>
+      <sample_data>
+        <instance state="starting">
+          {
+            "currentStep": 1,
+            "totalSteps": 5,
+            "percentage": 20,
+            "label": "Initializing process...",
+            "isComplete": false
+          }
+        </instance>
+        <instance state="mid_progress">
+          {
+            "currentStep": 3,
+            "totalSteps": 5,
+            "percentage": 60,
+            "label": "Processing documents...",
+            "isComplete": false
+          }
+        </instance>
+        <instance state="complete">
+          {
+            "currentStep": 5,
+            "totalSteps": 5,
+            "percentage": 100,
+            "label": "Process complete!",
+            "isComplete": true
+          }
+        </instance>
+      </sample_data>
+    </widget>
+
+    <widget name="Stepper">
+      <business_object>StepItem (array)</business_object>
+      <sample_data>
+        <instance>
+          {
+            "steps": [
+              {"label": "Upload Documents", "status": "complete", "icon": "check"},
+              {"label": "Review Information", "status": "complete", "icon": "check"},
+              {"label": "Verify Details", "status": "active", "icon": "edit"},
+              {"label": "Submit for Approval", "status": "pending", "icon": "clock"},
+              {"label": "Complete", "status": "pending", "icon": "flag"}
+            ],
+            "currentStep": 2
+          }
+        </instance>
+      </sample_data>
+    </widget>
+
+    <widget name="Breadcrumb">
+      <business_object>BreadcrumbItem (array)</business_object>
+      <sample_data>
+        <instance>
+          {
+            "items": [
+              {"label": "Home", "url": "/home", "active": false},
+              {"label": "Documents", "url": "/documents", "active": false},
+              {"label": "Reports", "url": "/documents/reports", "active": false},
+              {"label": "Annual Report 2026", "url": "/documents/reports/annual-2026", "active": true}
+            ]
+          }
+        </instance>
+      </sample_data>
+    </widget>
+
+    <widget name="Table/List">
+      <sample_data>
+        <instance>
+          {
+            "rows": [
+              {"id": 1, "name": "Project Alpha", "status": "Active", "progress": 75, "dueDate": "2026-06-15"},
+              {"id": 2, "name": "Project Beta", "status": "Planning", "progress": 25, "dueDate": "2026-07-01"},
+              {"id": 3, "name": "Project Gamma", "status": "Complete", "progress": 100, "dueDate": "2026-04-30"},
+              {"id": 4, "name": "Project Delta", "status": "On Hold", "progress": 50, "dueDate": "2026-08-15"}
+            ]
+          }
+        </instance>
+      </sample_data>
+    </widget>
+
+    <widget name="DatePicker">
+      <sample_data>
+        <instance>
+          {
+            "selectedDate": "2026-05-03",
+            "minDate": "2026-01-01",
+            "maxDate": "2026-12-31",
+            "disabledDates": ["2026-05-01", "2026-07-04", "2026-12-25"]
+          }
+        </instance>
+      </sample_data>
+    </widget>
+
+    <widget name="FileUpload">
+      <sample_data>
+        <instance>
+          {
+            "files": [
+              {"name": "annual_report.pdf", "size": 2457600, "type": "application/pdf", "status": "uploaded"},
+              {"name": "budget_2026.xlsx", "size": 524288, "type": "application/vnd.ms-excel", "status": "uploading", "progress": 65},
+              {"name": "presentation.pptx", "size": 8388608, "type": "application/vnd.ms-powerpoint", "status": "pending"}
+            ],
+            "maxSize": 10485760,
+            "allowedTypes": ["pdf", "xlsx", "pptx", "docx"]
+          }
+        </instance>
+      </sample_data>
+    </widget>
+  </widget_specific_data>
+
+  <data_generation_workflow>
+    <step number="1">
+      <action>Analyze business object structure</action>
+      <details>Read the business object JSON file to understand field types and structure</details>
+    </step>
+
+    <step number="2">
+      <action>Understand widget purpose</action>
+      <details>Determine what the widget does and what kind of data makes sense</details>
+    </step>
+
+    <step number="3">
+      <action>Generate contextual values</action>
+      <details>Create realistic values based on field names and widget purpose</details>
+    </step>
+
+    <step number="4">
+      <action>Ensure consistency</action>
+      <details>Verify that related fields have logically consistent values</details>
+    </step>
+
+    <step number="5">
+      <action>Add variety</action>
+      <details>Create multiple instances showing different states if appropriate</details>
+    </step>
+  </data_generation_workflow>
+
+  <common_data_patterns>
+    <pattern name="names">
+      <examples>Sarah Johnson, Michael Chen, Aisha Patel, Carlos Rodriguez, Emma Williams</examples>
+    </pattern>
+
+    <pattern name="dates">
+      <format>YYYY-MM-DD (ISO 8601)</format>
+      <examples>2026-05-03, 2026-04-15, 2026-06-30</examples>
+      <avoid>Use current year, not old dates like 2020</avoid>
+    </pattern>
+
+    <pattern name="statuses">
+      <examples>Active, Pending, Complete, In Progress, On Hold, Cancelled</examples>
+    </pattern>
+
+    <pattern name="labels">
+      <examples>Processing documents..., Uploading files..., Verifying information..., Almost done!</examples>
+    </pattern>
+
+    <pattern name="descriptions">
+      <examples>Annual financial report for fiscal year 2026, Quarterly sales analysis and projections</examples>
+    </pattern>
+  </common_data_patterns>
+
+  <presentation_format>
+    <format>
+      When presenting sample data to the user:
+
+      **Sample Data Generated:**
+
+      **[Widget Name]** ([Business Object])
+      ```json
+      {
+        "field1": "value1",
+        "field2": value2,
+        ...
+      }
+      ```
+
+      **Data Rationale:**
+      - [Reason for these values]
+      - [How it represents realistic usage]
+      - [What states it covers]
+    </format>
+  </presentation_format>
+</sample_data_generation>
+
+<!-- Made with Bob -->

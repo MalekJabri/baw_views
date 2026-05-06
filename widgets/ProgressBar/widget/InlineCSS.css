@@ -1,10 +1,11 @@
-/* ProgressBar Widget Styles - Carbon Design System Inspired */
+/* ProgressBar Widget Styles - Carbon Design System */
+/* Colors and typography aligned with themes/Carbon.less */
 
 .progressbar_maincontentbox {
 	width: 100%;
 	min-height: 120px;
 	padding: 1rem;
-	font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+	font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif; /* @bpm-font-family-sans-serif */
 }
 
 .progressbar_maincontentbox .progressbar-container {
@@ -18,7 +19,7 @@
 .progressbar_maincontentbox .progressbar-track {
 	width: 100%;
 	height: 8px;
-	background-color: #e0e0e0;
+	background-color: #e0e0e0; /* Gray 20 */
 	border-radius: 4px;
 	overflow: hidden;
 	position: relative;
@@ -29,7 +30,7 @@
 .progressbar_maincontentbox .progressbar-fill {
 	height: 100%;
 	width: 0%;
-	background-color: #da1e28; /* Red for 0-49% */
+	background-color: #da1e28; /* @bpm-color-alert - Red for 0-49% */
 	border-radius: 4px;
 	transition: width 0.5s ease-in-out, background-color 0.3s ease;
 	position: relative;
@@ -64,15 +65,15 @@
 
 /* Color states based on progress */
 .progressbar_maincontentbox .progressbar-fill.state-low {
-	background-color: #da1e28; /* Red: 0-49% */
+	background-color: #da1e28; /* @bpm-color-alert - Red: 0-49% */
 }
 
 .progressbar_maincontentbox .progressbar-fill.state-moderate {
-	background-color: #f1c21b; /* Yellow: 50-74% */
+	background-color: #f1c21b; /* Warning yellow 50 - Yellow: 50-74% */
 }
 
 .progressbar_maincontentbox .progressbar-fill.state-high {
-	background-color: #24a148; /* Green: 75-100% */
+	background-color: #24a148; /* Success green 50 - Green: 75-100% */
 }
 
 /* Percentage Display */
@@ -83,23 +84,23 @@
 }
 
 .progressbar_maincontentbox .percentage-value {
-	font-size: 2rem;
-	font-weight: 600;
-	color: #161616;
+	font-size: 32px; /* @bpm-font-size-xxlarge */
+	font-weight: 600; /* @bpm-font-weight-semibold */
+	color: #161616; /* @bpm-text-color */
 	transition: color 0.3s ease;
 }
 
 /* Color-coded percentage text */
 .progressbar_maincontentbox .percentage-value.state-low {
-	color: #da1e28;
+	color: #da1e28; /* @bpm-color-alert */
 }
 
 .progressbar_maincontentbox .percentage-value.state-moderate {
-	color: #f1c21b;
+	color: #f1c21b; /* Warning yellow 50 */
 }
 
 .progressbar_maincontentbox .percentage-value.state-high {
-	color: #24a148;
+	color: #24a148; /* Success green 50 */
 }
 
 /* Status Message */
@@ -110,30 +111,30 @@
 }
 
 .progressbar_maincontentbox .status-message {
-	font-size: 0.875rem;
-	font-weight: 400;
-	color: #525252;
+	font-size: 14px; /* @bpm-font-size-base */
+	font-weight: 400; /* @bpm-font-weight-normal */
+	color: #525252; /* Gray 70 */
 	text-align: center;
 	padding: 0.5rem 1rem;
 	border-radius: 4px;
-	background-color: #f4f4f4;
+	background-color: #f4f4f4; /* Gray 10 */
 	transition: all 0.3s ease;
 }
 
 /* Status message states */
 .progressbar_maincontentbox .status-message.state-not-started {
-	background-color: #f4f4f4;
-	color: #525252;
+	background-color: #f4f4f4; /* Gray 10 */
+	color: #525252; /* Gray 70 */
 }
 
 .progressbar_maincontentbox .status-message.state-in-progress {
-	background-color: #e5f6ff;
-	color: #0043ce;
+	background-color: #e5f6ff; /* Info background */
+	color: #0043ce; /* @bpm-link-text-color-hover */
 }
 
 .progressbar_maincontentbox .status-message.state-complete {
-	background-color: #defbe6;
-	color: #0e6027;
+	background-color: #defbe6; /* Success background */
+	color: #0e6027; /* Success text */
 }
 
 /* Pulse animation for in-progress state */
@@ -162,11 +163,11 @@
 	}
 	
 	.progressbar_maincontentbox .percentage-value {
-		font-size: 1.5rem;
+		font-size: 24px; /* @bpm-font-size-xlarge */
 	}
 	
 	.progressbar_maincontentbox .status-message {
-		font-size: 0.75rem;
+		font-size: 12px; /* @bpm-font-size-small */
 		padding: 0.375rem 0.75rem;
 	}
 	

@@ -1,0 +1,49 @@
+{
+  "name": "TimelineEvent",
+  "type": "businessObject",
+  "description": "Business object representing a single event in the Timeline widget",
+  "properties": [
+    {
+      "name": "title",
+      "type": "String",
+      "required": true,
+      "description": "Title or main text for the timeline event"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "required": false,
+      "description": "Optional detailed description of the event"
+    },
+    {
+      "name": "date",
+      "type": "String",
+      "required": false,
+      "description": "Date/time of the event (formatted string)"
+    },
+    {
+      "name": "timestamp",
+      "type": "Date",
+      "required": false,
+      "description": "Date/time of the event as Date object"
+    },
+    {
+      "name": "status",
+      "type": "String",
+      "required": false,
+      "description": "Event status: completed, current, pending, error, warning"
+    },
+    {
+      "name": "icon",
+      "type": "String",
+      "required": false,
+      "description": "Optional icon identifier or class name"
+    },
+    {
+      "name": "metadata",
+      "type": "String",
+      "required": false,
+      "description": "Additional metadata or context information"
+    }
+  ]
+}

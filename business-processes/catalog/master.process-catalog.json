@@ -1,0 +1,20 @@
+{
+  "catalogName": "Master Process Catalog",
+  "catalogVersion": "1.0.0",
+  "description": "Master catalog of all business processes across all contexts",
+  "generatedDate": "2026-05-06T10:30:00Z",
+  "contexts": [
+    {
+      "contextName": "LifeInsuranceAndAnnuities",
+      "contextCatalog": "business-processes/catalog/LifeInsuranceAndAnnuities.process-catalog.json",
+      "processCount": 1,
+      "description": "Business processes for Life Insurance and Annuities domain"
+    }
+  ],
+  "statistics": {
+    "totalContexts": 1,
+    "totalProcesses": 1,
+    "endToEndProcesses": 1,
+    "subProcesses": 0
+  }
+}

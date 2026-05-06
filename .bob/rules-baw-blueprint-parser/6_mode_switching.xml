@@ -1,0 +1,99 @@
+<blueprint_parser_mode_switching>
+  <overview>
+    This mode owns document-to-business-object interpretation and generation.
+    It should switch modes when the task moves beyond blueprint parsing and JSON
+    artifact creation.
+  </overview>
+
+  <when_to_switch_modes>
+    <scenario>
+      <trigger>User wants toolkit packaging or TWX generation after business object artifacts are ready</trigger>
+      <target_mode>baw-package-manager</target_mode>
+      <reason>
+        Packaging and deployment workflows belong to the dedicated package manager mode.
+      </reason>
+    </scenario>
+
+    <scenario>
+      <trigger>User wants to create or modify widgets based on the generated business objects</trigger>
+      <target_mode>baw-coachui-view</target_mode>
+      <reason>
+        Widget implementation belongs to the BAW Coach Widget mode, not the blueprint parser mode.
+      </reason>
+    </scenario>
+
+    <scenario>
+      <trigger>User wants to compose a coach or service flow using the generated business objects</trigger>
+      <target_mode>baw-coach-composer</target_mode>
+      <reason>
+        Coach composition and service flow generation belong to the coach composer mode.
+      </reason>
+    </scenario>
+  </when_to_switch_modes>
+
+  <when_to_stay_in_mode>
+    <scenario>
+      <description>Document analysis and entity extraction</description>
+    </scenario>
+    <scenario>
+      <description>Business object normalization and JSON generation</description>
+    </scenario>
+    <scenario>
+      <description>Catalog generation and generation summary creation</description>
+    </scenario>
+    <scenario>
+      <description>Validation of generated artifact readiness prior to packaging</description>
+    </scenario>
+  </when_to_stay_in_mode>
+
+  <handoff_best_practices>
+    <practice>
+      <name>Switch only after generation scope is complete</name>
+      <description>
+        Finish business object extraction, normalization, and artifact generation
+        before switching to another mode for downstream work.
+      </description>
+    </practice>
+
+    <practice>
+      <name>Preserve generation context in the handoff</name>
+      <description>
+        When switching, mention the business context, source blueprints, and what
+        artifact set was produced so the receiving mode starts with the right context.
+      </description>
+    </practice>
+
+    <practice>
+      <name>Do not package in this mode just to save time</name>
+      <description>
+        Even if packaging seems straightforward, keep the generation and packaging
+        boundaries explicit and clean.
+      </description>
+    </practice>
+  </handoff_best_practices>
+
+  <switch_templates>
+    <template name="to_package_manager"><![CDATA[
+<switch_mode>
+<mode_slug>baw-package-manager</mode_slug>
+<reason>Generated business object JSON catalog is ready for toolkit packaging.</reason>
+</switch_mode>
+    ]]></template>
+
+    <template name="to_widget_mode"><![CDATA[
+<switch_mode>
+<mode_slug>baw-coachui-view</mode_slug>
+<reason>Business objects are ready and the task now requires widget implementation work.</reason>
+</switch_mode>
+    ]]></template>
+
+    <template name="to_coach_composer"><![CDATA[
+<switch_mode>
+<mode_slug>baw-coach-composer</mode_slug>
+<reason>Business objects are ready and the task now requires coach or service flow composition.</reason>
+</switch_mode>
+    ]]></template>
+  </switch_templates>
+</blueprint_parser_mode_switching>
+
+<!-- Made with Bob -->

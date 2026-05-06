@@ -1,0 +1,123 @@
+<blueprint_parser_common_patterns>
+  <pattern_library>
+    <pattern name="document_to_object_extraction">
+      <description>
+        Use this pattern when a business document describes one or more entities
+        that should become business object JSON artifacts.
+      </description>
+      <steps>
+        <step>Identify candidate entity names</step>
+        <step>List attributes and constraints for each entity</step>
+        <step>Separate nested structures from references</step>
+        <step>Map the resulting model to repository-supported JSON shape</step>
+      </steps>
+    </pattern>
+
+    <pattern name="catalog_generation">
+      <description>
+        Use this pattern when generated business object files need to be
+        referenced by a stable catalog for later packaging.
+      </description>
+      <steps>
+        <step>Collect generated file paths from business-objects/generated/[context]/ for the current business context</step>
+        <step>Sort entries deterministically</step>
+        <step>Write the context catalog to business-objects/catalog/[context].catalog.json</step>
+        <step>Update or create business-objects/catalog/master.catalog.json with stable references to all generated contexts</step>
+      </steps>
+    </pattern>
+
+    <pattern name="ambiguity_tracking">
+      <description>
+        Use this pattern when the source blueprint does not fully define field
+        types, required status, or relationships.
+      </description>
+      <steps>
+        <step>Identify the ambiguous business statement</step>
+        <step>State the assumption clearly</step>
+        <step>Apply the most conservative repository-aligned interpretation</step>
+        <step>Record the ambiguity in a summary or report artifact when needed</step>
+      </steps>
+    </pattern>
+
+    <pattern name="context_based_grouping">
+      <description>
+        Use this pattern when the user provides a domain, module, or bounded
+        context that should drive output folder organization.
+      </description>
+      <steps>
+        <step>Use the user-provided context as the primary grouping key</step>
+        <step>Place related business object files under business-objects/generated/[context]/</step>
+        <step>Create a matching context-level catalog entry at business-objects/catalog/[context].catalog.json</step>
+      </steps>
+    </pattern>
+  </pattern_library>
+
+  <mapping_patterns>
+    <pattern name="entity">
+      <source_signal>Named business noun with described attributes</source_signal>
+      <target_shape>Standalone business object JSON file</target_shape>
+    </pattern>
+
+    <pattern name="embedded_structure">
+      <source_signal>Repeated sub-structure always used inside a parent object</source_signal>
+      <target_shape>Nested structure or dedicated reusable object based on repository conventions</target_shape>
+    </pattern>
+
+    <pattern name="enumeration">
+      <source_signal>Closed set of allowed values such as status or category</source_signal>
+      <target_shape>Enum-like definition or constrained field representation based on existing repository support</target_shape>
+    </pattern>
+
+    <pattern name="reference">
+      <source_signal>Business entity linked to another independently meaningful entity</source_signal>
+      <target_shape>Reference between generated business objects</target_shape>
+    </pattern>
+  </mapping_patterns>
+
+  <folder_patterns>
+    <pattern name="source_and_generated_separation">
+      <rule>Keep source blueprints under business-blueprints/ separate from generated business object artifacts under business-objects/</rule>
+      <benefit>Prevents accidental confusion between human-authored source and generated output</benefit>
+    </pattern>
+
+    <pattern name="catalog_as_handoff_contract">
+      <rule>Use business-objects/catalog/[context].catalog.json and business-objects/catalog/master.catalog.json as the dedicated catalog contract for later packaging workflows</rule>
+      <benefit>Creates a clean contract between generation mode and packaging mode</benefit>
+    </pattern>
+  </folder_patterns>
+
+  <anti_patterns>
+    <anti_pattern>
+      <name>Directly packaging after generation</name>
+      <why_bad>
+        It collapses generation and packaging responsibilities into one workflow
+        and makes the handoff boundary unclear.
+      </why_bad>
+      <correct_approach>
+        Stop after generation and hand off packaging work to baw-package-manager.
+      </correct_approach>
+    </anti_pattern>
+
+    <anti_pattern>
+      <name>Generating business objects without checking repository examples</name>
+      <why_bad>
+        It can create incompatible JSON shapes that existing import logic cannot use.
+      </why_bad>
+      <correct_approach>
+        Inspect existing examples and helper functions before generating artifacts.
+      </correct_approach>
+    </anti_pattern>
+
+    <anti_pattern>
+      <name>Hiding assumptions inside generated files</name>
+      <why_bad>
+        Users lose traceability when field meanings or relationships were inferred.
+      </why_bad>
+      <correct_approach>
+        Expose assumptions in summaries or companion report artifacts.
+      </correct_approach>
+    </anti_pattern>
+  </anti_patterns>
+</blueprint_parser_common_patterns>
+
+<!-- Made with Bob -->

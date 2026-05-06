@@ -30,14 +30,14 @@
     <step number="3">
       <action>Read current packaging configuration</action>
       <details>
-        Read package_multiple_widgets.py to get the current WIDGET_NAMES list.
+        Read package_baw.py to get the current WIDGET_NAMES list.
         This shows which widgets are already configured for packaging.
       </details>
       <example><![CDATA[
 <read_file>
 <args>
   <file>
-    <path>package_multiple_widgets.py</path>
+    <path>package_baw.py</path>
     <line_range>19-30</line_range>
   </file>
 </args>
@@ -49,7 +49,7 @@
       <action>Identify new widgets</action>
       <details>
         Compare the list of valid widgets found in the widgets directory with the
-        WIDGET_NAMES list in package_multiple_widgets.py. Any widget not in the list
+        WIDGET_NAMES list in package_baw.py. Any widget not in the list
         is considered new and should be added.
       </details>
     </step>
@@ -57,12 +57,12 @@
     <step number="5">
       <action>Update packaging configuration</action>
       <details>
-        If new widgets are found, update the WIDGET_NAMES list in package_multiple_widgets.py.
+        If new widgets are found, update the WIDGET_NAMES list in package_baw.py.
         Add new widgets in alphabetical order to maintain consistency.
       </details>
       <example><![CDATA[
 <apply_diff>
-<path>package_multiple_widgets.py</path>
+<path>package_baw.py</path>
 <diff>
 <<<<<<< SEARCH
 :start_line:19
@@ -143,7 +143,7 @@ WIDGET_NAMES = [
     <new_widgets_found>
       Report: "Detected N new widget(s): [widget names]"
       Report: "Adding to packaging configuration..."
-      Report: "Updated package_multiple_widgets.py"
+      Report: "Updated package_baw.py"
     </new_widgets_found>
     <no_new_widgets>
       Report: "All widgets already configured for packaging"

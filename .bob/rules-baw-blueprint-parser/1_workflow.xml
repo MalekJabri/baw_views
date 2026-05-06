@@ -1,0 +1,218 @@
+<blueprint_parser_workflow>
+  <overview>
+    This mode transforms business documentation from business-blueprints into
+    structured business object JSON artifacts, business process definitions with
+    Mermaid diagrams, and catalog files. It focuses on document interpretation,
+    business object extraction, process workflow discovery, normalization, and
+    generation readiness. It stops before toolkit packaging or deployment.
+  </overview>
+
+  <core_principles>
+    <principle>Treat business-blueprints as the authoritative source for generated business objects and processes</principle>
+    <principle>Extract business meaning before generating JSON and Markdown artifacts</principle>
+    <principle>Discover both data structures (business objects) and workflows (business processes)</principle>
+    <principle>Reuse existing repository generation capabilities instead of inventing parallel logic</principle>
+    <principle>Keep generated artifacts deterministic and organized by user-provided context</principle>
+    <principle>Generate Mermaid diagrams with metadata structured for future BPMN conversion</principle>
+    <principle>Produce packaging-ready outputs without performing packaging in this mode</principle>
+    <principle>Record assumptions and ambiguities when business meaning is inferred</principle>
+  </core_principles>
+
+  <workflow_steps>
+    <step number="1">
+      <title>Understand the Blueprint Request</title>
+      <description>Identify the business domain, source documents, and intended business object generation outcome</description>
+      <actions>
+        <action>Determine which files or folders under business-blueprints are in scope</action>
+        <action>Identify the business domain or context name that should drive output grouping</action>
+        <action>Clarify whether the user wants analysis only, generation planning, or actual JSON generation</action>
+        <action>Identify any naming constraints, target namespaces, or catalog organization preferences</action>
+      </actions>
+    </step>
+
+    <step number="2">
+      <title>Inspect Source Documents and Existing Patterns</title>
+      <description>Read the source business documents together with representative existing JSON and generation utilities</description>
+      <actions>
+        <action>Inspect the selected business-blueprints sources</action>
+        <action>Read comparable existing business object JSON examples if available</action>
+        <action>Read the existing business object generation or import helpers before deciding how outputs should be shaped</action>
+        <action>Use the repository's existing artifact structure as the reference for generated output conventions</action>
+      </actions>
+      <important>
+        Always ground generation decisions in existing repository conventions.
+        Do not infer a new JSON schema if the workspace already contains utilities
+        or examples that imply the expected shape.
+      </important>
+    </step>
+
+    <step number="3">
+      <title>Extract Business Concepts</title>
+      <description>Identify candidate business objects, fields, enums, and relationships from the documents</description>
+      <actions>
+        <action>Identify entity names, business terms, and repeated structures</action>
+        <action>Extract attributes, types, optionality, and constraints when stated</action>
+        <action>Identify relationships between entities and nested object candidates</action>
+        <action>Capture ambiguous or incomplete sections for later review</action>
+      </actions>
+      <output>
+        Build a structured intermediate understanding before any JSON files are generated.
+      </output>
+    </step>
+
+    <step number="4">
+      <title>Extract Business Processes</title>
+      <description>Identify and model business processes and workflows described in the blueprint</description>
+      <actions>
+        <action>Scan for process descriptions, workflows, and sequential activities</action>
+        <action>Identify process names, actors, and swimlanes</action>
+        <action>Extract process steps, decision points, and flow logic</action>
+        <action>Map processes to relevant business objects (data flow)</action>
+        <action>Identify subprocesses and process relationships</action>
+        <action>Note integration points and system interactions</action>
+      </actions>
+      <output>
+        Build a structured understanding of business processes alongside business objects.
+      </output>
+    </step>
+
+    <step number="5">
+      <title>Normalize the Models</title>
+      <description>Transform extracted concepts into stable business object and process models suitable for generation</description>
+      <actions>
+        <action>Resolve duplicate or overlapping entities and processes</action>
+        <action>Normalize naming conventions for objects, fields, and processes</action>
+        <action>Separate enumerations, nested objects, and object references where appropriate</action>
+        <action>Align field typing with the repository's supported business object conventions</action>
+        <action>Structure process flows with clear start/end points and decision logic</action>
+        <action>Link processes to business objects they consume or produce</action>
+      </actions>
+    </step>
+
+    <step number="6">
+      <title>Generate Business Object JSON Artifacts</title>
+      <description>Create JSON business object files and catalogs in the standard business-objects folder structure</description>
+      <actions>
+        <action>Generate one JSON file per business object under business-objects/generated/[context]/ using stable PascalCase file names such as Claim.json</action>
+        <action>Create a context catalog file under business-objects/catalog/[context].catalog.json</action>
+        <action>Maintain or create a global catalog at business-objects/catalog/master.catalog.json</action>
+        <action>Create optional parse summary or traceability files under business-objects/reports/[context].discovery-report.md when assumptions need to be documented</action>
+        <action>Preserve deterministic file naming and organization so later modes can consume outputs reliably</action>
+      </actions>
+      <important>
+        This mode may generate packaging-ready JSON artifacts, but it must not
+        package, deploy, or modify TWX outputs directly.
+      </important>
+    </step>
+
+    <step number="7">
+      <title>Generate Business Process Definitions</title>
+      <description>Create Markdown files with Mermaid diagrams for each identified business process</description>
+      <actions>
+        <action>Generate one Markdown file per process under business-processes/[context]/ using PascalCase names such as NewBusinessApplication.process.md</action>
+        <action>Include Mermaid flowchart or sequence diagrams visualizing the process</action>
+        <action>Document process steps, decision points, and actors</action>
+        <action>Link process activities to relevant business objects</action>
+        <action>Include structured process metadata in JSON format for future BPMN generation</action>
+        <action>Create a process catalog file under business-processes/catalog/[context].process-catalog.json</action>
+        <action>Maintain or create a master process catalog at business-processes/catalog/master.process-catalog.json</action>
+      </actions>
+      <important>
+        Process definitions are currently generated as Mermaid diagrams in Markdown.
+        The structured metadata prepares for future BPMN artifact generation.
+      </important>
+    </step>
+
+    <step number="8">
+      <title>Register Business Objects with Class IDs</title>
+      <description>Register all generated business objects in the BAW custom types registry with unique class IDs for version control</description>
+      <actions>
+        <action>Run the business object registration process to assign class IDs</action>
+        <action>Use execute_command to run: python3 register_business_objects.py</action>
+        <action>Verify that all business objects are registered in toolkit_packager/baw_custom_types.json</action>
+        <action>Confirm that class IDs are deterministic (same name + context = same GUID)</action>
+        <action>Note any circular dependencies detected (these are normal and expected)</action>
+      </actions>
+      <important>
+        Class ID registration is idempotent - running multiple times will reuse existing class IDs.
+        This step ensures business objects have stable identifiers for packaging and version control.
+      </important>
+    </step>
+
+    <step number="9">
+      <title>Validate Generation Readiness</title>
+      <description>Check that the generated artifacts are internally consistent and aligned with repository conventions</description>
+      <actions>
+        <action>Verify that object names are unique within the chosen context</action>
+        <action>Verify that all referenced objects are resolvable</action>
+        <action>Verify that field types match supported conventions</action>
+        <action>Verify that all business objects have registered class IDs in baw_custom_types.json</action>
+        <action>Verify that process names are unique and properly structured</action>
+        <action>Verify that process-to-business-object links are valid</action>
+        <action>Review assumptions or unresolved ambiguities before completion</action>
+      </actions>
+    </step>
+
+    <step number="10">
+      <title>Preserve Boundaries and Handoff Cleanly</title>
+      <description>Finish at the artifact generation boundary and hand off packaging work to the packaging mode when requested</description>
+      <actions>
+        <action>Summarize what was generated (business objects and processes) and from which source documents</action>
+        <action>State any assumptions that influenced the output models</action>
+        <action>List generated business objects and business processes</action>
+        <action>When the user wants packaging or deployment, hand off to baw-package-manager</action>
+      </actions>
+      <handoff_template>
+        <switch_mode>
+          <mode_slug>baw-package-manager</mode_slug>
+          <reason>Business object JSON artifacts and business process definitions are ready for toolkit packaging.</reason>
+        </switch_mode>
+      </handoff_template>
+    </step>
+  </workflow_steps>
+
+  <output_contract>
+    <source_root>business-blueprints/</source_root>
+    
+    <business_objects>
+      <generated_root>business-objects/</generated_root>
+      <generated_objects_path>business-objects/generated/[context]/</generated_objects_path>
+      <context_catalog_path>business-objects/catalog/[context].catalog.json</context_catalog_path>
+      <master_catalog_path>business-objects/catalog/master.catalog.json</master_catalog_path>
+      <report_path>business-objects/reports/[context].discovery-report.md</report_path>
+      <notes>
+        <note>Generated object files use stable PascalCase names such as Claim.json, Claimant.json, and ClaimDocument.json.</note>
+        <note>The context segment is derived from the user-provided business domain or grouping.</note>
+        <note>Reports are optional but recommended when assumptions, ambiguities, or inferred mappings must be documented.</note>
+      </notes>
+    </business_objects>
+    
+    <business_processes>
+      <generated_root>business-processes/</generated_root>
+      <generated_processes_path>business-processes/[context]/</generated_processes_path>
+      <process_catalog_path>business-processes/catalog/[context].process-catalog.json</process_catalog_path>
+      <master_process_catalog_path>business-processes/catalog/master.process-catalog.json</master_process_catalog_path>
+      <notes>
+        <note>Generated process files use stable PascalCase names such as NewBusinessApplication.process.md.</note>
+        <note>Each process file contains Mermaid diagrams and structured metadata.</note>
+        <note>Process metadata is structured to support future BPMN generation.</note>
+        <note>Processes are linked to business objects they consume or produce.</note>
+      </notes>
+    </business_processes>
+  </output_contract>
+
+  <completion_criteria>
+    <criterion>Source documents have been interpreted in the context requested by the user</criterion>
+    <criterion>Business objects are extracted and normalized into a stable internal model</criterion>
+    <criterion>Business processes are identified and modeled with clear workflows</criterion>
+    <criterion>Generated JSON artifacts follow the business-objects/generated/[context]/ structure</criterion>
+    <criterion>Generated process definitions follow the business-processes/[context]/ structure</criterion>
+    <criterion>Process definitions include Mermaid diagrams and structured metadata</criterion>
+    <criterion>Context and master catalog files are produced for both business objects and processes</criterion>
+    <criterion>Optional discovery reports are written under business-objects/reports/ when needed</criterion>
+    <criterion>Processes are properly linked to business objects they use</criterion>
+    <criterion>Packaging and deployment work remains outside this mode</criterion>
+  </completion_criteria>
+</blueprint_parser_workflow>
+
+<!-- Made with Bob -->

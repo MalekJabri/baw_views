@@ -1,0 +1,46 @@
+{
+  "type": "DocumentItem",
+  "description": "Business object representing an uploaded document with metadata",
+  "properties": [
+    {
+      "name": "id",
+      "type": "String",
+      "description": "Unique identifier for the document"
+    },
+    {
+      "name": "fileName",
+      "type": "String",
+      "description": "Original name of the uploaded file"
+    },
+    {
+      "name": "fileSize",
+      "type": "Integer",
+      "description": "Size of the file in bytes"
+    },
+    {
+      "name": "fileExtension",
+      "type": "String",
+      "description": "File extension (e.g., pdf, docx, jpg)"
+    },
+    {
+      "name": "documentType",
+      "type": "String",
+      "description": "Type of document selected by user (e.g., invoice, contract, report)"
+    },
+    {
+      "name": "fileContent",
+      "type": "String",
+      "description": "Base64 encoded file content for storage in LocalStore"
+    },
+    {
+      "name": "uploadedAt",
+      "type": "String",
+      "description": "ISO 8601 timestamp when the document was uploaded"
+    },
+    {
+      "name": "uploaded",
+      "type": "Boolean",
+      "description": "Flag indicating whether the document has been uploaded to LocalStore"
+    }
+  ]
+}

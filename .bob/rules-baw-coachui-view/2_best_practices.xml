@@ -62,8 +62,156 @@
       </examples>
     </convention>
 
+    <convention category="carbon_theme">
+      <rule>Use Carbon Design System values with inline documentation comments</rule>
+      <critical_note priority="high">
+        <title>Carbon Theme Integration</title>
+        <description>
+          BAW widget InlineCSS.css files are pure CSS, NOT LESS. They do not support LESS
+          preprocessing or variable substitution. Therefore, you MUST use hardcoded values
+          with inline comments that document which Carbon theme variables they correspond to.
+        </description>
+        <correct_pattern>
+          <![CDATA[
+/* Widget Styles - Carbon Design System */
+/* Colors and typography aligned with themes/Carbon.less */
+
+.widget_maincontentbox {
+    font-family: 'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* @bpm-font-family-sans-serif */
+    font-size: 14px; /* @bpm-font-size-base */
+    color: #161616; /* @bpm-text-color */
+}
+
+.widget-primary {
+    background-color: #0f62fe; /* @bpm-color-primary */
+    border-color: #e0e0e0; /* Gray 20 */
+}
+
+.widget-text {
+    font-size: 12px; /* @bpm-font-size-small */
+    color: #525252; /* Gray 70 */
+}
+          ]]>
+        </correct_pattern>
+        <wrong_pattern>
+          <![CDATA[
+/* WRONG: Do NOT use LESS variables - they won't work in InlineCSS.css */
+.widget_maincontentbox {
+    font-family: @bpm-font-family-sans-serif;  /* ❌ Will not compile */
+    font-size: @bpm-font-size-base;            /* ❌ Will not compile */
+    color: @bpm-text-color;                    /* ❌ Will not compile */
+}
+
+/* WRONG: Do NOT use hardcoded values without documentation */
+.widget-primary {
+    background-color: #0f62fe;  /* ❌ Missing theme reference */
+    color: #333;                /* ❌ Not a Carbon color */
+}
+          ]]>
+        </wrong_pattern>
+        <rationale>
+          This approach provides documentation while maintaining compatibility with BAW's
+          CSS compilation process. The comments make it easy to update values when the
+          theme changes and ensure consistency across all widgets.
+        </rationale>
+      </critical_note>
+      <carbon_color_reference>
+        <primary_colors>
+          <color value="#0f62fe" variable="@bpm-color-primary">Primary blue</color>
+          <color value="#0353E9" variable="@bpm-color-primary-dark">Dark blue</color>
+          <color value="#0043ce" variable="@bpm-link-text-color-hover">Hover blue</color>
+        </primary_colors>
+        <semantic_colors>
+          <color value="#198038" variable="@bpm-color-success">Success green</color>
+          <color value="#fdd13a" variable="@bpm-color-warning">Warning yellow</color>
+          <color value="#da1e28" variable="@bpm-color-alert">Error/Alert red</color>
+          <color value="#6ccaff" variable="@bpm-color-info">Info blue</color>
+        </semantic_colors>
+        <neutral_grays>
+          <color value="#161616" variable="@bpm-text-color">Gray 100 (Primary text)</color>
+          <color value="#525252">Gray 70 (Secondary text)</color>
+          <color value="#8d8d8d">Gray 50 (Tertiary text)</color>
+          <color value="#c6c6c6" variable="@bpm-link-text-color-disabled">Gray 30 (Disabled)</color>
+          <color value="#e0e0e0">Gray 20 (Borders)</color>
+          <color value="#f4f4f4">Gray 10 (Light backgrounds)</color>
+          <color value="#ffffff" variable="@bpm-body-bg">White</color>
+        </neutral_grays>
+      </carbon_color_reference>
+      <carbon_typography_reference>
+        <font_family>
+          <value>'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif</value>
+          <variable>@bpm-font-family-sans-serif</variable>
+        </font_family>
+        <font_sizes>
+          <size value="14px" variable="@bpm-font-size-base">Base (body text)</size>
+          <size value="12px" variable="@bpm-font-size-small">Small</size>
+          <size value="10px" variable="@bpm-font-size-xsmall">Extra small</size>
+          <size value="18px" variable="@bpm-font-size-large">Large</size>
+          <size value="24px" variable="@bpm-font-size-xlarge">Extra large</size>
+          <size value="32px" variable="@bpm-font-size-xxlarge">2X large</size>
+        </font_sizes>
+        <font_weights>
+          <weight value="400" variable="@bpm-font-weight-normal">Normal/Regular</weight>
+          <weight value="600" variable="@bpm-font-weight-semibold">Semibold</weight>
+          <weight value="700" variable="@bpm-font-weight-bold">Bold</weight>
+        </font_weights>
+      </carbon_typography_reference>
+      <reference_documentation>
+        <doc>themes/CARBON_THEME_VARIABLES.md - Complete variable reference</doc>
+        <doc>docs/CARBON_THEME_INTEGRATION.md - Integration guide with best practices</doc>
+        <doc>widgets/Timeline/widget/InlineCSS.css - Example implementation</doc>
+        <doc>widgets/Stepper/widget/InlineCSS.css - Example implementation</doc>
+      </reference_documentation>
+      <examples>
+        <good>
+          Always include font-family with Carbon theme comment
+          Use exact Carbon color values with variable name in comment
+          Document font sizes with their theme variable names
+          Reference Gray scale colors with their number (Gray 20, Gray 70, etc.)
+        </good>
+        <bad>
+          Use LESS variables (@bpm-color-primary) directly in CSS
+          Use arbitrary colors not from Carbon palette
+          Omit theme reference comments
+          Use generic font families without IBM Plex Sans
+        </bad>
+      </examples>
+    </convention>
+
     <convention category="javascript">
       <rule>Use BAW widget data and option access patterns consistently</rule>
+      <critical_note priority="high">
+        <title>List Binding Data Access</title>
+        <description>
+          When the widget's bindingType has isList:true in config.json, BAW automatically wraps
+          the array data in an object with an 'items' property. You MUST access the data using
+          this.getData().items, NOT this.getData() directly or any custom property name.
+        </description>
+        <correct_pattern>
+          <![CDATA[
+// In config.json:
+"bindingType": {
+  "name": "TimelineData",
+  "isList": true,
+  "type": "TimelineEvent"
+}
+
+// In inlineJavascript.js:
+// CORRECT: Access the array through .items property
+var timelineData = this.getData().items;
+
+// WRONG: These will NOT work
+var timelineData = this.getData();           // Returns object, not array
+var timelineData = this.getData().events;    // Property 'events' doesn't exist
+var timelineData = this.getData().timeline;  // Property 'timeline' doesn't exist
+          ]]>
+        </correct_pattern>
+        <rationale>
+          BAW's data binding system uses a standardized wrapper for list data. The .items property
+          is the only way to access the actual array when isList:true is set. This is a BAW
+          framework convention, not configurable.
+        </rationale>
+      </critical_note>
       <examples>
         <good>Read values through the established widget APIs and keep event execution explicit</good>
         <bad>Mix unrelated runtime assumptions into inline widget logic</bad>

@@ -1,0 +1,203 @@
+{
+  "description": "BAW Standard UI Widgets Reference - Comprehensive catalog for coach composition",
+  "version": "8.6.0.0",
+  "toolkit_id": "2064.304ac881-16c3-47d2-97d5-6e4c4a893177",
+  "categories": {
+    "input_controls": {
+      "description": "Widgets for user input and data entry",
+      "widgets": {
+        "Text": {
+          "id": "64.5663dd71-ff18-4d33-bea0-468d0b869816",
+          "binding_type": "String",
+          "use_case": "Single-line text input (name, email, phone, etc.)",
+          "common_config": ["label", "placeholder", "required", "maxLength"]
+        },
+        "Text Area": {
+          "id": "64.0e61869e-73fd-4401-b156-8c11adaec3f8",
+          "binding_type": "String",
+          "use_case": "Multi-line text input (descriptions, comments, notes)",
+          "common_config": ["label", "placeholder", "rows", "maxLength"]
+        },
+        "Integer": {
+          "id": "64.a6946c4c-f73d-4ced-9216-90018985ca96",
+          "binding_type": "Integer",
+          "use_case": "Whole number input (quantity, age, count)",
+          "common_config": ["label", "min", "max", "step"]
+        },
+        "Decimal": {
+          "id": "64.e0ede0f2-f3af-408c-af7b-e7a58eb5e2b4",
+          "binding_type": "Decimal",
+          "use_case": "Decimal number input (price, amount, percentage)",
+          "common_config": ["label", "min", "max", "step", "precision"]
+        },
+        "Date Picker": {
+          "id": "64.aeae8953-9e72-411e-b35a-93c7ab827c5c",
+          "binding_type": "Date",
+          "use_case": "Date selection (birth date, incident date, deadline)",
+          "common_config": ["label", "format", "minDate", "maxDate"]
+        },
+        "Date Time Picker": {
+          "id": "64.c8e0e5e5-e1e5-4e5e-b5e5-e5e5e5e5e5e5",
+          "binding_type": "Date",
+          "use_case": "Date and time selection (appointment, timestamp)",
+          "common_config": ["label", "format", "showTime"]
+        },
+        "Checkbox": {
+          "id": "64.fffd1628-baee-44e8-b7ca-5ae48644b0be",
+          "binding_type": "Boolean",
+          "use_case": "Single yes/no option (agree to terms, enable feature)",
+          "common_config": ["label", "checked"]
+        },
+        "Checkbox Group": {
+          "id": "64.b00a9c90-0931-47ac-ab7c-e9fd9b891ccb",
+          "binding_type": "String[]",
+          "use_case": "Multiple selection from list (interests, permissions)",
+          "common_config": ["label", "options", "orientation"]
+        },
+        "Radio Button Group": {
+          "id": "64.c8e0e5e5-e1e5-4e5e-b5e5-e5e5e5e5e5e6",
+          "binding_type": "String",
+          "use_case": "Single selection from list (gender, priority, status)",
+          "common_config": ["label", "options", "orientation"]
+        },
+        "Single Select": {
+          "id": "64.f8e0e5e5-e1e5-4e5e-b5e5-e5e5e5e5e5e7",
+          "binding_type": "String",
+          "use_case": "Dropdown selection (country, category, department)",
+          "common_config": ["label", "options", "placeholder"]
+        },
+        "Multi Select": {
+          "id": "64.a8e0e5e5-e1e5-4e5e-b5e5-e5e5e5e5e5e8",
+          "binding_type": "String[]",
+          "use_case": "Multiple dropdown selection (tags, categories)",
+          "common_config": ["label", "options", "placeholder", "maxSelections"]
+        }
+      }
+    },
+    "layout_containers": {
+      "description": "Widgets for organizing and structuring content",
+      "widgets": {
+        "Panel": {
+          "id": "64.c8e0e5e5-e1e5-4e5e-b5e5-e5e5e5e5e5e9",
+          "use_case": "Group related content with optional header/footer",
+          "common_config": ["title", "collapsible", "collapsed"]
+        },
+        "Collapsible Panel": {
+          "id": "64.aa70e5b9-aade-4334-b92d-1fb5e61f4b0a",
+          "use_case": "Expandable/collapsible content section",
+          "common_config": ["title", "collapsed", "icon"]
+        },
+        "Horizontal Layout": {
+          "id": "64.44f463cc-615b-43d0-834f-c398a82e0363",
+          "use_case": "Arrange widgets side-by-side in rows",
+          "common_config": ["columns", "spacing"]
+        },
+        "Vertical Layout": {
+          "id": "64.d8e0e5e5-e1e5-4e5e-b5e5-e5e5e5e5e5ea",
+          "use_case": "Stack widgets vertically",
+          "common_config": ["spacing"]
+        },
+        "Table Layout": {
+          "id": "64.e8e0e5e5-e1e5-4e5e-b5e5-e5e5e5e5e5eb",
+          "use_case": "Grid-based layout with rows and cells",
+          "common_config": ["rows", "columns", "borders"]
+        }
+      }
+    },
+    "display_widgets": {
+      "description": "Widgets for displaying information",
+      "widgets": {
+        "Output Text": {
+          "id": "64.b8e0e5e5-e1e5-4e5e-b5e5-e5e5e5e5e5ec",
+          "binding_type": "String",
+          "use_case": "Display read-only text (labels, values, messages)",
+          "common_config": ["text", "style", "size"]
+        },
+        "Table": {
+          "id": "64.f515b79f-fe61-4bd3-8e26-72f00155d139",
+          "binding_type": "ANY[]",
+          "use_case": "Display tabular data with sorting/filtering",
+          "common_config": ["columns", "data", "selectable", "paginated"]
+        },
+        "Badge": {
+          "id": "64.dbd042c3-8328-49af-9f0b-a92ba4ffb841",
+          "use_case": "Display status indicators or counts",
+          "common_config": ["text", "color", "variant"]
+        },
+        "Icon": {
+          "id": "64.1b440a6c-8508-4f95-bc28-728a58f2353c",
+          "use_case": "Display icons for visual indicators",
+          "common_config": ["icon", "size", "color"]
+        }
+      }
+    },
+    "action_widgets": {
+      "description": "Widgets for user actions and navigation",
+      "widgets": {
+        "Button": {
+          "id": "64.7133c7d4-1a54-45c8-89cd-a8e8fa4a8e36",
+          "use_case": "Trigger actions (submit, cancel, save, delete)",
+          "common_config": ["label", "action", "style", "disabled"]
+        },
+        "Link": {
+          "id": "64.22f864a3-15ab-48ce-9744-14f01b4b2368",
+          "use_case": "Navigation links or external URLs",
+          "common_config": ["text", "url", "target"]
+        },
+        "Breadcrumbs": {
+          "id": "64.281a0d61-afa8-4297-bbc8-29a2d1c1bc83",
+          "use_case": "Navigation trail showing current location",
+          "common_config": ["items", "separator"]
+        }
+      }
+    }
+  },
+  "common_form_patterns": {
+    "simple_form": {
+      "description": "Basic form with input fields and submit button",
+      "structure": [
+        "Panel (container)",
+        "  Text (field 1)",
+        "  Text (field 2)",
+        "  Text Area (field 3)",
+        "  Button (submit)"
+      ]
+    },
+    "multi_section_form": {
+      "description": "Form organized into logical sections",
+      "structure": [
+        "Panel (Section 1)",
+        "  Text fields...",
+        "Panel (Section 2)",
+        "  Date Picker, Select...",
+        "Horizontal Layout (Actions)",
+        "  Button (Submit)",
+        "  Button (Cancel)"
+      ]
+    },
+    "claims_form_example": {
+      "description": "Insurance claims form with 10 fields",
+      "sections": {
+        "claimant_info": {
+          "widgets": ["Text", "Text", "Text", "Text"],
+          "fields": ["Claimant Name", "Policy Number", "Contact Phone", "Email"]
+        },
+        "incident_details": {
+          "widgets": ["Date Picker", "Single Select", "Text", "Text Area"],
+          "fields": ["Incident Date", "Incident Type", "Location", "Description"]
+        },
+        "claim_processing": {
+          "widgets": ["Decimal", "Custom:ProgressBar"],
+          "fields": ["Estimated Amount", "Claim Status"]
+        }
+      }
+    }
+  },
+  "usage_notes": {
+    "binding_syntax": "tw.local.variableName",
+    "config_syntax": "Set in widget properties panel",
+    "custom_widgets": "Reference custom widgets from installed toolkits",
+    "data_types": "Match widget binding type to variable type",
+    "validation": "Use required, min, max, pattern for validation"
+  }
+}

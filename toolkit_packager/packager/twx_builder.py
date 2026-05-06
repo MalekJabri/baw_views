@@ -7,6 +7,7 @@ import zipfile
 from pathlib import Path
 from datetime import datetime
 from typing import List, Optional, Dict
+import xml.etree.ElementTree as ET
 
 from ..models import Widget, TWXObject, ToolkitConfig
 from ..core import generate_object_id, generate_version_id, generate_guid, escape_xml
@@ -28,7 +29,8 @@ class TWXBuilder:
         self,
         config: ToolkitConfig,
         template_dir: Optional[Path] = None,
-        output_dir: Optional[Path] = None
+        output_dir: Optional[Path] = None,
+        coaches_dir: Optional[Path] = None
     ):
         """
         Initialize TWX builder.
@@ -37,12 +39,15 @@ class TWXBuilder:
             config: Toolkit configuration
             template_dir: Path to template directory (default: templates/BaseTWX/25.0.1)
             output_dir: Path to output directory (default: output)
+            coaches_dir: Path to coaches directory (default: coaches)
         """
         self.config = config
         self.template_dir = template_dir or Path("templates/BaseTWX/25.0.1")
         self.output_dir = output_dir or Path("output")
+        self.coaches_dir = coaches_dir or Path("coaches")
         self.widgets: List[Widget] = []
         self.twx_objects: List[TWXObject] = []
+        self.coach_objects: List[TWXObject] = []
         
     def add_widget(self, widget: Widget) -> 'TWXBuilder':
         """
@@ -76,6 +81,9 @@ class TWXBuilder:
         # Generate all TWX objects
         self._generate_twx_objects()
         
+        # Load coaches from coaches directory
+        self._load_coaches()
+        
         # Create output directory
         self.output_dir.mkdir(exist_ok=True, parents=True)
         
@@ -102,9 +110,29 @@ class TWXBuilder:
         return output_path
     
     def _generate_twx_objects(self):
-        """Generate all TWX objects for widgets."""
+        """Generate all TWX objects for widgets and standalone business objects."""
         self.twx_objects = []
         
+        # Scan and add standalone business objects from business-objects/generated
+        from ..scanner import scan_business_objects, get_processing_order
+        
+        standalone_bos = scan_business_objects(Path.cwd())
+        if standalone_bos:
+            logger.info(f"📦 Found {len(standalone_bos)} standalone business object(s)")
+            # Process in dependency order to ensure referenced types are created first
+            ordered_bos = get_processing_order(standalone_bos)
+            
+            for bo in ordered_bos:
+                # Create minimal object_ids for standalone business objects
+                object_ids = {'coach_view': 'standalone'}
+                bo_gen = BusinessObjectGenerator(None, object_ids, bo.data)
+                bo_obj = bo_gen.generate()
+                self.twx_objects.append(bo_obj)
+                logger.info(f"  ✓ Added standalone BO: {bo.name}")
+        else:
+            logger.info("No standalone business objects found in business-objects/generated")
+        
+        # Process widgets
         for widget in self.widgets:
             logger.info(f"Generating objects for widget: {widget.name}")
             
@@ -159,6 +187,66 @@ class TWXBuilder:
             'preview_html_id': generate_object_id(f'{widget.name}_preview_html', '61'),
             'preview_js_id': generate_object_id(f'{widget.name}_preview_js', '61'),
         }
+    
+    def _load_coaches(self):
+        """Load coach XML files from coaches directory."""
+        if not self.coaches_dir.exists():
+            logger.info(f"Coaches directory not found: {self.coaches_dir}")
+            return
+        
+        coach_files = list(self.coaches_dir.glob("*.xml"))
+        if not coach_files:
+            logger.info("No coach files found in coaches directory")
+            return
+        
+        logger.info(f"Loading {len(coach_files)} coach file(s) from {self.coaches_dir}")
+        
+        for coach_file in coach_files:
+            try:
+                # Read the coach XML file
+                xml_content = coach_file.read_text(encoding='utf-8')
+                
+                # Parse XML to extract coach metadata
+                root = ET.fromstring(xml_content)
+                
+                # Extract coach ID and name - handle both direct process and teamworks wrapper
+                if root.tag == 'teamworks':
+                    # Look for process element inside teamworks
+                    process_elem = root.find('process')
+                    if process_elem is not None:
+                        coach_id = process_elem.get('id', '')
+                        coach_name = process_elem.get('name', coach_file.stem)
+                    else:
+                        logger.warning(f"Coach file {coach_file.name} has teamworks wrapper but no process element, skipping")
+                        continue
+                else:
+                    # Direct process element
+                    coach_id = root.get('id', '')
+                    coach_name = root.get('name', coach_file.stem)
+                
+                if not coach_id:
+                    logger.warning(f"Coach file {coach_file.name} missing ID, skipping")
+                    continue
+                
+                # Generate version ID for the coach
+                version_id = generate_version_id()
+                
+                # Create TWXObject for the coach
+                coach_obj = TWXObject(
+                    id=coach_id,
+                    version_id=version_id,
+                    name=coach_name,
+                    object_type="process",
+                    xml_content=xml_content
+                )
+                
+                self.coach_objects.append(coach_obj)
+                logger.info(f"✓ Loaded coach: {coach_name} ({coach_file.name})")
+                
+            except ET.ParseError as e:
+                logger.error(f"Failed to parse coach file {coach_file.name}: {e}")
+            except Exception as e:
+                logger.error(f"Error loading coach file {coach_file.name}: {e}")
     
     def _create_twx_file(self, output_path: Path):
         """
@@ -242,6 +330,14 @@ class TWXBuilder:
             object_path = f"objects/{twx_obj.id}.xml"
             twx.writestr(object_path, twx_obj.xml_content)
             logger.debug(f"Added object: {object_path}")
+        
+        # Add coach objects
+        if self.coach_objects:
+            logger.info(f"Adding {len(self.coach_objects)} coach object(s)...")
+            for coach_obj in self.coach_objects:
+                object_path = f"objects/{coach_obj.id}.xml"
+                twx.writestr(object_path, coach_obj.xml_content)
+                logger.debug(f"Added coach: {object_path}")
     
     def _add_managed_asset_files(self, twx: zipfile.ZipFile):
         """Add managed asset files to TWX."""
@@ -355,6 +451,11 @@ class TWXBuilder:
         # Add widget objects
         for twx_obj in self.twx_objects:
             object_line = f'        <object id="{twx_obj.id}" versionId="{twx_obj.version_id}" name="{escape_xml(twx_obj.name)}" type="{twx_obj.object_type}"/>'
+            object_lines.append(object_line)
+        
+        # Add coach objects
+        for coach_obj in self.coach_objects:
+            object_line = f'        <object id="{coach_obj.id}" versionId="{coach_obj.version_id}" name="{escape_xml(coach_obj.name)}" type="{coach_obj.object_type}"/>'
             object_lines.append(object_line)
         
         return "\n".join(object_lines)

@@ -1,0 +1,239 @@
+<widget_catalog_integration>
+  <overview>
+    Guidelines for using the BAW Standard Widget Catalog when designing coaches.
+    This catalog provides access to 89 standard BAW UI widgets that can be combined
+    with custom widgets to create comprehensive, production-ready coaches.
+  </overview>
+
+  <catalog_files>
+    <file name="baw_ui_toolkit_catalog.json">
+      <location>toolkit_packager/baw_ui_toolkit_catalog.json</location>
+      <description>Complete catalog of all 89 standard BAW UI widgets</description>
+      <contents>
+        <item>Widget names and IDs</item>
+        <item>Version IDs for reference</item>
+        <item>125 business object definitions</item>
+      </contents>
+    </file>
+    
+    <file name="baw_standard_widgets_reference.json">
+      <location>toolkit_packager/baw_standard_widgets_reference.json</location>
+      <description>Curated reference with categorized widgets and usage patterns</description>
+      <contents>
+        <item>Widgets organized by category (Input, Layout, Display, Action)</item>
+        <item>Binding types and data types</item>
+        <item>Common use cases and configurations</item>
+        <item>Form patterns and examples</item>
+      </contents>
+    </file>
+    
+    <file name="BAW_WIDGET_CATALOG_GUIDE.md">
+      <location>BAW_WIDGET_CATALOG_GUIDE.md</location>
+      <description>Comprehensive guide for building coaches</description>
+      <contents>
+        <item>Widget selection guide by use case</item>
+        <item>Implementation steps for BAW Studio</item>
+        <item>Best practices and examples</item>
+        <item>Complete claims form example</item>
+      </contents>
+    </file>
+  </catalog_files>
+
+  <when_to_use_standard_widgets>
+    <guideline>
+      <scenario>Basic text input fields</scenario>
+      <recommendation>Use standard Text widget (64.5663dd71-ff18-4d33-bea0-468d0b869816)</recommendation>
+      <rationale>Built-in, well-tested, no custom widget needed</rationale>
+    </guideline>
+    
+    <guideline>
+      <scenario>Multi-line text input</scenario>
+      <recommendation>Use standard Text Area widget (64.0e61869e-73fd-4401-b156-8c11adaec3f8)</recommendation>
+      <rationale>Standard widget handles all common text area needs</rationale>
+    </guideline>
+    
+    <guideline>
+      <scenario>Date selection</scenario>
+      <recommendation>Use standard Date Picker (64.aeae8953-9e72-411e-b35a-93c7ab827c5c) OR custom DateOutput for display-only</recommendation>
+      <rationale>Standard for input, custom for specialized display formatting</rationale>
+    </guideline>
+    
+    <guideline>
+      <scenario>Number input (whole numbers)</scenario>
+      <recommendation>Use standard Integer widget (64.a6946c4c-f73d-4ced-9216-90018985ca96)</recommendation>
+      <rationale>Built-in validation and formatting</rationale>
+    </guideline>
+    
+    <guideline>
+      <scenario>Number input (decimals/currency)</scenario>
+      <recommendation>Use standard Decimal widget (64.e0ede0f2-f3af-408c-af7b-e7a58eb5e2b4)</recommendation>
+      <rationale>Handles precision and currency formatting</rationale>
+    </guideline>
+    
+    <guideline>
+      <scenario>Single selection from list</scenario>
+      <recommendation>Use standard Single Select OR custom MultiSelect (single mode)</recommendation>
+      <rationale>Standard for simple dropdowns, custom for enhanced features</rationale>
+    </guideline>
+    
+    <guideline>
+      <scenario>Multiple selections from list</scenario>
+      <recommendation>Use custom MultiSelect widget for enhanced UX</recommendation>
+      <rationale>Custom widget provides search, bulk actions, better UX</rationale>
+    </guideline>
+    
+    <guideline>
+      <scenario>Progress visualization</scenario>
+      <recommendation>Use custom ProgressBar widget</recommendation>
+      <rationale>Custom widget provides animated, color-coded progress display</rationale>
+    </guideline>
+    
+    <guideline>
+      <scenario>Layout containers</scenario>
+      <recommendation>Use standard Panel, Horizontal Layout, Vertical Layout widgets</recommendation>
+      <rationale>Standard widgets handle all layout needs</rationale>
+    </guideline>
+    
+    <guideline>
+      <scenario>Action buttons</scenario>
+      <recommendation>Use standard Button widget (64.7133c7d4-1a54-45c8-89cd-a8e8fa4a8e36)</recommendation>
+      <rationale>Standard button handles all common actions</rationale>
+    </guideline>
+  </when_to_use_standard_widgets>
+
+  <workflow_integration>
+    <step number="1">
+      <title>Analyze Requirements</title>
+      <description>Determine which widgets are needed</description>
+      <actions>
+        <action>Identify all data fields and their types</action>
+        <action>Determine if standard widgets can fulfill requirements</action>
+        <action>Identify where custom widgets add value</action>
+      </actions>
+    </step>
+    
+    <step number="2">
+      <title>Consult Widget Catalog</title>
+      <description>Reference the catalog for standard widget options</description>
+      <actions>
+        <action>Read baw_standard_widgets_reference.json for widget categories</action>
+        <action>Match requirements to standard widget capabilities</action>
+        <action>Note widget IDs and binding types</action>
+        <action>Identify any custom widgets needed</action>
+      </actions>
+      <example>
+        <read_file>
+          <args>
+            <file>
+              <path>toolkit_packager/baw_standard_widgets_reference.json</path>
+            </file>
+          </args>
+        </read_file>
+      </example>
+    </step>
+    
+    <step number="3">
+      <title>Design Mixed Widget Layout</title>
+      <description>Create layout using both standard and custom widgets</description>
+      <design_approach>
+        <principle>Use standard widgets as the foundation</principle>
+        <principle>Add custom widgets for specialized functionality</principle>
+        <principle>Group related widgets in Panels</principle>
+        <principle>Follow logical data flow</principle>
+      </design_approach>
+    </step>
+    
+    <step number="4">
+      <title>Document Widget Selection</title>
+      <description>Explain why each widget was chosen</description>
+      <presentation_format>
+        <section>List all fields with their widget types</section>
+        <section>Explain standard vs custom widget choices</section>
+        <section>Show layout structure visually</section>
+        <section>Note any special configurations</section>
+      </presentation_format>
+    </step>
+  </workflow_integration>
+
+  <coach_design_patterns>
+    <pattern name="form_with_standard_and_custom">
+      <description>Typical form combining standard inputs with custom widgets</description>
+      <example>
+        <scenario>Insurance Claims Form</scenario>
+        <structure>
+          <section name="Claimant Information">
+            <widget type="standard">Text - Claimant Name</widget>
+            <widget type="standard">Text - Policy Number</widget>
+            <widget type="standard">Text - Contact Phone</widget>
+            <widget type="standard">Text - Email Address</widget>
+          </section>
+          <section name="Incident Details">
+            <widget type="standard">Date Picker - Incident Date</widget>
+            <widget type="custom">MultiSelect - Incident Type (enhanced UX)</widget>
+            <widget type="standard">Text - Incident Location</widget>
+            <widget type="standard">Text Area - Incident Description</widget>
+          </section>
+          <section name="Claim Processing">
+            <widget type="standard">Decimal - Estimated Claim Amount</widget>
+            <widget type="custom">ProgressBar - Claim Status (visualization)</widget>
+          </section>
+          <section name="Actions">
+            <widget type="standard">Button - Submit</widget>
+            <widget type="standard">Button - Cancel</widget>
+          </section>
+        </structure>
+        <rationale>
+          Standard widgets handle basic data entry efficiently.
+          Custom widgets (MultiSelect, ProgressBar) provide enhanced UX
+          for complex selections and status visualization.
+        </rationale>
+      </example>
+    </pattern>
+  </coach_design_patterns>
+
+  <important_notes>
+    <note>
+      <title>Current Limitation</title>
+      <description>
+        The generate_test_coach.py tool currently only supports custom widgets
+        from the widgets/ folder. For coaches that include standard BAW widgets,
+        you should:
+        1. Design the complete coach structure with both standard and custom widgets
+        2. Document the design clearly for the user
+        3. Explain that standard widgets must be added manually in IBM BAW Studio
+        4. Provide the exact widget names and IDs from the catalog
+        5. Show the complete layout structure
+      </description>
+    </note>
+    
+    <note>
+      <title>Future Enhancement</title>
+      <description>
+        The coach generation system could be enhanced to support standard widgets
+        by referencing the widget catalog and generating complete coach XML that
+        includes both standard and custom widgets. This would enable fully
+        automated coach generation for production use.
+      </description>
+    </note>
+  </important_notes>
+
+  <communication_guidelines>
+    <guideline>
+      Always reference the widget catalog when designing coaches with multiple fields
+    </guideline>
+    <guideline>
+      Explain the rationale for choosing standard vs custom widgets
+    </guideline>
+    <guideline>
+      Provide widget IDs from the catalog for reference
+    </guideline>
+    <guideline>
+      Show the complete coach structure including both widget types
+    </guideline>
+    <guideline>
+      Be clear about what can be auto-generated vs what needs manual addition
+    </guideline>
+  </communication_guidelines>
+</widget_catalog_integration>
+
+<!-- Made with Bob -->

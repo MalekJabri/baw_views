@@ -1,0 +1,58 @@
+{
+  "context": "LifeInsuranceAndAnnuities",
+  "version": "1.0.0",
+  "generatedDate": "2026-05-06T10:30:00Z",
+  "description": "Business processes for Life Insurance and Annuities domain",
+  "processes": [
+    {
+      "processId": "new-business-application",
+      "processName": "New Business Application Process",
+      "description": "End-to-end process for new policy applications from submission through issuance or decline",
+      "processFile": "business-processes/LifeInsuranceAndAnnuities/NewBusinessApplication.process.md",
+      "processType": "end-to-end",
+      "actors": ["Agent", "System", "Underwriter", "Medical Services"],
+      "businessObjects": [
+        "Application",
+        "Policyholder",
+        "Insured",
+        "Beneficiary",
+        "Agent",
+        "Requirement",
+        "MedicalHistory",
+        "MedicalRating",
+        "UnderwritingDecision",
+        "Policy",
+        "Document"
+      ],
+      "subProcesses": ["medical-underwriting"],
+      "complexity": "high",
+      "estimatedDuration": "2-4 weeks",
+      "keyActivities": [
+        "Collect Application Data",
+        "Validate Application",
+        "Review Application",
+        "Order Requirements",
+        "Medical Underwriting",
+        "Assess Risk",
+        "Underwriting Decision",
+        "Generate Policy Document",
+        "Issue Policy"
+      ],
+      "integrations": [
+        "MIB (Medical Information Bureau)",
+        "Prescription Database",
+        "MVR Service",
+        "Credit Bureau",
+        "Medical Exam Provider",
+        "Payment Gateway",
+        "Document Management System"
+      ]
+    }
+  ],
+  "relationships": [],
+  "statistics": {
+    "totalProcesses": 1,
+    "endToEndProcesses": 1,
+    "subProcesses": 0
+  }
+}

@@ -6,7 +6,7 @@
       "coachViewId": "64.2563bbd0-609b-47e7-8dd6-cffc53ace388",
       "description": "Date display widget with customizable formatting for IBM Business Automation Workflow",
       "created": "2026-05-01T10:14:32.484925Z",
-      "last_packaged": "2026-05-02T23:01:17.376801Z",
+      "last_packaged": "2026-05-06T19:00:11.869618Z",
       "bindingIds": {
         "DateValue": "65.06179e74-40a0-4bb0-801d-e0f2495cb82b"
       },
@@ -24,7 +24,7 @@
       "coachViewId": "64.f1a8d46e-c4a2-4a93-ad08-5037f9683fe5",
       "description": "Vertical multi-step process indicator widget for IBM Business Automation Workflow",
       "created": "2026-05-01T10:15:12.755100Z",
-      "last_packaged": "2026-05-02T23:01:17.444919Z",
+      "last_packaged": "2026-05-06T19:00:11.962259Z",
       "bindingIds": {
         "StepperData": "65.66db65de-cafa-41e9-ba95-ab7683bb5d71"
       },
@@ -43,7 +43,7 @@
       "coachViewId": "64.85fc6053-ab02-4cbe-b327-e895ba2b4e0e",
       "description": "Horizontal breadcrumb navigation widget for IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.482912Z",
-      "last_packaged": "2026-05-02T23:01:17.371983Z",
+      "last_packaged": "2026-05-06T19:00:11.860081Z",
       "bindingIds": {
         "BreadcrumbData": "65.3052f0ab-ded6-43d8-a9da-42fe0fa88b42"
       },
@@ -60,7 +60,7 @@
       "coachViewId": "64.394ead55-4ecf-4817-8364-eb192f89aeaa",
       "description": "Folder and document browser widget for IBM FileNet Content Engine via GraphQL, used in IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.491295Z",
-      "last_packaged": "2026-05-02T23:01:17.380326Z",
+      "last_packaged": "2026-05-06T19:00:11.872406Z",
       "bindingIds": {
         "SelectedItem": "65.d939504d-14fd-49c9-9fed-52bbe91a67cd"
       },
@@ -85,7 +85,7 @@
       "coachViewId": "64.56d91787-704f-477b-80be-206750ff0f08",
       "description": "Drag-and-drop document and folder import widget for IBM FileNet Content Engine via GraphQL, used in IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.496554Z",
-      "last_packaged": "2026-05-02T23:01:17.385711Z",
+      "last_packaged": "2026-05-06T19:00:11.878221Z",
       "bindingIds": {
         "ImportResult": "65.180968fe-1ffc-4db1-bb29-f5b041365df8"
       },
@@ -109,7 +109,7 @@
       "coachViewId": "64.dfe90acc-501f-47c5-a638-fa566723c375",
       "description": "File and folder manager widget with hierarchical structure and bulk metadata editing for IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.501057Z",
-      "last_packaged": "2026-05-02T23:01:17.390794Z",
+      "last_packaged": "2026-05-06T19:00:11.884862Z",
       "bindingIds": {
         "FilesData": "65.f37ca5ae-df1f-4a68-995e-c7e8fc551d62"
       },
@@ -143,7 +143,7 @@
       "coachViewId": "64.311518a4-3d13-4ec7-929f-892065639ac5",
       "description": "A widget for rendering markdown-formatted text into styled HTML content with support for headers, lists, code blocks, tables, and more",
       "created": "2026-05-01T10:18:44.505396Z",
-      "last_packaged": "2026-05-02T23:01:17.427043Z",
+      "last_packaged": "2026-05-06T19:00:11.899505Z",
       "bindingIds": {
         "MarkdownText": "65.8e9ccc30-6ad2-4adc-8019-473b6a6a1695"
       },
@@ -161,7 +161,7 @@
       "coachViewId": "64.3221b79a-3e25-4a2b-a427-b4c98b78f329",
       "description": "Multi-select dropdown widget with search and bulk selection capabilities for IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.509876Z",
-      "last_packaged": "2026-05-02T23:01:17.432055Z",
+      "last_packaged": "2026-05-06T19:00:11.928886Z",
       "bindingIds": {
         "SelectedItems": "65.419fe1d4-3fd6-4760-9858-f7b71dd03baf"
       },
@@ -182,7 +182,7 @@
       "coachViewId": "64.9736c878-28d7-4557-9188-ac43d87c34f0",
       "description": "Circular progress indicator widget for displaying percentage or value progress in IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.514079Z",
-      "last_packaged": "2026-05-02T23:01:17.437369Z",
+      "last_packaged": "2026-05-06T19:00:11.939917Z",
       "bindingIds": {
         "ProgressValue": "65.cfdb9767-d62d-4911-9d02-3ae38f757970"
       },
@@ -200,7 +200,7 @@
       "coachViewId": "64.69d392d7-3ff6-4004-8ddc-86bca454437a",
       "description": "A widget to display a list of tasks with status indicators for IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.521820Z",
-      "last_packaged": "2026-05-02T23:01:17.448298Z",
+      "last_packaged": "2026-05-06T19:00:11.967019Z",
       "bindingIds": {
         "TasksListData": "65.bc728ccf-4aee-4545-b2fc-2065d1136c4f"
       },
@@ -213,7 +213,7 @@
       "coachViewId": "64.db824ed3-93e7-4eb6-a583-56a0a2bf25c0",
       "description": "Animated horizontal progress bar with color-coded states and real-time percentage display for IBM Business Automation Workflow",
       "created": "2026-05-01T21:21:03.839681Z",
-      "last_packaged": "2026-05-02T23:01:17.441024Z",
+      "last_packaged": "2026-05-06T19:00:11.954184Z",
       "bindingIds": {
         "ProgressData": "65.45b6f4be-bafc-4434-803a-0c21dbdddff9"
       },
@@ -227,6 +227,64 @@
       "previewHtmlId": "61.bdad09c2-170a-489d-a449-4b8bebabd689",
       "previewJsId": "61.446a7cc8-aeda-4105-81ae-9d672398c3bd",
       "iconId": "61.19d8bd43-d600-41db-a9ca-5a6ee876a762"
+    },
+    "Timeline": {
+      "coachViewId": "64.cb0da67d-4681-4d0e-aba1-df847619fe10",
+      "description": "Vertical timeline widget for displaying chronological events in IBM Business Automation Workflow",
+      "created": "2026-05-05T22:03:43.799655Z",
+      "last_packaged": "2026-05-06T19:00:11.971063Z",
+      "bindingIds": {
+        "TimelineData": "65.e9f5c1ec-e91c-41f3-b565-eec238a2bac1"
+      },
+      "configOptionIds": {
+        "showDates": "66.ae28cce0-0045-47c2-9ba6-a2119fc57918",
+        "showIcons": "66.94c0114b-dda5-4fc8-b6d6-3270bbe579c4",
+        "alternateLayout": "66.f2435fd5-8306-4f1a-83a2-87a906e141f2",
+        "compact": "66.f0d924d7-81c3-476d-b05c-4104b72f1b7d",
+        "clickable": "66.66b30c7b-84c4-48ab-804c-e7c12c0b379c",
+        "eventClicked": "66.797a611c-c5b5-4417-b920-c0550f66164c"
+      },
+      "previewHtmlId": "61.91015892-cbdb-40cf-963a-2d6ede97d67e",
+      "previewJsId": "61.22af803c-0d9e-43c6-8cf2-54e8da1e1e6b",
+      "iconId": "61.d892dd08-cd82-4128-b96d-2c48d3c0b954"
+    },
+    "Carousel": {
+      "coachViewId": "64.ba950d9b-e8e3-4b71-a419-6b6501751103",
+      "description": "Interactive carousel widget with flip cards displaying icons, titles, and descriptions",
+      "created": "2026-05-06T11:52:27.415359Z",
+      "last_packaged": "2026-05-06T19:00:11.865540Z",
+      "bindingIds": {
+        "CarouselData": "65.c3b6f525-407b-4508-964c-69e158f2e51a"
+      },
+      "configOptionIds": {
+        "itemsPerView": "66.012786fc-8d97-4d95-8e2f-2062e947c944",
+        "autoPlay": "66.b6080f4e-5311-4875-87a4-ef366b8b4f54",
+        "autoPlayInterval": "66.a881386c-8e5c-44b1-9176-d3f05aab74ec",
+        "showIndicators": "66.b7c9ec7c-3fdc-43b6-b747-17114434698a",
+        "showNavigation": "66.aa3b179d-1d15-4402-aadf-bcec05650c46",
+        "itemClicked": "66.cc28a706-57d6-4753-822c-24f464ddd2a3"
+      },
+      "previewHtmlId": "61.1debc8f9-658a-4997-b9e2-de23cfcb925b",
+      "previewJsId": "61.03b47883-2754-44c9-9206-142cfa99d453",
+      "iconId": "61.be8434d9-c9f0-46cd-bb94-c2c098ee8bdf"
+    },
+    "MultiDocumentUpload": {
+      "coachViewId": "64.ef755491-8def-4211-a6f6-f12ff50b2db6",
+      "description": "Widget za upload više dokumenata sa tabelom, selekcijom tipa dokumenta i mogućnošću brisanja pre upload-a u LocalStore",
+      "created": "2026-05-06T15:03:49.313071Z",
+      "last_packaged": "2026-05-06T19:00:11.923173Z",
+      "bindingIds": {
+        "Documents": "65.cade153c-3984-4f83-903e-d58e18a0457a"
+      },
+      "configOptionIds": {
+        "documentTypes": "66.713ee954-437b-4d2e-83f5-806c62b2c443",
+        "maxFileSize": "66.9f81f814-83ee-495f-ad10-3d82f8d4737b",
+        "allowedExtensions": "66.fd522c90-5b99-4796-9fd2-4376218c688b",
+        "maxFiles": "66.215f3389-1743-4c05-9971-6981fa05c325"
+      },
+      "previewHtmlId": "61.da3a1bd2-80dc-452a-a18c-cb47311aed6a",
+      "previewJsId": "61.2376480b-5879-40e9-9164-577b400410be",
+      "iconId": "61.47125a39-d0d4-41de-a4af-d15608edbc55"
     }
   },
   "notes": {

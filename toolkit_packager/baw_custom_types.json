@@ -18,9 +18,9 @@
       ],
       "created": "2026-04-30T16:03:00Z"
     },
-    "BusinessObject": {
+    "TaskItem": {
       "classId": "/12.9f29bdd1-51fa-4451-96e1-30fc8397ad69",
-      "description": "",
+      "description": "Business object representing a task item with label and status",
       "widgets": [
         "TasksList"
       ],
@@ -33,6 +33,220 @@
         "ProgressBar"
       ],
       "created": "2026-05-01T21:21:03.839127Z"
+    },
+    "Policy": {
+      "classId": "/12.ad4c69b3-bbb0-4a7a-818e-353228a3d856",
+      "description": "Central business object representing an insurance or annuity contract",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.920872Z"
+    },
+    "Insured": {
+      "classId": "/12.a1c2efcb-8927-412a-8e13-c4c5e6e8609a",
+      "description": "Person whose life or health is covered by the policy",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.922691Z"
+    },
+    "MedicalCondition": {
+      "classId": "/12.23bbdd33-cf80-447a-82da-0abada58105e",
+      "description": "Specific medical condition details",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.923475Z"
+    },
+    "Requirement": {
+      "classId": "/12.be3031d2-5ffe-4a9b-af08-60e9a485ad0a",
+      "description": "Underwriting requirement for application processing",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.924009Z"
+    },
+    "Agent": {
+      "classId": "/12.c27775df-8750-4abe-bfec-ae6e582a215c",
+      "description": "Insurance agent or broker who sells policies",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.924408Z"
+    },
+    "MedicalRating": {
+      "classId": "/12.53cec71b-22da-4351-a110-d97a2b8bed8b",
+      "description": "Medical rating applied during underwriting",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.924778Z"
+    },
+    "Policyholder": {
+      "classId": "/12.8c98dc52-ff53-4b83-b09c-3c4c7ee812c5",
+      "description": "Person or entity that owns the policy and is responsible for premium payments",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.925158Z"
+    },
+    "BankAccount": {
+      "classId": "/12.9bae5199-1158-4a17-8924-d6af2d813f7d",
+      "description": "Bank account information for payments",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.925523Z"
+    },
+    "Address": {
+      "classId": "/12.c9965660-d064-4483-a2ae-cc8142344edd",
+      "description": "Physical or mailing address",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.926156Z"
+    },
+    "Beneficiary": {
+      "classId": "/12.4a456f01-fac7-41d5-a004-0073ec237766",
+      "description": "Person or entity designated to receive policy benefits",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.926541Z"
+    },
+    "Document": {
+      "classId": "/12.eb58c659-685b-40cc-92fb-492aff70df87",
+      "description": "Document attached to application or claim",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.926928Z"
+    },
+    "Claim": {
+      "classId": "/12.7383f197-abba-4598-baaa-609c5a13e6cf",
+      "description": "Claim filed against a policy",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.927333Z"
+    },
+    "Payment": {
+      "classId": "/12.6ee9044f-772d-4e63-a6ec-6b70c09b9eb6",
+      "description": "Premium payments or benefit disbursements",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.927735Z"
+    },
+    "Application": {
+      "classId": "/12.5855583b-7ce6-4c05-9e8b-5e773dfc513a",
+      "description": "Insurance or annuity application submitted by the applicant",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.928171Z"
+    },
+    "Claimant": {
+      "classId": "/12.5025b6df-882c-4bbe-9e5b-475a3d339639",
+      "description": "Person filing a claim against a policy",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.928576Z"
+    },
+    "Rider": {
+      "classId": "/12.1360e4ec-9658-4226-9156-c66092783b0e",
+      "description": "Additional coverage or benefit attached to a base policy",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.929029Z"
+    },
+    "UnderwritingDecision": {
+      "classId": "/12.acc8fdcb-a5bf-4f5b-be4f-726757164f1b",
+      "description": "Underwriting assessment and decision for an application",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.929772Z"
+    },
+    "MedicalHistory": {
+      "classId": "/12.36250656-a530-42a0-9c72-efaa5d9146a4",
+      "description": "Medical history information for underwriting",
+      "context": "LifeInsuranceAndAnnuities",
+      "widgets": [
+        "standalone"
+      ],
+      "created": "2026-05-05T15:51:56.930554Z"
+    },
+    "TimelineEvent": {
+      "classId": "/12.ddec1ee9-4687-4f01-ad9e-8dbb0a9b0b25",
+      "description": "Business object representing a single event in the Timeline widget",
+      "widgets": [
+        "Timeline"
+      ],
+      "created": "2026-05-05T20:49:04.504585Z"
+    },
+    "BusinessObject": {
+      "classId": "/12.c0801764-ae45-4d9a-b467-6224beaf0a8b",
+      "description": "Business object representing progress bar data",
+      "widgets": [
+        "ProgressBar",
+        "TasksList"
+      ],
+      "created": "2026-05-06T08:59:22.495247Z"
+    },
+    "businessObject": {
+      "classId": "/12.30abdf98-b421-432f-bfc6-b3a3d644a99c",
+      "description": "Central business object representing an insurance or annuity contract",
+      "widgets": [
+        "standalone",
+        "Breadcrumb",
+        "Stepper",
+        "Timeline"
+      ],
+      "created": "2026-05-06T09:01:24.224722Z"
+    },
+    "CarouselCard": {
+      "classId": "/12.60a29b66-449b-441c-83e0-e62fe47f0ad4",
+      "description": "Business object representing a single card in the Carousel widget with flip functionality",
+      "widgets": [
+        "Carousel"
+      ],
+      "created": "2026-05-06T09:40:30.652278Z"
+    },
+    "CarouselItem": {
+      "classId": "/12.7f77016e-0049-4421-96c7-d7fd16c8197c",
+      "description": "Business object representing a single item in the Carousel widget",
+      "widgets": [
+        "Carousel"
+      ],
+      "created": "2026-05-06T11:52:27.414317Z"
+    },
+    "DocumentItem": {
+      "classId": "/12.10b837cb-babd-454b-b60f-a6900f57534a",
+      "description": "Business object representing an uploaded document with metadata",
+      "widgets": [
+        "MultiDocumentUpload"
+      ],
+      "created": "2026-05-06T15:03:49.312505Z"
     }
   },
   "notes": {

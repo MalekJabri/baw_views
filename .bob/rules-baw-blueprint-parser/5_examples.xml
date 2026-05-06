@@ -1,0 +1,83 @@
+<blueprint_parser_examples>
+  <example name="single_blueprint_to_business_object_catalog">
+    <description>
+      Generate business object JSON artifacts from a single blueprint document.
+    </description>
+    <context>
+      The user has one business blueprint document that describes a business
+      domain and wants JSON business object files plus a catalog for later packaging.
+    </context>
+    <workflow>
+      <step number="1">Inspect the relevant source folder under business-blueprints</step>
+      <step number="2">Read the blueprint document together with comparable repository examples</step>
+      <step number="3">Extract business entities, fields, enums, and references</step>
+      <step number="4">Normalize names and relationships</step>
+      <step number="5">Generate JSON artifacts under business-objects/generated/[context]/</step>
+      <step number="6">Generate business-objects/catalog/[context].catalog.json and update business-objects/catalog/master.catalog.json</step>
+    </workflow>
+    <expected_outcome>
+      The repository contains business object JSON files under business-objects/generated/[context]/,
+      a context catalog under business-objects/catalog/[context].catalog.json,
+      an updated master catalog at business-objects/catalog/master.catalog.json,
+      and packaging remains intentionally deferred.
+    </expected_outcome>
+  </example>
+
+  <example name="multiple_documents_same_context">
+    <description>
+      Generate a unified set of business objects from several related blueprint documents.
+    </description>
+    <context>
+      The user provides multiple documents that all belong to the same business
+      domain and expects deduplicated output artifacts.
+    </context>
+    <workflow>
+      <step number="1">Read all selected blueprint files together</step>
+      <step number="2">Merge overlapping business concepts into a single normalized model</step>
+      <step number="3">Resolve duplicates and conflicting field descriptions conservatively</step>
+      <step number="4">Generate one consistent business object set for the shared context under business-objects/generated/[context]/</step>
+      <step number="5">Capture unresolved conflicts in business-objects/reports/[context].parse-report.md if needed</step>
+    </workflow>
+    <expected_outcome>
+      Related documents produce one coherent set of business object artifacts
+      instead of duplicate or contradictory JSON files.
+    </expected_outcome>
+  </example>
+
+  <example name="handoff_to_packaging_mode">
+    <description>
+      Hand off cleanly to packaging after business object generation is complete.
+    </description>
+    <context>
+      The user confirms that generated business object JSON artifacts are ready
+      to be packaged into a toolkit.
+    </context>
+    <handoff_pattern><![CDATA[
+<switch_mode>
+<mode_slug>baw-package-manager</mode_slug>
+<reason>Business object JSON catalog is ready for toolkit packaging.</reason>
+</switch_mode>
+    ]]></handoff_pattern>
+    <important>
+      The switch happens only after generation work in this mode is complete and
+      only when the user is ready to move to packaging.
+    </important>
+  </example>
+
+  <example name="avoid_out_of_scope_packaging">
+    <description>
+      Preserve boundaries when the user asks for packaging during generation analysis.
+    </description>
+    <context>
+      The user starts with blueprint parsing but then asks to package immediately
+      before generation artifacts are complete.
+    </context>
+    <correct_response>
+      Finish or clarify the generation task first. Do not run packaging commands
+      in this mode. If the user wants packaging after generation readiness is
+      established, switch to baw-package-manager.
+    </correct_response>
+  </example>
+</blueprint_parser_examples>
+
+<!-- Made with Bob -->

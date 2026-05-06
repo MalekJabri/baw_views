@@ -1,0 +1,869 @@
+{
+  "toolkit_info": {
+    "name": "UI Toolkit",
+    "shortName": "SYSBPMUI",
+    "snapshot_id": "2064.304ac881-16c3-47d2-97d5-6e4c4a893177",
+    "version": "8.6.0.0"
+  },
+  "coach_views": {
+    "Alerts": {
+      "id": "64.e6b70dd5-4d8e-4598-a08b-dcb9a9dfaba5",
+      "version_id": "8055c308-754a-4a00-a1c4-23b948f43245"
+    },
+    "Area Chart SDS": {
+      "id": "64.2c8ffc35-7cea-4d7b-85d9-e3d02a901bea",
+      "version_id": "7d658179-ec6e-4822-9d3e-f08d834081f5"
+    },
+    "Badge": {
+      "id": "64.dbd042c3-8328-49af-9f0b-a92ba4ffb841",
+      "version_id": "b056cff0-971d-463e-b917-ce6eddd3ad79"
+    },
+    "Bar Chart SDS": {
+      "id": "64.8d17dda8-175c-49ec-aaa8-cba00f7b5c24",
+      "version_id": "cff8ce1a-9ddb-4b8b-b6d6-83cd2d0935ca"
+    },
+    "Breadcrumbs": {
+      "id": "64.281a0d61-afa8-4297-bbc8-29a2d1c1bc83",
+      "version_id": "a24b5833-035e-4ce0-a7c0-7c039dcd82ab"
+    },
+    "Button": {
+      "id": "64.7133c7d4-1a54-45c8-89cd-a8e8fa4a8e36",
+      "version_id": "032024bd-46b5-4bf8-8c07-f488bde9e4e1"
+    },
+    "Caption Box": {
+      "id": "64.49c8e80a-9836-44d3-a3a7-97968fc8b4cb",
+      "version_id": "505a6de7-ee5e-468a-ab92-9e11d291352b"
+    },
+    "Checkbox": {
+      "id": "64.fffd1628-baee-44e8-b7ca-5ae48644b0be",
+      "version_id": "d3314156-a2ae-40ed-8802-6ec6f15f700e"
+    },
+    "Checkbox Group": {
+      "id": "64.b00a9c90-0931-47ac-ab7c-e9fd9b891ccb",
+      "version_id": "57ed6c97-ec45-4e7d-86e8-0b7df7b67f8f"
+    },
+    "Collapsible Panel": {
+      "id": "64.aa70e5b9-aade-4334-b92d-1fb5e61f4b0a",
+      "version_id": "df07780e-bc22-48cf-8752-fbe94b930d55"
+    },
+    "Configuration": {
+      "id": "64.a87aa2c7-c36c-4ee8-9b04-c296503ffb15",
+      "version_id": "3093a2de-717a-4e2b-ba2b-e99c55e177e3"
+    },
+    "Data": {
+      "id": "64.9b679256-e93b-4400-89f2-bd15b0c5578d",
+      "version_id": "b7752be7-3ab6-4a6e-88d3-d4b7d13ac764"
+    },
+    "Data Export": {
+      "id": "64.90bf9818-cbe7-4435-842a-8ae4559a376c",
+      "version_id": "2f29793f-cd9a-440c-9cf3-57c1f7cdcbce"
+    },
+    "Date Picker": {
+      "id": "64.aeae8953-9e72-411e-b35a-93c7ab827c5c",
+      "version_id": "aeed2bd0-db84-4c90-a122-13abff2b55e4"
+    },
+    "Date Time Picker": {
+      "id": "64.54643ff2-8363-4976-bb5e-d4eb1094cca3",
+      "version_id": "7cb5c3c2-5829-4ca4-b794-ce7228320981"
+    },
+    "Decimal": {
+      "id": "64.e0ede0f2-f3af-408c-af7b-e7a58eb5e2b4",
+      "version_id": "14dfe8b3-0ec0-4ee0-bbe4-ee111b7a2f3e"
+    },
+    "Default Inline User Task Template": {
+      "id": "64.dc5fd75e-5b13-460c-8cb8-1e463c729751",
+      "version_id": "45dcbc0e-a1e8-40fe-b7cf-4508d732c981"
+    },
+    "Deferred Section": {
+      "id": "64.9ee7a0fd-5b25-497d-85fc-1cc09795f524",
+      "version_id": "a0a09d27-f3c9-4208-8dd1-65579f0d9b06"
+    },
+    "Device Sensor": {
+      "id": "64.14d6d2be-5be6-48f5-8fd7-949f575c6150",
+      "version_id": "693ae478-d463-4cb8-b879-b4a8301c8b1e"
+    },
+    "DocumentView": {
+      "id": "64.daacaaf8-7b70-4e3a-9a96-bc291cd97436",
+      "version_id": "95c9c4d9-8b91-41c6-ba90-9db5f1bcd89b"
+    },
+    "Donut Chart SDS": {
+      "id": "64.0eeb7300-7ef8-4079-b3d2-d10ec7379e58",
+      "version_id": "7b88e191-2e65-4524-908d-9782f124c601"
+    },
+    "Event Subscription": {
+      "id": "64.38adbdb0-9f2a-47d1-ac5e-27ca6946ad2e",
+      "version_id": "2052b3d8-202d-475a-81d3-eb730fcf56c1"
+    },
+    "Exit Safeguard": {
+      "id": "64.06a9923f-f2b5-41ff-aeec-257b7d61b29b",
+      "version_id": "f8a2ba3e-1a4c-47b3-aa80-19c228833a27"
+    },
+    "Geo Coder": {
+      "id": "64.bfd6fc27-0b2b-4169-8970-7cb3b382d97f",
+      "version_id": "3572ea98-c85b-4b3b-a67a-204db87c40b7"
+    },
+    "Geo Location": {
+      "id": "64.e302f8ff-4f48-4730-8a38-a04523ed8b15",
+      "version_id": "2ffba88e-6462-4616-8b88-0903ca1dcded"
+    },
+    "Horizontal Layout": {
+      "id": "64.44f463cc-615b-43d0-834f-c398a82e0363",
+      "version_id": "eebc4a4b-f897-4067-8999-ea0cdfb95355"
+    },
+    "Horizontal Split": {
+      "id": "64.5c490b0f-ce12-4f65-a959-6084ee570480",
+      "version_id": "dedbff6c-c3ad-46f0-baf4-d1bcbc3f60ce"
+    },
+    "Icon": {
+      "id": "64.1b440a6c-8508-4f95-bc28-728a58f2353c",
+      "version_id": "c0761aac-4880-48a3-81f3-7cb78051b7a9"
+    },
+    "Image": {
+      "id": "64.49422be7-d203-44dc-951d-7ca4361d7b94",
+      "version_id": "c4cfb0a1-c377-49de-8e82-4f839963a0e9"
+    },
+    "Input Group": {
+      "id": "64.33c2011d-5bc9-4609-9e48-0f42b858f1a0",
+      "version_id": "a35d54f8-dbd9-4852-b592-fb98f91829a3"
+    },
+    "Integer": {
+      "id": "64.a6946c4c-f73d-4ced-9216-90018985ca96",
+      "version_id": "a91138ca-d07c-4605-9e52-002b1b25df30"
+    },
+    "JSON Text Area": {
+      "id": "64.0c440db2-90b0-4337-b778-428b289caadf",
+      "version_id": "e886f97f-8070-4510-836f-1bfb631a75d2"
+    },
+    "Line": {
+      "id": "64.ff97945c-a44b-44d1-8b36-083255daf920",
+      "version_id": "fa1ea64d-815f-491f-a8c3-e6a32c255e11"
+    },
+    "Line Chart SDS": {
+      "id": "64.d11572b6-d14b-4267-9eea-98c6709a7dbb",
+      "version_id": "61785f08-ab24-4f86-9a57-e9c4f39b5036"
+    },
+    "Link": {
+      "id": "64.22f864a3-15ab-48ce-9744-14f01b4b2368",
+      "version_id": "aea44993-9e89-4241-93fe-3c0f3b54e291"
+    },
+    "Map": {
+      "id": "64.4e6c49be-c45f-4571-9e67-1d17ed36b1df",
+      "version_id": "5546bda5-e501-4405-8d48-6d7d0449c188"
+    },
+    "Masked Text": {
+      "id": "64.b9c128d5-1c54-4a0a-9b76-0e7ffd6ed2a1",
+      "version_id": "f222fd0e-8fbb-4d4e-ad0a-6eb86b741464"
+    },
+    "Modal Alert": {
+      "id": "64.066607d7-6101-4ae6-aa5e-4b8fbbb433a7",
+      "version_id": "803d5266-2208-49d4-a15b-d43b6c2c3a7a"
+    },
+    "Modal Section": {
+      "id": "64.66286dff-19bf-447a-ad5c-4fc385fea67d",
+      "version_id": "fa2dc297-cfeb-4ed8-92c2-74d72dfffa15"
+    },
+    "Multi Purpose Chart": {
+      "id": "64.c025cd95-70c4-4b5e-924a-7bf69174e123",
+      "version_id": "660a9277-38a6-4893-a9d0-f494a448b102"
+    },
+    "Multi Select": {
+      "id": "64.7df3f465-dc52-4d4a-88a1-8d237a5ca563",
+      "version_id": "f62239e2-6997-4da1-b96f-3f84a71ddb9f"
+    },
+    "Navigation Event": {
+      "id": "64.ecaae891-b5b0-4836-bc25-def71fcad690",
+      "version_id": "b0968f07-2087-4008-97cc-69fb0afb4d8d"
+    },
+    "Navigation item": {
+      "id": "64.655c6c8a-c4a2-49e1-9174-a47adae9db7d",
+      "version_id": "06ea85cf-e457-42e5-9358-0d694a6b9536"
+    },
+    "Navigation list": {
+      "id": "64.13e06fc4-c088-4091-9bc9-9f7120b59322",
+      "version_id": "8d787f7c-b0ae-4686-9493-d6ac08c8ec4e"
+    },
+    "Navigation menu": {
+      "id": "64.6d3d37fb-3254-4f43-a409-e4f532200678",
+      "version_id": "76d568ce-d381-4d83-9259-0d55c5500483"
+    },
+    "Note": {
+      "id": "64.32441394-ff38-4ecb-8028-02fc04725fe9",
+      "version_id": "f8c02ff5-ae3a-4083-a06f-344d857a4d25"
+    },
+    "Notification": {
+      "id": "64.84561e27-ec84-49d3-adb9-de8e060437f0",
+      "version_id": "103b719b-21a5-4f45-bda9-ccca018d4110"
+    },
+    "OpenLayers API": {
+      "id": "64.d156e24b-e70a-4ffe-80f4-3153048db5cd",
+      "version_id": "9a5563ad-a41f-467a-aa64-e218e3cbb23c"
+    },
+    "Output Text": {
+      "id": "64.f634f22e-7800-4bd7-9f1e-87177acfb3bc",
+      "version_id": "a9ccff44-c68a-4002-b767-73370fecee97"
+    },
+    "Panel": {
+      "id": "64.455e44ab-b77b-4337-b3f9-435e234fb569",
+      "version_id": "0cf6527c-9e1d-4b32-8ff7-206fd54cc7bb"
+    },
+    "Panel Footer": {
+      "id": "64.7f521ba9-7450-4ed7-98e3-a0128c2900c9",
+      "version_id": "c2c2a8c0-6042-4a9a-9254-9d8704c5304a"
+    },
+    "Panel Header": {
+      "id": "64.23384625-cb80-4295-899a-943504b7aaa1",
+      "version_id": "6255ae8e-901d-48ec-a4ad-28f5409e122a"
+    },
+    "Password": {
+      "id": "64.4da8dcb3-7881-4e0f-8382-4e608751ce2e",
+      "version_id": "65b773ac-d82c-4789-bb3b-d89cee96133e"
+    },
+    "Pie Chart SDS": {
+      "id": "64.ded8f8bd-32de-4fbb-89c6-a335368ea435",
+      "version_id": "21143c91-6c71-454a-a2eb-90e2d5d1645e"
+    },
+    "Places": {
+      "id": "64.70e410ee-c257-456d-b8a0-051a5c9259cc",
+      "version_id": "b89fdfc5-028f-4a34-a845-87bd36a4409d"
+    },
+    "Popup Menu": {
+      "id": "64.c0514f65-f0be-441c-88b7-efcd91e36389",
+      "version_id": "290c0f56-e656-427f-9608-985326a572ec"
+    },
+    "Progress Bar": {
+      "id": "64.8f6a9870-14fb-474b-99c6-0e3844e23d67",
+      "version_id": "5e158bc7-f2a5-4b96-92e1-10fa12b80ee3"
+    },
+    "QR Code": {
+      "id": "64.32f56581-ee59-45d0-b58e-ed47e8a4d7bb",
+      "version_id": "8e2546ff-521c-4641-a17e-1847ec828682"
+    },
+    "Radio Button": {
+      "id": "64.ad2b879f-ee68-4bc9-9b1b-fb7c0856a48e",
+      "version_id": "f6d1174e-7986-47eb-b850-b82cce8fc5d2"
+    },
+    "Radio Button Group": {
+      "id": "64.bdddb841-6b07-4c08-bb5c-236a8da26b6a",
+      "version_id": "5fed3f1b-88b4-4725-8215-a5e8f7c98af0"
+    },
+    "Responsive Sensor": {
+      "id": "64.aa08832f-4366-4941-b213-3c1148b59d32",
+      "version_id": "1a937085-063a-4a16-9ed1-9c23d56898ee"
+    },
+    "Service Call": {
+      "id": "64.1feaead9-b1d2-4a7e-80a3-22156e6fe8f9",
+      "version_id": "27caf471-7ddc-4f3e-bc5b-bb4e13cae5c4"
+    },
+    "Service Data Table": {
+      "id": "64.6b29c1bc-c211-43ce-8fbc-904e6e4d57f7",
+      "version_id": "d0eb3259-a75c-483a-a906-3ac95d23b79e"
+    },
+    "Signature": {
+      "id": "64.a62e7774-259f-4e17-914d-97daaf7a7a28",
+      "version_id": "a59f9349-724e-4326-8d51-99692c65da63"
+    },
+    "Single Select": {
+      "id": "64.fd4da558-40d8-47be-92ca-c305708dc7b7",
+      "version_id": "cf913a8c-f679-4391-86f5-b279fabd636d"
+    },
+    "Slider": {
+      "id": "64.5a0a8518-8377-4232-ada1-9a2eaea7f7f7",
+      "version_id": "4eca61ca-828f-416d-b174-d2a22ad32150"
+    },
+    "Spacer": {
+      "id": "64.71b97b55-fda9-48e8-b21b-58fb4e85ca10",
+      "version_id": "f913b442-929c-4eb5-b0d4-20d15c903c9e"
+    },
+    "Spinner": {
+      "id": "64.be3078bd-3d8c-4bd6-9a47-307c4d14d4f5",
+      "version_id": "98acaf70-3874-4d7f-9f7c-6187da56c250"
+    },
+    "Stack": {
+      "id": "64.05d9d0b5-0423-4ab6-b16c-e3554dfaf4a6",
+      "version_id": "8174562e-3cec-48ef-b84b-88185d7ed7c9"
+    },
+    "Status Box": {
+      "id": "64.c48318be-0720-43d9-9c02-7fe15244ab79",
+      "version_id": "4119ad82-59dc-45bd-8a5b-9db0a19cb404"
+    },
+    "Step Chart SDS": {
+      "id": "64.2a8c9084-e5f5-4be3-a15c-1dfbd5f5c109",
+      "version_id": "e323e803-9447-4a39-901e-ecbddb9dcfce"
+    },
+    "Style": {
+      "id": "64.50e886c4-eede-4bba-9b9a-2f6b51ce6a9b",
+      "version_id": "795c1d63-8522-422c-abd2-8f2b46e741d4"
+    },
+    "Switch": {
+      "id": "64.bff9f5ff-fea4-4a70-87a5-769301740798",
+      "version_id": "c6ca073e-c532-4769-9f7f-cbdbc606279e"
+    },
+    "Tab Section": {
+      "id": "64.c05b439f-a4bd-48b0-8644-fa3b59052217",
+      "version_id": "82783746-c20c-4282-9a85-0fae1a300484"
+    },
+    "Table": {
+      "id": "64.f515b79f-fe61-4bd3-8e26-72f00155d139",
+      "version_id": "fed22a06-8e1b-42d2-a234-32b5a8e721ed"
+    },
+    "Table Layout": {
+      "id": "64.bd961fbd-60cd-4341-9234-cec3516a5ed8",
+      "version_id": "acb8eb72-92b0-4604-b6d1-a0b4fabcb823"
+    },
+    "Table Layout Cell": {
+      "id": "64.5aea8d13-714d-4d05-8717-8c744b419365",
+      "version_id": "ae24d997-c48a-4a9d-8177-cf13cc494db5"
+    },
+    "Table Layout Row": {
+      "id": "64.9ac7d257-d8ad-47e6-a1df-b76cf1a4ec87",
+      "version_id": "989860ab-bffb-4778-94f1-b8223535812d"
+    },
+    "Text": {
+      "id": "64.5663dd71-ff18-4d33-bea0-468d0b869816",
+      "version_id": "b0165071-2b3d-4cb7-8cb3-68d40f40dc7b"
+    },
+    "Text Area": {
+      "id": "64.0e61869e-73fd-4401-b156-8c11adaec3f8",
+      "version_id": "78dae373-c6c5-4e41-baa9-13e5715dd219"
+    },
+    "Text Editor": {
+      "id": "64.8881a0d8-ba85-4a8a-9c3b-c2f8ab32ece9",
+      "version_id": "87f05def-b386-4b9f-8678-e8e66e20a44c"
+    },
+    "Text Reader": {
+      "id": "64.933fd33b-4cce-4f8d-8219-7bac494f200d",
+      "version_id": "7ea003bd-76a3-42c4-b509-09d4a4f90886"
+    },
+    "Timer": {
+      "id": "64.ec19f655-f26d-45a2-a488-6f73536a03eb",
+      "version_id": "2e9852b5-7c91-41f0-aa92-901942f359a9"
+    },
+    "Tooltip": {
+      "id": "64.dc7cb757-a065-44c1-a92d-d186f8eea4e2",
+      "version_id": "6d1a2a96-93fa-4ea4-80e2-e8401eadcdff"
+    },
+    "Type Ahead Text": {
+      "id": "64.847f8ace-ae59-47ef-9b55-e5a4242e7426",
+      "version_id": "6523370c-82ce-44cb-921a-c5e874ae6921"
+    },
+    "Variant": {
+      "id": "64.b9738f74-c1ec-4483-90e0-e2dd133e4608",
+      "version_id": "435000e3-c8d8-4f0d-a69b-0ad9dd11e923"
+    },
+    "Vertical Layout": {
+      "id": "64.ef447b87-24a2-42a7-b2b9-cd471e9f7b67",
+      "version_id": "906d9421-180b-4557-a25e-0fbcc09c45e6"
+    },
+    "Video": {
+      "id": "64.90af4be1-268b-4bef-8e3d-627a1f3b76ed",
+      "version_id": "044131b4-89c7-4644-adc3-1426c009090c"
+    },
+    "Well": {
+      "id": "64.64ae2c6c-6c21-491c-b5ab-c58848dd9e48",
+      "version_id": "81455728-254c-403f-8f3e-0aa1b63f621f"
+    }
+  },
+  "business_objects": {
+    "AddressComponent": {
+      "id": "12.272439c0-6f02-40bc-9b02-f563129839f4",
+      "version_id": "bbb5b962-8ea0-46e3-a593-a51604d11a4d"
+    },
+    "AjaxError": {
+      "id": "12.5551644c-3dc6-4161-a939-4e7f27f8ce45",
+      "version_id": "255558ef-409b-4ec8-8f6a-29021cebab1d"
+    },
+    "AlertColorStyle": {
+      "id": "12.c4e6c7dd-d7b3-49fd-a2e6-6a5b6b6fcbf5",
+      "version_id": "ef05f25c-fe8f-445f-880b-66c2045a4599"
+    },
+    "AutoCustomSelection": {
+      "id": "12.b6ba2f0a-5a23-4a6b-ab3d-af28761c7e3b",
+      "version_id": "fdaf933d-9462-4ed5-bfe4-b1d7989b2ad3"
+    },
+    "BadgeColorStyle": {
+      "id": "12.b9826836-713e-4a9d-8a44-891f73941010",
+      "version_id": "4a7df7bf-89c5-4d0e-b3f1-9ced27d8d24a"
+    },
+    "BadgeShapeStyle": {
+      "id": "12.92fe7be4-e087-4c49-b977-9b4c77bf25bf",
+      "version_id": "1190dd10-a546-4151-8c04-58d1f65075f8"
+    },
+    "BoxFactor": {
+      "id": "12.2c8b9cc6-13cd-47db-a8ba-4b8c43202b7b",
+      "version_id": "a4cee99d-9039-4117-9daf-c9ba8a384fec"
+    },
+    "ButtonColorStyle": {
+      "id": "12.94510c84-2ee1-4487-a1df-006aac6f1918",
+      "version_id": "6c2d6a37-d269-42eb-a328-60be5b0fe30d"
+    },
+    "ButtonShapeStyle": {
+      "id": "12.203ff638-a153-4d69-8b87-d9ea008a55a3",
+      "version_id": "6403ca78-42a1-47a7-9f37-9c38a1f017ac"
+    },
+    "ButtonSizeStyle": {
+      "id": "12.6350f376-b985-4eb6-835e-25b425fc6936",
+      "version_id": "e358f634-4d03-4092-ba29-f143f2dfcdf0"
+    },
+    "CSSSpec": {
+      "id": "12.c8803636-42a1-4c87-b5f7-c36d2934f8cf",
+      "version_id": "34b63f68-7f55-44e3-884a-40e82bf0243a"
+    },
+    "CalendarType": {
+      "id": "12.328094c2-b1e2-491a-8b14-2a367a687e17",
+      "version_id": "b04778aa-2f73-4dfa-8479-31937bfe46d3"
+    },
+    "CaptionPlacement": {
+      "id": "12.17f40b9d-3bb9-4b65-b8ac-45bdb62f23f5",
+      "version_id": "c7f44cf8-c001-42d3-a630-0e2bc410ff54"
+    },
+    "ChartBackgroundColorStyle": {
+      "id": "12.1ec8aeca-b070-4c29-8240-91e329b6db6d",
+      "version_id": "5574637d-49d8-4403-9523-86de597c1211"
+    },
+    "ChartDataMode": {
+      "id": "12.43d1fe5b-de7f-49e7-b468-821c8da58f5e",
+      "version_id": "6c0718d5-cf95-4c1b-ab4b-2810a1666b46"
+    },
+    "ChartDataSeriesColorStyle": {
+      "id": "12.c5d9fc45-ea99-4984-8f73-0cacad6129b6",
+      "version_id": "9776e02c-540f-417a-a834-0aba8f0b3ef4"
+    },
+    "ChartGridLinesStyle": {
+      "id": "12.ab85f0e5-f534-4976-9cfb-2b59aa074446",
+      "version_id": "1fda7137-9188-4028-a095-0158480eeb36"
+    },
+    "ChartKind": {
+      "id": "12.d1b8ee99-4ac6-46d1-8d9f-af051dca5320",
+      "version_id": "2488053b-b2ac-4976-bae5-e8a53082456b"
+    },
+    "ChartLegendPlacement": {
+      "id": "12.8d8eddc9-f2a1-45bb-9eef-c54cca082b60",
+      "version_id": "1f447d20-5093-4c87-b8af-7e79244962db"
+    },
+    "ChartSDSColorStyle": {
+      "id": "12.e30bd9c0-c96c-4f38-8400-9eb6312816a6",
+      "version_id": "306708b7-7eb9-4d27-ae45-f2c04c4f9d8e"
+    },
+    "ChartTooltipStyle": {
+      "id": "12.6b5b9000-8b64-4639-a941-3369c8550032",
+      "version_id": "b515f938-e331-47c0-991d-c4244efbfdac"
+    },
+    "ChartType": {
+      "id": "12.c6e7d93a-889f-4dc4-9aaa-75f5e953b8ac",
+      "version_id": "ea6d9d69-70be-4a65-829d-c3a1795656d3"
+    },
+    "ChartXYAxisStyle": {
+      "id": "12.24b41fce-610c-4971-b38b-7a4510fab123",
+      "version_id": "5e30dcc2-fadf-46b9-ae98-b5c8357bd770"
+    },
+    "CollapsiblePanelColorStyle": {
+      "id": "12.f8db1bfe-05cc-44dc-85a5-aeafb2a6c35b",
+      "version_id": "65c41c23-f9b0-4443-8061-5a4006f97c10"
+    },
+    "ColumnSpec": {
+      "id": "12.b4dc6dc3-e3f5-4d37-ba0b-28e0032b2425",
+      "version_id": "96a27c16-3005-4684-bec8-0b945d13d045"
+    },
+    "ColumnVisibility": {
+      "id": "12.56ec4d68-55c0-4b1d-b0bf-1e34b474ade8",
+      "version_id": "f1b90381-5a85-4e14-acc9-a88b72d4bc35"
+    },
+    "ContentListColumnType": {
+      "id": "12.28a70116-f08a-4654-937e-147b84caeed3",
+      "version_id": "b3046de9-3b43-4632-8b59-ff986c142bbf"
+    },
+    "CurrencyCodeSelectionType": {
+      "id": "12.15365b4e-f917-48f9-87a7-4411410d1154",
+      "version_id": "647a3200-e9e0-4a23-8a20-8cf66c5fcc62"
+    },
+    "DataDimension": {
+      "id": "12.a2c20ada-cdaa-4883-bc96-3ca7a3a27e6b",
+      "version_id": "1602255a-844d-42a7-af4f-a5582f383a24"
+    },
+    "DataPoint": {
+      "id": "12.db7aaff9-c0a7-4f62-80e7-4329dd49f4c2",
+      "version_id": "28247d81-b2c7-4ab3-9ef5-d6680aa5fdc1"
+    },
+    "DataSeries": {
+      "id": "12.63a604e8-e026-4605-aae1-272b67822cc7",
+      "version_id": "b0066cc6-5d43-4283-b39f-4b8f40994e0b"
+    },
+    "DatePickerColorStyle": {
+      "id": "12.0f44e70d-4089-486f-a61a-f828b8ee920c",
+      "version_id": "c32b4aab-48f3-44fd-9e94-ae96a82f7062"
+    },
+    "DatePickerDisabledWeekDays": {
+      "id": "12.8862b73e-2d8b-4143-b382-67522f602197",
+      "version_id": "334ef3b0-9375-48dd-a917-a3fd1a85735a"
+    },
+    "DatePickerMinViewMode": {
+      "id": "12.404c31ce-a7c1-4e60-bcff-5b184dcb1813",
+      "version_id": "76886686-ff18-4a74-883e-3f6dc600822a"
+    },
+    "DatePickerOrientation": {
+      "id": "12.d037409a-94ca-499f-b2f4-f51f8ddbe1ff",
+      "version_id": "a488d8c3-0ceb-4464-b779-e546713f479c"
+    },
+    "DatePickerStartView": {
+      "id": "12.90bde226-8ffb-4d85-ad71-69c01d141ad5",
+      "version_id": "5fbdf368-294a-42b2-8861-189b24e5e321"
+    },
+    "DatePickerType": {
+      "id": "12.7ddd931a-637b-4a7e-9cd5-f2b7affb349f",
+      "version_id": "86999569-51f4-452a-8997-4e2e1d8654c4"
+    },
+    "DatePickerWeekStart": {
+      "id": "12.7a07add0-20a1-4efd-9765-cd2b6cfab5d1",
+      "version_id": "1630bf5c-9212-4780-9e08-18a0d4142d3c"
+    },
+    "DeviceInfo": {
+      "id": "12.9ff0c19f-7322-4dee-9264-824e2c2371ec",
+      "version_id": "8020de5b-b9ff-43f2-9914-ebb31f48313f"
+    },
+    "DrillDownInput": {
+      "id": "12.c86d4f1f-2223-4195-a6be-8e04a567690d",
+      "version_id": "99b637b4-76f2-4101-b9ec-1c18995838b1"
+    },
+    "DrillDownOutput": {
+      "id": "12.d29a25ac-e5ff-44b3-92eb-11ed673dfd84",
+      "version_id": "a2419adf-f32b-4de1-ab0f-98ec322bde2f"
+    },
+    "ExcelFileType": {
+      "id": "12.c7d5204f-d26d-45a0-a49e-9f9c72d1334e",
+      "version_id": "a3cc7103-f234-474a-bb23-abf41975451d"
+    },
+    "GeoLocation": {
+      "id": "12.6632ee5b-4a41-4935-bb5e-3b09f8c3cf8f",
+      "version_id": "0708a573-35f8-4c86-a2e8-265005fafe31"
+    },
+    "GeoMonitoringMode": {
+      "id": "12.8f78f7ac-8040-407e-86e3-db418827cf2c",
+      "version_id": "1913a35c-8662-4bd1-a393-4bd86d53d94a"
+    },
+    "GlobalTextDirection": {
+      "id": "12.98327f9a-a1a9-460f-9774-c6f45eeddf98",
+      "version_id": "9b046b62-97e9-434b-b74f-10c22fbbb758"
+    },
+    "HorizontalAlignment": {
+      "id": "12.46476d32-83bc-46a8-81bf-11fa6fda5525",
+      "version_id": "ecf311be-90e7-4823-9141-7772e2d94298"
+    },
+    "I18NData": {
+      "id": "12.26ad4047-b4b2-446a-98c4-c47051be4f41",
+      "version_id": "fcd8ad3e-9754-4328-a99f-4d308db1f39c"
+    },
+    "I18NGregorianCalendar": {
+      "id": "12.77d675a2-49d4-4ddb-bca3-944569fb35aa",
+      "version_id": "4b02a041-925a-406d-bf5d-c7ab4a2041f0"
+    },
+    "I18NGregorianCalendarDays": {
+      "id": "12.d7af2f2d-e965-4fa0-a447-5b3c67bd2e89",
+      "version_id": "70ba02da-3d22-481c-a7cd-48abe438898a"
+    },
+    "I18NGregorianCalendarMonths": {
+      "id": "12.348694b7-67fd-4742-b543-c079dc36fe7d",
+      "version_id": "1a09211a-043b-44e4-9a83-da4362b4a6d0"
+    },
+    "IconColorStyle": {
+      "id": "12.2429ac44-15a3-42f7-b875-3d5df167a05e",
+      "version_id": "80ed66bb-9e18-485f-ad44-a566e6516534"
+    },
+    "ImageCaptionPosition": {
+      "id": "12.7a1ae252-bb80-4890-8e38-0e22cc4ccc6a",
+      "version_id": "1c1a8517-6fd4-4b40-ab1c-e4ab9a9cf0d5"
+    },
+    "InputGroupButtonKind": {
+      "id": "12.3b707db6-3774-418f-9948-3bfaaf60d2ab",
+      "version_id": "a1e42ce8-4231-498e-a624-5ab7dc894ee1"
+    },
+    "InputGroupButtonLoc": {
+      "id": "12.1c06052f-a56b-4c88-8b02-47907baf4da2",
+      "version_id": "fbaf0a9a-3fff-4982-ba2c-754d3e6f3071"
+    },
+    "Invisibility": {
+      "id": "12.d982e8ad-40d5-43bf-86ea-314db85a2cb0",
+      "version_id": "606dd0a6-213b-4ebe-ad09-379b222729ab"
+    },
+    "LabelPlacement": {
+      "id": "12.f2e65123-fd3c-4fc2-8454-a25794d2ea77",
+      "version_id": "2d6ae668-f703-4064-8643-d413c6dc16ee"
+    },
+    "LatLong": {
+      "id": "12.5cc4a08f-5502-43a3-9259-ae44bdb8cada",
+      "version_id": "5578dbe7-dfa5-4e52-9269-c960e87f8f8b"
+    },
+    "LayoutFlow": {
+      "id": "12.5bb09c00-5cc8-4629-91f2-e64cc9103546",
+      "version_id": "c755d84d-3d53-4b37-9d2c-143276600621"
+    },
+    "LayoutFlow2": {
+      "id": "12.01ab3634-c905-4a5f-a880-9ac529d81a7b",
+      "version_id": "d720ff33-3aed-45ea-9e72-d4a41ff7e7b8"
+    },
+    "LinkType": {
+      "id": "12.9c3d8fd8-887d-4978-a9f1-e9ecc53b23da",
+      "version_id": "9d5db558-28cd-4d70-a763-8fef3bed9e47"
+    },
+    "MapSource": {
+      "id": "12.62004d18-cbd3-4fcf-8a90-27f7883c506c",
+      "version_id": "858f8a08-950b-458b-8efe-4ab062957d35"
+    },
+    "MapType": {
+      "id": "12.2bfc69e6-f78a-4a24-a362-ef747ca6959e",
+      "version_id": "afade3cc-81c3-4990-9688-28cfc3e4ce71"
+    },
+    "MenuBadgeShape": {
+      "id": "12.2928a836-0ae0-4637-b541-ddcf1fdca477",
+      "version_id": "3f56f7df-6c9b-44a3-b6f6-8d2c18e4b366"
+    },
+    "MenuHorizontalAlignment": {
+      "id": "12.2259afc5-f645-4530-a699-8524d0819939",
+      "version_id": "90eb8095-55d0-4408-b1d6-59663c3186d2"
+    },
+    "MenuItemSpec": {
+      "id": "12.89a63b7f-21b5-426d-9db5-9a822496c8fc",
+      "version_id": "9cbe91fa-36da-4377-b434-803b0ce8df4f"
+    },
+    "MenuItemType": {
+      "id": "12.2b0bfd67-839d-484f-9745-2db646ae8b3d",
+      "version_id": "0fc42526-912f-417c-bde2-e468c5141960"
+    },
+    "MenuVerticalAlignment": {
+      "id": "12.9cc31409-905d-4d83-8111-79f57fbf7c31",
+      "version_id": "88cddc8c-2cd1-457e-a51a-6bdefe1a5af8"
+    },
+    "NavigationBarAlignment": {
+      "id": "12.8b039e11-55ae-4b02-a6ab-461c59b35375",
+      "version_id": "71563b97-f312-4350-ad66-5c0632fa37de"
+    },
+    "NavigationBarColorMode": {
+      "id": "12.5a5b9812-2ea1-451a-9282-65f956f89471",
+      "version_id": "0f3f58b4-0a70-4993-8493-eaa6a9bd25f0"
+    },
+    "NavigationItemType": {
+      "id": "12.b78140ae-8932-4539-96dd-28361a872826",
+      "version_id": "630566c4-ed21-4517-b7f6-99c9de2d2ff5"
+    },
+    "NoteColorStyle": {
+      "id": "12.8987ca86-25a9-48a6-b73b-8b3422c91a3b",
+      "version_id": "014ebfee-8b5c-4c54-a812-66f6921f46be"
+    },
+    "NoteLabelStyle": {
+      "id": "12.7926710c-55ff-4dc2-97a7-963992e86875",
+      "version_id": "d80af185-7080-4935-bf35-0faac2d40816"
+    },
+    "OutputTextSizeStyle": {
+      "id": "12.4c8b82a7-5de4-45f1-bc41-984b33d10bfa",
+      "version_id": "5a3628e7-f3ed-4b45-aaac-41633f24277c"
+    },
+    "OutputTextWeightStyle": {
+      "id": "12.3a694a92-0361-4391-936b-d856e569236d",
+      "version_id": "b48fa58d-238e-4030-978e-b44413a71fc5"
+    },
+    "PageId": {
+      "id": "12.7ecaf4f2-7fc8-47d6-8c1b-758dd8f81a2c",
+      "version_id": "9e52814a-53fe-468e-8df4-310764ffc2fe"
+    },
+    "PageLayoutTarget": {
+      "id": "12.f957b33b-dd01-4e74-9de1-d056658cb868",
+      "version_id": "43fdf377-769d-4e1c-a1b3-67d56e3fb3f1"
+    },
+    "PanelColorStyle": {
+      "id": "12.8e35080d-c008-44d6-902c-4ab6e93fc4dc",
+      "version_id": "7c70701d-6aa9-46a8-b57f-222f715e8104"
+    },
+    "ParagraphColorStyle": {
+      "id": "12.ab87ad56-e675-440e-83ea-18484a008787",
+      "version_id": "81c74980-4adf-467e-b029-41f6f988596f"
+    },
+    "QRErrorCorrectionLevel": {
+      "id": "12.c8b900ef-e467-458c-a6ca-207bf91a0e94",
+      "version_id": "78cc113a-c16d-4c2f-887a-895f0348325e"
+    },
+    "ResponsiveBehavior": {
+      "id": "12.670cab94-28fe-4c59-8701-51e669f7fd9f",
+      "version_id": "e247d0ae-95ad-42ee-86a3-cac7ce001925"
+    },
+    "SelectDataMapping": {
+      "id": "12.be08081b-8381-4fe3-bcf1-0611e65f6942",
+      "version_id": "333dbccd-1c2b-4ad3-8e5f-5729850642bf"
+    },
+    "SelectItemsLookupMode": {
+      "id": "12.68bd7039-fb51-4d98-9cff-79fb625320b0",
+      "version_id": "8b8202d3-07b5-44e1-90f0-ca58d1c301de"
+    },
+    "ServiceDataTableCellRenderType": {
+      "id": "12.e8824acc-ab80-48a3-8064-efeff24c89a2",
+      "version_id": "b2c05fd8-c161-4d81-ae81-9acc947a4ae1"
+    },
+    "ServiceDataTableColumn": {
+      "id": "12.4f95e77e-787c-4df1-a3fa-1c4b1044a8c2",
+      "version_id": "947570e2-f08c-4bb9-abcf-e4ceead545d4"
+    },
+    "ServiceIndicatorType": {
+      "id": "12.aab9ca3b-6817-4e9e-988b-1dbc9182c089",
+      "version_id": "f1cf95dc-173f-4979-baa0-29384e35c585"
+    },
+    "SignatureColorStyle": {
+      "id": "12.cd4b8ea6-a3f5-4b22-a309-5cee9b4dd6f3",
+      "version_id": "5c990794-a5d6-49aa-af11-649e23aed618"
+    },
+    "SpinnerSizeStyle": {
+      "id": "12.9cf62f5b-22b4-4129-b5c7-8cad808b140f",
+      "version_id": "d7200339-e607-4633-a585-0ad8d595cd53"
+    },
+    "SplitPaneHandleLocation": {
+      "id": "12.5b27bc84-e326-4e52-af13-c2d7e5efa66e",
+      "version_id": "2fb66c83-feb0-461a-95a4-10c71d0e65e5"
+    },
+    "SplitPaneSpec": {
+      "id": "12.7857d0a2-ad47-4b75-aa01-e45ac7bebcea",
+      "version_id": "ab7bb738-529b-4846-8844-bd4aca9be912"
+    },
+    "StandardFileType": {
+      "id": "12.a2736389-fb54-4b83-bd33-0702f5527866",
+      "version_id": "f066fca8-91ba-41bc-8105-621ab2ce58d2"
+    },
+    "StreetAddress": {
+      "id": "12.53cf0411-8c1d-454c-ab08-74eeb9d5a060",
+      "version_id": "b0ce4aed-6bdb-41a1-b270-fe0098817967"
+    },
+    "SwitchLabelType": {
+      "id": "12.f6434ac0-e59e-4e72-9cb0-19030ef04761",
+      "version_id": "e4dcd8a6-c93e-49ae-968a-c5832e271008"
+    },
+    "SwitchShapeStyle": {
+      "id": "12.1602d5df-7365-48fa-9174-dd6c9ee195c3",
+      "version_id": "9587750e-440c-4dbd-87c0-69e3937d0a92"
+    },
+    "SwitchSizeStyle": {
+      "id": "12.6fb58e58-203e-451a-955f-ce51123e2cb1",
+      "version_id": "8be3a571-2f92-45a5-a227-f587d53f303f"
+    },
+    "TabColorStyle": {
+      "id": "12.5a6991b4-51a6-4f1a-879e-dc8765232a3e",
+      "version_id": "56d76692-6345-4435-895a-40617e0ecd6b"
+    },
+    "TableANYType": {
+      "id": "12.4a0b8525-54a5-465b-8c46-16d3c3268cb5",
+      "version_id": "93b17499-b73e-4d7b-a981-02690c524d63"
+    },
+    "TableCellRenderType": {
+      "id": "12.20b5f59b-ea97-405c-a86b-ab88873eda20",
+      "version_id": "5c5a030e-2324-4632-abed-80d055d1f8a2"
+    },
+    "TableColorStyle": {
+      "id": "12.dcbfb56a-149b-422d-b72c-38552efd01c6",
+      "version_id": "d49dc759-fdb8-42e2-8afe-3be164821dab"
+    },
+    "TableColumn": {
+      "id": "12.55625d09-2e7f-4b8b-82aa-e01b1ba5bb57",
+      "version_id": "06901636-66b9-4be7-9a8f-4283912420f9"
+    },
+    "TableColumnVisibility": {
+      "id": "12.ee438d67-2ff2-4575-b26c-190b6867852c",
+      "version_id": "3f888283-f716-4819-819a-623d4591c8b0"
+    },
+    "TableHFStyle": {
+      "id": "12.fe107586-72c8-4536-8a77-f654176a2430",
+      "version_id": "8256159c-3f07-4b48-8f90-7bb7ac642bc3"
+    },
+    "TableLayoutBorderStyle": {
+      "id": "12.debd77d5-9f3b-4fdb-9abb-e9f9f6dc6aeb",
+      "version_id": "55d20797-a06b-47e7-8f39-5a2b00cda5f3"
+    },
+    "TableRowRenderType": {
+      "id": "12.d3aef6df-934b-460e-a8d4-1e5ad65f6437",
+      "version_id": "d02c651f-5807-4868-8f80-d9dd9990a896"
+    },
+    "TableSelectionMode": {
+      "id": "12.42390c07-e390-49a8-886b-2f8bd0af1916",
+      "version_id": "54302395-1ce8-4d3c-b9f2-612bbe6d5315"
+    },
+    "TableStyle": {
+      "id": "12.d8e56f3f-d5e3-4e08-b10d-5056cdb2825a",
+      "version_id": "80bcb7ff-c079-4020-8081-08a71977b791"
+    },
+    "TabsStyle": {
+      "id": "12.e2a59a31-4d00-4c1b-ad7a-309664795105",
+      "version_id": "6b460793-a123-43fe-93ed-0d2b5a4ddbb6"
+    },
+    "TextAlignment": {
+      "id": "12.75537804-3b8a-43ca-857d-0f1b29d8a6ab",
+      "version_id": "67fcfe00-3e21-4647-998c-04cbdeda45a5"
+    },
+    "TextColorStyle": {
+      "id": "12.6f46942e-8977-4224-b295-0edb54f4d13a",
+      "version_id": "b2c30943-4b3c-4ea5-b5f7-94b7b40402f5"
+    },
+    "TextSizeStyle": {
+      "id": "12.26ad1c72-198c-467d-9b6f-01d337e68f79",
+      "version_id": "ae3c29de-d832-496e-8a43-9b666a81d00d"
+    },
+    "TextStatusStyle": {
+      "id": "12.da76ff0a-cade-4068-a45c-f291f2a3d6b6",
+      "version_id": "0a82fb0f-b6b8-4696-9f07-e1591552b089"
+    },
+    "TextWrap": {
+      "id": "12.72e87625-a946-46ad-9204-9817ca3d374f",
+      "version_id": "fb1619af-d4fd-44b6-95fc-09cb02896cd7"
+    },
+    "TooltipColorStyle": {
+      "id": "12.dec4ec4a-34be-4c18-b79d-7d7cf2033587",
+      "version_id": "441cc37e-9a7e-473c-a5f3-2f463fc0327d"
+    },
+    "TooltipHorizontalAlignment": {
+      "id": "12.6fbace1d-7bad-42ee-b2dd-81e12e70e7e1",
+      "version_id": "8fb9805d-becf-494c-8d81-2fd5a1013b85"
+    },
+    "TooltipSizeStyle": {
+      "id": "12.acfc922b-e932-48aa-a46c-2594e6ef479c",
+      "version_id": "1478a8e6-e129-4e09-8f73-b54dc34c63a2"
+    },
+    "TooltipVerticalAlignment": {
+      "id": "12.66958eac-26e4-4c4f-a93b-a4e2483567c8",
+      "version_id": "57f32ee8-c6c2-43d8-bc6b-16b4ecdb8821"
+    },
+    "TypeAheadItemsLookupMode": {
+      "id": "12.92c7516b-a238-493d-b271-07cb50d768d6",
+      "version_id": "936fe7dd-2226-4a7f-a2c9-b7a6cc98f793"
+    },
+    "URLType": {
+      "id": "12.e2420380-e9d0-4c8f-a4ba-9d74e11cf8bb",
+      "version_id": "b1265103-f803-4b4a-9f28-f45f4c552394"
+    },
+    "VerticalAlignment": {
+      "id": "12.df767017-b5d7-4b1b-9735-ae9a328fd119",
+      "version_id": "0527eb5a-d483-40ad-8ebd-9f4457c3ccf9"
+    },
+    "VideoSource": {
+      "id": "12.d799c97b-9f49-49ce-912b-9dac1d3eff3e",
+      "version_id": "de139970-f6f3-4c76-b7cb-f02d00f863c8"
+    },
+    "VideoSourceType": {
+      "id": "12.f1edcf66-a292-453d-9057-10748964afa1",
+      "version_id": "2f398149-f9f6-447b-9bd7-63e7731faa41"
+    },
+    "VideoTrackKind": {
+      "id": "12.a96fe3e7-0b40-476d-ad25-5fbd24a58cf3",
+      "version_id": "42643b04-3f9a-4858-a9d3-fc2a21285e8a"
+    },
+    "VideoTracks": {
+      "id": "12.be91d799-a1d0-4377-ba45-89a5c2157241",
+      "version_id": "63b792e5-4725-4dbd-bc81-efa4ef06fc21"
+    },
+    "Visibility": {
+      "id": "12.78a1a772-7c41-42ed-b78a-98a9eed21542",
+      "version_id": "600a70bf-de40-443d-a4d6-c9d3a318753b"
+    },
+    "WellColorDarkness": {
+      "id": "12.c78a4956-d5b3-45ce-b6c5-3bcdfc3e7dae",
+      "version_id": "7d97b823-c216-4206-954a-af6250ba17b1"
+    },
+    "WellIconPosition": {
+      "id": "12.a79f561e-6620-4d83-86fb-bd05d36dc73a",
+      "version_id": "fcb4f30e-96a4-43dc-a9de-337b47a62a24"
+    }
+  },
+  "data_types": {}
+}

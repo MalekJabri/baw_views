@@ -287,7 +287,7 @@ Custom_Widgets_1.0.28.twx
 
       <step number="4">
         <action>Package toolkit with icon included</action>
-        <command>python3 package_multiple_widgets.py</command>
+        <command>python3 package_baw.py</command>
         <expected_output>
           INFO: Reusing existing icon ID for 'ProgressBar': 61.19d8bd43-d600-41db-a9ca-5a6ee876a762
           (or)

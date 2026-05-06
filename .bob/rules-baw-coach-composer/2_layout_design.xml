@@ -1,0 +1,237 @@
+<layout_design_guidelines>
+  <overview>
+    Guidelines for designing optimal coach layouts that create effective
+    test environments for BAW custom widgets.
+  </overview>
+
+  <design_principles>
+    <principle name="logical_grouping">
+      <description>Group widgets by functionality or data relationships</description>
+      <examples>
+        <example>Navigation widgets together (Breadcrumb, Stepper)</example>
+        <example>Data display widgets together (ProgressBar, Charts)</example>
+        <example>Input widgets together (Forms, Selectors)</example>
+      </examples>
+    </principle>
+
+    <principle name="visual_hierarchy">
+      <description>Arrange widgets by importance and user workflow</description>
+      <guidelines>
+        <guideline>Primary actions at top or center</guideline>
+        <guideline>Supporting information below or to sides</guideline>
+        <guideline>Navigation elements at top</guideline>
+        <guideline>Status indicators prominently placed</guideline>
+      </guidelines>
+    </principle>
+
+    <principle name="data_flow">
+      <description>Arrange widgets to reflect data dependencies</description>
+      <guidelines>
+        <guideline>Input widgets before output widgets</guideline>
+        <guideline>Filters before filtered content</guideline>
+        <guideline>Parent data before child data</guideline>
+      </guidelines>
+    </principle>
+
+    <principle name="responsive_design">
+      <description>Consider how layout adapts to different screen sizes</description>
+      <guidelines>
+        <guideline>Use vertical layouts for mobile-friendly designs</guideline>
+        <guideline>Horizontal layouts for desktop-optimized views</guideline>
+        <guideline>Panels for collapsible sections</guideline>
+      </guidelines>
+    </principle>
+  </design_principles>
+
+  <layout_patterns>
+    <pattern name="single_widget_showcase">
+      <when_to_use>Testing a single widget in isolation</when_to_use>
+      <structure>
+        <layout type="vertical">
+          <section>Title/Description panel</section>
+          <section>Widget under test</section>
+          <section>Control buttons (OK, Cancel)</section>
+        </layout>
+      </structure>
+    </pattern>
+
+    <pattern name="related_widgets_group">
+      <when_to_use>Testing widgets that work together</when_to_use>
+      <structure>
+        <layout type="vertical">
+          <panel title="Widget Group Name">
+            <horizontal_layout>
+              <widget>Widget 1</widget>
+              <widget>Widget 2</widget>
+            </horizontal_layout>
+          </panel>
+          <section>Control buttons</section>
+        </layout>
+      </structure>
+    </pattern>
+
+    <pattern name="workflow_sequence">
+      <when_to_use>Testing widgets in a step-by-step process</when_to_use>
+      <structure>
+        <layout type="vertical">
+          <section>Navigation widget (Stepper/Breadcrumb)</section>
+          <panel title="Current Step">
+            <widget>Step-specific widget</widget>
+          </panel>
+          <section>Progress indicator</section>
+          <section>Navigation buttons</section>
+        </layout>
+      </structure>
+    </pattern>
+
+    <pattern name="dashboard_layout">
+      <when_to_use>Testing multiple independent widgets</when_to_use>
+      <structure>
+        <layout type="vertical">
+          <horizontal_layout>
+            <panel title="Section 1">
+              <widget>Widget 1</widget>
+            </panel>
+            <panel title="Section 2">
+              <widget>Widget 2</widget>
+            </panel>
+          </horizontal_layout>
+          <horizontal_layout>
+            <panel title="Section 3">
+              <widget>Widget 3</widget>
+            </panel>
+          </horizontal_layout>
+        </layout>
+      </structure>
+    </pattern>
+
+    <pattern name="master_detail">
+      <when_to_use>Testing list/detail widget combinations</when_to_use>
+      <structure>
+        <horizontal_layout>
+          <panel title="List" width="30%">
+            <widget>List widget</widget>
+          </panel>
+          <panel title="Details" width="70%">
+            <widget>Detail widget</widget>
+          </panel>
+        </horizontal_layout>
+      </structure>
+    </pattern>
+  </layout_patterns>
+
+  <widget_specific_guidelines>
+    <widget name="ProgressBar">
+      <placement>Prominent position, often at top or bottom</placement>
+      <grouping>With status text or completion indicators</grouping>
+      <sample_data>Show different progress states (0%, 50%, 100%)</sample_data>
+    </widget>
+
+    <widget name="Stepper">
+      <placement>Top of layout for navigation</placement>
+      <grouping>Above content area, with progress indicator</grouping>
+      <sample_data>Multi-step workflow with current step highlighted</sample_data>
+    </widget>
+
+    <widget name="Breadcrumb">
+      <placement>Very top of layout</placement>
+      <grouping>Standalone or with page title</grouping>
+      <sample_data>Realistic navigation path (Home > Section > Page)</sample_data>
+    </widget>
+
+    <widget name="Table/List">
+      <placement>Main content area</placement>
+      <grouping>With filters above, pagination below</grouping>
+      <sample_data>Multiple rows with varied data</sample_data>
+    </widget>
+
+    <widget name="Form Inputs">
+      <placement>Grouped in panels by category</placement>
+      <grouping>Related fields together, labels aligned</grouping>
+      <sample_data>Mix of filled and empty fields</sample_data>
+    </widget>
+
+    <widget name="Charts/Visualizations">
+      <placement>Prominent in content area</placement>
+      <grouping>With title and legend</grouping>
+      <sample_data>Realistic data ranges and distributions</sample_data>
+    </widget>
+  </widget_specific_guidelines>
+
+  <decision_making_process>
+    <step number="1">
+      <action>Identify widget types and purposes</action>
+      <questions>
+        <question>What does each widget do?</question>
+        <question>How do they relate to each other?</question>
+        <question>What's the user's goal?</question>
+      </questions>
+    </step>
+
+    <step number="2">
+      <action>Determine primary widget(s)</action>
+      <questions>
+        <question>Which widget is most important?</question>
+        <question>Which widget drives the interaction?</question>
+      </questions>
+    </step>
+
+    <step number="3">
+      <action>Choose layout pattern</action>
+      <questions>
+        <question>Do widgets work together or independently?</question>
+        <question>Is there a workflow or sequence?</question>
+        <question>How many widgets are there?</question>
+      </questions>
+    </step>
+
+    <step number="4">
+      <action>Arrange widgets within pattern</action>
+      <questions>
+        <question>What's the logical order?</question>
+        <question>What's the visual hierarchy?</question>
+        <question>How do users flow through the interface?</question>
+      </questions>
+    </step>
+
+    <step number="5">
+      <action>Add supporting elements</action>
+      <items>
+        <item>Titles and descriptions</item>
+        <item>Control buttons</item>
+        <item>Status indicators</item>
+        <item>Help text</item>
+      </items>
+    </step>
+  </decision_making_process>
+
+  <presentation_format>
+    <format>
+      When presenting your layout design to the user, use this format:
+
+      **Layout Plan: [Coach Name]**
+
+      **Structure:**
+      ```
+      📦 [Container Type]
+         ├─ [Widget 1] - [Purpose]
+         ├─ [Widget 2] - [Purpose]
+         └─ [Widget 3] - [Purpose]
+      ```
+
+      **Design Rationale:**
+      - [Reason 1]
+      - [Reason 2]
+      - [Reason 3]
+
+      **User Flow:**
+      1. [Step 1]
+      2. [Step 2]
+      3. [Step 3]
+
+      Shall I proceed with this design?
+    </format>
+  </presentation_format>
+</layout_design_guidelines>
+
+<!-- Made with Bob -->

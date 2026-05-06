@@ -1,0 +1,60 @@
+{
+  "name": "Timeline",
+  "description": "Vertical timeline widget for displaying chronological events in IBM Business Automation Workflow",
+  "bindingType": {
+    "name": "TimelineData",
+    "isList": true,
+    "type": "TimelineEvent"
+  },
+  "configOptions": [
+    {
+      "name": "showDates",
+      "type": "Boolean",
+      "label": "Show Dates",
+      "description": "Display date/time information for each event",
+      "default": true
+    },
+    {
+      "name": "showIcons",
+      "type": "Boolean",
+      "label": "Show Icons",
+      "description": "Display status icons for events",
+      "default": true
+    },
+    {
+      "name": "alternateLayout",
+      "type": "Boolean",
+      "label": "Alternate Layout",
+      "description": "Alternate event positions (left/right) for visual variety",
+      "default": false
+    },
+    {
+      "name": "compact",
+      "type": "Boolean",
+      "label": "Compact Mode",
+      "description": "Use compact spacing for timeline events",
+      "default": false
+    },
+    {
+      "name": "clickable",
+      "type": "Boolean",
+      "label": "Clickable",
+      "description": "Enable click interaction on timeline events",
+      "default": false
+    },
+    {
+      "name": "eventClicked",
+      "type": "Event",
+      "label": "Event Clicked",
+      "description": "Event fired when a timeline event is clicked",
+      "parameterName": "index"
+    }
+  ],
+  "businessObjects": [
+    {
+      "name": "TimelineEvent",
+      "file": "TimelineEvent.json"
+    }
+  ],
+  "changeFunction": true
+}

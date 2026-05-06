@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="120" height="120" fill="#f8f8f8" rx="8"/>
+  
+  <!-- Upload area background -->
+  <rect x="15" y="15" width="90" height="40" fill="#ffffff" stroke="#d0d0d0" stroke-width="2" stroke-dasharray="4,4" rx="4"/>
+  
+  <!-- Upload arrow icon -->
+  <g transform="translate(60, 35)">
+    <path d="M 0,-8 L -4,-4 L -2,-4 L -2,4 L 2,4 L 2,-4 L 4,-4 Z" fill="#0f62fe"/>
+    <rect x="-6" y="6" width="12" height="2" fill="#0f62fe"/>
+  </g>
+  
+  <!-- Document table -->
+  <rect x="15" y="62" width="90" height="43" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" rx="4"/>
+  
+  <!-- Table header -->
+  <rect x="15" y="62" width="90" height="12" fill="#f4f4f4" rx="4"/>
+  <line x1="15" y1="74" x2="105" y2="74" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Document 1 -->
+  <g transform="translate(20, 82)">
+    <!-- File icon -->
+    <rect width="8" height="10" fill="#0f62fe" rx="1"/>
+    <rect x="1" y="1" width="6" height="2" fill="#ffffff"/>
+    <rect x="1" y="4" width="6" height="1" fill="#ffffff"/>
+    <rect x="1" y="6" width="4" height="1" fill="#ffffff"/>
+    
+    <!-- File name -->
+    <rect x="12" y="2" width="35" height="2" fill="#161616" rx="1"/>
+    <rect x="12" y="6" width="20" height="1.5" fill="#6f6f6f" rx="0.5"/>
+    
+    <!-- Type badge -->
+    <rect x="60" y="2" width="18" height="6" fill="#e0e0e0" rx="3"/>
+  </g>
+  
+  <!-- Document 2 -->
+  <g transform="translate(20, 94)">
+    <!-- File icon -->
+    <rect width="8" height="10" fill="#0f62fe" rx="1"/>
+    <rect x="1" y="1" width="6" height="2" fill="#ffffff"/>
+    <rect x="1" y="4" width="6" height="1" fill="#ffffff"/>
+    <rect x="1" y="6" width="4" height="1" fill="#ffffff"/>
+    
+    <!-- File name -->
+    <rect x="12" y="2" width="30" height="2" fill="#161616" rx="1"/>
+    <rect x="12" y="6" width="18" height="1.5" fill="#6f6f6f" rx="0.5"/>
+    
+    <!-- Type badge -->
+    <rect x="60" y="2" width="18" height="6" fill="#e0e0e0" rx="3"/>
+  </g>
+  
+  <!-- Upload button -->
+  <rect x="35" y="110" width="50" height="8" fill="#0f62fe" rx="4"/>
+  <path d="M 45,114 L 47,116 L 49,114 M 47,116 L 47,112" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="52" y="112.5" width="20" height="3" fill="#ffffff" rx="1.5"/>
+</svg>
+
+<!-- Made with Bob -->

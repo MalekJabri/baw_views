@@ -3,7 +3,7 @@ Base generator class for TWX XML generators.
 """
 
 from abc import ABC, abstractmethod
-from typing import Dict, Union, List
+from typing import Dict, Union, List, Optional
 
 from ..models import Widget, TWXObject
 from ..core import generate_version_id
@@ -17,12 +17,12 @@ class BaseGenerator(ABC):
     Abstract base class for TWX object generators.
     """
     
-    def __init__(self, widget: Widget, object_ids: Dict[str, str]):
+    def __init__(self, widget: Optional[Widget], object_ids: Dict[str, str]):
         """
         Initialize generator.
         
         Args:
-            widget: Widget to generate XML for
+            widget: Widget to generate XML for (None for standalone business objects)
             object_ids: Dictionary of object IDs for this widget
         """
         self.widget = widget
@@ -89,6 +89,7 @@ class BaseGenerator(ABC):
             object_type: Type of object generated
             object_id: ID of generated object
         """
-        self.logger.debug(f"Generated {object_type}: {object_id} for widget '{self.widget.name}'")
+        widget_name = self.widget.name if self.widget else "standalone"
+        self.logger.debug(f"Generated {object_type}: {object_id} for widget '{widget_name}'")
 
 # Made with Bob

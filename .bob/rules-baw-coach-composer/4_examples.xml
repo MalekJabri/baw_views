@@ -1,0 +1,397 @@
+<coach_composer_examples>
+  <overview>
+    Complete examples of coach composition workflows showing how to analyze widgets,
+    design layouts, generate data, and create test coaches.
+  </overview>
+
+  <example name="single_widget_test">
+    <scenario>User wants to test a single ProgressBar widget</scenario>
+    
+    <user_request>
+      "Create a test coach for the ProgressBar widget"
+    </user_request>
+
+    <workflow>
+      <step number="1">
+        <action>Analyze widget</action>
+        <tool_use>
+          <read_file>
+            <args>
+              <file>
+                <path>widgets/ProgressBar/widget/config.json</path>
+              </file>
+            </args>
+          </read_file>
+        </tool_use>
+        <findings>
+          - Widget displays progress (0-100%)
+          - Binding type: ProgressData business object
+          - Shows current step, total steps, label
+        </findings>
+      </step>
+
+      <step number="2">
+        <action>Design layout</action>
+        <layout_plan>
+          **Layout Plan: ProgressBar Test Coach**
+
+          **Structure:**
+          ```
+          📦 Vertical Layout
+             ├─ Panel: "Progress Tracking"
+             │  └─ ProgressBar widget
+             └─ OK Button
+          ```
+
+          **Design Rationale:**
+          - Simple vertical layout for single widget focus
+          - Panel provides context and title
+          - Prominent placement for easy testing
+        </layout_plan>
+      </step>
+
+      <step number="3">
+        <action>Generate sample data</action>
+        <sample_data>
+          ```json
+          {
+            "currentStep": 3,
+            "totalSteps": 5,
+            "percentage": 60,
+            "label": "Processing documents...",
+            "isComplete": false
+          }
+          ```
+          
+          **Rationale:**
+          - Mid-progress state (60%) shows widget in action
+          - Realistic label describes current activity
+          - Consistent values (3/5 = 60%)
+        </sample_data>
+      </step>
+
+      <step number="4">
+        <action>Generate coach</action>
+        <tool_use>
+          <execute_command>
+            <command>python generate_test_coach.py --name "ProgressBar Test" --widgets widgets/ProgressBar --output coaches/progressbar_test.xml</command>
+          </execute_command>
+        </tool_use>
+      </step>
+
+      <step number="5">
+        <action>Present results</action>
+        <response>
+          ✅ **Test coach created successfully!**
+
+          **File:** coaches/progressbar_test.xml
+
+          **Layout Structure:**
+          - Simple vertical layout
+          - ProgressBar showing 60% completion
+          - Sample data: "Processing documents..." (Step 3 of 5)
+
+          **Next Steps:**
+          1. Review the generated coach XML in coaches/ folder
+          2. Use BAW Package Manager mode to package into toolkit
+          3. Deploy toolkit to BAW server
+          4. Test the coach in IBM Process Designer
+
+          Would you like to adjust the layout or sample data?
+        </response>
+      </step>
+    </workflow>
+  </example>
+
+  <example name="multiple_related_widgets">
+    <scenario>User wants to test navigation widgets together</scenario>
+    
+    <user_request>
+      "Create a test coach for Breadcrumb, Stepper, and ProgressBar widgets to test a multi-step workflow"
+    </user_request>
+
+    <workflow>
+      <step number="1">
+        <action>Analyze widgets</action>
+        <findings>
+          **Breadcrumb:**
+          - Shows navigation path
+          - Displays hierarchical location
+
+          **Stepper:**
+          - Multi-step process navigation
+          - Shows current step and completion status
+
+          **ProgressBar:**
+          - Visual progress indicator
+          - Shows percentage completion
+
+          **Relationship:** All three widgets work together to show progress through a multi-step workflow
+        </findings>
+      </step>
+
+      <step number="2">
+        <action>Design layout</action>
+        <layout_plan>
+          **Layout Plan: Multi-Step Workflow Test**
+
+          **Structure:**
+          ```
+          📦 Vertical Layout
+             ├─ Breadcrumb (navigation context)
+             ├─ Panel: "Workflow Progress"
+             │  ├─ Stepper (step-by-step navigation)
+             │  └─ ProgressBar (overall progress)
+             └─ OK Button
+          ```
+
+          **Design Rationale:**
+          - Breadcrumb at top shows where user is in the system
+          - Stepper shows detailed step-by-step progress
+          - ProgressBar provides quick visual progress indicator
+          - Logical top-to-bottom flow: context → details → summary
+          - Panel groups related progress widgets together
+
+          **User Flow:**
+          1. User sees location via Breadcrumb
+          2. User sees current step via Stepper
+          3. User sees overall progress via ProgressBar
+        </layout_plan>
+      </step>
+
+      <step number="3">
+        <action>Generate consistent sample data</action>
+        <sample_data>
+          **Breadcrumb Data:**
+          ```json
+          {
+            "items": [
+              {"label": "Home", "url": "/home", "active": false},
+              {"label": "Workflows", "url": "/workflows", "active": false},
+              {"label": "Document Processing", "url": "/workflows/documents", "active": true}
+            ]
+          }
+          ```
+
+          **Stepper Data:**
+          ```json
+          {
+            "steps": [
+              {"label": "Upload", "status": "complete"},
+              {"label": "Review", "status": "complete"},
+              {"label": "Process", "status": "active"},
+              {"label": "Approve", "status": "pending"},
+              {"label": "Complete", "status": "pending"}
+            ],
+            "currentStep": 2
+          }
+          ```
+
+          **ProgressBar Data:**
+          ```json
+          {
+            "currentStep": 3,
+            "totalSteps": 5,
+            "percentage": 60,
+            "label": "Processing documents...",
+            "isComplete": false
+          }
+          ```
+
+          **Data Consistency:**
+          - All widgets show step 3 of 5 (60% complete)
+          - Breadcrumb shows "Document Processing" context
+          - Stepper shows "Process" as active step
+          - ProgressBar shows 60% with matching label
+        </sample_data>
+      </step>
+
+      <step number="4">
+        <action>Generate coach</action>
+        <tool_use>
+          <execute_command>
+            <command>python generate_test_coach.py --name "Multi-Step Workflow Test" --widgets widgets/Breadcrumb widgets/Stepper widgets/ProgressBar --output coaches/workflow_test.xml</command>
+          </execute_command>
+        </tool_use>
+      </step>
+
+      <step number="5">
+        <action>Present results</action>
+        <response>
+          ✅ **Multi-step workflow test coach created!**
+
+          **File:** coaches/workflow_test.xml
+
+          **Layout Structure:**
+          ```
+          📍 Breadcrumb: Home > Workflows > Document Processing
+          
+          📦 Workflow Progress Panel
+             🔢 Stepper: Step 3 of 5 (Process - Active)
+             📊 ProgressBar: 60% - "Processing documents..."
+          ```
+
+          **Sample Data Highlights:**
+          - Consistent 60% progress across all widgets
+          - Realistic workflow: Upload → Review → Process → Approve → Complete
+          - Contextual breadcrumb trail
+          - Active step clearly indicated
+
+          **Next Steps:**
+          1. Review the generated coach in coaches/ folder
+          2. Package into toolkit using BAW Package Manager mode
+          3. Deploy to BAW server
+          4. Test in IBM Process Designer
+
+          **Testing Scenarios:**
+          - Verify breadcrumb navigation
+          - Test stepper step transitions
+          - Validate progress bar updates
+          - Check data consistency across widgets
+
+          Would you like to test different progress states or adjust the layout?
+        </response>
+      </step>
+    </workflow>
+  </example>
+
+  <example name="user_refinement">
+    <scenario>User wants to adjust the layout after seeing initial design</scenario>
+    
+    <initial_request>
+      "Create a test coach for ProgressBar and Stepper"
+    </initial_request>
+
+    <initial_design>
+      **Layout Plan:**
+      ```
+      📦 Vertical Layout
+         ├─ Stepper
+         └─ ProgressBar
+      ```
+    </initial_design>
+
+    <user_feedback>
+      "Can you make the ProgressBar more prominent and add a title?"
+    </user_feedback>
+
+    <refined_design>
+      **Refined Layout Plan:**
+      ```
+      📦 Vertical Layout
+         ├─ Panel: "Current Progress" (emphasized)
+         │  └─ ProgressBar (larger, prominent)
+         ├─ Panel: "Workflow Steps"
+         │  └─ Stepper
+         └─ OK Button
+      ```
+
+      **Changes Made:**
+      - ProgressBar now in its own titled panel at top
+      - Panel title "Current Progress" adds emphasis
+      - ProgressBar positioned first for prominence
+      - Stepper in separate panel below
+      - Clear visual hierarchy
+
+      Shall I generate the coach with this refined layout?
+    </refined_design>
+
+    <lesson>
+      Always be ready to iterate and refine based on user feedback.
+      Present clear before/after comparisons when making changes.
+    </lesson>
+  </example>
+
+  <example name="dashboard_layout">
+    <scenario>User wants to test multiple independent widgets</scenario>
+    
+    <user_request>
+      "Create a dashboard-style test coach with ProgressBar, DateOutput, and MultiSelect widgets"
+    </user_request>
+
+    <layout_plan>
+      **Layout Plan: Widget Dashboard**
+
+      **Structure:**
+      ```
+      📦 Vertical Layout
+         ├─ Horizontal Layout (Row 1)
+         │  ├─ Panel: "Progress Tracking" (50%)
+         │  │  └─ ProgressBar
+         │  └─ Panel: "Date Information" (50%)
+         │     └─ DateOutput
+         ├─ Panel: "Selection Options" (Full Width)
+         │  └─ MultiSelect
+         └─ OK Button
+      ```
+
+      **Design Rationale:**
+      - Dashboard-style layout with multiple sections
+      - Top row splits screen 50/50 for two widgets
+      - Bottom section full-width for selection widget
+      - Each widget in its own titled panel
+      - Balanced, organized appearance
+    </layout_plan>
+
+    <sample_data>
+      **ProgressBar:** Current project completion (75%)
+      **DateOutput:** Last updated timestamp
+      **MultiSelect:** Available project categories
+
+      All data themed around "Project Management Dashboard"
+    </sample_data>
+  </example>
+
+  <communication_patterns>
+    <pattern name="initial_response">
+      <template>
+        I'll create a test coach for [widgets]. Let me analyze these widgets first.
+
+        [Analysis of widgets and their purposes]
+
+        Based on this analysis, I recommend this layout:
+
+        [Layout plan with visual structure]
+
+        [Design rationale]
+
+        Shall I proceed with this design?
+      </template>
+    </pattern>
+
+    <pattern name="presenting_results">
+      <template>
+        ✅ **Test coach created successfully!**
+
+        **File:** coaches/[filename].xml
+
+        **Layout Structure:**
+        [Visual representation]
+
+        **Sample Data:**
+        [Key data points]
+
+        **Next Steps:**
+        1. Review the generated coach in coaches/ folder
+        2. Use BAW Package Manager mode to package into toolkit
+        3. Deploy toolkit to BAW server
+        4. Test in IBM Process Designer
+
+        [Offer to refine or adjust]
+      </template>
+    </pattern>
+
+    <pattern name="asking_for_clarification">
+      <template>
+        I can create a test coach for [widgets]. To design the best layout, I'd like to understand:
+
+        - [Question 1]
+        - [Question 2]
+
+        Or I can proceed with a standard layout that [description]. Which would you prefer?
+      </template>
+    </pattern>
+  </communication_patterns>
+</coach_composer_examples>
+
+<!-- Made with Bob -->

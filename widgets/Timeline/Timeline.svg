@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="120" height="120" fill="#f4f4f4"/>
+  
+  <!-- Timeline vertical line -->
+  <line x1="30" y1="20" x2="30" y2="100" stroke="#e0e0e0" stroke-width="3"/>
+  
+  <!-- Event 1 - Completed (top) -->
+  <circle cx="30" cy="30" r="10" fill="#0f62fe" stroke="#0f62fe" stroke-width="2"/>
+  <path d="M 26 30 L 28.5 32.5 L 34 27" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="45" y="24" width="50" height="4" fill="#161616" rx="2"/>
+  <rect x="45" y="30" width="35" height="3" fill="#8d8d8d" rx="1.5"/>
+  
+  <!-- Event 2 - Current (middle) -->
+  <circle cx="30" cy="60" r="10" fill="white" stroke="#0f62fe" stroke-width="3"/>
+  <circle cx="30" cy="60" r="4" fill="#0f62fe"/>
+  <rect x="45" y="54" width="50" height="4" fill="#0f62fe" rx="2"/>
+  <rect x="45" y="60" width="40" height="3" fill="#8d8d8d" rx="1.5"/>
+  
+  <!-- Event 3 - Pending (bottom) -->
+  <circle cx="30" cy="90" r="10" fill="white" stroke="#c6c6c6" stroke-width="2"/>
+  <circle cx="30" cy="90" r="4" fill="#c6c6c6"/>
+  <rect x="45" y="84" width="45" height="4" fill="#525252" rx="2"/>
+  <rect x="45" y="90" width="30" height="3" fill="#8d8d8d" rx="1.5"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="30" cy="30" r="12" fill="none" stroke="#0f62fe" stroke-width="1" opacity="0.2"/>
+  <circle cx="30" cy="60" r="14" fill="none" stroke="#0f62fe" stroke-width="1" opacity="0.3"/>
+</svg>
+
+<!-- Made with Bob -->

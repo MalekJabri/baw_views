@@ -46,7 +46,7 @@
       <description>Implement or update the widget files</description>
       <steps>
         <step>Create or update Layout.html with semantic structure and accessibility attributes</step>
-        <step>Create or update InlineCSS.css with scoped styling</step>
+        <step>Create or update InlineCSS.css with scoped styling using Carbon Design System values (see themes/CARBON_THEME_VARIABLES.md). Use hardcoded values with inline comments documenting the corresponding theme variables, NOT LESS variable references</step>
         <step>Create or update inlineJavascript.js with BAW data and option access patterns</step>
         <step>Create or update config.json and business object files when the widget needs metadata or complex types</step>
         <step>Create event handler files in widget/events/ folder ONLY when the widget requires specific BAW events (load, change, view, validate, unload). Not all widgets need event handlers - create only what's necessary for the widget's functionality</step>

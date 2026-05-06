@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='utf-8'?>
+<teamworks>
+  <process id="1.6cbc4dd9-b3d4-4b4d-818b-4d1cccf888de" name="Insurance Claims">
+    <processId>1.6cbc4dd9-b3d4-4b4d-818b-4d1cccf888de</processId>
+    <processType>10</processType>
+    <isRootProcess>false</isRootProcess>
+    <isErrorHandlerEnabled>false</isErrorHandlerEnabled>
+    <isLoggingVariables>false</isLoggingVariables>
+    <isTransactional>false</isTransactional>
+    <exposedType>0</exposedType>
+    <isTrackingEnabled>true</isTrackingEnabled>
+    <cachingType>false</cachingType>
+    <mobileReady>false</mobileReady>
+    <sboSyncEnabled>true</sboSyncEnabled>
+    <isSecured>false</isSecured>
+    <isAjaxExposed>false</isAjaxExposed>
+    <isInvokedAsynchronously>false</isInvokedAsynchronously>
+    <isTransactionalFlow>false</isTransactionalFlow>
+    <description>Test coach for 2 widgets</description>
+    <guid>guid:d20d8a7f3d674462:3c77e24d:935b42492b6:-63c7</guid>
+    <versionId>49af26b5-c84c-4dc2-b010-f84a99eb1a4d</versionId>
+    <dependencySummary isNull="true" />
+    <processVariable name="progressbarData">
+      <lastModified isNull="true" />
+      <lastModifiedBy isNull="true" />
+      <tenantId isNull="true" />
+      <processVariableId>2056.34385653-5f80-4e99-ad54-922673e43e73</processVariableId>
+      <description isNull="true" />
+      <processId>1.6cbc4dd9-b3d4-4b4d-818b-4d1cccf888de</processId>
+      <namespace>2</namespace>
+      <seq>1</seq>
+      <isArrayOf>false</isArrayOf>
+      <isTransient>false</isTransient>
+      <classId>ProgressData</classId>
+      <hasDefault>false</hasDefault>
+      <defaultValue isNull="true" />
+      <guid>guid:dac4a1bb-0058-afc7-690c-b2d33f67f8d0</guid>
+      <versionId>55b115b2-077d-4e55-8a89-ec922f619956</versionId>
+    </processVariable>
+    <processVariable name="dateoutputData">
+      <lastModified isNull="true" />
+      <lastModifiedBy isNull="true" />
+      <tenantId isNull="true" />
+      <processVariableId>2056.bbb5ca3f-487e-42e4-a9f7-3001d6f3658b</processVariableId>
+      <description isNull="true" />
+      <processId>1.6cbc4dd9-b3d4-4b4d-818b-4d1cccf888de</processId>
+      <namespace>2</namespace>
+      <seq>2</seq>
+      <isArrayOf>false</isArrayOf>
+      <isTransient>false</isTransient>
+      <classId>DateValue</classId>
+      <hasDefault>false</hasDefault>
+      <defaultValue isNull="true" />
+      <guid>guid:64d95d59-d817-cf3e-b3d8-64a631744793</guid>
+      <versionId>029e1ce3-6760-4cfb-b330-57d7027c0b7e</versionId>
+    </processVariable>
+    <item>
+      <processItemId>2025.efe20628-73bd-4ad0-89e8-054df7210198</processItemId>
+      <name>Test Coach</name>
+      <tWComponentName>CoachFlowWrapper</tWComponentName>
+      <tWComponentId>FormTask_efe20628-73bd-4ad0-89e8-054df7210198</tWComponentId>
+      <isLogEnabled>false</isLogEnabled>
+      <isTraceEnabled>false</isTraceEnabled>
+      <isErrorHandlerEnabled>false</isErrorHandlerEnabled>
+      <saveExecutionContext>true</saveExecutionContext>
+      <layoutData x="0" y="0">
+        <errorLink>
+          <controlPoints />
+          <showEndState>false</showEndState>
+          <showName>false</showName>
+        </errorLink>
+      </layoutData>
+      <TWComponent />
+    </item>
+    <item>
+      <processItemId>2025.9831f1c2-e4af-4073-8b14-392a30de76bc</processItemId>
+      <name>Exit</name>
+      <tWComponentName>ExitPoint</tWComponentName>
+      <tWComponentId>3008.40a185f7-2935-4d8b-a5e2-5127051bf9fd</tWComponentId>
+      <isLogEnabled>false</isLogEnabled>
+      <isTraceEnabled>false</isTraceEnabled>
+      <isErrorHandlerEnabled>false</isErrorHandlerEnabled>
+      <saveExecutionContext>true</saveExecutionContext>
+      <layoutData x="0" y="0">
+        <errorLink>
+          <controlPoints />
+          <showEndState>false</showEndState>
+          <showName>false</showName>
+        </errorLink>
+      </layoutData>
+      <TWComponent>
+        <exitPointId>3008.40a185f7-2935-4d8b-a5e2-5127051bf9fd</exitPointId>
+        <haltProcess>false</haltProcess>
+        <guid>guid:216e8846-2a59-34ee-9bd7-774470f787f5</guid>
+        <versionId>d7bd22f5-af0c-4f8e-8d29-24fa25f3b57d</versionId>
+      </TWComponent>
+    </item>
+    <link name="to Exit">
+      <fromProcessItemId>2025.efe20628-73bd-4ad0-89e8-054df7210198</fromProcessItemId>
+      <toProcessItemId>2025.9831f1c2-e4af-4073-8b14-392a30de76bc</toProcessItemId>
+      <endStateId>Out</endStateId>
+      <layoutData>
+        <controlPoints />
+        <showEndState>false</showEndState>
+        <showName>false</showName>
+      </layoutData>
+    </link>
+    <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://www.ibm.com/bpm" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath">
+      <process id="1.6cbc4dd9-b3d4-4b4d-818b-4d1cccf888de" isExecutable="true" />
+      <startEvent id="StartEvent_327ec3d0-1c0d-44ed-96c3-7054499f3fcf" name="Start">
+        <outgoing />
+      </startEvent>
+      <userTask id="FormTask_efe20628-73bd-4ad0-89e8-054df7210198" name="Test Coach" implementation="coach">
+        <incoming />
+        <outgoing />
+        <coachRef>65.efe20628-73bd-4ad0-89e8-054df7210198</coachRef>
+        <coach id="65.efe20628-73bd-4ad0-89e8-054df7210198" name="Test Coach">
+          <coachId>65.efe20628-73bd-4ad0-89e8-054df7210198</coachId>
+          <isResponsive>true</isResponsive>
+          <showBoundary>true</showBoundary>
+          <layout type="vertical" />
+          <item id="mainLayout" type="horizontalLayout">
+            <items />
+            <contribution>
+              <item id="widget_0" type="coachView">
+                <coachViewRef>64.db824ed3-93e7-4eb6-a583-56a0a2bf25c0</coachViewRef>
+                <binding>tw.local.progressbarData</binding>
+                <config>
+                  <option name="label">ProgressBar</option>
+                </config>
+                <config>
+                  <option name="label">ProgressBar</option>
+                  <option name="visible">true</option>
+                  <option name="enabled">true</option>
+                </config>
+              </item>
+            </contribution>
+            <contribution>
+              <item id="widget_1" type="coachView">
+                <coachViewRef>64.2563bbd0-609b-47e7-8dd6-cffc53ace388</coachViewRef>
+                <binding>tw.local.dateoutputData</binding>
+                <config>
+                  <option name="label">DateOutput</option>
+                </config>
+                <config>
+                  <option name="label">DateOutput</option>
+                  <option name="visible">true</option>
+                  <option name="enabled">true</option>
+                </config>
+              </item>
+            </contribution>
+          </item>
+          <item id="okButton" type="button">
+            <config>
+              <option name="label">OK</option>
+              <option name="action">submit</option>
+            </config>
+          </item>
+        </coach>
+      </userTask>
+      <endEvent id="EndEvent_9831f1c2-e4af-4073-8b14-392a30de76bc" name="Exit">
+        <incoming />
+      </endEvent>
+      <sequenceFlow id="flow_StartEvent_327ec3d0-1c0d-44ed-96c3-7054499f3fcf_to_FormTask_efe20628-73bd-4ad0-89e8-054df7210198" sourceRef="StartEvent_327ec3d0-1c0d-44ed-96c3-7054499f3fcf" targetRef="FormTask_efe20628-73bd-4ad0-89e8-054df7210198" />
+      <sequenceFlow id="flow_FormTask_efe20628-73bd-4ad0-89e8-054df7210198_to_EndEvent_9831f1c2-e4af-4073-8b14-392a30de76bc" sourceRef="FormTask_efe20628-73bd-4ad0-89e8-054df7210198" targetRef="EndEvent_9831f1c2-e4af-4073-8b14-392a30de76bc" />
+    </definitions>
+  </process>
+</teamworks>

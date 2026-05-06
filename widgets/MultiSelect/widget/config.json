@@ -9,7 +9,8 @@
   "configOptions": [
     {
       "name": "options",
-      "type": "List",
+      "type": "NameValuePair",
+      "isList": true,
       "label": "Options",
       "description": "Array of available options with value and name properties",
       "default": [],

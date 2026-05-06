@@ -1,0 +1,82 @@
+<!--
+ #BEGIN COPYRIGHT 
+ Licensed Materials - Property of IBM
+ 5725-C95
+ (C) Copyright IBM Corporation 2026. All Rights Reserved.
+ #END COPYRIGHT 
+-->
+
+<div class="multi-doc-upload-container" role="region" aria-label="Multi-document upload">
+  <!-- File Input Section -->
+  <div class="upload-section">
+    <div class="file-input-wrapper">
+      <input 
+        type="file" 
+        class="file-input" 
+        id="fileInput" 
+        multiple 
+        accept="*/*"
+        aria-label="Select files to upload"
+      />
+      <label for="fileInput" class="file-input-label">
+        <svg class="upload-icon" width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M7.5 11V3.7L5.7 5.5 5 4.8 8 1.8l3 3-.7.7-1.8-1.8V11h-1z"/>
+          <path d="M13 14H3V7h1v6h8V7h1v7z"/>
+        </svg>
+        <span class="file-input-text">Izaberite dokumente</span>
+        <span class="file-input-hint">ili prevucite ovde</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Documents Table Section -->
+  <div class="documents-table-section">
+    <div class="table-header">
+      <h3 class="table-title">Uploadovani dokumenti</h3>
+      <span class="document-count">0 dokumenata</span>
+    </div>
+    
+    <div class="table-wrapper">
+      <table class="documents-table" role="table">
+        <thead>
+          <tr>
+            <th scope="col" class="col-filename">Naziv fajla</th>
+            <th scope="col" class="col-size">Veličina</th>
+            <th scope="col" class="col-type">Tip dokumenta</th>
+            <th scope="col" class="col-actions">Akcije</th>
+          </tr>
+        </thead>
+        <tbody class="documents-tbody">
+          <!-- Documents will be dynamically added here -->
+        </tbody>
+      </table>
+      
+      <div class="empty-state">
+        <svg class="empty-icon" width="64" height="64" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M9 1H3.5c-.3 0-.5.2-.5.5v13c0 .3.2.5.5.5h9c.3 0 .5-.2.5-.5V5L9 1zm0 1.4L11.6 5H9V2.4zM12 14H4V2h4v3.5c0 .3.2.5.5.5H12v8z"/>
+        </svg>
+        <p class="empty-text">Nema uploadovanih dokumenata</p>
+        <p class="empty-hint">Izaberite fajlove da biste počeli</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload Button Section -->
+  <div class="upload-actions">
+    <button type="button" class="btn-upload" disabled aria-label="Upload documents to local storage">
+      <svg class="btn-icon" width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M9 7h4l-5 5-5-5h4V1h2v6z"/>
+        <path d="M2 14h12v1H2z"/>
+      </svg>
+      <span>Upload u LocalStore</span>
+    </button>
+    <button type="button" class="btn-clear" disabled aria-label="Clear all documents">
+      <svg class="btn-icon" width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M12 4.7L11.3 4 8 7.3 4.7 4 4 4.7 7.3 8 4 11.3l.7.7L8 8.7l3.3 3.3.7-.7L8.7 8z"/>
+      </svg>
+      <span>Obriši sve</span>
+    </button>
+  </div>
+</div>
+
+<!-- Made with Bob -->

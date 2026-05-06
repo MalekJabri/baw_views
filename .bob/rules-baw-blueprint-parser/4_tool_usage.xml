@@ -1,0 +1,91 @@
+<blueprint_parser_tool_usage>
+  <tool_priorities>
+    <priority level="1">
+      <tool>list_files</tool>
+      <when>Use first to inspect the business-blueprints sources, generated artifact areas, and comparable repository locations</when>
+      <why>Folder structure and existing repository patterns should guide generation decisions</why>
+    </priority>
+
+    <priority level="2">
+      <tool>read_file</tool>
+      <when>Use after locating candidate blueprint sources and existing JSON/helper examples</when>
+      <why>Reading source documents together with repository examples reduces schema drift</why>
+    </priority>
+
+    <priority level="3">
+      <tool>search_files</tool>
+      <when>Use to find existing business object generation helpers, import functions, catalog patterns, or comparable JSON structures</when>
+      <why>Repository search helps the mode reuse existing capabilities instead of inventing new formats</why>
+    </priority>
+
+    <priority level="4">
+      <tool>write_to_file</tool>
+      <when>Use for creating new generated JSON artifacts, catalogs, or companion summary files</when>
+      <why>Generation work commonly creates new files rather than editing existing ones</why>
+    </priority>
+
+    <priority level="5">
+      <tool>apply_diff</tool>
+      <when>Use only for targeted updates to existing catalog or related configuration files</when>
+      <why>Precise edits reduce accidental disruption to surrounding configuration or metadata</why>
+    </priority>
+
+    <priority level="6">
+      <tool>execute_command</tool>
+      <when>Use only when a repository-local helper command supports artifact generation or validation</when>
+      <why>Commands can reuse existing automation, but should not blur the mode boundary into packaging or deployment</why>
+    </priority>
+  </tool_priorities>
+
+  <tool_specific_guidance>
+    <tool name="list_files">
+      <best_practices>
+        <practice>Inspect business-blueprints before assuming source document layout</practice>
+        <practice>Inspect comparable output or helper locations before choosing generation paths</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="read_file">
+      <best_practices>
+        <practice>Read source blueprint files together with existing JSON examples and generation helpers whenever possible</practice>
+        <practice>Use focused line ranges for large helper files to keep context efficient</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="search_files">
+      <best_practices>
+        <practice>Search for existing business object import or generation functions before designing output structure</practice>
+        <practice>Search for catalog-related patterns to keep handoff artifacts consistent with later workflows</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="write_to_file">
+      <best_practices>
+        <practice>Use for new JSON artifacts, catalogs, and generation summaries</practice>
+        <practice>Write complete file contents with deterministic structure</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="apply_diff">
+      <best_practices>
+        <practice>Prefer apply_diff when adjusting an existing catalog or configuration file instead of rewriting it fully</practice>
+        <practice>Read the current file first to ensure exact diff matching</practice>
+      </best_practices>
+    </tool>
+
+    <tool name="execute_command">
+      <best_practices>
+        <practice>Use only repository-local helper commands that directly support business object generation or validation</practice>
+        <practice>Do not use packaging or deployment commands in this mode</practice>
+      </best_practices>
+    </tool>
+  </tool_specific_guidance>
+
+  <boundary_rules>
+    <rule>Do not package generated artifacts into TWX outputs in this mode</rule>
+    <rule>Do not deploy generated artifacts to BAW servers in this mode</rule>
+    <rule>When the task shifts to packaging or deployment, hand off to baw-package-manager</rule>
+  </boundary_rules>
+</blueprint_parser_tool_usage>
+
+<!-- Made with Bob -->

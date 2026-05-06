@@ -1,0 +1,52 @@
+{
+  "name": "MultiDocumentUpload",
+  "description": "Widget za upload više dokumenata sa tabelom, selekcijom tipa dokumenta i mogućnošću brisanja pre upload-a u LocalStore",
+  "bindingType": {
+    "name": "Documents",
+    "isList": true,
+    "type": "DocumentItem"
+  },
+  "configOptions": [
+    {
+      "name": "documentTypes",
+      "type": "List",
+      "label": "Tipovi dokumenata",
+      "description": "Lista dostupnih tipova dokumenata za selekciju",
+      "default": [
+        { "value": "invoice", "name": "Faktura" },
+        { "value": "contract", "name": "Ugovor" },
+        { "value": "report", "name": "Izveštaj" },
+        { "value": "other", "name": "Ostalo" }
+      ],
+      "required": true
+    },
+    {
+      "name": "maxFileSize",
+      "type": "Integer",
+      "label": "Maksimalna veličina fajla (MB)",
+      "description": "Maksimalna dozvoljena veličina fajla u megabajtima",
+      "default": 10
+    },
+    {
+      "name": "allowedExtensions",
+      "type": "List",
+      "label": "Dozvoljene ekstenzije",
+      "description": "Lista dozvoljenih ekstenzija fajlova (prazno = sve dozvoljeno)",
+      "default": []
+    },
+    {
+      "name": "maxFiles",
+      "type": "Integer",
+      "label": "Maksimalan broj fajlova",
+      "description": "Maksimalan broj fajlova koji mogu biti uploadovani (null = bez limita)",
+      "default": null
+    }
+  ],
+  "businessObjects": [
+    {
+      "name": "DocumentItem",
+      "file": "DocumentItem.json"
+    }
+  ],
+  "changeFunction": true
+}

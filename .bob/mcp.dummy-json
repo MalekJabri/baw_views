@@ -1,23 +1,21 @@
 {
     "mcpServers": {
         "baw-admin": {
-            "command": "uvx",
+           "command": "npx",
             "args": [
-                "--from",
-                "git+https://github.com/MalekJabri/baw-admin-mcp-server",
+                "-y",
+                "github:MalekJabri/baw-admin-mcp-server-standalone",
                 "baw-admin-mcp-server"
             ],
             "env": {
-                "MCP_TRANSPORT": "stdio",
                 "BAW_BASE_URL": "https://server/bas/ops",
                 "BAW_USERNAME": "user",
                 "BAW_PASSWORD": "pasword",
-                "LOG_LEVEL": "INFO"
+                 "BAW_REJECT_UNAUTHORIZED": "false"
             },
             "alwaysAllow": [
-                "get_container",
-                "count_containers",
-                "check_orphaned_containers"
+                "get_install_status",
+                "login"
             ]
         }
     }

@@ -1,5 +1,5 @@
 """
-Scanner module for discovering and validating widgets.
+Scanner module for discovering and validating widgets and business objects.
 """
 
 from .widget_scanner import (
@@ -19,8 +19,22 @@ from .validator import (
     get_validation_summary,
 )
 
+from .business_object_scanner import (
+    BusinessObject,
+    scan_business_objects,
+    get_business_object_by_name,
+    load_custom_types_registry,
+    save_custom_types_registry,
+    register_business_object,
+    get_or_create_class_id,
+    build_dependency_graph,
+    get_processing_order,
+    list_business_object_names,
+    count_business_objects,
+)
+
 __all__ = [
-    # Scanner
+    # Widget Scanner
     'scan_project',
     'is_widget_directory',
     'get_widget_files',
@@ -33,6 +47,18 @@ __all__ = [
     'validate_widgets',
     'check_required_files',
     'get_validation_summary',
+    # Business Object Scanner
+    'BusinessObject',
+    'scan_business_objects',
+    'get_business_object_by_name',
+    'load_custom_types_registry',
+    'save_custom_types_registry',
+    'register_business_object',
+    'get_or_create_class_id',
+    'build_dependency_graph',
+    'get_processing_order',
+    'list_business_object_names',
+    'count_business_objects',
 ]
 
 # Made with Bob

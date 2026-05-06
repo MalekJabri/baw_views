@@ -1,10 +1,12 @@
-/* Stepper Widget Styles - Carbon Design System Inspired - Vertical Layout Only */
+/* Stepper Widget Styles - Carbon Design System - Vertical Layout Only */
+/* Colors and typography aligned with themes/Carbon.less */
 
 .stepper_maincontentbox {
 	width: 100%;
 	min-height: 80px;
 	overflow: hidden;
 	padding: 1rem 0;
+	font-family: 'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* @bpm-font-family-sans-serif */
 }
 
 .stepper_maincontentbox .stepper-container {
@@ -38,12 +40,12 @@
 	left: 16px;
 	width: 2px;
 	height: calc(100% - 32px);
-	background-color: #e0e0e0;
+	background-color: #e0e0e0; /* Gray 20 */
 	z-index: 0;
 }
 
 .stepper_maincontentbox .stepper-container .stepper-list .stepper-item.completed:not(:last-child)::after {
-	background-color: #0f62fe;
+	background-color: #0f62fe; /* @bpm-color-primary */
 }
 
 /* Step Circle Container */
@@ -54,50 +56,50 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #ffffff;
-	border: 2px solid #e0e0e0;
+	background-color: #ffffff; /* @bpm-body-bg */
+	border: 2px solid #e0e0e0; /* Gray 20 */
 	position: relative;
 	z-index: 1;
 	transition: all 0.3s ease;
-	font-size: 0.875rem;
-	font-weight: 600;
-	color: #525252;
+	font-size: 12px; /* @bpm-font-size-small */
+	font-weight: 600; /* @bpm-font-weight-semibold */
+	color: #525252; /* Gray 70 */
 }
 
 /* Step Circle - Completed */
 .stepper_maincontentbox .stepper-container .stepper-list .stepper-item.completed .step-circle {
-	background-color: #0f62fe;
-	border-color: #0f62fe;
-	color: #ffffff;
+	background-color: #0f62fe; /* @bpm-color-primary */
+	border-color: #0f62fe; /* @bpm-color-primary */
+	color: #ffffff; /* @bpm-text-alternate-color */
 }
 
 /* Step Circle - Current/Active */
 .stepper_maincontentbox .stepper-container .stepper-list .stepper-item.current .step-circle {
-	border-color: #0f62fe;
+	border-color: #0f62fe; /* @bpm-color-primary */
 	border-width: 3px;
-	color: #0f62fe;
+	color: #0f62fe; /* @bpm-color-primary */
 	box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.1);
 }
 
 /* Step Circle - Error */
 .stepper_maincontentbox .stepper-container .stepper-list .stepper-item.error .step-circle {
-	background-color: #da1e28;
-	border-color: #da1e28;
-	color: #ffffff;
+	background-color: #da1e28; /* @bpm-color-alert */
+	border-color: #da1e28; /* @bpm-color-alert */
+	color: #ffffff; /* @bpm-text-alternate-color */
 }
 
 /* Step Circle - Warning */
 .stepper_maincontentbox .stepper-container .stepper-list .stepper-item.warning .step-circle {
-	background-color: #f1c21b;
+	background-color: #f1c21b; /* Warning yellow 50 */
 	border-color: #f1c21b;
-	color: #161616;
+	color: #161616; /* @bpm-text-color */
 }
 
 /* Step Circle - Disabled */
 .stepper_maincontentbox .stepper-container .stepper-list .stepper-item.disabled .step-circle {
-	background-color: #f4f4f4;
-	border-color: #c6c6c6;
-	color: #c6c6c6;
+	background-color: #f4f4f4; /* Gray 10 */
+	border-color: #c6c6c6; /* @bpm-link-text-color-disabled */
+	color: #c6c6c6; /* @bpm-link-text-color-disabled */
 	cursor: not-allowed;
 }
 
@@ -113,24 +115,24 @@
 	margin-top: 0;
 	margin-left: 1rem;
 	text-align: left;
-	font-size: 0.875rem;
-	color: #525252;
-	font-weight: 400;
+	font-size: 12px; /* @bpm-font-size-small */
+	color: #525252; /* Gray 70 */
+	font-weight: 400; /* @bpm-font-weight-normal */
 	max-width: none;
 	word-wrap: break-word;
 }
 
 .stepper_maincontentbox .stepper-container .stepper-list .stepper-item.current .step-label {
-	color: #161616;
-	font-weight: 600;
+	color: #161616; /* @bpm-text-color */
+	font-weight: 600; /* @bpm-font-weight-semibold */
 }
 
 .stepper_maincontentbox .stepper-container .stepper-list .stepper-item.completed .step-label {
-	color: #161616;
+	color: #161616; /* @bpm-text-color */
 }
 
 .stepper_maincontentbox .stepper-container .stepper-list .stepper-item.disabled .step-label {
-	color: #c6c6c6;
+	color: #c6c6c6; /* @bpm-link-text-color-disabled */
 }
 
 /* Step Description */
@@ -138,8 +140,8 @@
 	margin-top: 0.25rem;
 	margin-left: 1rem;
 	text-align: left;
-	font-size: 0.75rem;
-	color: #8d8d8d;
+	font-size: 10px; /* @bpm-font-size-xsmall */
+	color: #8d8d8d; /* Gray 50 */
 	max-width: none;
 	word-wrap: break-word;
 }
@@ -155,7 +157,7 @@
 }
 
 .stepper_maincontentbox .stepper-container .stepper-list .stepper-item.clickable:hover .step-label {
-	color: #0f62fe;
+	color: #0f62fe; /* @bpm-color-primary */
 }
 
 /* Status Icons */
@@ -189,17 +191,17 @@
 /* Responsive Design */
 @media (max-width: 672px) {
 	.stepper_maincontentbox .stepper-container .stepper-list .stepper-item .step-label {
-		font-size: 0.75rem;
+		font-size: 10px; /* @bpm-font-size-xsmall */
 	}
 	
 	.stepper_maincontentbox .stepper-container .stepper-list .stepper-item .step-description {
-		font-size: 0.625rem;
+		font-size: 10px; /* @bpm-font-size-xsmall */
 	}
 	
 	.stepper_maincontentbox .stepper-container .stepper-list .stepper-item .step-circle {
 		width: 28px;
 		height: 28px;
-		font-size: 0.75rem;
+		font-size: 10px; /* @bpm-font-size-xsmall */
 	}
 }
 

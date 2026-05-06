@@ -3,6 +3,8 @@ Business Object XML Generator for BAW Toolkit Packager.
 Generates XML for Business Objects (12.xxx.xml).
 """
 
+import json
+from pathlib import Path
 from typing import Dict, Optional
 from datetime import datetime
 
@@ -14,6 +16,33 @@ from ..utils.custom_type_registry import get_custom_type_registry
 
 logger = get_logger(__name__)
 
+# Load BAW type mappings from configuration file
+_TYPE_MAPPINGS = None
+
+def load_type_mappings() -> Dict[str, str]:
+    """Load BAW type mappings from JSON configuration file."""
+    global _TYPE_MAPPINGS
+    if _TYPE_MAPPINGS is None:
+        mappings_file = Path(__file__).parent.parent / 'baw_type_mappings.json'
+        try:
+            with open(mappings_file, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+                # Combine mappings and aliases into a single lookup dict
+                _TYPE_MAPPINGS = {}
+                # Add direct mappings
+                for type_name, class_id in config['mappings'].items():
+                    _TYPE_MAPPINGS[type_name.lower()] = class_id
+                    _TYPE_MAPPINGS[type_name] = class_id
+                # Add aliases
+                for alias, target in config['aliases'].items():
+                    if target in config['mappings']:
+                        _TYPE_MAPPINGS[alias] = config['mappings'][target]
+                logger.info(f"Loaded {len(_TYPE_MAPPINGS)} BAW type mappings from configuration")
+        except Exception as e:
+            logger.warning(f"Failed to load BAW type mappings: {e}. Using defaults.")
+            _TYPE_MAPPINGS = {}
+    return _TYPE_MAPPINGS
+
 
 class BusinessObjectGenerator(BaseGenerator):
     """
@@ -21,18 +50,22 @@ class BusinessObjectGenerator(BaseGenerator):
     Creates business object definitions from JSON specifications.
     """
     
-    def __init__(self, widget: Widget, object_ids: Dict[str, str], bo_definition: dict):
+    def __init__(self, widget: Optional[Widget], object_ids: Dict[str, str], bo_definition: dict):
         """
         Initialize business object generator.
         
         Args:
-            widget: Widget containing the business object
+            widget: Widget containing the business object (None for standalone business objects)
             object_ids: Dictionary of object IDs
             bo_definition: Business object definition from JSON
         """
         super().__init__(widget, object_ids)
         self.bo_definition = bo_definition
-        self.bo_name = bo_definition.get('name', 'BusinessObject')
+        # Get business object name:
+        # 1. First try 'name' field (used by standalone BOs and some widget BOs)
+        # 2. Then try 'type' field (used by widget BOs like ProgressData, TaskItem)
+        # 3. Fall back to 'BusinessObject' if neither exists
+        self.bo_name = bo_definition.get('name') or bo_definition.get('type', 'BusinessObject')
     
     def generate(self) -> TWXObject:
         """
@@ -46,6 +79,8 @@ class BusinessObjectGenerator(BaseGenerator):
         registry = get_custom_type_registry()
         existing_class_id = registry.get_type(self.bo_name)
         
+        widget_name = self.widget.name if self.widget else "standalone"
+        
         if existing_class_id:
             # Reuse existing class ID
             bo_id = existing_class_id.lstrip('/')  # Remove leading / if present
@@ -54,7 +89,7 @@ class BusinessObjectGenerator(BaseGenerator):
             registry.register_type(
                 self.bo_name,
                 existing_class_id,
-                self.widget.name,
+                widget_name,
                 self.bo_definition.get('description', '')
             )
         else:
@@ -64,7 +99,7 @@ class BusinessObjectGenerator(BaseGenerator):
             registry.register_type(
                 self.bo_name,
                 class_id_with_slash,
-                self.widget.name,
+                widget_name,
                 self.bo_definition.get('description', '')
             )
             logger.info(f"Created new business object '{self.bo_name}' with ID: {bo_id}")
@@ -279,22 +314,38 @@ class BusinessObjectGenerator(BaseGenerator):
     def get_class_ref_for_type(self, prop_type: str) -> str:
         """
         Get BAW class reference for a property type.
+        Uses centralized type mappings from baw_type_mappings.json.
+        Handles primitive types, arrays, and custom business object references.
         
         Args:
-            prop_type: Property type (String, Integer, Boolean, etc.)
+            prop_type: Property type (String, Integer, Boolean, Date, Decimal, CustomType, CustomType[], etc.)
             
         Returns:
             Class reference string
         """
-        type_mapping = {
-            'String': '0594de47-b0cd-452b-a221-95dc16247e72/12.db884a3c-c533-44b7-bb2d-47bec8ad4022',
-            'Integer': '0594de47-b0cd-452b-a221-95dc16247e72/12.3fa0d7a0-828a-4d60-99cc-db5ed143fc2d',
-            'Boolean': '0594de47-b0cd-452b-a221-95dc16247e72/12.83ff975e-8dbc-42e5-b738-fa8bc08274a2',
-            'Decimal': '0594de47-b0cd-452b-a221-95dc16247e72/12.c0e8e1c5-c2f5-4c3e-b4e5-5e5e5e5e5e5e',
-            'Date': '0594de47-b0cd-452b-a221-95dc16247e72/12.d0e8e1c5-c2f5-4c3e-b4e5-5e5e5e5e5e5e',
-        }
+        type_mappings = load_type_mappings()
+        registry = get_custom_type_registry()
         
-        return type_mapping.get(prop_type, type_mapping['String'])
+        # Check if it's an array type (ends with [])
+        is_array = prop_type.endswith('[]')
+        base_type = prop_type[:-2] if is_array else prop_type
+        
+        # Try to find in primitive type mappings first
+        class_id = type_mappings.get(base_type) or type_mappings.get(base_type.lower())
+        
+        # If not found in primitives, check if it's a custom business object
+        if not class_id:
+            custom_type_id = registry.get_type(base_type)
+            if custom_type_id:
+                # Custom business object reference - use the registered class ID
+                class_id = custom_type_id.lstrip('/')
+                logger.debug(f"Using custom business object reference for type '{base_type}': {class_id}")
+            else:
+                # Unknown type - default to String
+                logger.warning(f"Unknown type '{prop_type}' for business object property, defaulting to String")
+                class_id = type_mappings.get('String', '0594de47-b0cd-452b-a221-95dc16247e72/12.db884a3c-c533-44b7-bb2d-47bec8ad4022')
+        
+        return class_id
 
 
 # Made with Bob

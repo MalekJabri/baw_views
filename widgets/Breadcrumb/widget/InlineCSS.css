@@ -1,9 +1,11 @@
-/* Breadcrumb Widget Styles - Aligned with Advance Preview */
+/* Breadcrumb Widget Styles - Carbon Design System */
+/* Colors and typography aligned with themes/Carbon.less */
 
 .breadcrumb_maincontentbox {
 	width: 100%;
 	min-height: 35px;
 	overflow: hidden;
+	font-family: 'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* @bpm-font-family-sans-serif */
 }
 
 .breadcrumb_maincontentbox .breadcrumb-nav{
@@ -17,21 +19,21 @@
 }
 
 .breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item{
-	border-top: 2px solid #e0e0e0;
+	border-top: 2px solid #e0e0e0; /* Gray 20 */
 	width: 25%;
 }
 
 /* Status-based border colors - JavaScript adds these classes */
 .breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item.completed{
-	border-top-color: #0f62fe;
+	border-top-color: #0f62fe; /* @bpm-color-primary */
 }
 
 .breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item.working{
-	border-top-color: #0f62fe;
+	border-top-color: #0f62fe; /* @bpm-color-primary */
 }
 
 .breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item.current{
-	border-top-color: #0f62fe;
+	border-top-color: #0f62fe; /* @bpm-color-primary */
 }
 
 .breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item .breadcrumb-link{
@@ -39,19 +41,20 @@
 	display: flex;
 	align-items: center;
 	text-decoration: none;
-	color: #0f62fe;
+	color: #0f62fe; /* @bpm-link-text-color */
 	outline: 2px solid transparent;
 	outline-offset: -2px;
 	transition: color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+	font-size: 14px; /* @bpm-font-size-base */
 }
 
 .breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item .breadcrumb-link:hover {
-	color: #0043ce;
+	color: #0043ce; /* @bpm-link-text-color-hover */
 	text-decoration: underline;
 }
 
 .breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item .breadcrumb-link:focus {
-	outline: 2px solid #0f62fe;
+	outline: 2px solid #0f62fe; /* @bpm-link-text-color */
 	outline-offset: 2px;
 }
 
@@ -60,12 +63,13 @@
 }
 
 .breadcrumb_maincontentbox .breadcrumb-nav .breadcrumb-list .breadcrumb-item.current .breadcrumb-link {
-	color: #161616;
+	color: #161616; /* @bpm-text-color */
 	cursor: default;
 	pointer-events: none;
-	font-weight: 600;
+	font-weight: 600; /* @bpm-font-weight-semibold */
 }
 
+/* Status Icons */
 .breadcrumb_completed{
 	background-image:url("data:image/svg+xml;utf8,%3Csvg%20id%3D%22icon%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%20%20.cls-1%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20none%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%3C%2Fstyle%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%2214%2021.414%209%2016.413%2010.413%2015%2014%2018.586%2021.585%2011%2023%2012.415%2014%2021.414%22%20style%3D%22fill%3A%231446c6%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M16%2C2A14%2C14%2C0%2C1%2C0%2C30%2C16%2C14%2C14%2C0%2C0%2C0%2C16%2C2Zm0%2C26A12%2C12%2C0%2C1%2C1%2C28%2C16%2C12%2C12%2C0%2C0%2C1%2C16%2C28Z%22%20style%3D%22fill%3A%231446c6%22%2F%3E%0A%20%20%3Crect%20id%3D%22_Transparent_Rectangle_%22%20data-name%3D%22%26lt%3BTransparent%20Rectangle%26gt%3B%22%20class%3D%22cls-1%22%20width%3D%2232%22%20height%3D%2232%22%2F%3E%0A%3C%2Fsvg%3E");
 	width: 24px;
@@ -88,6 +92,7 @@
 	margin-right: 8px;
 	animation: spin 1s linear infinite;
 }
+
 @keyframes spin {
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
@@ -103,6 +108,7 @@
 	background-position: center;
 	margin-right: 8px;
 }
+
 /* Alias classes for different status naming conventions */
 .breadcrumb_inprogress,
 .breadcrumb_in-progress {
@@ -129,7 +135,5 @@
 	background-position: center;
 	margin-right: 8px;
 }
-
-
 
 /* Made with Bob */

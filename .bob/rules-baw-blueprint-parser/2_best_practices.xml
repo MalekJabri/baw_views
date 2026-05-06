@@ -1,0 +1,125 @@
+<blueprint_parser_best_practices>
+  <general_principles>
+    <principle priority="high">
+      <name>Source-first interpretation</name>
+      <description>
+        Treat documents under business-blueprints as the business source of truth
+        for generation tasks in this mode.
+      </description>
+      <rationale>
+        The quality of generated business objects depends on preserving the business
+        meaning found in source documents before translating them into JSON.
+      </rationale>
+    </principle>
+
+    <principle priority="high">
+      <name>Repository-aligned generation</name>
+      <description>
+        Reuse existing repository conventions, helpers, and known artifact shapes
+        whenever possible.
+      </description>
+      <rationale>
+        This prevents incompatible output structures and keeps the mode aligned
+        with downstream toolkit packaging workflows.
+      </rationale>
+    </principle>
+
+    <principle priority="high">
+      <name>Normalization before emission</name>
+      <description>
+        Build an internal structured understanding of business objects before
+        generating files.
+      </description>
+      <rationale>
+        Direct file generation from unstructured text increases duplication,
+        inconsistency, and type mismatches.
+      </rationale>
+    </principle>
+  </general_principles>
+
+  <naming_and_structure>
+    <guideline>
+      <rule>Use user-provided business context to group outputs in the standard business-objects structure</rule>
+      <good_example>Generate related business objects into business-objects/generated/[context]/ with matching entries in business-objects/catalog/[context].catalog.json</good_example>
+      <bad_example>Scatter generated objects across unrelated directories</bad_example>
+    </guideline>
+
+    <guideline>
+      <rule>Use stable, predictable object naming</rule>
+      <good_example>Use singular PascalCase names for business object files when repository examples support that convention</good_example>
+      <bad_example>Mix plural, lowercase, and ad hoc file names for similar object types</bad_example>
+    </guideline>
+
+    <guideline>
+      <rule>Keep generated catalogs deterministic and aligned with the fixed catalog locations</rule>
+      <good_example>Use a predictable ordering of generated artifacts inside business-objects/catalog/[context].catalog.json and business-objects/catalog/master.catalog.json</good_example>
+      <bad_example>Emit catalogs with unstable ordering or inconsistent references</bad_example>
+    </guideline>
+  </naming_and_structure>
+
+  <analysis_guidelines>
+    <guideline>
+      <rule>Separate entities, value lists, and references explicitly</rule>
+      <rationale>
+        Documents often describe reusable values, embedded structures, and linked
+        entities in the same paragraph. These should not automatically become the
+        same kind of artifact.
+      </rationale>
+    </guideline>
+
+    <guideline>
+      <rule>Capture ambiguity instead of hiding it</rule>
+      <rationale>
+        If a field type, required status, or relationship is unclear, record the
+        assumption or surface the ambiguity rather than silently inventing a model.
+      </rationale>
+    </guideline>
+
+    <guideline>
+      <rule>Prefer consistency over overly clever inference</rule>
+      <rationale>
+        Repeated, deterministic mappings are more valuable than speculative model
+        generation that may be difficult to package or maintain later.
+      </rationale>
+    </guideline>
+  </analysis_guidelines>
+
+  <mode_boundaries>
+    <boundary>
+      <rule>Do not package generated business object artifacts in this mode</rule>
+      <reason>Packaging belongs to the dedicated packaging workflow</reason>
+    </boundary>
+    <boundary>
+      <rule>Do not deploy generated artifacts to BAW servers in this mode</rule>
+      <reason>Deployment belongs to packaging and deployment workflows</reason>
+    </boundary>
+    <boundary>
+      <rule>Do not create unrelated widget or coach implementations unless explicitly requested in another mode</rule>
+      <reason>This mode is dedicated to document-to-business-object generation work</reason>
+    </boundary>
+  </mode_boundaries>
+
+  <quality_checklist>
+    <category name="before_generation">
+      <item>Read the blueprint sources and relevant existing repository patterns</item>
+      <item>Identify the intended business context and grouping</item>
+      <item>Determine whether repository helpers already imply the target JSON shape</item>
+    </category>
+
+    <category name="during_generation">
+      <item>Normalize names, fields, and references before writing artifacts</item>
+      <item>Write generated objects under business-objects/generated/[context]/</item>
+      <item>Write context and master catalogs under business-objects/catalog/</item>
+      <item>Write parse reports under business-objects/reports/ when needed</item>
+      <item>Record assumptions when document meaning is incomplete</item>
+    </category>
+
+    <category name="before_completion">
+      <item>Confirm generated outputs align with repository conventions</item>
+      <item>Confirm catalogs are suitable for later packaging workflows</item>
+      <item>Keep packaging and deployment work out of scope</item>
+    </category>
+  </quality_checklist>
+</blueprint_parser_best_practices>
+
+<!-- Made with Bob -->

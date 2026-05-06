@@ -1,11 +1,14 @@
 <examples>
-  <example name="package_selected_widgets">
-    <description>Package one or more widgets into a TWX artifact</description>
-    <context>Use when the widget set is already implemented and the goal is artifact generation</context>
+  <example name="package_baw_artifacts">
+    <description>Package widgets, business objects, and coaches into a TWX artifact</description>
+    <context>Use when artifacts are ready and the goal is TWX generation</context>
     <steps>
       <step>Inspect the widgets requested for packaging</step>
-      <step>Review the packaging configuration that selects widgets</step>
-      <step>Run the packaging workflow and report the generated artifact</step>
+      <step>Check for standalone business objects in business-objects/generated/</step>
+      <step>Check for coaches in coaches/</step>
+      <step>Review the packaging configuration in package_baw.py</step>
+      <step>Run python package_baw.py and report the generated artifact</step>
+      <step>Confirm all artifact types (widgets, business objects, coaches) are included</step>
     </steps>
   </example>
 
@@ -21,10 +24,12 @@
 
   <example name="validate_before_packaging">
     <description>Perform a lightweight readiness review before running the build</description>
-    <context>Use when newly created or modified widgets are about to be packaged</context>
+    <context>Use when newly created or modified artifacts are about to be packaged</context>
     <steps>
       <step>Inspect the target widgets and metadata files</step>
-      <step>Confirm the packaging configuration aligns with the requested widget set</step>
+      <step>Check business objects in business-objects/generated/ for valid JSON structure</step>
+      <step>Check coaches in coaches/ for valid XML structure</step>
+      <step>Confirm the packaging configuration in package_baw.py aligns with available widgets</step>
       <step>Proceed to packaging only if there are no obvious blockers</step>
     </steps>
   </example>

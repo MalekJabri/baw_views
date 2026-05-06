@@ -24,11 +24,13 @@
     </step>
 
     <step number="3">
-      <action>Detect new widgets automatically</action>
+      <action>Detect new widgets and business objects automatically</action>
       <details>
         When packaging is requested, scan the widgets directory to identify any new widgets
-        that are not yet in the package_multiple_widgets.py WIDGET_NAMES list. Automatically
-        add them to ensure all widgets are included in the package.
+        that are not yet in the package_baw.py WIDGET_NAMES list. Also scan the
+        business-objects/generated directory for standalone business objects. Automatically
+        add new widgets to ensure all artifacts are included in the package. Business objects
+        are automatically included by the TWXBuilder without configuration changes.
       </details>
     </step>
 
@@ -43,30 +45,56 @@
 
   <main_workflow>
     <phase name="analysis">
-      <description>Analyze packaging readiness and detect new widgets</description>
+      <description>Analyze packaging readiness and detect new widgets and business objects</description>
       <steps>
         <step>Scan the widgets directory to identify all available widgets</step>
-        <step>Compare with the current WIDGET_NAMES list in package_multiple_widgets.py</step>
+        <step>Compare with the current WIDGET_NAMES list in package_baw.py</step>
         <step>Identify any new widgets that need to be added to the packaging configuration</step>
+        <step>Scan the business-objects/generated directory to identify all business objects</step>
+        <step>Note: Business objects are automatically included by TWXBuilder - no configuration needed</step>
         <step>Validate that all widgets appear structurally ready for packaging</step>
+        <step>Validate that all business objects have proper JSON structure</step>
       </steps>
+    </phase>
+
+    <phase name="business_object_registration">
+      <description>Register business objects with class IDs before packaging</description>
+      <steps>
+        <step>Check if business-objects/generated directory exists and contains business objects</step>
+        <step>If business objects are found, run the registration process</step>
+        <step>Execute: python3 register_business_objects.py</step>
+        <step>Verify that all business objects are registered in toolkit_packager/baw_custom_types.json</step>
+        <step>Confirm that class IDs are stable and deterministic</step>
+        <step>Note: Circular dependencies warning is normal and expected for complex business models</step>
+      </steps>
+      <important>
+        This step ensures all business objects have unique BAW class IDs before packaging.
+        The registration is idempotent - running multiple times will reuse existing class IDs.
+        Business objects without registered class IDs cannot be properly packaged into TWX files.
+      </important>
     </phase>
 
     <phase name="configuration_update">
       <description>Update packaging configuration with new widgets</description>
       <steps>
-        <step>If new widgets are detected, update package_multiple_widgets.py WIDGET_NAMES list</step>
+        <step>If new widgets are detected, update package_baw.py WIDGET_NAMES list</step>
         <step>Add new widgets in alphabetical order for consistency</step>
         <step>Confirm the update was successful</step>
+        <step>Note: Business objects require no configuration - they are auto-detected</step>
       </steps>
     </phase>
 
     <phase name="packaging">
       <description>Run the packaging workflow</description>
       <steps>
-        <step>Execute package_multiple_widgets.py to generate the TWX artifact</step>
+        <step>Execute package_baw.py to generate the TWX artifact</step>
+        <step>The packager automatically includes all artifacts:</step>
+        <step>  - Custom widgets from widgets/</step>
+        <step>  - Standalone business objects from business-objects/generated/</step>
+        <step>  - Coaches from coaches/</step>
         <step>Capture the resulting output path and artifact summary</step>
         <step>Verify the package was created successfully</step>
+        <step>Confirm that all artifact types are included in the TWX</step>
       </steps>
     </phase>
 
@@ -90,26 +118,35 @@
     </phase>
   </main_workflow>
 
-  <automatic_widget_detection>
+  <automatic_artifact_detection>
     <description>
-      When packaging is requested, automatically detect and include new widgets
+      When packaging is requested, automatically detect and include new widgets and business objects
     </description>
-    <steps>
+    <widget_detection>
       <step>List all directories in the widgets folder</step>
       <step>For each directory, check if it contains a widget/config.json file</step>
-      <step>Compare the list of valid widgets with WIDGET_NAMES in package_multiple_widgets.py</step>
+      <step>Compare the list of valid widgets with WIDGET_NAMES in package_baw.py</step>
       <step>Add any missing widgets to WIDGET_NAMES in alphabetical order</step>
       <step>Inform the user about newly detected widgets being added</step>
-    </steps>
-  </automatic_widget_detection>
+    </widget_detection>
+    <business_object_detection>
+      <step>Business objects are automatically detected by TWXBuilder</step>
+      <step>TWXBuilder scans business-objects/generated/ for all JSON files</step>
+      <step>Business objects are processed in dependency order</step>
+      <step>No configuration changes needed - detection is automatic</step>
+      <step>The packaging log will show all detected business objects</step>
+    </business_object_detection>
+  </automatic_artifact_detection>
 
   <completion_criteria>
     <criterion>All available widgets are detected and included in packaging configuration</criterion>
+    <criterion>All standalone business objects are automatically detected and included</criterion>
+    <criterion>All coaches are automatically detected and included</criterion>
     <criterion>The packaging workflow completes successfully</criterion>
     <criterion>Output artifacts are clearly reported with file location and size</criterion>
     <criterion>Deployment option is offered after successful packaging</criterion>
     <criterion>If deployment is performed, status is tracked and reported</criterion>
-    <criterion>Widget-authoring work is not mixed into the packaging workflow</criterion>
+    <criterion>Implementation work is not mixed into the packaging workflow</criterion>
   </completion_criteria>
 </workflow_instructions>
 

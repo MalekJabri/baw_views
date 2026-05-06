@@ -1,0 +1,533 @@
+/* MultiDocumentUpload Widget - IBM Carbon Design System Styling */
+
+.multi-doc-upload-container {
+  width: 100%;
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Upload Section */
+.upload-section {
+  width: 100%;
+}
+
+.file-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.file-input {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.file-input-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  padding: 2rem;
+  background: linear-gradient(to bottom, #ffffff 0%, #f8f8f8 100%);
+  border: 2px dashed #d0d0d0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 0.75rem;
+}
+
+.file-input-label:hover {
+  background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
+  border-color: #0f62fe;
+  box-shadow: 0 4px 12px rgba(15, 98, 254, 0.1);
+}
+
+.file-input:focus + .file-input-label {
+  border-color: #0f62fe;
+  border-width: 3px;
+  box-shadow: 0 0 0 3px rgba(15, 98, 254, 0.1);
+}
+
+.file-input-label.drag-over {
+  background: linear-gradient(135deg, rgba(15, 98, 254, 0.05) 0%, rgba(15, 98, 254, 0.1) 100%);
+  border-color: #0f62fe;
+  border-width: 3px;
+  transform: scale(1.02);
+}
+
+.upload-icon {
+  width: 48px;
+  height: 48px;
+  color: #0f62fe;
+  transition: transform 0.3s ease;
+}
+
+.file-input-label:hover .upload-icon {
+  transform: translateY(-4px);
+}
+
+.file-input-text {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #161616;
+}
+
+.file-input-hint {
+  font-size: 0.875rem;
+  color: #6f6f6f;
+}
+
+/* Documents Table Section */
+.documents-table-section {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(to bottom, #f8f8f8 0%, #f0f0f0 100%);
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #161616;
+}
+
+.document-count {
+  font-size: 0.875rem;
+  color: #6f6f6f;
+  padding: 0.25rem 0.75rem;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+.table-wrapper {
+  position: relative;
+  min-height: 200px;
+}
+
+.documents-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+.documents-table thead {
+  background: #f4f4f4;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.documents-table th {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #161616;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.documents-table tbody tr {
+  border-bottom: 1px solid #e8e8e8;
+  transition: background-color 0.2s ease;
+}
+
+.documents-table tbody tr:hover {
+  background: linear-gradient(to right, rgba(15, 98, 254, 0.03) 0%, rgba(15, 98, 254, 0.01) 100%);
+}
+
+.documents-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.documents-table td {
+  padding: 1rem;
+  font-size: 0.9375rem;
+  color: #161616;
+  vertical-align: middle;
+}
+
+.col-filename {
+  width: 40%;
+}
+
+.col-size {
+  width: 15%;
+}
+
+.col-type {
+  width: 30%;
+}
+
+.col-actions {
+  width: 15%;
+  text-align: center;
+}
+
+/* File Info */
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.file-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+  border-radius: 6px;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.file-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.file-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.file-name {
+  font-weight: 500;
+  color: #161616;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-extension {
+  font-size: 0.75rem;
+  color: #6f6f6f;
+  text-transform: uppercase;
+}
+
+.file-size {
+  color: #6f6f6f;
+  font-size: 0.875rem;
+}
+
+/* Document Type Select */
+.doc-type-select {
+  width: 100%;
+  height: 40px;
+  padding: 0 2.5rem 0 0.75rem;
+  background: #f8f8f8;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  font-size: 0.9375rem;
+  color: #161616;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%230f62fe' d='M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px;
+}
+
+.doc-type-select:hover {
+  background-color: #f0f0f0;
+  border-color: #0f62fe;
+}
+
+.doc-type-select:focus {
+  background-color: #ffffff;
+  border-color: #0f62fe;
+  border-width: 2px;
+  padding: 0 calc(2.5rem - 1px) 0 calc(0.75rem - 1px);
+  box-shadow: 0 0 0 3px rgba(15, 98, 254, 0.1);
+  outline: none;
+}
+
+.doc-type-select option {
+  padding: 0.5rem;
+}
+
+/* Action Buttons in Table */
+.btn-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  color: #da1e28;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+  background: #fff1f1;
+  border-color: #da1e28;
+  transform: scale(1.1);
+}
+
+.btn-delete:active {
+  transform: scale(0.95);
+}
+
+.btn-delete svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  gap: 0.75rem;
+}
+
+.documents-table-section.has-documents .empty-state {
+  display: none;
+}
+
+.documents-table-section:not(.has-documents) .documents-table {
+  display: none;
+}
+
+.empty-icon {
+  width: 64px;
+  height: 64px;
+  color: #c6c6c6;
+  margin-bottom: 0.5rem;
+}
+
+.empty-text {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #161616;
+}
+
+.empty-hint {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6f6f6f;
+}
+
+/* Upload Actions */
+.upload-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 0.5rem;
+}
+
+.btn-upload,
+.btn-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 48px;
+  padding: 0 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-upload {
+  background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+  color: #ffffff;
+}
+
+.btn-upload:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0353e9 0%, #002d9c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(15, 98, 254, 0.3);
+}
+
+.btn-upload:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(15, 98, 254, 0.2);
+}
+
+.btn-clear {
+  background: #ffffff;
+  color: #da1e28;
+  border: 1px solid #da1e28;
+}
+
+.btn-clear:hover:not(:disabled) {
+  background: #fff1f1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(218, 30, 40, 0.2);
+}
+
+.btn-clear:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(218, 30, 40, 0.1);
+}
+
+.btn-upload:disabled,
+.btn-clear:disabled {
+  background: #e0e0e0;
+  color: #8d8d8d;
+  border-color: #e0e0e0;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .documents-table {
+    font-size: 0.875rem;
+  }
+  
+  .documents-table th,
+  .documents-table td {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .col-filename {
+    width: 35%;
+  }
+  
+  .col-size {
+    width: 20%;
+  }
+  
+  .col-type {
+    width: 30%;
+  }
+  
+  .col-actions {
+    width: 15%;
+  }
+  
+  .upload-actions {
+    flex-direction: column;
+  }
+  
+  .btn-upload,
+  .btn-clear {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .file-input-label {
+    min-height: 140px;
+    padding: 1.5rem;
+  }
+  
+  .upload-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .file-input-text {
+    font-size: 1rem;
+  }
+  
+  .documents-table th {
+    font-size: 0.75rem;
+    padding: 0.625rem 0.375rem;
+  }
+  
+  .documents-table td {
+    font-size: 0.8125rem;
+    padding: 0.75rem 0.375rem;
+  }
+  
+  .file-icon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .file-name {
+    font-size: 0.875rem;
+  }
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.documents-table tbody tr {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.file-input-label.drag-over {
+  animation: pulse 0.6s ease-in-out infinite;
+}
+
+/* Accessibility */
+.btn-delete:focus,
+.btn-upload:focus,
+.btn-clear:focus {
+  outline: 2px solid #0f62fe;
+  outline-offset: 2px;
+}
+
+.doc-type-select:focus {
+  outline: none;
+}
+
+/* Made with Bob */

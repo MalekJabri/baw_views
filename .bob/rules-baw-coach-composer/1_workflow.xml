@@ -1,0 +1,210 @@
+<coach_composer_workflow>
+  <overview>
+    This workflow guides you through creating intelligent test coaches for BAW custom widgets.
+    You analyze widget purposes, design optimal layouts, generate realistic sample data,
+    and compose complete service flows using the existing Python tools.
+  </overview>
+
+  <core_principles>
+    <principle>Understand widget purposes before designing layouts</principle>
+    <principle>Group related widgets logically</principle>
+    <principle>Generate contextual, realistic sample data</principle>
+    <principle>Follow BAW UX best practices</principle>
+    <principle>Explain design decisions to the user</principle>
+    <principle>Iterate based on user feedback</principle>
+  </core_principles>
+
+  <workflow_steps>
+    <step number="1">
+      <title>Understand the Request</title>
+      <description>Parse user's request to identify widgets and requirements</description>
+      <actions>
+        <action>Identify which widgets need to be included</action>
+        <action>Understand any specific layout preferences</action>
+        <action>Note any data requirements or constraints</action>
+        <action>Clarify the testing scenario or use case</action>
+      </actions>
+    </step>
+
+    <step number="2">
+      <title>Consult Widget Catalog</title>
+      <description>Reference the BAW widget catalog for standard widget options</description>
+      <actions>
+        <action>Read baw_standard_widgets_reference.json to understand available standard widgets</action>
+        <action>Identify which requirements can be met with standard widgets</action>
+        <action>Determine where custom widgets add value</action>
+        <action>Note widget IDs and binding types for selected widgets</action>
+      </actions>
+      <example>
+        <read_file>
+          <args>
+            <file>
+              <path>toolkit_packager/baw_standard_widgets_reference.json</path>
+            </file>
+          </args>
+        </read_file>
+      </example>
+      <important>
+        Always consult the catalog first to leverage standard widgets before
+        assuming custom widgets are needed. Standard widgets are well-tested,
+        maintained, and cover most common use cases.
+      </important>
+    </step>
+
+    <step number="3">
+      <title>Analyze Custom Widgets</title>
+      <description>Read and understand custom widget configurations if needed</description>
+      <actions>
+        <action>Use read_file to examine custom widget config.json files</action>
+        <action>Identify widget purposes and capabilities</action>
+        <action>Note binding types and business objects</action>
+        <action>Understand configuration options</action>
+        <action>Identify data dependencies between widgets</action>
+      </actions>
+      <example>
+        <read_file>
+          <args>
+            <file>
+              <path>widgets/ProgressBar/widget/config.json</path>
+            </file>
+            <file>
+              <path>widgets/MultiSelect/widget/config.json</path>
+            </file>
+          </args>
+        </read_file>
+      </example>
+    </step>
+
+    <step number="4">
+      <title>Design Layout Structure</title>
+      <description>Create an optimal layout plan using both standard and custom widgets</description>
+      <design_considerations>
+        <consideration>Widget relationships and data flow</consideration>
+        <consideration>Logical grouping by functionality</consideration>
+        <consideration>Visual hierarchy and importance</consideration>
+        <consideration>User workflow and interaction patterns</consideration>
+        <consideration>Responsive design principles</consideration>
+      </design_considerations>
+      <layout_options>
+        <option>Vertical layout - Stack widgets top to bottom</option>
+        <option>Horizontal layout - Arrange widgets side by side</option>
+        <option>Panel groups - Group related widgets in titled panels</option>
+        <option>Mixed layout - Combine different layout types</option>
+      </layout_options>
+      <output>
+        Present your layout plan to the user with clear reasoning
+      </output>
+    </step>
+
+    <step number="5">
+      <title>Generate Sample Data</title>
+      <description>Create realistic, contextual test data</description>
+      <data_generation_principles>
+        <principle>Match data types to widget purposes</principle>
+        <principle>Use realistic values and ranges</principle>
+        <principle>Create meaningful relationships between data</principle>
+        <principle>Include edge cases when appropriate</principle>
+        <principle>Generate multiple data states (empty, partial, complete)</principle>
+      </data_generation_principles>
+      <example_data_types>
+        <type name="ProgressBar">
+          <field>currentStep: 3 (realistic progress)</field>
+          <field>totalSteps: 5 (reasonable total)</field>
+          <field>label: "Processing documents..." (contextual)</field>
+          <field>percentage: 60 (calculated from steps)</field>
+        </type>
+        <type name="Stepper">
+          <field>steps: Array of step objects with labels and statuses</field>
+          <field>currentStep: Index of active step</field>
+          <field>completed: Boolean array for step completion</field>
+        </type>
+      </example_data_types>
+    </step>
+
+    <step number="6">
+      <title>Compose the Coach</title>
+      <description>Generate coach structure and document standard widget requirements</description>
+      <actions>
+        <action>Prepare the command with all widget paths</action>
+        <action>Specify output location in coaches folder</action>
+        <action>Execute generate_test_coach.py</action>
+        <action>Verify successful generation</action>
+      </actions>
+      <command_template>
+        <execute_command>
+          <command>python generate_test_coach.py --name "Your Coach Name" --widgets widget1_path widget2_path --output coaches/your_coach.xml</command>
+        </execute_command>
+      </command_template>
+      <important_notes>
+        <note>
+          The generate_test_coach.py tool currently only supports custom widgets.
+          For coaches with standard widgets, document the complete design including
+          standard widget names and IDs from the catalog.
+        </note>
+        <note>
+          Always save generated coaches to the coaches/ folder. These XML files
+          will later be packaged into toolkits and process applications for
+          deployment to BAW servers.
+        </note>
+      </important_notes>
+    </step>
+
+    <step number="7">
+      <title>Switch to BAW Package Manager</title>
+      <description>Automatically hand off to packaging and deployment</description>
+      <actions>
+        <action>Confirm successful coach generation</action>
+        <action>Use switch_mode tool to transition to baw-package-manager mode</action>
+        <action>Provide context about what was created</action>
+      </actions>
+      <switch_template>
+        <switch_mode>
+          <mode_slug>baw-package-manager</mode_slug>
+          <reason>Coach created successfully. Ready to package toolkit with new coach and deploy to BAW server.</reason>
+        </switch_mode>
+      </switch_template>
+      <important>
+        Always switch to BAW Package Manager mode after successful coach generation
+        to enable automatic packaging and deployment workflow, just like the
+        BAW Coach Widget mode does after widget creation.
+      </important>
+    </step>
+
+    <step number="8">
+      <title>Iterate if Needed</title>
+      <description>Refine based on user feedback</description>
+      <refinement_options>
+        <option>Adjust layout structure</option>
+        <option>Modify sample data</option>
+        <option>Add or remove widgets</option>
+        <option>Change groupings or containers</option>
+        <option>Update widget configurations</option>
+      </refinement_options>
+    </step>
+  </workflow_steps>
+
+  <tool_usage_guidelines>
+    <guideline>
+      Always use read_file to examine widget configs before designing
+    </guideline>
+    <guideline>
+      Use list_files to discover available widgets if needed
+    </guideline>
+    <guideline>
+      Execute generate_test_coach.py to create the service flow
+    </guideline>
+    <guideline>
+      Read generated XML if user wants to see the structure
+    </guideline>
+  </tool_usage_guidelines>
+
+  <communication_style>
+    <style>Be conversational and explain your design thinking</style>
+    <style>Present layout plans visually with clear structure</style>
+    <style>Justify design decisions with UX principles</style>
+    <style>Offer alternatives when appropriate</style>
+    <style>Confirm understanding before proceeding</style>
+  </communication_style>
+</coach_composer_workflow>
+
+<!-- Made with Bob -->
