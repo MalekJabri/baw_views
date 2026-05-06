@@ -60,6 +60,8 @@ class ToolkitConfig:
     short_name: str = "CW"
     description: str = "Custom widget toolkit for BAW"
     version: str = "1.0.0"
+    toolkit_id: Optional[str] = None  # Persistent toolkit ID for BAW
+    branch_id: Optional[str] = None  # Persistent branch ID for BAW (for upgrade compatibility)
     is_toolkit: bool = True
     is_hidden: bool = False
     is_system: bool = False
@@ -102,16 +104,26 @@ class ToolkitConfig:
         Returns:
             Dictionary representation
         """
+        toolkit_dict = {
+            'name': self.name,
+            'shortName': self.short_name,
+            'description': self.description,
+            'version': self.version,
+            'isToolkit': self.is_toolkit,
+            'isHidden': self.is_hidden,
+            'isSystem': self.is_system
+        }
+        
+        # Add toolkit ID if present
+        if self.toolkit_id:
+            toolkit_dict['id'] = self.toolkit_id
+        
+        # Add branch ID if present
+        if self.branch_id:
+            toolkit_dict['branchId'] = self.branch_id
+        
         return {
-            'toolkit': {
-                'name': self.name,
-                'shortName': self.short_name,
-                'description': self.description,
-                'version': self.version,
-                'isToolkit': self.is_toolkit,
-                'isHidden': self.is_hidden,
-                'isSystem': self.is_system
-            },
+            'toolkit': toolkit_dict,
             'dependencies': {
                 'systemData': self.system_data.to_dict() if self.system_data else None,
                 'uiToolkit': self.ui_toolkit.to_dict() if self.ui_toolkit else None
@@ -156,6 +168,8 @@ class ToolkitConfig:
             short_name=toolkit_data.get('shortName', 'CW'),
             description=toolkit_data.get('description', 'Custom widget toolkit for BAW'),
             version=toolkit_data.get('version', '1.0.0'),
+            toolkit_id=toolkit_data.get('id'),  # Load persistent toolkit ID
+            branch_id=toolkit_data.get('branchId'),  # Load persistent branch ID
             is_toolkit=toolkit_data.get('isToolkit', True),
             is_hidden=toolkit_data.get('isHidden', False),
             is_system=toolkit_data.get('isSystem', False),

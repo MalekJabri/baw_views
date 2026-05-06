@@ -55,6 +55,17 @@ from .scanner import (
     validate_widget,
     validate_widgets,
     ValidationResult,
+    BusinessObject,
+    scan_business_objects,
+    get_business_object_by_name,
+    load_custom_types_registry,
+    save_custom_types_registry,
+    register_business_object,
+    get_or_create_class_id,
+    build_dependency_graph,
+    get_processing_order,
+    list_business_object_names,
+    count_business_objects,
 )
 
 # Generators
@@ -62,6 +73,8 @@ from .generators import (
     BaseGenerator,
     CoachViewGenerator,
     ManagedAssetGenerator,
+    ServiceFlowGenerator,
+    generate_service_flow,
 )
 
 # Packager
@@ -107,6 +120,17 @@ __all__ = [
     'validate_widget',
     'validate_widgets',
     'ValidationResult',
+    'BusinessObject',
+    'scan_business_objects',
+    'get_business_object_by_name',
+    'load_custom_types_registry',
+    'save_custom_types_registry',
+    'register_business_object',
+    'get_or_create_class_id',
+    'build_dependency_graph',
+    'get_processing_order',
+    'list_business_object_names',
+    'count_business_objects',
     # Generators
     'BaseGenerator',
     'CoachViewGenerator',
