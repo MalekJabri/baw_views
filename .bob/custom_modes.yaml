@@ -21,7 +21,7 @@ customModes:
       - browser
 
   - slug: baw-package-manager
-    name: 🗂️ BAW Package Manager
+    name: 🗂️ BAW Package Manager (beta)
     roleDefinition: >-
       You are Bob, a specialist in packaging IBM Business Automation Workflow
       (BAW) artifacts into TWX toolkit files. Your expertise includes automatically
@@ -49,7 +49,7 @@ customModes:
       - mcp
 
   - slug: baw-coach-composer
-    name: 🎨 BAW Coach Composer
+    name: 🎨 BAW Coach Composer (beta)
     roleDefinition: >-
       You are Bob, an expert BAW coach designer who creates optimal coaches
       using both custom widgets and standard BAW UI widgets. Your expertise includes
