@@ -2,6 +2,40 @@
 
 A collection of reusable, accessible custom view widgets for IBM Business Automation Workflow (BAW) built with Carbon Design System principles.
 
+## ⚠️ Important Disclaimer
+
+**This is NOT an official IBM project.** This repository contains experimental widgets and tools developed using Large Language Models (LLMs) for rapid prototyping and development acceleration.
+
+### Key Considerations:
+
+- **LLM-Generated Content**: All code, assets, and artifacts in this repository have been generated or assisted by AI/LLM tools and may contain errors, inconsistencies, or "hallucinations"
+- **Not Production-Ready**: These widgets are intended for development and testing purposes only
+- **Use Standard Mechanisms**: For production environments, we strongly recommend using IBM's official methods:
+  - Import BPMN models through standard BAW import
+  - Use OpenAPI specifications for service integration
+  - Perform manual copy-paste of verified artifacts
+  - Follow IBM's official documentation and best practices
+
+### BAW Package Manager Mode
+
+The BAW Package Manager mode included in this project can help accelerate development workflows, but should be used with caution:
+
+- ✅ **Good for**: Rapid prototyping, learning, development acceleration
+- ⚠️ **Use carefully**: Review all generated code before deployment
+- ❌ **Not recommended for**: Production systems without thorough review and testing
+
+### Recommendations:
+
+1. **Always review generated code** before using in any environment
+2. **Test thoroughly** in development environments before considering production use
+3. **Validate against IBM documentation** and best practices
+4. **Use official IBM tools** for production deployments
+5. **Consider this as a learning resource** and development accelerator, not a production solution
+
+**By using this repository, you acknowledge that you understand these limitations and will use appropriate caution and validation in your projects.**
+
+---
+
 ## 📋 Table of Contents
 
 - [Overview](#overview)
