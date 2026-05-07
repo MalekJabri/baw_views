@@ -6,7 +6,7 @@
       "coachViewId": "64.2563bbd0-609b-47e7-8dd6-cffc53ace388",
       "description": "Date display widget with customizable formatting for IBM Business Automation Workflow",
       "created": "2026-05-01T10:14:32.484925Z",
-      "last_packaged": "2026-05-06T19:00:11.869618Z",
+      "last_packaged": "2026-05-06T20:03:09.260302Z",
       "bindingIds": {
         "DateValue": "65.06179e74-40a0-4bb0-801d-e0f2495cb82b"
       },
@@ -24,7 +24,7 @@
       "coachViewId": "64.f1a8d46e-c4a2-4a93-ad08-5037f9683fe5",
       "description": "Vertical multi-step process indicator widget for IBM Business Automation Workflow",
       "created": "2026-05-01T10:15:12.755100Z",
-      "last_packaged": "2026-05-06T19:00:11.962259Z",
+      "last_packaged": "2026-05-06T20:03:09.304515Z",
       "bindingIds": {
         "StepperData": "65.66db65de-cafa-41e9-ba95-ab7683bb5d71"
       },
@@ -43,7 +43,7 @@
       "coachViewId": "64.85fc6053-ab02-4cbe-b327-e895ba2b4e0e",
       "description": "Horizontal breadcrumb navigation widget for IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.482912Z",
-      "last_packaged": "2026-05-06T19:00:11.860081Z",
+      "last_packaged": "2026-05-06T20:03:09.250691Z",
       "bindingIds": {
         "BreadcrumbData": "65.3052f0ab-ded6-43d8-a9da-42fe0fa88b42"
       },
@@ -60,7 +60,7 @@
       "coachViewId": "64.394ead55-4ecf-4817-8364-eb192f89aeaa",
       "description": "Folder and document browser widget for IBM FileNet Content Engine via GraphQL, used in IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.491295Z",
-      "last_packaged": "2026-05-06T19:00:11.872406Z",
+      "last_packaged": "2026-05-06T20:03:09.266668Z",
       "bindingIds": {
         "SelectedItem": "65.d939504d-14fd-49c9-9fed-52bbe91a67cd"
       },
@@ -85,7 +85,7 @@
       "coachViewId": "64.56d91787-704f-477b-80be-206750ff0f08",
       "description": "Drag-and-drop document and folder import widget for IBM FileNet Content Engine via GraphQL, used in IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.496554Z",
-      "last_packaged": "2026-05-06T19:00:11.878221Z",
+      "last_packaged": "2026-05-06T20:03:09.274098Z",
       "bindingIds": {
         "ImportResult": "65.180968fe-1ffc-4db1-bb29-f5b041365df8"
       },
@@ -109,7 +109,7 @@
       "coachViewId": "64.dfe90acc-501f-47c5-a638-fa566723c375",
       "description": "File and folder manager widget with hierarchical structure and bulk metadata editing for IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.501057Z",
-      "last_packaged": "2026-05-06T19:00:11.884862Z",
+      "last_packaged": "2026-05-06T20:03:09.278896Z",
       "bindingIds": {
         "FilesData": "65.f37ca5ae-df1f-4a68-995e-c7e8fc551d62"
       },
@@ -143,7 +143,7 @@
       "coachViewId": "64.311518a4-3d13-4ec7-929f-892065639ac5",
       "description": "A widget for rendering markdown-formatted text into styled HTML content with support for headers, lists, code blocks, tables, and more",
       "created": "2026-05-01T10:18:44.505396Z",
-      "last_packaged": "2026-05-06T19:00:11.899505Z",
+      "last_packaged": "2026-05-06T20:03:09.284318Z",
       "bindingIds": {
         "MarkdownText": "65.8e9ccc30-6ad2-4adc-8019-473b6a6a1695"
       },
@@ -161,7 +161,7 @@
       "coachViewId": "64.3221b79a-3e25-4a2b-a427-b4c98b78f329",
       "description": "Multi-select dropdown widget with search and bulk selection capabilities for IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.509876Z",
-      "last_packaged": "2026-05-06T19:00:11.928886Z",
+      "last_packaged": "2026-05-06T20:03:09.292706Z",
       "bindingIds": {
         "SelectedItems": "65.419fe1d4-3fd6-4760-9858-f7b71dd03baf"
       },
@@ -182,7 +182,7 @@
       "coachViewId": "64.9736c878-28d7-4557-9188-ac43d87c34f0",
       "description": "Circular progress indicator widget for displaying percentage or value progress in IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.514079Z",
-      "last_packaged": "2026-05-06T19:00:11.939917Z",
+      "last_packaged": "2026-05-06T20:03:09.296344Z",
       "bindingIds": {
         "ProgressValue": "65.cfdb9767-d62d-4911-9d02-3ae38f757970"
       },
@@ -200,7 +200,7 @@
       "coachViewId": "64.69d392d7-3ff6-4004-8ddc-86bca454437a",
       "description": "A widget to display a list of tasks with status indicators for IBM Business Automation Workflow",
       "created": "2026-05-01T10:18:44.521820Z",
-      "last_packaged": "2026-05-06T19:00:11.967019Z",
+      "last_packaged": "2026-05-06T20:03:09.307685Z",
       "bindingIds": {
         "TasksListData": "65.bc728ccf-4aee-4545-b2fc-2065d1136c4f"
       },
@@ -213,7 +213,7 @@
       "coachViewId": "64.db824ed3-93e7-4eb6-a583-56a0a2bf25c0",
       "description": "Animated horizontal progress bar with color-coded states and real-time percentage display for IBM Business Automation Workflow",
       "created": "2026-05-01T21:21:03.839681Z",
-      "last_packaged": "2026-05-06T19:00:11.954184Z",
+      "last_packaged": "2026-05-06T20:03:09.300490Z",
       "bindingIds": {
         "ProgressData": "65.45b6f4be-bafc-4434-803a-0c21dbdddff9"
       },
@@ -232,7 +232,7 @@
       "coachViewId": "64.cb0da67d-4681-4d0e-aba1-df847619fe10",
       "description": "Vertical timeline widget for displaying chronological events in IBM Business Automation Workflow",
       "created": "2026-05-05T22:03:43.799655Z",
-      "last_packaged": "2026-05-06T19:00:11.971063Z",
+      "last_packaged": "2026-05-06T20:03:09.310461Z",
       "bindingIds": {
         "TimelineData": "65.e9f5c1ec-e91c-41f3-b565-eec238a2bac1"
       },
@@ -252,7 +252,7 @@
       "coachViewId": "64.ba950d9b-e8e3-4b71-a419-6b6501751103",
       "description": "Interactive carousel widget with flip cards displaying icons, titles, and descriptions",
       "created": "2026-05-06T11:52:27.415359Z",
-      "last_packaged": "2026-05-06T19:00:11.865540Z",
+      "last_packaged": "2026-05-06T20:03:09.255519Z",
       "bindingIds": {
         "CarouselData": "65.c3b6f525-407b-4508-964c-69e158f2e51a"
       },
@@ -272,7 +272,7 @@
       "coachViewId": "64.ef755491-8def-4211-a6f6-f12ff50b2db6",
       "description": "Widget za upload više dokumenata sa tabelom, selekcijom tipa dokumenta i mogućnošću brisanja pre upload-a u LocalStore",
       "created": "2026-05-06T15:03:49.313071Z",
-      "last_packaged": "2026-05-06T19:00:11.923173Z",
+      "last_packaged": "2026-05-06T20:03:09.289086Z",
       "bindingIds": {
         "Documents": "65.cade153c-3984-4f83-903e-d58e18a0457a"
       },
