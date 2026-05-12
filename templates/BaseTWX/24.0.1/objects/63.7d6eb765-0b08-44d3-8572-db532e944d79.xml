@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamworks>
+    <projectDefaults id="63.7d6eb765-0b08-44d3-8572-db532e944d79" name="Toolkit Settings">
+        <lastModified>1778612272941</lastModified>
+        <lastModifiedBy>e255575</lastModifiedBy>
+        <tenantId isNull="true" />
+        <projectDefaultsId>63.7d6eb765-0b08-44d3-8572-db532e944d79</projectDefaultsId>
+        <description isNull="true" />
+        <guid>guid:7d6eb765-0b08-44d3-8572-db532e944d79</guid>
+        <versionId>4e5e923e-ffb4-4a7f-b077-0eb7916d8fee</versionId>
+        <participantRef isNull="true" />
+        <defaultXslRef>6b8d712d-9bce-46dd-b112-f94df7c41b0d/61.140920b1-a53c-4d72-b6bb-60776f49f7f2</defaultXslRef>
+        <defaultCssRef>6b8d712d-9bce-46dd-b112-f94df7c41b0d/61.aabe9f91-df4b-43db-857c-41dbed4820a3</defaultCssRef>
+        <defaultTheme>6b8d712d-9bce-46dd-b112-f94df7c41b0d/72.993e03e9-2574-40fc-807c-65b06be378fd</defaultTheme>
+        <themeVersion isNull="true" />
+        <defaultJsRefs isNull="true" />
+        <isWbmEnabled>false</isWbmEnabled>
+        <namespace>http://IC</namespace>
+        <isIidOptimized>true</isIidOptimized>
+        <isQueueBypass>1</isQueueBypass>
+        <templateAcronymReference isNull="true" />
+        <templateSnapshotReference isNull="true" />
+        <targetEnvironment>BAW_tWAS</targetEnvironment>
+        <subtype isNull="true" />
+        <capability isNull="true" />
+    </projectDefaults>
+</teamworks>
+

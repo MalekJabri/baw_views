@@ -124,6 +124,41 @@
     </step>
 
     <step number="8">
+      <title>Generate OpenAPI Specification</title>
+      <description>Create an OpenAPI 3.0 specification file containing all discovered business object schemas</description>
+      <actions>
+        <action>Generate openapi-spec.json under business-objects/ containing all business object schemas</action>
+        <action>Include only the OpenAPI info section and components/schemas section</action>
+        <action>Do NOT include servers, paths, operations, or tags sections</action>
+        <action>Map business object properties to OpenAPI data types (string, number, integer, boolean, array, object)</action>
+        <action>Use $ref for nested object references between business objects</action>
+        <action>Include enum constraints for categorical fields</action>
+        <action>Mark required fields based on business object definitions</action>
+        <action>Add descriptions from business object metadata</action>
+      </actions>
+      <important>
+        The OpenAPI spec is a pure data model definition without API endpoints.
+        It serves as a machine-readable schema catalog for all business objects.
+      </important>
+      <example_structure>
+        {
+          "openapi": "3.0.3",
+          "info": {
+            "title": "[Context] Business Objects",
+            "description": "OpenAPI specification defining business object schemas for [context] domain. This specification contains only the data models without API endpoints.",
+            "version": "1.0.0"
+          },
+          "components": {
+            "schemas": {
+              "BusinessObject1": { ... },
+              "BusinessObject2": { ... }
+            }
+          }
+        }
+      </example_structure>
+    </step>
+
+    <step number="9">
       <title>Register Business Objects with Class IDs</title>
       <description>Register all generated business objects in the BAW custom types registry with unique class IDs for version control</description>
       <actions>
@@ -147,6 +182,7 @@
         <action>Verify that all referenced objects are resolvable</action>
         <action>Verify that field types match supported conventions</action>
         <action>Verify that all business objects have registered class IDs in baw_custom_types.json</action>
+        <action>Verify that the OpenAPI spec file exists and contains all business objects</action>
         <action>Verify that process names are unique and properly structured</action>
         <action>Verify that process-to-business-object links are valid</action>
         <action>Review assumptions or unresolved ambiguities before completion</action>
@@ -157,9 +193,9 @@
       <title>Preserve Boundaries and Handoff Cleanly</title>
       <description>Finish at the artifact generation boundary and hand off packaging work to the packaging mode when requested</description>
       <actions>
-        <action>Summarize what was generated (business objects and processes) and from which source documents</action>
+        <action>Summarize what was generated (business objects, processes, and OpenAPI spec) and from which source documents</action>
         <action>State any assumptions that influenced the output models</action>
-        <action>List generated business objects and business processes</action>
+        <action>List generated business objects, business processes, and confirm OpenAPI spec creation</action>
         <action>When the user wants packaging or deployment, hand off to baw-package-manager</action>
       </actions>
       <handoff_template>
@@ -180,10 +216,12 @@
       <context_catalog_path>business-objects/catalog/[context].catalog.json</context_catalog_path>
       <master_catalog_path>business-objects/catalog/master.catalog.json</master_catalog_path>
       <report_path>business-objects/reports/[context].discovery-report.md</report_path>
+      <openapi_spec_path>business-objects/openapi-spec.json</openapi_spec_path>
       <notes>
         <note>Generated object files use stable PascalCase names such as Claim.json, Claimant.json, and ClaimDocument.json.</note>
         <note>The context segment is derived from the user-provided business domain or grouping.</note>
         <note>Reports are optional but recommended when assumptions, ambiguities, or inferred mappings must be documented.</note>
+        <note>OpenAPI spec contains all business object schemas without servers, paths, or operations.</note>
       </notes>
     </business_objects>
     
@@ -208,6 +246,7 @@
     <criterion>Generated JSON artifacts follow the business-objects/generated/[context]/ structure</criterion>
     <criterion>Generated process definitions follow the business-processes/[context]/ structure</criterion>
     <criterion>Process definitions include Mermaid diagrams and structured metadata</criterion>
+    <criterion>OpenAPI specification file is generated at business-objects/openapi-spec.json with all business object schemas</criterion>
     <criterion>Context and master catalog files are produced for both business objects and processes</criterion>
     <criterion>Optional discovery reports are written under business-objects/reports/ when needed</criterion>
     <criterion>Processes are properly linked to business objects they use</criterion>

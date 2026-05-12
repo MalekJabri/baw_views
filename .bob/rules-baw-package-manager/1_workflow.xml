@@ -84,10 +84,27 @@
       </steps>
     </phase>
 
-    <phase name="packaging">
-      <description>Run the packaging workflow</description>
+    <phase name="template_version_selection">
+      <description>Select BAW template version for packaging</description>
       <steps>
-        <step>Execute package_baw.py to generate the TWX artifact</step>
+        <step>Ask the user which BAW template version to use (24.0.1 or 25.0.1)</step>
+        <step>Use ask_followup_question tool with version options</step>
+        <step>Default to 25.0.1 if user doesn't specify</step>
+        <step>Note: The package_baw.py script has interactive mode built-in, but in BAW Package Manager mode, we ask first</step>
+      </steps>
+      <important>
+        Always ask for template version before packaging. Available versions:
+        - BAW 24.0.1: For older BAW installations
+        - BAW 25.0.1: Default, for current BAW installations
+      </important>
+    </phase>
+
+    <phase name="packaging">
+      <description>Run the packaging workflow with selected template version</description>
+      <steps>
+        <step>Execute package_baw.py with the selected template version</step>
+        <step>Use: python3 package_baw.py --template-version {version} --no-prompt</step>
+        <step>The --no-prompt flag skips interactive mode since we already asked</step>
         <step>The packager automatically includes all artifacts:</step>
         <step>  - Custom widgets from widgets/</step>
         <step>  - Standalone business objects from business-objects/generated/</step>

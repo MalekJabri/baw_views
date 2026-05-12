@@ -52,8 +52,14 @@
     <tool name="execute_command">
       <best_practices>
         <practice>Use for packaging execution and lightweight validation checks</practice>
+        <practice>Always specify template version: python3 package_baw.py --template-version {version} --no-prompt</practice>
+        <practice>Use --no-prompt flag to skip interactive mode when version is already determined</practice>
         <practice>Capture output that helps confirm success, warnings, or blocking failures</practice>
       </best_practices>
+      <template_versions>
+        <version name="24.0.1">For older BAW installations</version>
+        <version name="25.0.1">Default, for current BAW installations</version>
+      </template_versions>
     </tool>
 
     <tool name="use_mcp_tool">

@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamworks>
+    <coachView id="64.8d1a9716-6a0b-49b5-9f8c-b69f2d3d1d14" name="StatusCard">
+        <lastModified>1778614234118</lastModified>
+        <lastModifiedBy>e255575</lastModifiedBy>
+        <tenantId isNull="true" />
+        <coachViewId>64.8d1a9716-6a0b-49b5-9f8c-b69f2d3d1d14</coachViewId>
+        <isTemplate>false</isTemplate>
+        <layout>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;ns2:layout xmlns:ns2="http://www.ibm.com/bpm/CoachDesignerNG" xmlns:ns3="http://www.ibm.com/bpm/coachview"&gt;&lt;ns2:layoutItem xsi:type="ns2:CustomHTML" version="8550" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;&lt;ns2:id&gt;7530ab92-82f1-4d45-85bb-7d6fa29c8819&lt;/ns2:id&gt;&lt;ns2:layoutItemId&gt;statusCardHTML&lt;/ns2:layoutItemId&gt;&lt;ns2:configData&gt;&lt;ns2:id&gt;9d0a5c00-1a7d-4394-88ef-c1c788472a0c&lt;/ns2:id&gt;&lt;ns2:optionName&gt;@customHTML.contentType&lt;/ns2:optionName&gt;&lt;ns2:value&gt;TEXT&lt;/ns2:value&gt;&lt;/ns2:configData&gt;&lt;ns2:configData&gt;&lt;ns2:id&gt;92be8cf3-d0b3-4fa4-83a9-d036e0c696db&lt;/ns2:id&gt;&lt;ns2:optionName&gt;@customHTML.textContent&lt;/ns2:optionName&gt;&lt;ns2:value&gt;&amp;lt;div class="statuscard-container" role="region" aria-label="Status card"&amp;gt;
+  &amp;lt;div class="statuscard-content"&amp;gt;
+    &amp;lt;div class="statuscard-title" aria-label="Card title"&amp;gt;
+      &amp;lt;span class="title-text"&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class="statuscard-value" aria-label="Card value"&amp;gt;
+      &amp;lt;span class="value-text"&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/div&amp;gt;
+  &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/ns2:value&gt;&lt;/ns2:configData&gt;&lt;/ns2:layoutItem&gt;&lt;/ns2:layout&gt;</layout>
+        <paletteIcon isNull="true" />
+        <previewImage isNull="true" />
+        <hasLabel>false</hasLabel>
+        <labelPosition>0</labelPosition>
+        <nineSliceX1Coord>0</nineSliceX1Coord>
+        <nineSliceX2Coord>0</nineSliceX2Coord>
+        <nineSliceY1Coord>0</nineSliceY1Coord>
+        <nineSliceY2Coord>0</nineSliceY2Coord>
+        <emitBoundary>false</emitBoundary>
+        <isPrototypeFunc>false</isPrototypeFunc>
+        <enableDevMode>false</enableDevMode>
+        <isMobileReady>false</isMobileReady>
+        <loadJsFunction isNull="true" />
+        <unloadJsFunction isNull="true" />
+        <viewJsFunction isNull="true" />
+        <changeJsFunction>// StatusCard - Change Event Handler&#xD;
+// Executed when the widget data changes&#xD;
+var _this = this;&#xD;
+&#xD;
+// Get the updated data&#xD;
+var data = _this.getData();&#xD;
+&#xD;
+console.log('StatusCard data changed:', data);&#xD;
+&#xD;
+// Get DOM elements&#xD;
+var container = _this.context.element.querySelector(".statuscard-container");&#xD;
+var titleElement = container.querySelector(".title-text");&#xD;
+var valueElement = container.querySelector(".value-text");&#xD;
+&#xD;
+// Extract title and value from updated data&#xD;
+var title = "";&#xD;
+var value = "";&#xD;
+&#xD;
+if (data) {&#xD;
+    if (typeof data === "string") {&#xD;
+        value = data;&#xD;
+    } else if (typeof data === "object") {&#xD;
+        title = data.title || data.label || "";&#xD;
+        value = data.value || data.text || data.content || "";&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+// Update display&#xD;
+if (title) {&#xD;
+    titleElement.textContent = title;&#xD;
+    titleElement.parentElement.style.display = "flex";&#xD;
+} else {&#xD;
+    titleElement.parentElement.style.display = "none";&#xD;
+}&#xD;
+&#xD;
+if (value) {&#xD;
+    valueElement.textContent = value;&#xD;
+} else {&#xD;
+    valueElement.textContent = "—";&#xD;
+}&#xD;
+&#xD;
+// Made with Bob</changeJsFunction>
+        <collaborationJsFunction isNull="true" />
+        <description></description>
+        <validateJsFunction isNull="true" />
+        <previewAdvHtml isNull="true" />
+        <previewAdvJs isNull="true" />
+        <useUrlBinding>false</useUrlBinding>
+        <guid>guid:d1d25b3a021c2e9a:45631e7c:19e0c643f1b:-174b</guid>
+        <versionId>9d5ba051-b679-4ec0-aa71-d9a3cdfad2cf</versionId>
+        <field1 isNull="true" />
+        <field2 isNull="true" />
+        <field3>0</field3>
+        <field4 isNull="true" />
+        <field5>false</field5>
+        <clobField1 isNull="true" />
+        <bindingType name="cardData">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewBindingTypeId>65.13ff24e6-cd80-45b6-945a-caad9afd7bba</coachViewBindingTypeId>
+            <coachViewId>64.8d1a9716-6a0b-49b5-9f8c-b69f2d3d1d14</coachViewId>
+            <isList>false</isList>
+            <classId>/12.a610e2a3-ea7a-4636-83e3-6976216e5d63</classId>
+            <seq>0</seq>
+            <description isNull="true" />
+            <guid>guid:13ff24e6-cd80-45b6-945a-caad9afd7bba</guid>
+            <versionId>3959a337-e45b-48d1-b58b-7bce35d49a55</versionId>
+        </bindingType>
+        <configOption name="alignment">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewConfigOptionId>66.3bdd443f-1a05-471d-9305-ab2c8bfd7cc3</coachViewConfigOptionId>
+            <coachViewId>64.8d1a9716-6a0b-49b5-9f8c-b69f2d3d1d14</coachViewId>
+            <isList>false</isList>
+            <propertyType>OBJECT</propertyType>
+            <label>Alignment</label>
+            <classId>6b8d712d-9bce-46dd-b112-f94df7c41b0d/12.db884a3c-c533-44b7-bb2d-47bec8ad4022</classId>
+            <processId isNull="true" />
+            <actionflowId isNull="true" />
+            <isAdaptive>false</isAdaptive>
+            <seq>0</seq>
+            <description>&lt;div style="color: rgb(204, 204, 204); background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;"&gt;&lt;span style="color: #ce9178;"&gt;Text alignment within the card: 'left' or 'center'&lt;/span&gt;&lt;/div&gt;</description>
+            <groupName></groupName>
+            <guid>guid:3bdd443f-1a05-471d-9305-ab2c8bfd7cc3</guid>
+            <versionId>4f6f73d3-e0dc-44b2-8c6b-9344ef0fceec</versionId>
+        </configOption>
+        <configOption name="variant">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewConfigOptionId>66.8c57fc76-2b52-40b9-a9ed-f15e4c312f58</coachViewConfigOptionId>
+            <coachViewId>64.8d1a9716-6a0b-49b5-9f8c-b69f2d3d1d14</coachViewId>
+            <isList>false</isList>
+            <propertyType>OBJECT</propertyType>
+            <label>Variant</label>
+            <classId>6b8d712d-9bce-46dd-b112-f94df7c41b0d/12.db884a3c-c533-44b7-bb2d-47bec8ad4022</classId>
+            <processId isNull="true" />
+            <actionflowId isNull="true" />
+            <isAdaptive>false</isAdaptive>
+            <seq>1</seq>
+            <description>&lt;div style="color: rgb(204, 204, 204); background-color: rgb(31, 31, 31); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;"&gt;&lt;span style="color: #ce9178;"&gt;Visual variant: 'default', 'success', 'warning', 'error', 'info'&lt;/span&gt;&lt;/div&gt;</description>
+            <groupName></groupName>
+            <guid>guid:8c57fc76-2b52-40b9-a9ed-f15e4c312f58</guid>
+            <versionId>daa7ab42-3119-4cf7-a84f-078edd6a39e6</versionId>
+        </configOption>
+        <configOption name="clickable">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewConfigOptionId>66.05f41c95-5309-43b1-9678-81e8ef4fc07f</coachViewConfigOptionId>
+            <coachViewId>64.8d1a9716-6a0b-49b5-9f8c-b69f2d3d1d14</coachViewId>
+            <isList>false</isList>
+            <propertyType>OBJECT</propertyType>
+            <label>Clickable</label>
+            <classId>6b8d712d-9bce-46dd-b112-f94df7c41b0d/12.83ff975e-8dbc-42e5-b738-fa8bc08274a2</classId>
+            <processId isNull="true" />
+            <actionflowId isNull="true" />
+            <isAdaptive>false</isAdaptive>
+            <seq>2</seq>
+            <description></description>
+            <groupName></groupName>
+            <guid>guid:05f41c95-5309-43b1-9678-81e8ef4fc07f</guid>
+            <versionId>ba4ae13d-164f-4ea8-910b-e6e65d41ea9b</versionId>
+        </configOption>
+        <inlineScript name="Inline CSS">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewInlineScriptId>68.6fdafe3e-c06a-4e23-84f9-5364b5b65eaa</coachViewInlineScriptId>
+            <coachViewId>64.8d1a9716-6a0b-49b5-9f8c-b69f2d3d1d14</coachViewId>
+            <scriptType>CSS</scriptType>
+            <scriptBlock>/* StatusCard Widget Styles - Carbon Design System */&#xD;
+/* Colors and typography aligned with themes/Carbon.less */&#xD;
+&#xD;
+.statuscard-container {&#xD;
+    width: 100%;&#xD;
+    min-height: 120px;&#xD;
+    padding: 1.5rem;&#xD;
+    font-family: 'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* @bpm-font-family-sans-serif */&#xD;
+    background-color: #ffffff; /* @bpm-body-bg */&#xD;
+    border: 1px solid #e0e0e0; /* Gray 20 */&#xD;
+    border-radius: 8px;&#xD;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);&#xD;
+    transition: all 0.3s ease;&#xD;
+}&#xD;
+&#xD;
+/* Hover effect for interactivity */&#xD;
+.statuscard-container:hover {&#xD;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);&#xD;
+    border-color: #c6c6c6; /* Gray 30 / @bpm-link-text-color-disabled */&#xD;
+    transform: translateY(-2px);&#xD;
+}&#xD;
+&#xD;
+/* Card content wrapper */&#xD;
+.statuscard-content {&#xD;
+    display: flex;&#xD;
+    flex-direction: column;&#xD;
+    gap: 0.75rem;&#xD;
+    width: 100%;&#xD;
+}&#xD;
+&#xD;
+/* Title section */&#xD;
+.statuscard-title {&#xD;
+    display: flex;&#xD;
+    align-items: center;&#xD;
+    margin-bottom: 0.5rem;&#xD;
+}&#xD;
+&#xD;
+.statuscard-title .title-text {&#xD;
+    font-size: 14px; /* @bpm-font-size-base */&#xD;
+    font-weight: 600; /* @bpm-font-weight-semibold */&#xD;
+    color: #525252; /* Gray 70 - Secondary text */&#xD;
+    text-transform: uppercase;&#xD;
+    letter-spacing: 0.5px;&#xD;
+    line-height: 1.4;&#xD;
+}&#xD;
+&#xD;
+/* Value section */&#xD;
+.statuscard-value {&#xD;
+    display: flex;&#xD;
+    align-items: center;&#xD;
+}&#xD;
+&#xD;
+.statuscard-value .value-text {&#xD;
+    font-size: 18px; /* @bpm-font-size-large */&#xD;
+    font-weight: 400; /* @bpm-font-weight-normal */&#xD;
+    color: #161616; /* @bpm-text-color */&#xD;
+    line-height: 1.5;&#xD;
+    word-wrap: break-word;&#xD;
+    word-break: break-word;&#xD;
+}&#xD;
+&#xD;
+/* Centered alignment variant */&#xD;
+.statuscard-container.align-center .statuscard-content {&#xD;
+    align-items: center;&#xD;
+    text-align: center;&#xD;
+}&#xD;
+&#xD;
+.statuscard-container.align-center .statuscard-title,&#xD;
+.statuscard-container.align-center .statuscard-value {&#xD;
+    justify-content: center;&#xD;
+}&#xD;
+&#xD;
+/* Color variants for different status types */&#xD;
+.statuscard-container.variant-success {&#xD;
+    background-color: #defbe6; /* Success light background */&#xD;
+    border-color: #24a148; /* Success green 50 */&#xD;
+}&#xD;
+&#xD;
+.statuscard-container.variant-success .statuscard-value .value-text {&#xD;
+    color: #0e6027; /* Success dark text */&#xD;
+}&#xD;
+&#xD;
+.statuscard-container.variant-warning {&#xD;
+    background-color: #fff3e0; /* Warning light background */&#xD;
+    border-color: #fdd13a; /* @bpm-color-warning */&#xD;
+}&#xD;
+&#xD;
+.statuscard-container.variant-warning .statuscard-value .value-text {&#xD;
+    color: #8e6a00; /* Warning dark text */&#xD;
+}&#xD;
+&#xD;
+.statuscard-container.variant-error {&#xD;
+    background-color: #fff1f1; /* Error light background */&#xD;
+    border-color: #da1e28; /* @bpm-color-alert */&#xD;
+}&#xD;
+&#xD;
+.statuscard-container.variant-error .statuscard-value .value-text {&#xD;
+    color: #750e13; /* Error dark text */&#xD;
+}&#xD;
+&#xD;
+.statuscard-container.variant-info {&#xD;
+    background-color: #e5f6ff; /* Info light background */&#xD;
+    border-color: #0f62fe; /* @bpm-color-primary */&#xD;
+}&#xD;
+&#xD;
+.statuscard-container.variant-info .statuscard-value .value-text {&#xD;
+    color: #0043ce; /* @bpm-link-text-color-hover */&#xD;
+}&#xD;
+&#xD;
+/* Responsive Design */&#xD;
+@media (max-width: 672px) {&#xD;
+    .statuscard-container {&#xD;
+        padding: 1rem;&#xD;
+        min-height: 100px;&#xD;
+    }&#xD;
+    &#xD;
+    .statuscard-content {&#xD;
+        gap: 0.5rem;&#xD;
+    }&#xD;
+    &#xD;
+    .statuscard-title .title-text {&#xD;
+        font-size: 12px; /* @bpm-font-size-small */&#xD;
+    }&#xD;
+    &#xD;
+    .statuscard-value .value-text {&#xD;
+        font-size: 16px;&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+/* Accessibility - High Contrast Mode Support */&#xD;
+@media (prefers-contrast: high) {&#xD;
+    .statuscard-container {&#xD;
+        border-width: 2px;&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+/* Reduced Motion Support */&#xD;
+@media (prefers-reduced-motion: reduce) {&#xD;
+    .statuscard-container {&#xD;
+        transition: none;&#xD;
+    }&#xD;
+    &#xD;
+    .statuscard-container:hover {&#xD;
+        transform: none;&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+/* Made with Bob */</scriptBlock>
+            <seq>0</seq>
+            <description></description>
+            <guid>guid:6fdafe3e-c06a-4e23-84f9-5364b5b65eaa</guid>
+            <versionId>30c5bb63-ba1a-4c90-963d-9c18d4cdd5d5</versionId>
+        </inlineScript>
+        <inlineScript name="Inline Javascript">
+            <lastModified isNull="true" />
+            <lastModifiedBy isNull="true" />
+            <tenantId isNull="true" />
+            <coachViewInlineScriptId>68.e51d3215-d508-4948-99cf-69c80e5e178c</coachViewInlineScriptId>
+            <coachViewId>64.8d1a9716-6a0b-49b5-9f8c-b69f2d3d1d14</coachViewId>
+            <scriptType>JS</scriptType>
+            <scriptBlock>// StatusCard Widget - BAW Implementation&#xD;
+&#xD;
+// Get the card data from BAW binding&#xD;
+var cardData = this.getData();&#xD;
+&#xD;
+// Get configuration options&#xD;
+var alignment = this.getOption("alignment") || "left"; // "left" or "center"&#xD;
+var variant = this.getOption("variant") || "default"; // "default", "success", "warning", "error", "info"&#xD;
+var clickable = this.getOption("clickable") || false;&#xD;
+&#xD;
+// Get DOM elements&#xD;
+var container = this.context.element.querySelector(".statuscard-container");&#xD;
+var titleElement = container.querySelector(".title-text");&#xD;
+var valueElement = container.querySelector(".value-text");&#xD;
+&#xD;
+// Extract title and value from data&#xD;
+var title = "";&#xD;
+var value = "";&#xD;
+&#xD;
+if (cardData) {&#xD;
+    if (typeof cardData === "string") {&#xD;
+        // If data is just a string, use it as the value&#xD;
+        value = cardData;&#xD;
+    } else if (typeof cardData === "object") {&#xD;
+        // If data is an object, extract title and value&#xD;
+        title = cardData.title || cardData.label || "";&#xD;
+        value = cardData.value || cardData.text || cardData.content || "";&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+// Function to update card display&#xD;
+function updateCard(titleText, valueText) {&#xD;
+    // Update title&#xD;
+    if (titleText) {&#xD;
+        titleElement.textContent = titleText;&#xD;
+        titleElement.parentElement.style.display = "flex";&#xD;
+    } else {&#xD;
+        titleElement.parentElement.style.display = "none";&#xD;
+    }&#xD;
+    &#xD;
+    // Update value&#xD;
+    if (valueText) {&#xD;
+        valueElement.textContent = valueText;&#xD;
+    } else {&#xD;
+        valueElement.textContent = "—"; // Em dash for empty value&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+// Function to apply alignment&#xD;
+function applyAlignment(align) {&#xD;
+    // Remove existing alignment classes&#xD;
+    container.classList.remove("align-center");&#xD;
+    &#xD;
+    // Add alignment class&#xD;
+    if (align === "center") {&#xD;
+        container.classList.add("align-center");&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+// Function to apply variant styling&#xD;
+function applyVariant(variantType) {&#xD;
+    // Remove existing variant classes&#xD;
+    container.classList.remove("variant-success", "variant-warning", "variant-error", "variant-info");&#xD;
+    &#xD;
+    // Add variant class&#xD;
+    if (variantType &amp;&amp; variantType !== "default") {&#xD;
+        container.classList.add("variant-" + variantType);&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+// Function to apply clickable behavior&#xD;
+function applyClickable(isClickable) {&#xD;
+    if (isClickable) {&#xD;
+        container.style.cursor = "pointer";&#xD;
+        container.setAttribute("tabindex", "0");&#xD;
+        container.setAttribute("role", "button");&#xD;
+        &#xD;
+        // Add click handler&#xD;
+        container.addEventListener("click", function() {&#xD;
+            // Fire boundary event for card click&#xD;
+            if (me.ui &amp;&amp; me.ui.fireEvent) {&#xD;
+                me.ui.fireEvent("cardClicked", {&#xD;
+                    title: title,&#xD;
+                    value: value&#xD;
+                });&#xD;
+            }&#xD;
+        });&#xD;
+        &#xD;
+        // Add keyboard handler for accessibility&#xD;
+        container.addEventListener("keydown", function(event) {&#xD;
+            if (event.key === "Enter" || event.key === " ") {&#xD;
+                event.preventDefault();&#xD;
+                container.click();&#xD;
+            }&#xD;
+        });&#xD;
+    } else {&#xD;
+        container.style.cursor = "default";&#xD;
+        container.removeAttribute("tabindex");&#xD;
+        container.removeAttribute("role");&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+// Initial render&#xD;
+updateCard(title, value);&#xD;
+applyAlignment(alignment);&#xD;
+applyVariant(variant);&#xD;
+applyClickable(clickable);&#xD;
+&#xD;
+// Store reference to widget instance for event handling&#xD;
+var me = this;&#xD;
+&#xD;
+// Listen for data changes (BAW automatic updates)&#xD;
+if (this.context &amp;&amp; this.context.binding) {&#xD;
+    var binding = this.context.binding;&#xD;
+    &#xD;
+    // Watch for changes to the bound data&#xD;
+    if (binding.addDataChangeListener) {&#xD;
+        binding.addDataChangeListener(function(newValue) {&#xD;
+            var newTitle = "";&#xD;
+            var newValueText = "";&#xD;
+            &#xD;
+            if (typeof newValue === "string") {&#xD;
+                newValueText = newValue;&#xD;
+            } else if (newValue &amp;&amp; typeof newValue === "object") {&#xD;
+                newTitle = newValue.title || newValue.label || "";&#xD;
+                newValueText = newValue.value || newValue.text || newValue.content || "";&#xD;
+            }&#xD;
+            &#xD;
+            title = newTitle;&#xD;
+            value = newValueText;&#xD;
+            updateCard(newTitle, newValueText);&#xD;
+        });&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+// Public method to manually update card content&#xD;
+this.updateCard = function(newTitle, newValue) {&#xD;
+    title = newTitle || "";&#xD;
+    value = newValue || "";&#xD;
+    updateCard(title, value);&#xD;
+    &#xD;
+    // Update the bound data if possible&#xD;
+    if (this.context &amp;&amp; this.context.binding &amp;&amp; this.context.binding.set) {&#xD;
+        var newData = {&#xD;
+            title: title,&#xD;
+            value: value&#xD;
+        };&#xD;
+        this.context.binding.set(newData);&#xD;
+    }&#xD;
+};&#xD;
+&#xD;
+// Made with Bob&#xD;
+</scriptBlock>
+            <seq>1</seq>
+            <description></description>
+            <guid>guid:e51d3215-d508-4948-99cf-69c80e5e178c</guid>
+            <versionId>a286416d-b35e-4e42-b4e6-feb39171c848</versionId>
+        </inlineScript>
+    </coachView>
+</teamworks>
+

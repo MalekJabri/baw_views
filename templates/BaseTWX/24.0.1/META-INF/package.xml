@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:package buildId="BPM8600-20241207-054351" buildVersion="8.6.8" buildDescription="IBM Business Process Manager V8.6.8.24010 - 20241207_0858 - BPM8600-20241207-054351" fixPack="24010" containsECM="false" containsBPMN2="false" xmlns:p="http://lombardisoftware.com/schema/teamworks/7.0.0/package.xsd">
+    <target>
+        <project id="2066.9ba8db7b-5eea-4e1d-bce3-7b0b91650ffb" name="Interfaces Customizadas" description="" shortName="IC" isToolkit="true" isHidden="false" isSystem="false" solutionID="" solutionServerName="" solutionPrefix="" type="" isTemplate="false" isIconSet="false" caseDisplayName=""/>
+        <branch id="2063.00a88b52-6d59-4e40-9e9a-0f6c4551d367" name="Main" acronym="Main" description=""/>
+        <snapshot id="2064.5d5fe9d6-9127-4d94-90e2-d374aacc85b6" name="IC_12052026_1704" acronym="IC12052" originalCreationDate="2026-05-12T17:04:35.997-03:00" description=""/>
+    </target>
+    <governanceAssignments/>
+    <dependencies>
+        <dependency rank="0" isManaged="false" id="2069.6b8d712d-9bce-46dd-b112-f94df7c41b0d">
+            <project id="2066.1b351583-e5cb-43b7-baee-340a63130ea7" name="System Data" shortName="TWSYS" isToolkit="true" isHidden="false" isSystem="true"/>
+            <branch id="2063.0798815e-0346-4ef4-8946-ab4301c9f340" name="Main"/>
+            <snapshot id="2064.1080ded6-d153-4654-947c-2d16fce170ed" name="8.6.0.0" originalCreationDate="2015-08-24T21:00:00.000-03:00"/>
+        </dependency>
+        <dependency rank="1" isManaged="false" id="2069.986a10a9-56ae-4277-b619-ae8f6c2e85d0">
+            <project id="2066.ec5973da-aebe-40f6-aa02-a77962288f52" name="UI Toolkit" shortName="SYSBPMUI" isToolkit="true" isHidden="false" isSystem="true"/>
+            <branch id="2063.83ee2bb2-72b4-4a4d-b8ae-37ecd983c05e" name="Main"/>
+            <snapshot id="2064.304ac881-16c3-47d2-97d5-6e4c4a893177" name="8.6.0.0" originalCreationDate="2017-05-24T20:23:53.574-03:00"/>
+        </dependency>
+    </dependencies>
+    <objects>
+        <object id="1.2c4beb24-97ea-4eea-801d-0a7c496dd595" versionId="4e071d82-21a4-4eed-a299-0ee2956b432e" name="Deployment service flow" type="process"/>
+        <object id="1.52b15e50-3ddc-426b-a7f2-d5706e43ddf7" versionId="8aef6170-c8d9-4a4a-acda-69778acec3c8" name="Client-side human service" type="process"/>
+        <object id="12.a610e2a3-ea7a-4636-83e3-6976216e5d63" versionId="e26e758f-dcfc-471c-b801-14f20fd5b33e" name="CardData" type="twClass"/>
+        <object id="61.d66ce30a-997a-4851-a31c-5b72ba9a8999" versionId="da0fe0f3-83f6-4298-8dc2-f9580bba3599" name="993e03e9-2574-40fc-807c-65b06be378fd.zip" type="managedAsset"/>
+        <object id="62.0c6368b9-0344-417f-b14e-c71ce0b48f1c" versionId="640173ea-a8d9-495b-bf27-a788f1a4fafa" name="Environment Variables" type="environmentVariableSet"/>
+        <object id="63.7d6eb765-0b08-44d3-8572-db532e944d79" versionId="4e5e923e-ffb4-4a7f-b077-0eb7916d8fee" name="Toolkit Settings" type="projectDefaults"/>
+        <object id="64.8d1a9716-6a0b-49b5-9f8c-b69f2d3d1d14" versionId="9d5ba051-b679-4ec0-aa71-d9a3cdfad2cf" name="StatusCard" type="coachView"/>
+    </objects>
+    <files>
+        <file path="8e15c6db-f80e-4f81-8e2e-40256b543a4a" id="61.d66ce30a-997a-4851-a31c-5b72ba9a8999"/>
+    </files>
+    <migrationPolicies/>
+</p:package>

@@ -16,14 +16,14 @@
 	max-width: 100%;
 }
 
-/* Central Timeline Line - Refined */
+/* Central Timeline Line - Carbon Neutral */
 .timeline_maincontentbox .timeline-container .timeline-line {
 	position: absolute;
 	left: 24px;
 	top: 0;
 	bottom: 0;
 	width: 2px;
-	background: linear-gradient(180deg, #e0e0e0 0%, #f4f4f4 100%);
+	background: #e0e0e0; /* Gray 20 - solid, no gradient */
 	z-index: 0;
 }
 
@@ -70,61 +70,61 @@
 
 /* Event Marker - Completed State */
 .timeline_maincontentbox .timeline-container .timeline-events .timeline-event.completed .event-marker {
-	background: linear-gradient(135deg, #0f62fe 0%, #0353E9 100%);
-	border-color: #0f62fe;
-	box-shadow: 0 4px 12px rgba(15, 98, 254, 0.25);
+	background: #161616; /* Gray 100 - Carbon dark */
+	border-color: #161616;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 /* Event Marker - Current State with Pulse */
 .timeline_maincontentbox .timeline-container .timeline-events .timeline-event.current .event-marker {
-	background: #ffffff;
+	background: #0f62fe; /* Carbon blue */
 	border-color: #0f62fe;
-	border-width: 4px;
-	box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.15), 0 4px 12px rgba(15, 98, 254, 0.2);
+	border-width: 3px;
+	box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.1), 0 2px 8px rgba(15, 98, 254, 0.2);
 	animation: currentPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes currentPulse {
 	0%, 100% {
-		box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.15), 0 4px 12px rgba(15, 98, 254, 0.2);
+		box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.1), 0 2px 8px rgba(15, 98, 254, 0.2);
 	}
 	50% {
-		box-shadow: 0 0 0 8px rgba(15, 98, 254, 0.08), 0 4px 16px rgba(15, 98, 254, 0.25);
+		box-shadow: 0 0 0 8px rgba(15, 98, 254, 0.06), 0 2px 12px rgba(15, 98, 254, 0.25);
 	}
 }
 
 /* Event Marker - Pending State */
 .timeline_maincontentbox .timeline-container .timeline-events .timeline-event.pending .event-marker {
-	background: #f4f4f4;
-	border-color: #c6c6c6;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+	background: #f4f4f4; /* Gray 10 */
+	border-color: #c6c6c6; /* Gray 30 */
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 /* Event Marker - Error State */
 .timeline_maincontentbox .timeline-container .timeline-events .timeline-event.error .event-marker {
-	background: linear-gradient(135deg, #da1e28 0%, #ba1b23 100%);
+	background: #da1e28; /* Carbon red - no gradient */
 	border-color: #da1e28;
-	box-shadow: 0 4px 12px rgba(218, 30, 40, 0.25);
+	box-shadow: 0 2px 6px rgba(218, 30, 40, 0.2);
 }
 
 /* Event Marker - Warning State */
 .timeline_maincontentbox .timeline-container .timeline-events .timeline-event.warning .event-marker {
-	background: linear-gradient(135deg, #fdd13a 0%, #cfa102 100%);
-	border-color: #fdd13a;
-	box-shadow: 0 4px 12px rgba(253, 209, 58, 0.25);
+	background: #525252; /* Gray 70 - neutral warning */
+	border-color: #525252;
+	box-shadow: 0 2px 6px rgba(82, 82, 82, 0.2);
 }
 
-/* Event Content Container - Card Style */
+/* Event Content Container - Carbon Card Style */
 .timeline_maincontentbox .timeline-container .timeline-events .timeline-event .event-content {
 	display: flex;
 	flex-direction: column;
 	flex: 1;
 	margin-left: 1.5rem;
-	padding: 0.75rem 1.25rem;
+	padding: 1rem 1.25rem;
 	background: #ffffff;
-	border-radius: 8px;
-	border: 1px solid #e0e0e0;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+	border-radius: 0; /* Carbon uses sharp corners */
+	border: 1px solid #e0e0e0; /* Gray 20 */
+	box-shadow: none; /* Carbon cards are flat */
 	transition: all 0.2s cubic-bezier(0.2, 0, 0.38, 0.9);
 	position: relative;
 	top: 4px;
@@ -249,14 +249,14 @@
 }
 
 .timeline_maincontentbox .timeline-container .timeline-events .timeline-event.clickable:hover .event-marker {
-	transform: scale(1.08);
-	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+	transform: scale(1.05);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .timeline_maincontentbox .timeline-container .timeline-events .timeline-event.clickable:hover .event-content {
-	border-color: #0f62fe;
-	box-shadow: 0 4px 12px rgba(15, 98, 254, 0.15);
-	transform: translateX(4px);
+	border-color: #0f62fe; /* Carbon blue */
+	background: #f4f4f4; /* Gray 10 - subtle hover */
+	transform: translateX(2px);
 }
 
 .timeline_maincontentbox .timeline-container .timeline-events .timeline-event.clickable:active .event-content {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamworks>
+    <environmentVariableSet id="62.0c6368b9-0344-417f-b14e-c71ce0b48f1c" name="Environment Variables">
+        <lastModified>1778612272891</lastModified>
+        <lastModifiedBy>e255575</lastModifiedBy>
+        <tenantId isNull="true" />
+        <envVarSetId>62.0c6368b9-0344-417f-b14e-c71ce0b48f1c</envVarSetId>
+        <description isNull="true" />
+        <guid>guid:0c6368b9-0344-417f-b14e-c71ce0b48f1c</guid>
+        <versionId>640173ea-a8d9-495b-bf27-a788f1a4fafa</versionId>
+    </environmentVariableSet>
+</teamworks>
+

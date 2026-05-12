@@ -3,13 +3,20 @@
     <description>Package widgets, business objects, and coaches into a TWX artifact</description>
     <context>Use when artifacts are ready and the goal is TWX generation</context>
     <steps>
+      <step>Ask user which BAW template version to use (24.0.1 or 25.0.1)</step>
+      <step>Use ask_followup_question with version options, default to 25.0.1</step>
       <step>Inspect the widgets requested for packaging</step>
       <step>Check for standalone business objects in business-objects/generated/</step>
       <step>Check for coaches in coaches/</step>
       <step>Review the packaging configuration in package_baw.py</step>
-      <step>Run python package_baw.py and report the generated artifact</step>
+      <step>Run python3 package_baw.py --template-version {selected_version} --no-prompt</step>
+      <step>Report the generated artifact with template version used</step>
       <step>Confirm all artifact types (widgets, business objects, coaches) are included</step>
     </steps>
+    <template_selection>
+      <option value="24.0.1">For older BAW installations</option>
+      <option value="25.0.1">Default, for current BAW installations</option>
+    </template_selection>
   </example>
 
   <example name="troubleshoot_packaging_failure">
