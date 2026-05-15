@@ -10,7 +10,7 @@ output/
 sample/
 .bob/oldmcp.txt
 business-objects/
-business-process/
+business-processes/
 business-blueprints/
 business-process/*
 templates/Localisation
