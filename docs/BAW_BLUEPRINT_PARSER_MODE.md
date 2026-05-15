@@ -29,11 +29,12 @@ This mode serves as the bridge between business documentation and technical impl
 ### Business Process Capabilities
 - **Discovering** business processes and workflows from blueprint documents
 - **Modeling** process flows with actors, activities, and decision points
+- **Generating** BPMN configuration files (JSON) following the schema in BPMN_tools/CONFIG_SCHEMA_DESIGN.md
 - **Generating** Mermaid diagrams for process visualization
 - **Documenting** process steps, business rules, and integration points
 - **Linking** processes to relevant business objects (data flow)
 - **Creating** process catalogs organized by business context
-- **Preparing** structured metadata for future BPMN generation
+- **Preparing** config-driven BPMN generation with pre-defined element IDs
 
 ## When to Use This Mode
 
@@ -53,11 +54,12 @@ Use the BAW Blueprint Parser mode when you need to:
 
 ### Business Process Tasks
 - ✅ Discover and model business processes from blueprint documents
+- ✅ Generate BPMN configuration files (JSON) with pre-defined IDs for all elements
 - ✅ Generate Mermaid diagrams for process visualization
 - ✅ Document process workflows with actors and decision points
 - ✅ Link processes to business objects (data flow)
 - ✅ Create process catalogs organized by context
-- ✅ Prepare structured metadata for future BPMN generation
+- ✅ Enable deterministic BPMN XML generation via config-driven approach
 - ✅ Identify subprocesses and process relationships
 - ✅ Document integration points and system interactions
 
@@ -67,7 +69,7 @@ Use the BAW Blueprint Parser mode when you need to:
 - ❌ Deploying toolkits to BAW servers (use BAW Package Manager)
 - ❌ Creating or modifying coach widgets (use BAW Coach Widget)
 - ❌ Designing coach layouts (use BAW Coach Composer)
-- ❌ Generating actual BPMN XML (future capability, currently generates Mermaid)
+- ❌ Generating BPMN XML directly (use BPMN_tools Python scripts with generated configs)
 
 ## Workflow
 
@@ -179,19 +181,59 @@ graph TD
 - Reference other business objects correctly
 - Ensure JSON structure matches BAW packaging requirements
 
-### 7. Generate Business Process Definitions
+### 7. Generate BPMN Process Configurations
 
-**Purpose:** Create Markdown files with Mermaid diagrams for each identified business process.
+**Purpose:** Create JSON configuration files for each identified business process following the config-driven architecture.
+
+**Config-Driven Architecture:**
+```
+Blueprint Document → GenAI Analysis → JSON Config → Python Generator → BPMN XML
+                     (This Mode)                      (BPMN_tools)
+```
+
+**GenAI Role (This Mode):**
+- Analyze business documents and extract process information
+- Understand business context, actors, and workflows
+- Create structured JSON configurations with pre-defined IDs
+- Handle ambiguity and incomplete information
+
+**Python Role (BPMN_tools):**
+- Read JSON configurations
+- Generate valid BPMN 2.0 XML
+- Ensure proper element references
+- Apply BAW-specific conventions
 
 **Actions:**
-- Generate one Markdown file per process under `business-processes/[context]/`
-- Include Mermaid flowchart or sequence diagrams visualizing the process
-- Document process steps, decision points, and actors
+- Generate one JSON config file per process under `business-processes/configs/[context]/`
+- Follow the schema defined in `BPMN_tools/CONFIG_SCHEMA_DESIGN.md`
+- Extract process metadata (id, name, description, version)
+- Identify and define all roles/actors with unique IDs using `role-[name]` pattern
+- Extract milestones with unique IDs using `ms-[name]` pattern
+- Identify all BPMN elements (start events, tasks, gateways, end events) with unique IDs using `elem-[type]-[number]` pattern
+- Define sequence flows connecting elements with unique IDs using `flow-[number]` pattern
+- Create swimlanes for multi-role processes with unique IDs using `lane-[role-id]` pattern
 - Link process activities to relevant business objects
-- Include structured process metadata in JSON format for future BPMN generation
-- Use appropriate diagram types (flowchart with swimlanes, sequence diagrams)
+- Validate config structure before saving
+- Optionally generate companion Mermaid diagram for visualization
 
-**Important:** Process definitions are currently generated as Mermaid diagrams in Markdown. The structured metadata prepares for future BPMN artifact generation.
+**Important:** The config-driven approach separates document understanding (GenAI) from BPMN XML generation (Python), ensuring reliable and maintainable BPMN artifacts.
+
+**Config Structure (JSON):**
+- **process**: `{id, name, description, version}` - Process metadata
+- **metadata**: `{context, complexity, estimatedDuration}` - Additional metadata
+- **roles**: `[{id, name, type, description}]` - All actors (human, system, external)
+- **milestones**: `[{id, name, description}]` - Key process phases
+- **elements**: `[{id, type, name, assignee, incoming, outgoing}]` - BPMN flow nodes
+- **flows**: `[{id, sourceRef, targetRef, name, conditionExpression}]` - Sequence flows
+- **lanes**: `[{id, name, flowNodeRefs}]` - Swimlanes (optional)
+
+**ID Naming Conventions:**
+- Process IDs: `proc-[context]-[number]` (e.g., `proc-insurance-001`)
+- Role IDs: `role-[name]` (e.g., `role-agent`, `role-underwriter`)
+- Milestone IDs: `ms-[name]` (e.g., `ms-application-submitted`)
+- Element IDs: `elem-[type]-[number]` (e.g., `elem-start-1`, `elem-task-1`, `elem-gateway-1`)
+- Flow IDs: `flow-[number]` (e.g., `flow-1`, `flow-2`)
+- Lane IDs: `lane-[role-id]` (e.g., `lane-role-agent`)
 
 ### 8. Create Discovery Report
 
@@ -320,11 +362,17 @@ business-objects/
 
 ```
 business-processes/
-├── [context]/                  # e.g., LifeInsuranceAndAnnuities
-│   ├── NewBusinessApplication.process.md
-│   ├── ClaimsProcessing.process.md
-│   ├── PolicyAdministration.process.md
-│   └── ...
+├── configs/
+│   └── [context]/              # e.g., LifeInsuranceAndAnnuities
+│       ├── NewBusinessApplication.bpmn-config.json  # BPMN config for Python generator
+│       ├── ClaimsProcessing.bpmn-config.json
+│       ├── PolicyAdministration.bpmn-config.json
+│       └── ...
+├── diagrams/                   # Optional: Mermaid diagrams for visualization
+│   └── [context]/
+│       ├── NewBusinessApplication.md
+│       ├── ClaimsProcessing.md
+│       └── ...
 └── catalog/
     ├── [context].process-catalog.json  # Context-specific process catalog
     └── master.process-catalog.json     # Global process catalog
@@ -333,7 +381,8 @@ business-processes/
 ### File Naming Conventions
 
 - **Business Objects:** PascalCase (e.g., `Claim.json`, `PolicyHolder.json`)
-- **Business Processes:** PascalCase with `.process.md` extension (e.g., `NewBusinessApplication.process.md`)
+- **BPMN Configs:** PascalCase with `.bpmn-config.json` suffix (e.g., `NewBusinessApplication.bpmn-config.json`)
+- **Process Diagrams:** PascalCase with `.md` extension (e.g., `NewBusinessApplication.md`) - Optional
 - **Context:** Derived from business domain (e.g., `LifeInsuranceAndAnnuities`)
 - **Catalogs:** `[context].catalog.json` and `master.catalog.json` for objects; `[context].process-catalog.json` and `master.process-catalog.json` for processes
 - **Reports:** `[context].discovery-report.md` (comprehensive documentation)
@@ -341,11 +390,11 @@ business-processes/
 ## Core Principles
 
 1. **Authoritative Source:** Treat business blueprints as the authoritative source for both data and process models
-2. **Business Meaning First:** Extract business meaning before generating JSON and Mermaid artifacts
+2. **Business Meaning First:** Extract business meaning before generating JSON and BPMN config artifacts
 3. **Dual Discovery:** Discover both data structures (business objects) and workflows (business processes)
 4. **Reuse Conventions:** Use existing repository patterns and utilities
 5. **Deterministic Output:** Keep generated artifacts consistent and organized by context
-6. **Structured Metadata:** Generate Mermaid diagrams with metadata structured for future BPMN conversion
+6. **Config-Driven BPMN:** Generate BPMN configs with pre-defined IDs for deterministic XML generation
 7. **Packaging-Ready:** Produce outputs ready for packaging without performing packaging
 8. **Document Assumptions:** Record assumptions and ambiguities when inferring business meaning
 9. **Link Data and Process:** Connect processes to business objects they consume or produce
@@ -379,15 +428,21 @@ business-processes/
 **Mode Actions:**
 1. Read `business-blueprints/LifeInsuranceAndAnnuities-2.pdf`
 2. Identify key workflows: New Business Application, Claims Processing, Policy Administration, Annuity Payout
-3. Extract process steps, actors, and decision points
-4. Model process flows with swimlanes
-5. Generate Mermaid diagrams for each process
-6. Link processes to relevant business objects (Application, Policy, Claim, etc.)
-7. Document business rules and integration points
-8. Create process files in `business-processes/LifeInsuranceAndAnnuities/`
-9. Generate structured metadata for future BPMN conversion
-10. Create process catalog at `business-processes/catalog/LifeInsuranceAndAnnuities.process-catalog.json`
-11. Update master process catalog
+3. Extract process steps, actors, and decision points for each workflow
+4. For each process, generate BPMN config JSON file following `BPMN_tools/CONFIG_SCHEMA_DESIGN.md` schema:
+   - Extract process metadata (id: `proc-insurance-001`, name, description, version)
+   - Identify roles (e.g., `role-agent`, `role-underwriter`, `role-system`)
+   - Define milestones (e.g., `ms-application-submitted`, `ms-underwriting-complete`)
+   - Extract elements (start events, tasks, gateways, end events) with IDs like `elem-start-1`, `elem-task-1`
+   - Define sequence flows (e.g., `flow-1`, `flow-2`) connecting elements
+   - Create swimlanes (e.g., `lane-role-agent`) for multi-role processes
+5. Link processes to relevant business objects (Application, Policy, Claim, etc.)
+6. Validate config structure (valid references, proper flow logic)
+7. Save BPMN configs to `business-processes/configs/LifeInsuranceAndAnnuities/`
+8. Optionally generate companion Mermaid diagrams for visualization
+9. Create process catalog at `business-processes/catalog/LifeInsuranceAndAnnuities.process-catalog.json`
+10. Update master process catalog
+11. Configs are ready for Python BPMN generator in `BPMN_tools/`
 
 ### Scenario 3: Complete Blueprint Analysis (Objects + Processes)
 
@@ -399,7 +454,7 @@ business-processes/
 2. Generate comprehensive discovery report covering:
    - 18 business objects with full specifications
    - 26 enumerations with valid values
-   - 4+ business processes with Mermaid diagrams
+   - 4+ business processes with BPMN configs and Mermaid diagrams
    - Business rules and constraints
    - Integration points and system interactions
 3. Create cross-references between processes and business objects
@@ -453,10 +508,11 @@ graph TD
 
 **Business Processes:**
 - Extract process workflows alongside business objects
-- Generate clear Mermaid diagrams with proper swimlanes
+- Generate BPMN config JSON files following CONFIG_SCHEMA_DESIGN.md schema
+- Generate pre-defined IDs for all elements to enable deterministic BPMN XML generation
+- Generate companion Mermaid diagrams with proper swimlanes for visualization
 - Link processes to business objects they consume or produce
 - Document decision points and business rules
-- Include structured metadata for future BPMN generation
 - Create process catalogs organized by context
 - Identify subprocesses and process relationships
 
@@ -473,8 +529,9 @@ graph TD
 - Don't modify widget implementations
 - Don't create coach layouts
 - Don't skip the class ID registration step
-- Don't generate BPMN XML directly (use Mermaid with metadata for now)
+- Don't generate BPMN XML directly (generate config files for BPMN_tools to consume)
 - Don't create processes without linking to relevant business objects
+- Don't forget to generate both BPMN config JSON and Mermaid diagram for each process
 
 ## Troubleshooting
 
@@ -505,7 +562,8 @@ graph TD
 The BAW Blueprint Parser mode is your specialized assistant for transforming business documentation into structured, packaging-ready artifacts including:
 
 - **Business Objects** - JSON definitions with deterministic class IDs
-- **Business Processes** - Mermaid diagrams with structured metadata
+- **BPMN Configurations** - JSON config files with pre-defined IDs for deterministic BPMN XML generation
+- **Business Processes** - Mermaid diagrams for visualization
 - **Discovery Reports** - Comprehensive documentation with traceability
 - **Catalogs** - Organized by business context for easy navigation
 - **Dependency Analysis** - Processing order and relationship mapping
@@ -537,7 +595,14 @@ It handles the complex task of extracting business meaning from documents and ge
 - Process catalogs and metadata
 - Structured preparation for future BPMN generation
 
-### Phase 4: Future BPMN Generation (Planned)
-- Direct BPMN XML generation
+### Phase 4: Config-Driven BPMN Generation (Current)
+- BPMN configuration file generation (JSON)
+- Pre-defined element IDs for deterministic generation
+- Schema-based validation (CONFIG_SCHEMA_DESIGN.md)
+- Python-based BPMN XML generation from configs
+- Separation of concerns: GenAI creates config, Python generates XML
+
+### Phase 5: BAW Process Packaging (Planned)
 - BAW process artifact packaging
 - Deployment-ready process definitions
+- Integration with BAW Package Manager

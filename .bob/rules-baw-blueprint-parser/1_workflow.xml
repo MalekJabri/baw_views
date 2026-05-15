@@ -106,24 +106,52 @@
     </step>
 
     <step number="7">
-      <title>Generate Business Process Definitions</title>
-      <description>Create Markdown files with Mermaid diagrams for each identified business process</description>
+      <title>Generate BPMN Process Configurations</title>
+      <description>Create JSON configuration files for each identified business process</description>
       <actions>
-        <action>Generate one Markdown file per process under business-processes/[context]/ using PascalCase names such as NewBusinessApplication.process.md</action>
-        <action>Include Mermaid flowchart or sequence diagrams visualizing the process</action>
-        <action>Document process steps, decision points, and actors</action>
+        <action>Generate one JSON config file per process under business-processes/configs/[context]/ using PascalCase names such as NewBusinessApplication.bpmn-config.json</action>
+        <action>Follow the config schema defined in BPMN_tools/CONFIG_SCHEMA_DESIGN.md</action>
+        <action>Extract process metadata (id, name, description, version)</action>
+        <action>Identify and define all roles/actors with unique IDs (role-*)</action>
+        <action>Extract milestones with unique IDs (ms-*)</action>
+        <action>Identify all BPMN elements (start events, tasks, gateways, end events) with unique IDs (elem-*)</action>
+        <action>Define sequence flows connecting elements with unique IDs (flow-*)</action>
+        <action>Create swimlanes for multi-role processes with unique IDs (lane-*)</action>
         <action>Link process activities to relevant business objects</action>
-        <action>Include structured process metadata in JSON format for future BPMN generation</action>
+        <action>Validate config structure before saving</action>
         <action>Create a process catalog file under business-processes/catalog/[context].process-catalog.json</action>
         <action>Maintain or create a master process catalog at business-processes/catalog/master.process-catalog.json</action>
       </actions>
       <important>
-        Process definitions are currently generated as Mermaid diagrams in Markdown.
-        The structured metadata prepares for future BPMN artifact generation.
+        BPMN configs are JSON files consumed by Python generators in BPMN_tools/.
+        The config-driven approach separates document understanding (GenAI) from BPMN XML generation (Python).
+        See 1_bpmn_config_generation.xml for detailed extraction and validation guidance.
       </important>
     </step>
 
     <step number="8">
+      <title>Generate BPMN XML Files</title>
+      <description>Generate BPMN 2.0 XML files from the JSON config files using the generate_bpmn tool</description>
+      <actions>
+        <action>For each BPMN config file created in step 7, generate the corresponding BPMN XML file</action>
+        <action>Use execute_command to run: python BPMN_tools/generate_bpmn.py business-processes/configs/[context]/[ProcessName].bpmn-config.json business-processes/[context]/[ProcessName].bpmn</action>
+        <action>Verify that BPMN XML files are created successfully in business-processes/[context]/</action>
+        <action>Validate that generated BPMN files are well-formed XML</action>
+        <action>Create a README.md in business-processes/[context]/ documenting the generated processes</action>
+      </actions>
+      <important>
+        The generate_bpmn tool automatically validates the config before generating XML.
+        BPMN XML files are placed in business-processes/[context]/ alongside their config files.
+        This step transforms JSON configs into importable BPMN 2.0 XML for BAW.
+      </important>
+      <example>
+        python BPMN_tools/generate_bpmn.py \
+          business-processes/configs/Insurance/SimpleClaimSubmission.bpmn-config.json \
+          business-processes/Insurance/SimpleClaimSubmission.bpmn
+      </example>
+    </step>
+
+    <step number="9">
       <title>Generate OpenAPI Specification</title>
       <description>Create an OpenAPI 3.0 specification file containing all discovered business object schemas</description>
       <actions>
@@ -158,7 +186,7 @@
       </example_structure>
     </step>
 
-    <step number="9">
+    <step number="10">
       <title>Register Business Objects with Class IDs</title>
       <description>Register all generated business objects in the BAW custom types registry with unique class IDs for version control</description>
       <actions>
@@ -174,7 +202,7 @@
       </important>
     </step>
 
-    <step number="9">
+    <step number="11">
       <title>Validate Generation Readiness</title>
       <description>Check that the generated artifacts are internally consistent and aligned with repository conventions</description>
       <actions>
@@ -189,7 +217,7 @@
       </actions>
     </step>
 
-    <step number="10">
+    <step number="12">
       <title>Preserve Boundaries and Handoff Cleanly</title>
       <description>Finish at the artifact generation boundary and hand off packaging work to the packaging mode when requested</description>
       <actions>
@@ -227,13 +255,16 @@
     
     <business_processes>
       <generated_root>business-processes/</generated_root>
-      <generated_processes_path>business-processes/[context]/</generated_processes_path>
+      <config_files_path>business-processes/configs/[context]/</config_files_path>
+      <bpmn_files_path>business-processes/[context]/</bpmn_files_path>
       <process_catalog_path>business-processes/catalog/[context].process-catalog.json</process_catalog_path>
       <master_process_catalog_path>business-processes/catalog/master.process-catalog.json</master_process_catalog_path>
       <notes>
-        <note>Generated process files use stable PascalCase names such as NewBusinessApplication.process.md.</note>
-        <note>Each process file contains Mermaid diagrams and structured metadata.</note>
-        <note>Process metadata is structured to support future BPMN generation.</note>
+        <note>Generated BPMN config files use stable PascalCase names such as NewBusinessApplication.bpmn-config.json.</note>
+        <note>Each config file contains structured JSON following the schema in BPMN_tools/CONFIG_SCHEMA_DESIGN.md.</note>
+        <note>Configs include process metadata, roles, milestones, elements, flows, and optional lanes.</note>
+        <note>BPMN XML files are automatically generated from configs using BPMN_tools/generate_bpmn.py.</note>
+        <note>BPMN XML files are placed in business-processes/[context]/ for easy import into BAW.</note>
         <note>Processes are linked to business objects they consume or produce.</note>
       </notes>
     </business_processes>
@@ -244,8 +275,12 @@
     <criterion>Business objects are extracted and normalized into a stable internal model</criterion>
     <criterion>Business processes are identified and modeled with clear workflows</criterion>
     <criterion>Generated JSON artifacts follow the business-objects/generated/[context]/ structure</criterion>
-    <criterion>Generated process definitions follow the business-processes/[context]/ structure</criterion>
-    <criterion>Process definitions include Mermaid diagrams and structured metadata</criterion>
+    <criterion>Generated BPMN config files follow the business-processes/configs/[context]/ structure</criterion>
+    <criterion>BPMN configs follow the schema defined in BPMN_tools/CONFIG_SCHEMA_DESIGN.md</criterion>
+    <criterion>All BPMN elements have unique IDs following naming conventions (proc-*, role-*, elem-*, flow-*, lane-*)</criterion>
+    <criterion>BPMN configs pass validation checks (valid references, proper flow logic)</criterion>
+    <criterion>BPMN XML files are generated from configs and placed in business-processes/[context]/</criterion>
+    <criterion>Generated BPMN XML files are valid BPMN 2.0 and ready for BAW import</criterion>
     <criterion>OpenAPI specification file is generated at business-objects/openapi-spec.json with all business object schemas</criterion>
     <criterion>Context and master catalog files are produced for both business objects and processes</criterion>
     <criterion>Optional discovery reports are written under business-objects/reports/ when needed</criterion>

@@ -90,7 +90,8 @@ graph TD
 **Actions:**
 - Review available widgets in `widgets/` directory
 - Check packaging scripts and configuration
-- Review `toolkit.config.json` for toolkit metadata
+- Review `toolkit.config.json` for toolkit metadata and BAW version
+- Verify BAW template version is configured correctly
 - Check existing output expectations
 
 ### 3. Detect New Widgets Automatically
@@ -185,6 +186,7 @@ Registration complete: 18 business objects
 
 **Actions:**
 - Execute `package_baw.py` to generate TWX artifact
+- BAW template version is read from `toolkit.config.json` (`bawVersion` field)
 - Packager automatically includes:
   - Custom widgets from `widgets/`
   - Standalone business objects from `business-objects/generated/`
@@ -196,6 +198,8 @@ Registration complete: 18 business objects
 ```bash
 python3 package_baw.py
 ```
+
+**Note:** The BAW template version (24.0.1 or 25.0.1) is configured in `toolkit.config.json` under the `bawVersion` field. No command-line arguments are needed.
 
 **Example Output:**
 ```
@@ -333,15 +337,37 @@ output/
 From `toolkit.config.json`:
 ```json
 {
-  "name": "MyToolkit",
-  "version": "1.0.0",
-  "description": "Custom BAW widgets and business objects",
-  "vendor": "Your Organization",
-  "widgets": ["Breadcrumb", "ProgressBar", "Stepper"],
-  "businessObjects": ["Address", "Policy", "Claim"],
-  "coaches": ["insurance_application", "claim_submission"]
+  "toolkit": {
+    "name": "MyToolkit",
+    "shortName": "MT",
+    "version": "1.0.0",
+    "bawVersion": "25.0.1",
+    "description": "Custom BAW widgets and business objects",
+    "id": "2066.xxx-xxx-xxx",
+    "isToolkit": true
+  },
+  "dependencies": {
+    "systemData": {
+      "snapshotId": "2064.xxx",
+      "name": "8.6.0.0_TC"
+    },
+    "uiToolkit": {
+      "snapshotId": "2064.xxx",
+      "name": "8.6.0.0"
+    }
+  },
+  "output": {
+    "directory": "output",
+    "filename": "MyToolkit_{version}.twx"
+  }
 }
 ```
+
+**Key Configuration Fields:**
+- `bawVersion`: BAW template version (24.0.1 or 25.0.1) - determines which template structure to use
+- `version`: Toolkit version (auto-incremented during packaging)
+- `id`: Persistent toolkit ID for upgrade compatibility
+- `shortName`: Toolkit acronym used in BAW
 
 ## Core Principles
 
@@ -433,6 +459,61 @@ graph LR
 - **This Mode:** Packages and deploys all artifacts
 - **Deploys To:** BAW servers via MCP tools
 
+## BAW Version Configuration
+
+### Overview
+
+The BAW Package Manager uses a **config-based approach** for template versioning. The BAW template version is specified in `toolkit.config.json` and automatically used during packaging.
+
+### Configuration
+
+In `toolkit.config.json`, set the `bawVersion` field:
+
+```json
+{
+  "toolkit": {
+    "name": "Custom Widgets",
+    "shortName": "CW",
+    "version": "1.0.96",
+    "bawVersion": "25.0.1",  // ← BAW template version
+    "id": "2066.xxx-xxx-xxx"
+  }
+}
+```
+
+### Supported Versions
+
+- **24.0.1** - BAW 24.x template (includes 3 dependency toolkits)
+- **25.0.1** - BAW 25.x template (includes 2 dependency toolkits) - **Default**
+
+### How It Works
+
+1. **Configuration Loading**: `package_baw.py` reads `bawVersion` from config
+2. **Template Selection**: TWXBuilder uses `templates/BaseTWX/{bawVersion}/`
+3. **Automatic Dependencies**: Correct toolkit dependencies are included automatically
+4. **No Manual Selection**: No command-line arguments or prompts needed
+
+### Switching Versions
+
+To switch BAW versions, simply update the config:
+
+```json
+"bawVersion": "24.0.1"  // Change from 25.0.1 to 24.0.1
+```
+
+Then run packaging as normal:
+```bash
+python3 package_baw.py
+```
+
+### Benefits
+
+✅ **Single Source of Truth** - Version controlled with your code
+✅ **Team Consistency** - Everyone uses the same BAW version
+✅ **Automatic Dependencies** - Correct toolkits included automatically
+✅ **No Manual Steps** - No prompts or command-line arguments
+✅ **Version Tracking** - BAW version tracked in git with your code
+
 ## Best Practices
 
 ### ✅ Do
@@ -442,6 +523,7 @@ graph LR
 - Validate all artifacts before running packaging workflow
 - Offer deployment after successful packaging
 - Provide detailed status and progress updates
+- Verify `bawVersion` in config matches target BAW server version
 - Use MCP tools for BAW server operations
 - Establish login session before deployment
 - Monitor deployment status until completion
@@ -454,6 +536,7 @@ graph LR
 - Don't skip business object registration
 - Don't deploy without successful packaging
 - Don't perform BAW operations without login session
+- Don't manually edit template version in code - use config instead
 
 ## Troubleshooting
 

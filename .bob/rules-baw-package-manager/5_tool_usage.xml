@@ -52,8 +52,7 @@
     <tool name="execute_command">
       <best_practices>
         <practice>Use for packaging execution and lightweight validation checks</practice>
-        <practice>Always specify template version: python3 package_baw.py --template-version {version} --no-prompt</practice>
-        <practice>Use --no-prompt flag to skip interactive mode when version is already determined</practice>
+        <practice>Always specify template version: python3 package_baw.py</practice>
         <practice>Capture output that helps confirm success, warnings, or blocking failures</practice>
       </best_practices>
       <template_versions>

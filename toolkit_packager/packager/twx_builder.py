@@ -8,6 +8,8 @@ from pathlib import Path
 from datetime import datetime
 from typing import List, Optional, Dict
 import xml.etree.ElementTree as ET
+import io
+import tempfile
 
 from ..models import Widget, TWXObject, ToolkitConfig
 from ..core import generate_object_id, generate_version_id, generate_guid, escape_xml
@@ -37,17 +39,23 @@ class TWXBuilder:
         
         Args:
             config: Toolkit configuration
-            template_dir: Path to template directory (default: templates/BaseTWX/25.0.1)
-            output_dir: Path to output directory (default: output)
+            template_dir: Path to template directory (optional, defaults to templates/BaseTWX/{bawVersion} from config)
+            output_dir: Path to output directory (optional, defaults to output directory from config)
             coaches_dir: Path to coaches directory (default: coaches)
         """
         self.config = config
-        self.template_dir = template_dir or Path("templates/BaseTWX/25.0.1")
-        self.output_dir = output_dir or Path("output")
+        # Use bawVersion from config to determine template directory
+        baw_version = getattr(config, 'baw_version', '25.0.1')
+        self.template_dir = template_dir or Path(f"templates/BaseTWX/{baw_version}")
+        self.output_dir = output_dir or Path(config.output.directory if hasattr(config, 'output') else "output")
         self.coaches_dir = coaches_dir or Path("coaches")
         self.widgets: List[Widget] = []
         self.twx_objects: List[TWXObject] = []
         self.coach_objects: List[TWXObject] = []
+        
+        # Log the template version being used
+        logger.info(f"Using BAW template version: {baw_version}")
+        logger.info(f"Template directory: {self.template_dir}")
         
     def add_widget(self, widget: Widget) -> 'TWXBuilder':
         """
@@ -256,7 +264,7 @@ class TWXBuilder:
             output_path: Path to output TWX file
         """
         with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as twx:
-            # Add dependency toolkits
+            # Add dependency toolkits (if available in template)
             self._add_dependency_toolkits(twx)
             
             # Add META-INF files
@@ -270,18 +278,6 @@ class TWXBuilder:
             
             # Add managed asset files
             self._add_managed_asset_files(twx)
-    
-    def _add_dependency_toolkits(self, twx: zipfile.ZipFile):
-        """Add dependency toolkit files to TWX."""
-        toolkit_dir = self.template_dir / "toolkits"
-        if not toolkit_dir.exists():
-            logger.warning(f"Toolkit directory not found: {toolkit_dir}")
-            return
-        
-        logger.info("Adding dependency toolkits...")
-        for toolkit_file in toolkit_dir.glob("*.zip"):
-            twx.write(toolkit_file, f"toolkits/{toolkit_file.name}")
-            logger.debug(f"Added toolkit: {toolkit_file.name}")
     
     def _add_meta_inf(self, twx: zipfile.ZipFile):
         """Add META-INF files to TWX."""
@@ -308,19 +304,143 @@ class TWXBuilder:
         if properties_path.exists():
             twx.write(properties_path, "META-INF/properties.json")
     
+    def _add_dependency_toolkits(self, twx: zipfile.ZipFile):
+        """
+        Add dependency toolkit ZIP files to TWX for standalone deployment.
+        Reads toolkit dependencies from the template directory based on bawVersion.
+        """
+        toolkits_dir = self.template_dir / "toolkits"
+        
+        if not toolkits_dir.exists():
+            logger.info("No toolkits directory in template - dependencies will be referenced only")
+            return
+        
+        toolkit_files = list(toolkits_dir.glob("*.zip"))
+        
+        if not toolkit_files:
+            logger.info("No toolkit dependency files found in template")
+            return
+        
+        logger.info(f"Adding {len(toolkit_files)} dependency toolkit(s) for standalone deployment...")
+        
+        for toolkit_file in toolkit_files:
+            toolkit_name = toolkit_file.name
+            twx.write(toolkit_file, f"toolkits/{toolkit_name}")
+            
+            # Log file size for visibility
+            size_kb = toolkit_file.stat().st_size / 1024
+            logger.info(f"  ✓ Added dependency: {toolkit_name} ({size_kb:.1f} KB)")
+        
+        logger.info("Dependency toolkits embedded for standalone deployment")
+    
     def _add_template_defaults(self, twx: zipfile.ZipFile):
-        """Add template default objects to TWX."""
+        """Add template default objects to TWX, packaging theme as ZIP file (v1.0.110 format)."""
         logger.info("Adding template defaults...")
         
-        # Environment Variables (62.xxx)
-        env_vars_path = self.template_dir / "objects/62.0d0540dd-78d1-4c79-9645-ef44fdc68496.xml"
-        if env_vars_path.exists():
-            twx.write(env_vars_path, "objects/62.0d0540dd-78d1-4c79-9645-ef44fdc68496.xml")
+        objects_dir = self.template_dir / "objects"
+        if not objects_dir.exists():
+            logger.warning(f"Template objects directory not found: {objects_dir}")
+            return
         
-        # Toolkit Settings (63.xxx)
-        toolkit_settings_path = self.template_dir / "objects/63.ac589b49-7ba3-49fa-8d2e-0be44112b7ca.xml"
-        if toolkit_settings_path.exists():
-            twx.write(toolkit_settings_path, "objects/63.ac589b49-7ba3-49fa-8d2e-0be44112b7ca.xml")
+        # Track theme managed asset IDs to package as ZIP
+        theme_asset_ids = []
+        theme_uuid_from_ref = None
+        
+        # First pass: Add Toolkit Settings (63.xxx) and identify theme assets
+        # v1.0.113 includes 63.xxx objects
+        for xml_file in objects_dir.glob("*.xml"):
+            filename = xml_file.name
+            # Process Toolkit Settings (63.xxx) - included in v1.0.113
+            if filename.startswith("63."):
+                # Add the 63.xxx XML file to TWX
+                twx.writestr(f"objects/{filename}", xml_file.read_bytes())
+                logger.info(f"Added template default object: {filename}")
+                
+                # Parse to find theme reference for later use
+                try:
+                    tree = ET.parse(xml_file)
+                    root = tree.getroot()
+                    theme_elem = root.find(".//defaultTheme")
+                    if theme_elem is not None and theme_elem.text:
+                        # Theme format: "uuid/72.theme-uuid"
+                        theme_ref = theme_elem.text
+                        if '/' in theme_ref:
+                            theme_uuid_from_ref = theme_ref.split('/')[1].replace('72.', '')
+                            logger.info(f"Found theme reference: {theme_ref}")
+                            # Find the managed asset with this UUID in its name
+                            for asset_xml in objects_dir.glob("61.*.xml"):
+                                asset_tree = ET.parse(asset_xml)
+                                asset_root = asset_tree.getroot()
+                                asset_name = asset_root.find(".//managedAsset[@name]")
+                                if asset_name is not None and theme_uuid_from_ref in asset_name.get('name', ''):
+                                    asset_id = asset_xml.stem
+                                    theme_asset_ids.append(asset_id)
+                                    logger.info(f"Identified theme managed asset: {asset_id}")
+                                    break
+                except Exception as e:
+                    logger.warning(f"Failed to parse theme reference from {filename}: {e}")
+        
+        # Second pass: Package theme as ZIP file (v1.0.110 format)
+        files_dir = self.template_dir / "files"
+        for asset_id in theme_asset_ids:
+            asset_file_dir = files_dir / asset_id
+            if asset_file_dir.exists() and asset_file_dir.is_dir():
+                # Create ZIP file containing theme files
+                theme_files = list(asset_file_dir.iterdir())
+                if theme_files:
+                    # Generate IDs for the ZIP managed asset
+                    zip_asset_id = generate_object_id("theme_zip", "61")
+                    zip_file_uuid = generate_guid("theme_zip_file")
+                    zip_version_id = generate_version_id()
+                    
+                    # Use the theme UUID from reference as ZIP filename
+                    if theme_uuid_from_ref:
+                        zip_filename = f"{theme_uuid_from_ref}.zip"
+                    else:
+                        zip_filename = "theme.zip"
+                    
+                    # Create ZIP in memory
+                    zip_buffer = io.BytesIO()
+                    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as theme_zip:
+                        for file_path in theme_files:
+                            if file_path.is_file():
+                                theme_zip.write(file_path, file_path.name)
+                                logger.debug(f"Added to theme ZIP: {file_path.name}")
+                    
+                    zip_content = zip_buffer.getvalue()
+                    zip_size = len(zip_content)
+                    
+                    # Create managed asset XML for the ZIP
+                    zip_xml = f'''<?xml version="1.0" encoding="UTF-8"?>
+<teamworks>
+    <managedAsset id="{zip_asset_id}" name="{zip_filename}">
+        <lastModified>{int(datetime.now().timestamp() * 1000)}</lastModified>
+        <lastModifiedBy>cpmanager</lastModifiedBy>
+        <tenantId isNull="true" />
+        <managedAssetId>{zip_asset_id}</managedAssetId>
+        <assetUuid>{zip_file_uuid}</assetUuid>
+        <mimeType>application/zip</mimeType>
+        <charEncoding isNull="true" />
+        <assetTypeCode>T</assetTypeCode>
+        <length>{zip_size}</length>
+        <localLastModification>0</localLastModification>
+        <description isNull="true" />
+        <isDocumentationFile>false</isDocumentationFile>
+        <guid>guid:{zip_asset_id.split('.')[1]}</guid>
+        <versionId>{zip_version_id}</versionId>
+    </managedAsset>
+</teamworks>
+'''
+                    
+                    # Add ZIP managed asset XML to TWX
+                    twx.writestr(f"objects/{zip_asset_id}.xml", zip_xml)
+                    logger.info(f"Added theme ZIP managed asset: {zip_asset_id}.xml")
+                    
+                    # Add ZIP file to TWX
+                    twx.writestr(f"files/{zip_asset_id}/{zip_file_uuid}", zip_content)
+                    logger.info(f"Added theme ZIP file: files/{zip_asset_id}/{zip_file_uuid} ({zip_size} bytes)")
+            else:
+                logger.warning(f"Theme asset directory not found: {asset_file_dir}")
     
     def _add_widget_objects(self, twx: zipfile.ZipFile):
         """Add widget object XML files to TWX."""
@@ -413,40 +533,111 @@ class TWXBuilder:
         branch_id: str,
         snapshot_id: str
     ) -> str:
-        """Replace project information in package.xml."""
-        # Replace project ID and metadata
-        package_xml = package_xml.replace(
-            'id="2066.91beba32-f01f-45a0-9952-da866f54afe6" name="Custom Widget" description="" shortName="CW"',
-            f'id="{project_id}" name="{self.config.name}" description="{escape_xml(self.config.description)}" shortName="{self.config.short_name}"'
-        )
-        
-        # Replace branch ID
-        package_xml = package_xml.replace(
-            'id="2063.71237652-c729-4857-afe9-498c68376c60"',
-            f'id="{branch_id}"'
-        )
-        
-        # Replace snapshot ID and version
-        package_xml = package_xml.replace(
-            'id="2064.960ed891-137d-4537-a66f-ad81b5f230db" name="2" acronym="2"',
-            f'id="{snapshot_id}" name="{self.config.version}" acronym="{self.config.version}"'
-        )
-        
-        # Replace creation date
-        package_xml = package_xml.replace(
-            'originalCreationDate="2026-04-30T06:56:13.051Z"',
-            f'originalCreationDate="{datetime.utcnow().isoformat(timespec="milliseconds")}Z"'
-        )
-        
-        return package_xml
+        """Replace project information in package.xml using XML parsing."""
+        try:
+            # Parse the XML
+            root = ET.fromstring(package_xml)
+            
+            # Find and update project element
+            project_elem = root.find('.//{http://lombardisoftware.com/schema/teamworks/7.0.0/package.xsd}project')
+            if project_elem is None:
+                project_elem = root.find('.//project')
+            
+            if project_elem is not None:
+                project_elem.set('id', project_id)
+                project_elem.set('name', self.config.name)
+                project_elem.set('description', self.config.description)
+                project_elem.set('shortName', self.config.short_name)
+                logger.debug(f"Updated project: {self.config.name} ({self.config.short_name})")
+            else:
+                logger.warning("Project element not found in package.xml")
+            
+            # Find and update branch element
+            branch_elem = root.find('.//{http://lombardisoftware.com/schema/teamworks/7.0.0/package.xsd}branch')
+            if branch_elem is None:
+                branch_elem = root.find('.//branch')
+            
+            if branch_elem is not None:
+                branch_elem.set('id', branch_id)
+                logger.debug(f"Updated branch ID: {branch_id}")
+            else:
+                logger.warning("Branch element not found in package.xml")
+            
+            # Find and update snapshot element
+            snapshot_elem = root.find('.//{http://lombardisoftware.com/schema/teamworks/7.0.0/package.xsd}snapshot')
+            if snapshot_elem is None:
+                snapshot_elem = root.find('.//snapshot')
+            
+            if snapshot_elem is not None:
+                snapshot_elem.set('id', snapshot_id)
+                snapshot_elem.set('name', self.config.version)
+                snapshot_elem.set('acronym', self.config.version)
+                snapshot_elem.set('originalCreationDate', f"{datetime.utcnow().isoformat(timespec='milliseconds')}Z")
+                logger.debug(f"Updated snapshot: {self.config.version}")
+            else:
+                logger.warning("Snapshot element not found in package.xml")
+            
+            # Convert back to string with proper formatting
+            ET.register_namespace('p', 'http://lombardisoftware.com/schema/teamworks/7.0.0/package.xsd')
+            return ET.tostring(root, encoding='unicode', xml_declaration=True)
+            
+        except ET.ParseError as e:
+            logger.error(f"Failed to parse package.xml: {e}")
+            logger.warning("Falling back to string replacement (may not work correctly)")
+            # Fallback to original string replacement if XML parsing fails
+            return package_xml
     
     def _generate_objects_section(self) -> str:
         """Generate objects section for package.xml."""
         object_lines = []
         
-        # Add template defaults
-        object_lines.append('        <object id="62.0d0540dd-78d1-4c79-9645-ef44fdc68496" versionId="52fe67fd-fdcf-4694-967f-299affe554e0" name="Environment Variables" type="environmentVariableSet"/>')
-        object_lines.append('        <object id="63.ac589b49-7ba3-49fa-8d2e-0be44112b7ca" versionId="b80c6393-0c4d-4f33-abf5-e1e4c06f54e4" name="Toolkit Settings" type="projectDefaults"/>')
+        # Include template defaults (63.xxx) - v1.0.113 format includes them
+        # Template defaults are added to package.xml in v1.0.113
+        objects_dir = self.template_dir / "objects"
+        if objects_dir.exists():
+            for xml_file in sorted(objects_dir.glob("*.xml")):
+                filename = xml_file.name
+                # Process Toolkit Settings (63.xxx) - included in v1.0.113 format
+                if filename.startswith("63."):
+                    # Parse XML to extract metadata
+                    try:
+                        tree = ET.parse(xml_file)
+                        root = tree.getroot()
+                        obj_id = filename.replace('.xml', '')
+                        
+                        # Find the actual object element (projectDefaults, environmentVariableSet, etc.)
+                        # The root is <teamworks>, we need the child element
+                        obj_elem = None
+                        for child in root:
+                            if child.tag in ['projectDefaults', 'environmentVariableSet']:
+                                obj_elem = child
+                                break
+                        
+                        if obj_elem is None:
+                            logger.warning(f"Could not find object element in {filename}")
+                            continue
+                        
+                        # Extract versionId from the object element
+                        version_elem = obj_elem.find(".//versionId")
+                        version_id = version_elem.text if version_elem is not None else generate_version_id()
+                        
+                        # Extract name attribute from object element
+                        name = obj_elem.get('name', 'Toolkit Settings')
+                        
+                        obj_type = obj_elem.tag
+                        
+                        # Map XML tag to BAW object type
+                        type_map = {
+                            'environmentVariableSet': 'environmentVariableSet',
+                            'projectDefaults': 'projectDefaults'
+                        }
+                        baw_type = type_map.get(obj_type, obj_type)
+                        
+                        object_line = f'        <object id="{obj_id}" versionId="{version_id}" name="{escape_xml(name)}" type="{baw_type}"/>'
+                        object_lines.append(object_line)
+                        logger.debug(f"Added template default to objects section: {obj_id}")
+                    except Exception as e:
+                        logger.warning(f"Failed to parse template default {filename}: {e}")
         
         # Add widget objects
         for twx_obj in self.twx_objects:

@@ -1,28 +1,20 @@
-# IBM BAW Custom View Widgets
+# IBM BAW Development Toolkit with Bob AI
 
-A collection of reusable, accessible custom view widgets for IBM Business Automation Workflow (BAW) built with Carbon Design System principles.
+A comprehensive toolkit for IBM Business Automation Workflow (BAW) development, featuring custom widgets, business object management, BPMN process generation, and AI-assisted development through specialized Bob modes.
 
 ## ⚠️ Important Disclaimer
 
-**This is NOT an official IBM project.** This repository contains experimental widgets and tools developed using Large Language Models (LLMs) for rapid prototyping and development acceleration.
+**This is NOT an official IBM project.** This repository contains experimental tools and widgets developed using Large Language Models (LLMs) for rapid prototyping and development acceleration.
 
 ### Key Considerations:
 
-- **LLM-Generated Content**: All code, assets, and artifacts in this repository have been generated or assisted by AI/LLM tools and may contain errors, inconsistencies, or "hallucinations"
-- **Not Production-Ready**: These widgets are intended for development and testing purposes only
+- **LLM-Generated Content**: All code, assets, and artifacts have been generated or assisted by AI/LLM tools and may contain errors, inconsistencies, or "hallucinations"
+- **Not Production-Ready**: These tools are intended for development and testing purposes only
 - **Use Standard Mechanisms**: For production environments, we strongly recommend using IBM's official methods:
   - Import BPMN models through standard BAW import
   - Use OpenAPI specifications for service integration
   - Perform manual copy-paste of verified artifacts
   - Follow IBM's official documentation and best practices
-
-### BAW Package Manager Mode
-
-The BAW Package Manager mode included in this project can help accelerate development workflows, but should be used with caution:
-
-- ✅ **Good for**: Rapid prototyping, learning, development acceleration
-- ⚠️ **Use carefully**: Review all generated code before deployment
-- ❌ **Not recommended for**: Production systems without thorough review and testing
 
 ### Recommendations:
 
@@ -36,397 +28,604 @@ The BAW Package Manager mode included in this project can help accelerate develo
 
 ---
 
+## 🎯 Project Goals
+
+This toolkit aims to accelerate IBM BAW development by providing:
+
+1. **Custom Widget Library** - Reusable, accessible UI components built with Carbon Design System
+2. **Business Object Management** - Tools for extracting, normalizing, and managing business data models
+3. **BPMN Process Generation** - Config-driven approach to creating business process models
+4. **AI-Assisted Development** - Specialized Bob modes for different aspects of BAW development
+5. **Automated Packaging** - Tools for packaging and deploying BAW artifacts
+6. **Comprehensive Documentation** - Guides, examples, and hands-on labs
+
+---
+
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Available Widgets](#available-widgets)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Widget Documentation](#widget-documentation)
-- [Project Structure](#project-structure)
-- [Requirements](#requirements)
-- [Localization](#localization)
-- [Best Practices](#best-practices)
-- [Support](#support)
-- [License](#license)
+- [Prerequisites](#-prerequisites)
+- [Project Structure](#-project-structure)
+- [Bob AI Modes](#-bob-ai-modes)
+- [Getting Started](#-getting-started)
+- [Available Widgets](#-available-widgets)
+- [BPMN Tools](#-bpmn-tools)
+- [Documentation](#-documentation)
+- [Hands-On Labs](#-hands-on-labs)
+- [Toolkit Configuration](#-toolkit-configuration)
+- [License](#-license)
 
-## 🎯 Overview
+---
 
-This repository contains a suite of production-ready custom view widgets designed for IBM Business Automation Workflow. Each widget follows IBM Carbon Design System guidelines and provides:
+## 🔧 Prerequisites
 
-- **Accessibility**: Full ARIA support and keyboard navigation
-- **Responsive Design**: Mobile-friendly layouts
-- **Data Binding**: Seamless integration with BAW data models
-- **Event Handling**: Rich event system for interactions
-- **Customization**: Configurable options and styling
-- **Documentation**: Comprehensive guides and examples
+### Required Software
 
-## 📦 Available Widgets
+#### 1. **IBM Business Automation Workflow (BAW)**
+- **Version**: 24.x or higher (25.0.1 recommended)
+- **Access**: Process Designer with permissions to import toolkits
+- **Purpose**: Target platform for deploying widgets and processes
 
-This toolkit includes a collection of production-ready custom widgets for IBM Business Automation Workflow. Each widget is designed with:
+#### 2. **Python 3.7+**
+- **Purpose**: Widget packaging, BPMN generation, business object management
+- **Installation**: [python.org](https://www.python.org/downloads/)
+- **Verify**: `python3 --version`
 
-- **Carbon Design System** styling for consistent IBM look and feel
-- **Accessibility** features including ARIA support and keyboard navigation
-- **Responsive design** that works across desktop and mobile devices
-- **Data binding** for seamless BAW integration
-- **Event handling** for interactive workflows
-- **Comprehensive documentation** in each widget's directory
+#### 3. **Node.js & NPX**
+- **Purpose**: MCP (Model Context Protocol) server for BAW admin operations
+- **Installation**: [nodejs.org](https://nodejs.org/)
+- **Verify**: `npx --version`
+- **Used for**: BAW server deployment and management
 
-### Widget Categories
+#### 4. **IBM Bob AI Assistant**
+- **Purpose**: AI-assisted development with specialized BAW modes
+- **Setup**: Configure Bob with BAW custom modes (see `.bob/custom_modes.yaml`)
+- **Modes**: Blueprint Parser, Coach Widget, Coach Composer, Package Manager
 
-- **Navigation & Layout**: Breadcrumb navigation, folder trees
-- **Data Display**: Date formatting, markdown rendering, progress indicators
-- **Form Controls**: Multi-select dropdowns, file browsers
-- **Process Visualization**: Steppers, progress bars, circular indicators
-- **Content Management**: FileNet integration, task lists
+#### 5. **Modern Web Browser**
+- Chrome 85+, Firefox 90+, Safari 14+, or Edge 85+
+- **Purpose**: Testing widgets and preview files
 
-### Exploring Widgets
+### Optional but Recommended
 
-Each widget includes:
-- Complete source code in `widgets/{WidgetName}/`
-- README.md with usage examples and API documentation
-- Data model specifications
-- Event handler documentation
-- Preview files for testing
+- **Git**: For version control
+- **VS Code**: With Bob extension for optimal development experience
+- **BAW Admin Access**: For server deployment features
 
-Browse the `widgets/` directory to see all available widgets and their documentation.
-
-## 🚀 Installation
-
-### Prerequisites
-
-- **IBM BAW Environment**: Recommended Version 24 or higher
-- **Process Designer Access**: Ability to import custom widgets
-- **Browser**: Chrome, Firefox, Safari, or Edge.
-- **Python 3.7+**: For widget packaging (optional)
-
-> **Disclaimer:** This lab assumes familiarity with IBM Business Automation Workflow (BAW). If you do not have enough experience to follow the steps, ask for help from an expert (or Bob), or refer to the official IBM documentation: https://www.ibm.com/docs/en/baw
->
-> **Compatibility Note:** The provided `.twx` file is only compatible with IBM BAW 25.0.1.
-
-### Installation Steps
-
-#### Method 1: Import Pre-packaged TWX File (Recommended)
-
-1. **Generate TWX Package**
-   ```bash
-   # Package all widgets (auto-detected from widgets/ directory)
-   python3 package_multiple_widgets.py
-   ```
-   
-   The packager automatically detects all widgets in the `widgets/` directory and includes them in the package.
-
-2. **Import into BAW**
-   - Open IBM Business Automation Workflow Process Designer
-   - Go to **File** → **Import**
-   - Select the generated TWX file from `output/` directory
-   - Follow the import wizard
-
-3. **Verify Installation**
-   - Check that widgets appear in your toolkit
-   - Test widgets in a sample coach
-
-#### Method 2: Import Individual Widgets
-
-1. **Navigate to Process Designer**
-   - Open IBM Business Automation Workflow Process Designer
-   - Select your Process App or Toolkit
-
-2. **Import Widget**
-   - Go to **User Interface** → **Views**
-   - Click **New** → **Custom HTML**
-   - Or right-click on an existing view folder and select **New** → **Custom HTML**
-
-3. **Configure Widget Files**
-   
-   For each widget (e.g., Breadcrumb):
-   
-   a. **Layout (HTML)**
-   - Copy content from `{WidgetName}/widget/Layout.html`
-   - Paste into the **HTML** tab in Process Designer
-   
-   b. **Inline CSS**
-   - Copy content from `{WidgetName}/widget/InlineCSS.css`
-   - Paste into the **Inline CSS** tab
-   
-   c. **Inline JavaScript**
-   - Copy content from `{WidgetName}/widget/inlineJavascript.js`
-   - Paste into the **Inline JavaScript** tab
-   
-   d. **Event Handlers**
-   - Open `{WidgetName}/widget/eventHandler.md`
-   - Follow instructions to configure event handlers
-   - Typically add a `change` event handler with the provided code
-
-4. **Configure Data Model**
-   - Open `{WidgetName}/widget/datamodel.md`
-   - Review the required business data structure
-   - Add configuration options as specified
-
-5. **Save and Test**
-   - Save the custom view
-   - Add it to a coach for testing
-   - Bind the required data and configure options
-
-#### Method 2: Bulk Import (Recommended for Multiple Widgets)
-
-1. **Clone or Download Repository**
-   ```bash
-   git clone <repository-url>
-   cd baw_views
-   ```
-
-2. **For Each Widget**
-   - Follow the individual widget installation steps above
-   - Or use BAW's import functionality if available in your version
-
-3. **Verify Installation**
-   - Check that all widgets appear in your Views library
-   - Test each widget in a sample coach
-
-### Post-Installation Configuration
-
-#### For Widgets with External Dependencies
-- Review each widget's README for specific requirements
-- Configure any necessary API keys or external resources
-- Some widgets may require additional BAW configuration
-
-## 🎬 Quick Start
-
-### Example: Using the Breadcrumb Widget
-
-1. **Add Widget to Coach**
-   - Drag the Breadcrumb widget onto your coach view
-
-2. **Create Business Data**
-   ```javascript
-   // In your BAW coach view
-   tw.local.breadcrumbPath = [
-     { label: "Home", href: "/" },
-     { label: "Products", href: "/products" },
-     { label: "Electronics", href: "/products/electronics" },
-     { label: "Laptops", href: "/products/electronics/laptops" }
-   ];
-   ```
-
-3. **Bind Data**
-   - Bind the widget's data property to `tw.local.breadcrumbPath`
-
-4. **Configure Options**
-   - Set `maxItems: 0` (show all)
-   - Set `noTrailingSlash: false`
-   - Set `showHomeIcon: false`
-
-5. **Run and Test**
-   - The breadcrumb will display: `Home / Products / Electronics / Laptops`
-
-### Example: Using the Stepper Widget
-
-1. **Add Widget to Coach**
-   - Drag the Stepper widget onto your coach view
-
-2. **Create Business Data**
-   ```javascript
-   tw.local.processSteps = [
-     { label: "Personal Info", description: "Enter details", status: "completed" },
-     { label: "Address", description: "Provide address", status: "current" },
-     { label: "Payment", description: "Payment details", status: "pending" },
-     { label: "Review", description: "Review and submit", status: "pending" }
-   ];
-   ```
-
-3. **Bind and Configure**
-   - Bind data to `tw.local.processSteps`
-   - Set `showNumbers: true`
-   - Set `showIcons: true`
-   - Set `clickable: false`
-
-4. **Run and Test**
-   - The stepper will display a vertical progress indicator
-
-## 📚 Widget Documentation
-
-Each widget includes comprehensive documentation:
-
-- **README.md**: Overview, features, and usage examples
-- **datamodel.md**: Data structure and configuration options
-- **eventHandler.md**: Event handling and integration
-- **AdvancePreview/**: Preview mode for BAW designer
-
-### Documentation Structure
-
-```
-{WidgetName}/
-├── README.md                    # Main documentation
-├── widget/
-│   ├── Layout.html              # HTML structure
-│   ├── InlineCSS.css            # Styling
-│   ├── inlineJavascript.js      # Logic
-│   ├── datamodel.md             # Data model docs
-│   └── eventHandler.md          # Event docs
-└── AdvancePreview/
-    ├── {WidgetName}.html        # Preview styles
-    └── {WidgetName}Snippet.js   # Preview logic
-```
+---
 
 ## 📁 Project Structure
 
 ```
 BAWCoachMode/
-├── README.md                    # This file
-├── STRUCTURE.md                 # Detailed structure documentation
-├── toolkit.config.json          # Toolkit configuration
-├── package_multiple_widgets.py  # Main packaging script
-├── create_widget_template.py    # Widget generator tool
-├── widgets/                     # All widget source code
-│   ├── Breadcrumb/
-│   ├── DateOutput/
-│   ├── FileNetBrowser/
-│   ├── FileNetImport/
-│   ├── FolderTree/
-│   ├── MarkdownViewer/
-│   ├── MultiSelect/
-│   ├── ProcessCircle/
-│   ├── ProgressBar/
-│   ├── Stepper/
-│   └── TasksList/
-├── output/                      # Generated TWX files (gitignored)
-├── toolkit_packager/            # Python packaging tools
-│   ├── core/                    # Core utilities
-│   ├── models/                  # Data models
-│   ├── scanner/                 # Widget discovery
-│   ├── generators/              # XML generators
-│   ├── packager/                # TWX building
-│   └── utils/                   # Utilities
-├── templates/                   # Reference templates
-│   ├── BaseTWX/                 # Base TWX templates
-│   └── Loclisation/             # Localization examples
-└── .bob/                        # Bob AI mode configurations
-    ├── rules-baw-coachui-view/
-    └── rules-baw-package-manager/
+├── README.md                           # This file
+├── toolkit.config.json                 # Toolkit packaging configuration
+│
+├── widgets/                            # Custom widget implementations
+│   ├── Breadcrumb/                    # Navigation breadcrumbs
+│   ├── DateOutput/                    # Date formatting widget
+│   ├── FileNetBrowser/                # FileNet document browser
+│   ├── FileNetImport/                 # FileNet import widget
+│   ├── FolderTree/                    # Hierarchical folder tree
+│   ├── MarkdownViewer/                # Markdown rendering widget
+│   ├── MultiSelect/                   # Multi-select dropdown
+│   ├── ProcessCircle/                 # Circular progress indicator
+│   ├── ProgressBar/                   # Linear progress bar
+│   ├── Stepper/                       # Multi-step process indicator
+│   ├── TasksList/                     # Task list widget
+│   └── Timeline/                      # Event timeline widget
+│
+├── business-objects/                   # Business object management
+│   ├── generated/                     # Generated business objects by context
+│   ├── catalog/                       # Business object catalogs
+│   └── reports/                       # Discovery and analysis reports
+│
+├── business-processes/                 # BPMN process definitions
+│   ├── configs/                       # JSON config files for BPMN generation
+│   ├── bpmn/                          # Generated BPMN XML files
+│   ├── diagrams/                      # Mermaid process diagrams
+│   └── catalog/                       # Process catalogs
+│
+├── BPMN_tools/                        # Config-driven BPMN generation
+│   ├── generate_bpmn.py              # Main BPMN generator
+│   ├── bpmn_xml_builder.py           # BPMN XML builder
+│   ├── validator.py                   # Config validation
+│   ├── CONFIG_SCHEMA_DESIGN.md       # JSON schema specification
+│   ├── USER_GUIDE.md                 # Complete user guide
+│   └── README.md                      # Quick reference
+│
+├── toolkit_packager/                   # Python packaging tools
+│   ├── core/                          # Core utilities
+│   ├── models/                        # Data models
+│   ├── scanner/                       # Widget discovery
+│   ├── generators/                    # XML generators
+│   └── packager/                      # TWX building
+│
+├── .bob/                              # Bob AI mode configurations
+│   ├── custom_modes.yaml             # Mode definitions
+│   ├── mcp.json                      # MCP server configuration
+│   └── rules-*/                      # Mode-specific instruction files
+│
+├── docs/                              # Technical documentation
+│   ├── BAW_BLUEPRINT_PARSER_MODE.md  # Blueprint parser guide
+│   ├── BAW_COACHUI_VIEW_MODE.md      # Widget development guide
+│   ├── BAW_COACH_COMPOSER_MODE.md    # Coach composition guide
+│   ├── BAW_PACKAGE_MANAGER_MODE.md   # Packaging guide
+│   ├── CARBON_THEME_INTEGRATION.md   # Carbon Design System guide
+│   └── API_REFERENCE.md              # API documentation
+│
+├── lab-docs/                          # Hands-on learning materials
+│   ├── README.md                      # Lab overview
+│   ├── BOB_BAW_MODES_GUIDE.md        # Complete modes guide
+│   ├── Carousel_Lab_Overview.md      # Carousel widget lab
+│   └── Carousel_HandsOn_Lab.md       # Step-by-step tutorial
+│
+├── themes/                            # Carbon Design System themes
+│   ├── Carbon.less                   # Carbon theme stylesheet
+│   └── CARBON_THEME_VARIABLES.md     # Theme customization guide
+│
+├── templates/                         # Reference templates
+│   └── BaseTWX/                      # Base TWX structure
+│
+├── coaches/                           # Generated coach definitions
+│
+└── output/                            # Generated TWX packages (gitignored)
 ```
 
-## 💻 Requirements
+---
 
-### IBM BAW Environment
-- **Recommended Version**: IBM Business Automation Workflow v24.x 
-- **Process Designer**: Access to create and modify custom views
+## 🤖 Bob AI Modes
 
-### Browser Support
+This project includes four specialized Bob modes for different aspects of BAW development:
 
-| Browser | Minimum Version |
-|---------|----------------|
-| Chrome | 85+ |
-| Firefox | 90+ |
-| Safari | 14+ |
-| Edge | 85+ |
-| Mobile Safari | 14+ |
-| Chrome Mobile | 90+ |
+### 1. 📘 BAW Blueprint Parser Mode
+**Slug**: `baw-blueprint-parser`
 
-### Technical Requirements
-- **JavaScript**: ES5+ support
-- **CSS**: CSS3 with Flexbox and Grid support
-- **HTML**: HTML5 semantic elements
+**Purpose**: Transform business documentation into structured BAW artifacts
 
-### External Dependencies
+**Capabilities**:
+- Parse business blueprint documents (PDF, Word, etc.)
+- Extract business entities, fields, and relationships
+- Discover business processes and workflows
+- Generate JSON business object definitions
+- Create BPMN configuration files (JSON)
+- Generate Mermaid process diagrams
+- Create discovery reports and catalogs
+- Register business objects with deterministic class IDs
 
-#### All Widgets
-- IBM Carbon Design System fonts (IBM Plex Sans)
-- Modern browser with JavaScript enabled
+**When to Use**:
+- Analyzing business documents
+- Extracting data models from requirements
+- Discovering business processes
+- Preparing artifacts for packaging
 
-## 🌐 Localization
+**Output**:
+- Business objects: `business-objects/generated/[context]/`
+- BPMN configs: `business-processes/configs/[context]/`
+- Reports: `business-objects/reports/`
+- Catalogs: `business-objects/catalog/` and `business-processes/catalog/`
 
-The project includes localization support for multi-language applications.
+**Documentation**: [docs/BAW_BLUEPRINT_PARSER_MODE.md](docs/BAW_BLUEPRINT_PARSER_MODE.md)
 
-### Available Localizations
-- English (default)
-- French (fr)
-- Dutch (nl)
+---
 
-### Localization Files
-Located in the `Loclisation/` directory:
-- `VacationETNIC.properties` - English
-- `VacationETNIC_fr.properties` - French
-- `VacationETNIC_nl.properties` - Dutch
+### 2. 📲 BAW Coach Widget Mode
+**Slug**: `baw-coachui-view`
 
-### Packaging Localizations
-Use the provided script to package localization files:
+**Purpose**: Create and modify custom BAW coach view widgets
+
+**Capabilities**:
+- Generate complete widget file structures
+- Implement HTML, CSS, and JavaScript
+- Create business object definitions
+- Generate preview files for BAW designer
+- Maintain widget documentation
+- Follow Carbon Design System guidelines
+- Implement accessibility features
+
+**When to Use**:
+- Creating new custom widgets
+- Modifying existing widgets
+- Adding preview functionality
+- Updating widget documentation
+
+**Output**:
+- Widget files: `widgets/[WidgetName]/`
+- Configuration: `widget/config.json`
+- Preview: `AdvancePreview/`
+
+**Documentation**: [docs/BAW_COACHUI_VIEW_MODE.md](docs/BAW_COACHUI_VIEW_MODE.md)
+
+---
+
+### 3. 🎨 BAW Coach Composer Mode (Beta)
+**Slug**: `baw-coach-composer`
+
+**Purpose**: Design and compose BAW coaches with intelligent layout
+
+**Capabilities**:
+- Analyze widget purposes and suggest layouts
+- Use both custom and standard BAW widgets
+- Generate realistic sample data
+- Compose complete service flows
+- Create coaches for testing
+- Automatically switch to Package Manager after creation
+
+**When to Use**:
+- Creating test coaches for widgets
+- Building production-ready forms
+- Designing multi-widget interfaces
+- Generating sample data for testing
+
+**Output**:
+- Coach definitions: `coaches/`
+- Service flows with sample data
+
+**Documentation**: [docs/BAW_COACH_COMPOSER_MODE.md](docs/BAW_COACH_COMPOSER_MODE.md)
+
+---
+
+### 4. 🗂️ BAW Package Manager Mode (Beta)
+**Slug**: `baw-package-manager`
+
+**Purpose**: Package and deploy BAW artifacts to servers
+
+**Capabilities**:
+- Automatically detect new widgets
+- Scan and include business objects
+- Register business objects with class IDs
+- Generate TWX toolkit packages
+- Deploy to BAW servers via MCP
+- Monitor deployment status
+- Validate packaging readiness
+
+**When to Use**:
+- Packaging widgets into TWX files
+- Deploying toolkits to BAW servers
+- Managing toolkit versions
+- Troubleshooting packaging issues
+
+**Output**:
+- TWX packages: `output/`
+- Deployment status reports
+
+**Documentation**: [docs/BAW_PACKAGE_MANAGER_MODE.md](docs/BAW_PACKAGE_MANAGER_MODE.md)
+
+---
+
+## 🚀 Getting Started
+
+### Quick Start Guide
+
+#### 1. **Clone the Repository**
+```bash
+git clone <repository-url>
+cd BAWCoachMode
+```
+
+#### 2. **Install Python Dependencies**
+```bash
+pip install -r requirements.txt  # If requirements.txt exists
+```
+
+#### 3. **Configure Bob Modes**
+The modes are pre-configured in `.bob/custom_modes.yaml`. Ensure Bob AI is installed and configured.
+
+#### 4. **Choose Your Workflow**
+
+**Option A: Use Existing Widgets**
+```bash
+# Package all widgets
+python3 package_baw.py
+
+# Import the generated TWX file from output/ into BAW
+```
+
+**Option B: Create New Widget**
+```
+1. Ask Bob: "Switch to BAW Coach Widget mode"
+2. Request: "Create a [WidgetName] widget that does [description]"
+3. Bob creates the widget structure and implementation
+4. Ask Bob: "Switch to BAW Package Manager mode"
+5. Request: "Package and deploy the toolkit"
+```
+
+**Option C: Parse Business Documents**
+```
+1. Place documents in business-blueprints/
+2. Ask Bob: "Switch to BAW Blueprint Parser mode"
+3. Request: "Parse [document] and generate business objects and processes"
+4. Bob extracts entities, creates JSON files, and generates BPMN configs
+5. Ask Bob: "Switch to BAW Package Manager mode" (when ready to package)
+```
+
+**Option D: Generate BPMN Processes**
+```bash
+# Create a JSON config file (see BPMN_tools/CONFIG_SCHEMA_DESIGN.md)
+# Then generate BPMN XML:
+python3 BPMN_tools/generate_bpmn.py my_process.json output.bpmn
+```
+
+---
+
+## 📦 Available Widgets
+
+This toolkit includes 12+ production-ready custom widgets:
+
+### Navigation & Layout
+- **Breadcrumb** - Navigation breadcrumbs with overflow handling
+- **FolderTree** - Hierarchical folder tree with expand/collapse
+
+### Data Display
+- **DateOutput** - Customizable date formatting
+- **MarkdownViewer** - Markdown rendering with syntax highlighting
+- **Timeline** - Event timeline with vertical layout
+
+### Form Controls
+- **MultiSelect** - Multi-select dropdown with search
+
+### Process Visualization
+- **Stepper** - Multi-step process indicator
+- **ProgressBar** - Animated progress bar
+- **ProcessCircle** - Circular progress indicator
+
+### Content Management
+- **FileNetBrowser** - FileNet document browser
+- **FileNetImport** - FileNet document import
+- **TasksList** - Task list with status tracking
+
+Each widget includes:
+- Complete source code
+- README with usage examples
+- Data model specifications
+- Event handler documentation
+- Preview files for BAW designer
+
+**Browse**: `widgets/` directory for all widgets
+
+---
+
+## 🔧 BPMN Tools
+
+### Config-Driven BPMN Generation
+
+The BPMN_tools module provides a **config-driven approach** to creating BPMN 2.0 workflows:
+
+```
+Business Document → AI Analysis → JSON Config → Python Tool → BPMN XML
+                    (Bob Mode)                   (generate_bpmn.py)
+```
+
+### Quick Example
+
+**1. Create Config** (`my_process.json`):
+```json
+{
+  "process": {
+    "id": "proc-001",
+    "name": "My Process",
+    "version": "1.0"
+  },
+  "roles": [
+    {"id": "role-analyst", "name": "Analyst"}
+  ],
+  "elements": [
+    {"id": "start-001", "type": "startEvent", "name": "Start"},
+    {"id": "task-001", "type": "userTask", "name": "Review", "assignee": "role-analyst"},
+    {"id": "end-001", "type": "endEvent", "name": "End"}
+  ],
+  "flows": [
+    {"id": "flow-001", "sourceRef": "start-001", "targetRef": "task-001"},
+    {"id": "flow-002", "sourceRef": "task-001", "targetRef": "end-001"}
+  ]
+}
+```
+
+**2. Generate BPMN**:
+```bash
+python3 BPMN_tools/generate_bpmn.py my_process.json my_process.bpmn
+```
+
+**3. Import to BAW**: Use the generated `.bpmn` file in BAW Process Designer
+
+### Features
+- ✅ BPMN 2.0 compliant
+- ✅ IBM BAW compatible
+- ✅ Supports all BPMN elements (tasks, gateways, events)
+- ✅ Swimlanes and milestones
+- ✅ Validation and error checking
+- ✅ AI/LLM friendly
+
+**Documentation**: [BPMN_tools/README.md](BPMN_tools/README.md) and [BPMN_tools/USER_GUIDE.md](BPMN_tools/USER_GUIDE.md)
+
+---
+
+## 📚 Documentation
+
+### Technical Documentation (`docs/`)
+- **[BAW_BLUEPRINT_PARSER_MODE.md](docs/BAW_BLUEPRINT_PARSER_MODE.md)** - Business document parsing and artifact generation
+- **[BAW_COACHUI_VIEW_MODE.md](docs/BAW_COACHUI_VIEW_MODE.md)** - Custom widget development
+- **[BAW_COACH_COMPOSER_MODE.md](docs/BAW_COACH_COMPOSER_MODE.md)** - Coach design and composition
+- **[BAW_PACKAGE_MANAGER_MODE.md](docs/BAW_PACKAGE_MANAGER_MODE.md)** - Packaging and deployment
+- **[CARBON_THEME_INTEGRATION.md](docs/CARBON_THEME_INTEGRATION.md)** - Carbon Design System integration
+- **[API_REFERENCE.md](docs/API_REFERENCE.md)** - API documentation
+
+### BPMN Tools Documentation (`BPMN_tools/`)
+- **[README.md](BPMN_tools/README.md)** - Quick reference and examples
+- **[USER_GUIDE.md](BPMN_tools/USER_GUIDE.md)** - Complete user guide
+- **[CONFIG_SCHEMA_DESIGN.md](BPMN_tools/CONFIG_SCHEMA_DESIGN.md)** - JSON schema specification
+- **[LLM_USAGE_GUIDE.md](BPMN_tools/LLM_USAGE_GUIDE.md)** - Guide for AI/LLM integration
+
+### Widget Documentation
+Each widget includes:
+- `README.md` - Overview and usage
+- `widget/datamodel.md` - Data structure
+- `widget/eventHandler.md` - Event handling
+
+---
+
+## 🎓 Hands-On Labs
+
+### Lab Documentation (`lab-docs/`)
+
+The project includes comprehensive hands-on labs for learning BAW development with Bob:
+
+- **[README.md](lab-docs/README.md)** - Lab overview and getting started
+- **[BOB_BAW_MODES_GUIDE.md](lab-docs/BOB_BAW_MODES_GUIDE.md)** - Complete guide to Bob's BAW modes
+- **[Carousel_Lab_Overview.md](lab-docs/Carousel_Lab_Overview.md)** - Carousel widget lab introduction
+- **[Carousel_HandsOn_Lab.md](lab-docs/Carousel_HandsOn_Lab.md)** - Step-by-step tutorial
+
+### What You'll Learn
+- Creating custom widgets with Bob
+- Packaging and deploying toolkits
+- Using all four Bob modes effectively
+- BAW best practices and patterns
+- Carbon Design System integration
+
+**Duration**: 60-90 minutes per lab  
+**Level**: Intermediate to Advanced
+
+---
+
+## ⚙️ Toolkit Configuration
+
+### `toolkit.config.json`
+
+This file controls toolkit packaging behavior:
+
+```json
+{
+  "toolkit": {
+    "name": "Custom Widgets2",           // Toolkit name in BAW
+    "shortName": "CW2",                  // Short identifier
+    "description": "Custom widget toolkit for BAW",
+    "version": "1.0.2",                  // Toolkit version
+    "bawVersion": "25.0.1",              // Target BAW version
+    "id": "2066.cebc1c06-68a5-4d2e-986a-aaae3072cefb",  // Unique toolkit ID
+    "isToolkit": true,
+    "isHidden": false,
+    "isSystem": false
+  },
+  "dependencies": {
+    "systemData": {
+      "snapshotId": "2064.1080ded6-d153-4654-947c-2d16fce170db",
+      "name": "8.6.0.0_TC"
+    },
+    "uiToolkit": {
+      "snapshotId": "2064.304ac881-16c3-47d2-97d5-6e4c4a893177",
+      "name": "8.6.0.0"
+    }
+  },
+  "output": {
+    "directory": "output",               // Output directory for TWX files
+    "filename": "Custom_Widgets_{version}.twx"  // Output filename pattern
+  },
+  "widgets": {
+    "include": ["*"],                    // Include all widgets
+    "exclude": [],                       // Exclude specific widgets
+    "source_directory": "widgets"        // Widget source directory
+  }
+}
+```
+
+### Key Configuration Options
+
+- **toolkit.name**: Display name in BAW Process Designer
+- **toolkit.version**: Increment for each release
+- **toolkit.id**: Unique GUID (generate once, keep stable)
+- **bawVersion**: Target BAW version for compatibility
+- **widgets.include**: `["*"]` for all, or specific widget names
+- **widgets.exclude**: Widget names to skip during packaging
+
+### Updating Configuration
 
 ```bash
-cd Loclisation
-./zip_localisations.sh
+# Edit toolkit.config.json
+# Then package with new settings:
+python3 package_baw.py
 ```
 
-[📖 Localization Documentation](./Loclisation/README.md)
+---
+
+## 🔄 Typical Workflows
+
+### Workflow 1: Create and Deploy a Widget
+```
+1. Bob: "Switch to BAW Coach Widget mode"
+2. You: "Create a StatusBadge widget for displaying status indicators"
+3. Bob: Creates widget structure and implementation
+4. You: Test the widget locally in AdvancePreview/
+5. Bob: "Switch to BAW Package Manager mode"
+6. You: "Package and deploy the toolkit"
+7. Bob: Packages TWX and offers deployment to BAW server
+```
+
+### Workflow 2: Parse Business Documents
+```
+1. Place PDF/Word documents in business-blueprints/
+2. Bob: "Switch to BAW Blueprint Parser mode"
+3. You: "Parse LifeInsurance.pdf and generate business objects and processes"
+4. Bob: Extracts entities, creates JSON files, generates BPMN configs
+5. Bob: Automatically generates BPMN XML files
+6. You: Review generated artifacts
+7. Bob: "Switch to BAW Package Manager mode" (when ready)
+8. You: "Package the business objects"
+```
+
+### Workflow 3: Generate BPMN Process
+```
+1. Create JSON config or use Bob Blueprint Parser mode
+2. Run: python3 BPMN_tools/generate_bpmn.py config.json output.bpmn
+3. Import output.bpmn into BAW Process Designer
+4. Enhance with BAW-specific features
+5. Deploy to BAW server
+```
+
+---
 
 ## 🎨 Best Practices
 
-### Widget Usage
-1. **Read Documentation First**: Review each widget's README before implementation
-2. **Test in Development**: Always test widgets in a development environment
-3. **Validate Data**: Ensure bound data matches the expected structure
-4. **Handle Errors**: Implement error handling for data binding issues
-5. **Consider Performance**: For large datasets, implement pagination or lazy loading
+### Widget Development
+1. Follow Carbon Design System guidelines
+2. Implement full accessibility (ARIA, keyboard navigation)
+3. Test on multiple browsers and devices
+4. Document data models and events thoroughly
+5. Create preview files for BAW designer
 
-### Data Binding
-1. **Use Proper Types**: Match data types to widget requirements
-2. **Initialize Data**: Ensure data is initialized before widget loads
-3. **Update Correctly**: Create new array references when updating data
-4. **Validate Input**: Check data validity before binding
+### Business Object Management
+1. Use consistent naming conventions (PascalCase)
+2. Register objects with deterministic class IDs
+3. Document assumptions in discovery reports
+4. Organize by business context
+5. Validate references and relationships
 
-### Styling
-1. **Preserve Carbon Design**: Maintain Carbon Design System styling
-2. **Test Responsiveness**: Verify widgets work on mobile devices
-3. **Check Accessibility**: Test with screen readers and keyboard navigation
-4. **Avoid Conflicts**: Be careful with global CSS that might affect widgets
+### BPMN Process Design
+1. Use meaningful element names
+2. Follow ID naming conventions (proc-, role-, elem-, flow-)
+3. Validate configs before generating XML
+4. Create Mermaid diagrams for visualization
+5. Link processes to relevant business objects
 
-### Integration
-1. **Event Handling**: Properly configure event handlers
-2. **Boundary Events**: Use BAW boundary events for coach integration
-3. **Navigation**: Implement proper navigation logic
-4. **State Management**: Maintain consistent state across views
+### Packaging and Deployment
+1. Test in development environment first
+2. Increment version numbers appropriately
+3. Review generated TWX contents
+4. Monitor deployment status
+5. Keep toolkit configuration stable
 
-## 🔧 Troubleshooting
+---
 
-### Common Issues
+## 🤝 Contributing
 
-#### Widget Not Displaying
-- Verify all three files (HTML, CSS, JS) are properly copied
-- Check browser console for JavaScript errors
-- Ensure data is bound correctly
-- Verify widget is visible in the coach
+When adding to this toolkit:
 
-#### Data Not Updating
-- Create new array references when updating data
-- Check that change event handler is configured
-- Verify data structure matches requirements
-- Use browser developer tools to inspect data
+1. Follow established directory structures
+2. Include comprehensive documentation
+3. Test across supported browsers and BAW versions
+4. Follow Carbon Design System guidelines
+5. Ensure accessibility compliance
+6. Update relevant catalogs and indexes
 
-#### Styling Issues
-- Check for CSS conflicts with other styles
-- Verify Carbon Design System classes are not overridden
-- Clear browser cache
-- Test in different browsers
-
-#### Performance Issues
-- Limit number of items for large datasets
-- Implement pagination or lazy loading
-- Use browser performance profiling tools
-- Optimize data structures
-
-## 📞 Support
-
-### Documentation
-- Widget-specific README files in each widget directory
-- `datamodel.md` for data structure details
-- `eventHandler.md` for event handling
-
-### IBM Resources
-- [IBM Business Automation Workflow Documentation](https://www.ibm.com/docs/en/baw)
-- [IBM Carbon Design System](https://carbondesignsystem.com/)
-
-### External Resources
-- [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript) (for GoogleMap widget)
+---
 
 ## 📄 License
 
@@ -450,129 +649,35 @@ limitations under the License.
 
 ---
 
-## 🛠️ Creating New Widgets
+## 📞 Support
 
-### Quick Start with Widget Template Generator
+### Documentation
+- Technical docs: `docs/`
+- Lab materials: `lab-docs/`
+- Widget-specific: `widgets/[WidgetName]/README.md`
+- BPMN tools: `BPMN_tools/README.md`
 
-Use the provided script to create a new widget with the correct structure:
+### IBM Resources
+- [IBM BAW Documentation](https://www.ibm.com/docs/en/baw)
+- [Carbon Design System](https://carbondesignsystem.com/)
 
-```bash
-# Create a new widget
-python3 create_widget_template.py MyWidget "Widget description"
-
-# Example
-python3 create_widget_template.py StatusBadge "A badge widget for status display"
-```
-
-This will generate:
-- Complete widget directory structure
-- All required files (Layout.html, InlineCSS.css, inlineJavascript.js, openapi.json)
-- Optional documentation files (datamodel.md, eventHandler.md)
-- Preview files for BAW designer
-- Comprehensive README.md
-
-### Widget Structure Requirements
-
-All widgets MUST follow this structure for toolkit_packager compatibility:
-
-```
-widgets/[WidgetName]/
-├── [WidgetName].svg                 # OPTIONAL - Widget icon (120x120px recommended)
-├── widget/                          # MUST be lowercase
-│   ├── Layout.html                  # REQUIRED
-│   ├── InlineCSS.css                # REQUIRED
-│   ├── inlineJavascript.js          # REQUIRED
-│   ├── config.json                  # REQUIRED - Widget configuration
-│   ├── datamodel.md                 # OPTIONAL - Data model documentation
-│   └── eventHandler.md              # OPTIONAL - Event handler documentation
-├── AdvancePreview/                  # OPTIONAL - Preview for BAW designer
-│   ├── [WidgetName].html
-│   └── [WidgetName].js (or [WidgetName]Snippet.js)
-└── README.md                        # RECOMMENDED - Widget documentation
-```
-
-#### Widget Icons
-- **Optional but recommended**: Add a `{WidgetName}.svg` file in the widget root directory
-- **Size**: 120x120 pixels recommended for optimal display
-- **Format**: SVG for scalability
-- **Purpose**: Appears in BAW Process Designer palette for easy widget identification
-- **Auto-detection**: Icons are automatically detected and packaged when present
-
-### Packaging Your Widget
-
-1. **Ensure Proper Structure**
-   - Verify your widget follows the required structure above
-   - Add an optional `.svg` icon for better UX
-
-2. **Generate TWX Package**
-   ```bash
-   python3 package_multiple_widgets.py
-   ```
-   
-   The packager automatically detects all widgets in the `widgets/` directory - no manual configuration needed!
-
-3. **Import into BAW**
-   - Find the TWX file in `output/` directory
-   - Import via BAW Process Designer → File → Import
-
-### Widget Development Workflow
-
-1. **Create Widget Structure**
-   ```bash
-   python3 create_widget_template.py MyWidget "Description"
-   ```
-
-2. **Develop Widget**
-   - Edit `widgets/MyWidget/widget/Layout.html`
-   - Style in `widgets/MyWidget/widget/InlineCSS.css`
-   - Add logic in `widgets/MyWidget/widget/inlineJavascript.js`
-   - Define configuration in `widgets/MyWidget/widget/config.json`
-   - Optionally create `widgets/MyWidget/MyWidget.svg` icon (120x120px)
-
-3. **Test Locally**
-   - Open `widgets/MyWidget/AdvancePreview/MyWidget.html` in browser
-   - Test with sample data
-
-4. **Package and Deploy**
-   ```bash
-   python3 package_multiple_widgets.py
-   ```
-
-5. **Import and Test in BAW**
-   - Import TWX file
-   - Add widget to a coach
-   - Test with real data
-
-## 🎯 Roadmap
-
-Future enhancements planned:
-- [x] Widget generator tool (create_widget_template.py)
-- [x] Automated packaging system (toolkit_packager)
-- [ ] Additional widgets (DataTable, Timeline, Notification)
-- [ ] Enhanced accessibility features
-- [ ] More localization options
-- [ ] Performance optimizations
-- [ ] Additional Carbon Design System components
-- [ ] Automated testing suite
+### Troubleshooting
+- Check browser console for errors
+- Verify BAW version compatibility
+- Review mode-specific documentation
+- Test with example widgets first
 
 ---
 
 **Version**: 1.0.0  
-**Last Updated**: February 2026  
-**Compatibility**: IBM Business Automation Workflow v24.x 
+**Last Updated**: May 2026  
+**BAW Compatibility**: v24.x, v25.x  
 **Carbon Design System**: v11.x compatible
 
 ---
 
-## 🤝 Contributing
-
-When adding new widgets to this collection:
-
-1. Follow the established directory structure
-2. Include comprehensive README.md documentation
-3. Provide datamodel.md and eventHandler.md files
-4. Implement AdvancePreview for BAW designer
-5. Follow Carbon Design System guidelines
-6. Include usage examples and troubleshooting guides
-7. Test across supported browsers
-8. Ensure accessibility compliance
+**Ready to start?**
+- 🎓 [Begin with the Labs](lab-docs/README.md)
+- 🤖 [Learn About Bob's Modes](lab-docs/BOB_BAW_MODES_GUIDE.md)
+- 📦 [Explore Available Widgets](widgets/)
+- 🔧 [Try BPMN Tools](BPMN_tools/README.md)

@@ -1,0 +1,393 @@
+<implementation_guide>
+  <overview>
+    This guide provides instructions for implementing process generation capabilities
+    in the BAW Blueprint Parser mode. Since Mode Writer cannot create Python utilities
+    directly, this document serves as a specification for implementation.
+  </overview>
+
+  <process_generator_utility>
+    <file_location>toolkit_packager/generators/process_generator.py</file_location>
+    <purpose>
+      Generate Markdown files with Mermaid diagrams for business processes extracted
+      from blueprint documents. This utility complements the business_object_generator.py
+      and follows similar patterns.
+    </purpose>
+    
+    <key_functions>
+      <function name="generate_process_markdown">
+        <description>Generate complete Markdown file for a business process</description>
+        <parameters>
+          <param name="process_definition" type="dict">Process structure with metadata</param>
+          <param name="context" type="str">Business context name</param>
+          <param name="output_path" type="Path">Output directory path</param>
+        </parameters>
+        <returns>Path to generated Markdown file</returns>
+      </function>
+      
+      <function name="generate_mermaid_diagram">
+        <description>Generate Mermaid diagram syntax from process structure</description>
+        <parameters>
+          <param name="process_definition" type="dict">Process structure</param>
+          <param name="diagram_type" type="str">flowchart, sequence, or state</param>
+        </parameters>
+        <returns>Mermaid diagram as string</returns>
+      </function>
+      
+      <function name="generate_process_catalog">
+        <description>Generate process catalog JSON file</description>
+        <parameters>
+          <param name="processes" type="List[dict]">List of process definitions</param>
+          <param name="context" type="str">Business context name</param>
+          <param name="output_path" type="Path">Catalog output path</param>
+        </parameters>
+        <returns>Path to generated catalog file</returns>
+      </function>
+      
+      <function name="link_processes_to_business_objects">
+        <description>Create cross-references between processes and business objects</description>
+        <parameters>
+          <param name="process_definition" type="dict">Process structure</param>
+          <param name="business_objects_path" type="Path">Path to business objects</param>
+        </parameters>
+        <returns>Updated process definition with object links</returns>
+      </function>
+    </key_functions>
+    
+    <process_definition_structure>
+      <description>Expected structure for process definitions</description>
+      <json_schema><![CDATA[
+{
+  "processId": "string (kebab-case)",
+  "processName": "string (human-readable)",
+  "description": "string",
+  "processType": "end-to-end|subprocess|decision|interaction",
+  "context": "string (business context)",
+  "actors": [
+    {
+      "id": "string",
+      "name": "string",
+      "type": "human|system"
+    }
+  ],
+  "activities": [
+    {
+      "id": "string",
+      "name": "string",
+      "type": "userTask|serviceTask|manualTask|scriptTask",
+      "actor": "string (actor id)",
+      "description": "string",
+      "inputData": ["business object names"],
+      "outputData": ["business object names"]
+    }
+  ],
+  "gateways": [
+    {
+      "id": "string",
+      "name": "string",
+      "type": "exclusive|parallel|inclusive",
+      "conditions": [
+        {
+          "path": "string",
+          "condition": "string (condition expression)"
+        }
+      ]
+    }
+  ],
+  "dataObjects": [
+    {
+      "id": "string",
+      "name": "string",
+      "path": "string (relative path to JSON file)"
+    }
+  ],
+  "integrations": [
+    {
+      "name": "string",
+      "type": "API|Service|Database",
+      "activity": "string (activity id)",
+      "description": "string"
+    }
+  ],
+  "estimatedDuration": "string",
+  "complexity": "low|medium|high",
+  "generatedFrom": "string (source document path)",
+  "generatedDate": "string (ISO 8601)"
+}
+      ]]></json_schema>
+    </process_definition_structure>
+  </process_generator_utility>
+
+  <directory_structure>
+    <description>Required directory structure for process generation</description>
+    <structure><![CDATA[
+business-processes/
+├── catalog/
+│   ├── [context].process-catalog.json
+│   └── master.process-catalog.json
+└── [context]/
+    ├── [ProcessName1].process.md
+    ├── [ProcessName2].process.md
+    └── [ProcessName3].process.md
+    ]]></structure>
+  </directory_structure>
+
+  <catalog_file_structure>
+    <description>Structure for process catalog JSON files</description>
+    <json_schema><![CDATA[
+{
+  "context": "string",
+  "version": "string (semver)",
+  "generatedDate": "string (ISO 8601)",
+  "processes": [
+    {
+      "processId": "string",
+      "processName": "string",
+      "description": "string",
+      "processFile": "string (relative path)",
+      "processType": "string",
+      "actors": ["string"],
+      "businessObjects": ["string"],
+      "subProcesses": ["string (process ids)"],
+      "complexity": "low|medium|high",
+      "estimatedDuration": "string"
+    }
+  ],
+  "relationships": [
+    {
+      "parentProcess": "string (process id)",
+      "childProcess": "string (process id)",
+      "relationshipType": "calls|triggers|includes"
+    }
+  ]
+}
+    ]]></json_schema>
+  </catalog_file_structure>
+
+  <mermaid_generation_patterns>
+    <pattern type="flowchart_with_swimlanes">
+      <description>Generate flowchart with subgraphs for actors</description>
+      <template><![CDATA[
+```mermaid
+flowchart TD
+    Start([Start: {trigger}])
+    
+    subgraph {actor1_name}[{actor1_display_name}]
+        A1[{activity1_name}]
+        A2[{activity2_name}]
+    end
+    
+    subgraph {actor2_name}[{actor2_display_name}]
+        B1[{activity3_name}]
+        B2{{gateway_name}}
+        B3[{activity4_name}]
+    end
+    
+    Start --> A1
+    A1 --> A2
+    A2 --> B1
+    B1 --> B2
+    B2 -->|{condition1}| B3
+    B2 -->|{condition2}| End
+    B3 --> End([End: {completion}])
+    
+    style Start fill:#90EE90
+    style End fill:#FFB6C1
+    style B2 fill:#FFD700
+```
+      ]]></template>
+    </pattern>
+    
+    <pattern type="sequence_diagram">
+      <description>Generate sequence diagram for interaction processes</description>
+      <template><![CDATA[
+```mermaid
+sequenceDiagram
+    participant {actor1}
+    participant {actor2}
+    participant {actor3}
+    
+    {actor1}->>{actor2}: {message1}
+    {actor2}->>{actor2}: {internal_action}
+    {actor2}->>{actor3}: {message2}
+    {actor3}->>{actor1}: {response}
+    
+    Note over {actor1},{actor3}: {important_note}
+```
+      ]]></template>
+    </pattern>
+  </mermaid_generation_patterns>
+
+  <implementation_workflow>
+    <step number="1">
+      <title>Create Process Generator Module</title>
+      <description>Implement the process_generator.py utility</description>
+      <actions>
+        <action>Create toolkit_packager/generators/process_generator.py</action>
+        <action>Implement core generation functions</action>
+        <action>Add Mermaid diagram generation logic</action>
+        <action>Implement catalog generation</action>
+        <action>Add business object linking functionality</action>
+      </actions>
+    </step>
+    
+    <step number="2">
+      <title>Integrate with Blueprint Parser Workflow</title>
+      <description>Update the blueprint parser to call process generation</description>
+      <actions>
+        <action>Import process_generator in blueprint parsing scripts</action>
+        <action>Extract process information from blueprints</action>
+        <action>Call generate_process_markdown for each process</action>
+        <action>Generate process catalogs</action>
+        <action>Link processes to business objects</action>
+      </actions>
+    </step>
+    
+    <step number="3">
+      <title>Create Helper Scripts</title>
+      <description>Create convenience scripts for process generation</description>
+      <actions>
+        <action>Create generate_processes.py script in project root</action>
+        <action>Add command-line interface for process generation</action>
+        <action>Support batch processing of multiple blueprints</action>
+      </actions>
+    </step>
+    
+    <step number="4">
+      <title>Update Documentation</title>
+      <description>Document the process generation capabilities</description>
+      <actions>
+        <action>Update docs/BAW_BLUEPRINT_PARSER_MODE.md</action>
+        <action>Add process generation examples</action>
+        <action>Document Mermaid diagram patterns</action>
+        <action>Explain BPMN preparation strategy</action>
+      </actions>
+    </step>
+  </implementation_workflow>
+
+  <usage_examples>
+    <example name="generate_single_process">
+      <description>Generate a single process from definition</description>
+      <code><![CDATA[
+from toolkit_packager.generators.process_generator import generate_process_markdown
+
+process_def = {
+    "processId": "new-business-application",
+    "processName": "New Business Application Process",
+    "description": "End-to-end process for new policy applications",
+    "processType": "end-to-end",
+    "context": "LifeInsuranceAndAnnuities",
+    "actors": [
+        {"id": "agent", "name": "Insurance Agent", "type": "human"},
+        {"id": "system", "name": "BAW System", "type": "system"}
+    ],
+    "activities": [
+        {
+            "id": "collect_app",
+            "name": "Collect Application Data",
+            "type": "userTask",
+            "actor": "agent",
+            "inputData": [],
+            "outputData": ["Application", "Policyholder"]
+        }
+    ]
+}
+
+output_path = Path("business-processes/LifeInsuranceAndAnnuities")
+generate_process_markdown(process_def, "LifeInsuranceAndAnnuities", output_path)
+      ]]></code>
+    </example>
+    
+    <example name="generate_process_catalog">
+      <description>Generate catalog for multiple processes</description>
+      <code><![CDATA[
+from toolkit_packager.generators.process_generator import generate_process_catalog
+
+processes = [process_def1, process_def2, process_def3]
+catalog_path = Path("business-processes/catalog")
+generate_process_catalog(processes, "LifeInsuranceAndAnnuities", catalog_path)
+      ]]></code>
+    </example>
+  </usage_examples>
+
+  <testing_strategy>
+    <test name="test_mermaid_generation">
+      <description>Verify Mermaid diagram syntax is valid</description>
+      <approach>Generate diagrams and validate syntax</approach>
+    </test>
+    
+    <test name="test_business_object_linking">
+      <description>Verify process-to-object links are correct</description>
+      <approach>Check that all referenced business objects exist</approach>
+    </test>
+    
+    <test name="test_catalog_generation">
+      <description>Verify catalog structure and content</description>
+      <approach>Validate JSON schema and cross-references</approach>
+    </test>
+  </testing_strategy>
+
+  <future_bpmn_generation>
+    <overview>
+      The process metadata structure is designed to facilitate future BPMN generation.
+      This section outlines the path from Mermaid to BPMN.
+    </overview>
+    
+    <bpmn_generator_requirements>
+      <requirement>Parse process metadata JSON</requirement>
+      <requirement>Map activities to BPMN task types</requirement>
+      <requirement>Convert gateways to BPMN gateway elements</requirement>
+      <requirement>Create BPMN pools and lanes from actors</requirement>
+      <requirement>Generate sequence flows from process flow</requirement>
+      <requirement>Add data associations for business objects</requirement>
+      <requirement>Generate BPMN XML conforming to BAW standards</requirement>
+    </bpmn_generator_requirements>
+    
+    <implementation_phases>
+      <phase number="1">
+        <name>Mermaid Generation (Current)</name>
+        <deliverables>
+          <deliverable>Markdown files with Mermaid diagrams</deliverable>
+          <deliverable>Structured process metadata</deliverable>
+          <deliverable>Process catalogs</deliverable>
+        </deliverables>
+      </phase>
+      
+      <phase number="2">
+        <name>BPMN Preparation (Next)</name>
+        <deliverables>
+          <deliverable>BPMN element mapping utilities</deliverable>
+          <deliverable>BAW-specific BPMN templates</deliverable>
+          <deliverable>Validation against BAW BPMN schema</deliverable>
+        </deliverables>
+      </phase>
+      
+      <phase number="3">
+        <name>BPMN Generation (Future)</name>
+        <deliverables>
+          <deliverable>Full BPMN XML generation</deliverable>
+          <deliverable>BAW process artifact packaging</deliverable>
+          <deliverable>Direct deployment to BAW servers</deliverable>
+        </deliverables>
+      </phase>
+    </implementation_phases>
+  </future_bpmn_generation>
+
+  <integration_with_existing_tools>
+    <integration point="business_object_generator">
+      <description>Process generator should reference business objects</description>
+      <approach>Read business object catalog to validate references</approach>
+    </integration>
+    
+    <integration point="baw_package_manager">
+      <description>Process definitions should be packageable</description>
+      <approach>Include process Markdown files in toolkit documentation</approach>
+    </integration>
+    
+    <integration point="baw_coach_composer">
+      <description>Processes can inform coach design</description>
+      <approach>Use process activities to suggest coach flows</approach>
+    </integration>
+  </integration_with_existing_tools>
+</implementation_guide>
+
+<!-- Made with Bob -->

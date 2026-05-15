@@ -1,0 +1,731 @@
+<bpmn_config_generation_guide>
+  <overview>
+    This guide provides comprehensive instructions for generating BPMN process configurations
+    from business blueprint documents. The config-driven approach separates GenAI's document
+    understanding capabilities from deterministic BPMN XML generation.
+    
+    **Key Principle**: GenAI analyzes documents and creates JSON configs; Python generates BPMN XML.
+  </overview>
+
+  <architecture>
+    <separation_of_concerns>
+      <genai_role>
+        - Analyze business documents
+        - Extract process information (roles, steps, decisions, flows)
+        - Understand business context and intent
+        - Create structured JSON configurations
+        - Handle ambiguity and incomplete information
+      </genai_role>
+      <python_role>
+        - Read JSON configurations
+        - Generate valid BPMN 2.0 XML
+        - Ensure proper element references
+        - Apply BAW-specific conventions
+        - Validate XML structure
+      </python_role>
+    </separation_of_concerns>
+
+    <workflow>
+      <step>1. Blueprint Document → GenAI Analysis</step>
+      <step>2. GenAI Analysis → JSON Config (this mode)</step>
+      <step>3. JSON Config → Python Generator (BPMN_tools)</step>
+      <step>4. Python Generator → BPMN XML</step>
+    </workflow>
+  </architecture>
+
+  <config_schema_reference>
+    <location>BPMN_tools/CONFIG_SCHEMA_DESIGN.md</location>
+    <description>
+      Complete JSON schema definition with 4 example configs covering all BPMN patterns:
+      - Linear flow (simple sequential process)
+      - Approval flow (with decision gateways)
+      - Parallel flow (concurrent activities)
+      - Swimlane flow (multi-role process)
+    </description>
+    <important>
+      Always reference CONFIG_SCHEMA_DESIGN.md for the authoritative schema structure.
+      The examples in that file show the exact JSON format expected by the Python generator.
+    </important>
+  </config_schema_reference>
+
+  <extraction_workflow>
+    <step number="1">
+      <title>Identify Process Scope</title>
+      <description>Determine which processes are described in the blueprint document</description>
+      <actions>
+        <action>Scan for process names, workflow descriptions, or procedure titles</action>
+        <action>Identify process boundaries (start and end points)</action>
+        <action>Determine process context (business domain)</action>
+        <action>Note process complexity (simple, moderate, complex)</action>
+      </actions>
+      <indicators>
+        <indicator>Sections titled "Process", "Workflow", "Procedure"</indicator>
+        <indicator>Sequential step descriptions</indicator>
+        <indicator>Actor-based activity descriptions</indicator>
+        <indicator>Decision trees or conditional logic</indicator>
+      </indicators>
+    </step>
+
+    <step number="2">
+      <title>Extract Process Metadata</title>
+      <description>Capture high-level process information</description>
+      <required_fields>
+        <field name="processId">
+          <format>kebab-case, descriptive</format>
+          <pattern>proc-[context]-[number]</pattern>
+          <example>proc-insurance-001</example>
+        </field>
+        <field name="processName">
+          <format>Human-readable title</format>
+          <example>New Business Application Process</example>
+        </field>
+        <field name="description">
+          <content>Brief process purpose and scope</content>
+          <length>1-3 sentences</length>
+        </field>
+        <field name="version">
+          <format>Semantic versioning</format>
+          <default>1.0.0</default>
+        </field>
+      </required_fields>
+    </step>
+
+    <step number="3">
+      <title>Identify Roles and Actors</title>
+      <description>Extract all participants in the process</description>
+      <actions>
+        <action>Identify human roles (Agent, Underwriter, Manager)</action>
+        <action>Identify system actors (Automated System, External API)</action>
+        <action>Assign unique role IDs using role-[name] pattern</action>
+        <action>Determine role types (human, system, external)</action>
+      </actions>
+      <role_structure>
+        <field name="id">role-[lowercase-name]</field>
+        <field name="name">Display name</field>
+        <field name="type">human | system | external</field>
+        <field name="description">Role responsibilities</field>
+      </role_structure>
+      <examples>
+        <example>
+          {
+            "id": "role-agent",
+            "name": "Insurance Agent",
+            "type": "human",
+            "description": "Collects application data and submits to system"
+          }
+        </example>
+        <example>
+          {
+            "id": "role-system",
+            "name": "BAW System",
+            "type": "system",
+            "description": "Validates data and routes work"
+          }
+        </example>
+      </examples>
+    </step>
+
+    <step number="4">
+      <title>Identify Milestones</title>
+      <description>Extract key process milestones or phases</description>
+      <actions>
+        <action>Look for major process phases or stages</action>
+        <action>Identify completion criteria for each milestone</action>
+        <action>Assign unique milestone IDs using ms-[name] pattern</action>
+      </actions>
+      <milestone_structure>
+        <field name="id">ms-[lowercase-name]</field>
+        <field name="name">Display name</field>
+        <field name="description">Milestone significance</field>
+      </milestone_structure>
+      <examples>
+        <example>
+          {
+            "id": "ms-application-submitted",
+            "name": "Application Submitted",
+            "description": "Initial application received and validated"
+          }
+        </example>
+        <example>
+          {
+            "id": "ms-underwriting-complete",
+            "name": "Underwriting Complete",
+            "description": "Risk assessment and decision made"
+          }
+        </example>
+      </examples>
+    </step>
+
+    <step number="5">
+      <title>Extract Process Elements</title>
+      <description>Identify all BPMN elements (events, tasks, gateways)</description>
+      
+      <start_events>
+        <description>Process initiation points</description>
+        <id_pattern>elem-start-[number]</id_pattern>
+        <structure>
+          {
+            "id": "elem-start-1",
+            "type": "startEvent",
+            "name": "Application Received",
+            "outgoing": ["flow-1"]
+          }
+        </structure>
+      </start_events>
+
+      <tasks>
+        <description>Work activities performed by roles</description>
+        <id_pattern>elem-task-[number]</id_pattern>
+        <task_types>
+          <type name="userTask">Human-performed activity</type>
+          <type name="serviceTask">Automated system activity</type>
+          <type name="scriptTask">Script execution</type>
+          <type name="manualTask">Manual work outside system</type>
+        </task_types>
+        <structure>
+          {
+            "id": "elem-task-1",
+            "type": "userTask",
+            "name": "Collect Application Data",
+            "assignee": "role-agent",
+            "incoming": ["flow-1"],
+            "outgoing": ["flow-2"],
+            "documentation": "Agent collects applicant information"
+          }
+        </structure>
+        <extraction_tips>
+          <tip>Look for action verbs (Submit, Review, Approve, Process)</tip>
+          <tip>Identify who performs the action (determines assignee)</tip>
+          <tip>Note if action is automated (serviceTask) or manual (userTask)</tip>
+        </extraction_tips>
+      </tasks>
+
+      <gateways>
+        <description>Decision points and flow control</description>
+        <id_pattern>elem-gateway-[number]</id_pattern>
+        <gateway_types>
+          <type name="exclusiveGateway">One path chosen (XOR)</type>
+          <type name="parallelGateway">All paths taken (AND)</type>
+          <type name="inclusiveGateway">One or more paths (OR)</type>
+        </gateway_types>
+        <structure>
+          {
+            "id": "elem-gateway-1",
+            "type": "exclusiveGateway",
+            "name": "Application Complete?",
+            "incoming": ["flow-2"],
+            "outgoing": ["flow-3", "flow-4"]
+          }
+        </structure>
+        <extraction_tips>
+          <tip>Look for decision points, questions, or conditional logic</tip>
+          <tip>Identify conditions for each outgoing path</tip>
+          <tip>Use exclusiveGateway for "if-then-else" logic</tip>
+          <tip>Use parallelGateway for "do all concurrently"</tip>
+        </extraction_tips>
+      </gateways>
+
+      <end_events>
+        <description>Process completion points</description>
+        <id_pattern>elem-end-[number]</id_pattern>
+        <structure>
+          {
+            "id": "elem-end-1",
+            "type": "endEvent",
+            "name": "Process Complete",
+            "incoming": ["flow-10"]
+          }
+        </structure>
+      </end_events>
+    </step>
+
+    <step number="6">
+      <title>Define Sequence Flows</title>
+      <description>Map connections between elements</description>
+      <actions>
+        <action>Identify flow sequence from process description</action>
+        <action>Assign unique flow IDs using flow-[number] pattern</action>
+        <action>Connect elements using sourceRef and targetRef</action>
+        <action>Add conditions for gateway outgoing flows</action>
+      </actions>
+      <flow_structure>
+        <field name="id">flow-[number]</field>
+        <field name="sourceRef">ID of source element</field>
+        <field name="targetRef">ID of target element</field>
+        <field name="name">Optional flow label</field>
+        <field name="conditionExpression">For gateway outgoing flows</field>
+      </flow_structure>
+      <examples>
+        <example type="simple">
+          {
+            "id": "flow-1",
+            "sourceRef": "elem-start-1",
+            "targetRef": "elem-task-1"
+          }
+        </example>
+        <example type="conditional">
+          {
+            "id": "flow-3",
+            "name": "Complete",
+            "sourceRef": "elem-gateway-1",
+            "targetRef": "elem-task-2",
+            "conditionExpression": "${application.isComplete == true}"
+          }
+        </example>
+      </examples>
+      <validation_rules>
+        <rule>Every element must have at least one incoming or outgoing flow (except start/end)</rule>
+        <rule>Start events have only outgoing flows</rule>
+        <rule>End events have only incoming flows</rule>
+        <rule>Gateway outgoing flows should have conditions (except default)</rule>
+        <rule>All flow references must point to existing element IDs</rule>
+      </validation_rules>
+    </step>
+
+    <step number="7">
+      <title>Define Swimlanes (Optional)</title>
+      <description>Create lanes for multi-role processes</description>
+      <when_to_use>
+        <use_case>Process involves multiple distinct roles</use_case>
+        <use_case>Visual separation of responsibilities is important</use_case>
+        <use_case>Process spans multiple departments or systems</use_case>
+      </when_to_use>
+      <lane_structure>
+        <field name="id">lane-[role-id]</field>
+        <field name="name">Display name</field>
+        <field name="flowNodeRefs">Array of element IDs in this lane</field>
+      </lane_structure>
+      <example>
+        {
+          "id": "lane-role-agent",
+          "name": "Insurance Agent",
+          "flowNodeRefs": ["elem-task-1", "elem-task-2"]
+        }
+      </example>
+      <assignment_rules>
+        <rule>Assign tasks to lanes based on assignee role</rule>
+        <rule>Gateways typically go in the lane of the preceding task</rule>
+        <rule>Start/end events can be in any appropriate lane</rule>
+      </assignment_rules>
+    </step>
+  </extraction_workflow>
+
+  <id_conventions>
+    <overview>
+      All elements must have unique, predictable IDs for proper XML referencing.
+      Use these patterns consistently across all configs.
+    </overview>
+    
+    <patterns>
+      <pattern name="process">proc-[context]-[number]</pattern>
+      <pattern name="role">role-[lowercase-name]</pattern>
+      <pattern name="milestone">ms-[lowercase-name]</pattern>
+      <pattern name="start_event">elem-start-[number]</pattern>
+      <pattern name="task">elem-task-[number]</pattern>
+      <pattern name="gateway">elem-gateway-[number]</pattern>
+      <pattern name="end_event">elem-end-[number]</pattern>
+      <pattern name="flow">flow-[number]</pattern>
+      <pattern name="lane">lane-[role-id]</pattern>
+    </patterns>
+
+    <numbering_guidelines>
+      <guideline>Start numbering at 1 for each element type</guideline>
+      <guideline>Use sequential numbers (1, 2, 3, not 1, 5, 10)</guideline>
+      <guideline>Maintain number sequence even if elements are reordered</guideline>
+      <guideline>Don't reuse numbers within the same config</guideline>
+    </numbering_guidelines>
+  </id_conventions>
+
+  <config_generation_examples>
+    <example name="simple_linear_process">
+      <description>Basic sequential process with no branching</description>
+      <blueprint_excerpt>
+        "The application process starts when an agent submits an application.
+        The system validates the data, then routes it to an underwriter for review.
+        After review, the underwriter makes a decision and the process ends."
+      </blueprint_excerpt>
+      <generated_config><![CDATA[
+{
+  "process": {
+    "id": "proc-insurance-001",
+    "name": "Simple Application Process",
+    "description": "Linear application review process",
+    "version": "1.0.0"
+  },
+  "metadata": {
+    "context": "Insurance",
+    "complexity": "simple",
+    "estimatedDuration": "1 week"
+  },
+  "roles": [
+    {
+      "id": "role-agent",
+      "name": "Insurance Agent",
+      "type": "human",
+      "description": "Submits applications"
+    },
+    {
+      "id": "role-system",
+      "name": "System",
+      "type": "system",
+      "description": "Validates and routes"
+    },
+    {
+      "id": "role-underwriter",
+      "name": "Underwriter",
+      "type": "human",
+      "description": "Reviews and decides"
+    }
+  ],
+  "milestones": [
+    {
+      "id": "ms-submitted",
+      "name": "Application Submitted",
+      "description": "Initial submission complete"
+    },
+    {
+      "id": "ms-reviewed",
+      "name": "Review Complete",
+      "description": "Underwriting decision made"
+    }
+  ],
+  "elements": [
+    {
+      "id": "elem-start-1",
+      "type": "startEvent",
+      "name": "Application Received",
+      "outgoing": ["flow-1"]
+    },
+    {
+      "id": "elem-task-1",
+      "type": "userTask",
+      "name": "Submit Application",
+      "assignee": "role-agent",
+      "incoming": ["flow-1"],
+      "outgoing": ["flow-2"]
+    },
+    {
+      "id": "elem-task-2",
+      "type": "serviceTask",
+      "name": "Validate Data",
+      "assignee": "role-system",
+      "incoming": ["flow-2"],
+      "outgoing": ["flow-3"]
+    },
+    {
+      "id": "elem-task-3",
+      "type": "userTask",
+      "name": "Review Application",
+      "assignee": "role-underwriter",
+      "incoming": ["flow-3"],
+      "outgoing": ["flow-4"]
+    },
+    {
+      "id": "elem-end-1",
+      "type": "endEvent",
+      "name": "Process Complete",
+      "incoming": ["flow-4"]
+    }
+  ],
+  "flows": [
+    {
+      "id": "flow-1",
+      "sourceRef": "elem-start-1",
+      "targetRef": "elem-task-1"
+    },
+    {
+      "id": "flow-2",
+      "sourceRef": "elem-task-1",
+      "targetRef": "elem-task-2"
+    },
+    {
+      "id": "flow-3",
+      "sourceRef": "elem-task-2",
+      "targetRef": "elem-task-3"
+    },
+    {
+      "id": "flow-4",
+      "sourceRef": "elem-task-3",
+      "targetRef": "elem-end-1"
+    }
+  ],
+  "lanes": [
+    {
+      "id": "lane-role-agent",
+      "name": "Insurance Agent",
+      "flowNodeRefs": ["elem-task-1"]
+    },
+    {
+      "id": "lane-role-system",
+      "name": "System",
+      "flowNodeRefs": ["elem-task-2"]
+    },
+    {
+      "id": "lane-role-underwriter",
+      "name": "Underwriter",
+      "flowNodeRefs": ["elem-task-3"]
+    }
+  ]
+}
+      ]]></generated_config>
+    </example>
+
+    <example name="approval_with_gateway">
+      <description>Process with decision gateway and conditional flows</description>
+      <blueprint_excerpt>
+        "After validation, the system checks if the application is complete.
+        If complete, it routes to underwriter. If incomplete, it returns to agent.
+        The underwriter reviews and either approves or declines."
+      </blueprint_excerpt>
+      <key_elements>
+        <element>Two exclusive gateways for decisions</element>
+        <element>Conditional flows with expressions</element>
+        <element>Multiple end events (approved, declined)</element>
+      </key_elements>
+      <generated_config><![CDATA[
+{
+  "process": {
+    "id": "proc-insurance-002",
+    "name": "Approval Process with Decisions",
+    "description": "Application process with validation and approval decisions",
+    "version": "1.0.0"
+  },
+  "elements": [
+    {
+      "id": "elem-start-1",
+      "type": "startEvent",
+      "name": "Start",
+      "outgoing": ["flow-1"]
+    },
+    {
+      "id": "elem-task-1",
+      "type": "serviceTask",
+      "name": "Validate Application",
+      "assignee": "role-system",
+      "incoming": ["flow-1"],
+      "outgoing": ["flow-2"]
+    },
+    {
+      "id": "elem-gateway-1",
+      "type": "exclusiveGateway",
+      "name": "Complete?",
+      "incoming": ["flow-2"],
+      "outgoing": ["flow-3", "flow-4"]
+    },
+    {
+      "id": "elem-task-2",
+      "type": "userTask",
+      "name": "Fix Application",
+      "assignee": "role-agent",
+      "incoming": ["flow-4"],
+      "outgoing": ["flow-5"]
+    },
+    {
+      "id": "elem-task-3",
+      "type": "userTask",
+      "name": "Review Application",
+      "assignee": "role-underwriter",
+      "incoming": ["flow-3", "flow-5"],
+      "outgoing": ["flow-6"]
+    },
+    {
+      "id": "elem-gateway-2",
+      "type": "exclusiveGateway",
+      "name": "Decision",
+      "incoming": ["flow-6"],
+      "outgoing": ["flow-7", "flow-8"]
+    },
+    {
+      "id": "elem-end-1",
+      "type": "endEvent",
+      "name": "Approved",
+      "incoming": ["flow-7"]
+    },
+    {
+      "id": "elem-end-2",
+      "type": "endEvent",
+      "name": "Declined",
+      "incoming": ["flow-8"]
+    }
+  ],
+  "flows": [
+    {
+      "id": "flow-1",
+      "sourceRef": "elem-start-1",
+      "targetRef": "elem-task-1"
+    },
+    {
+      "id": "flow-2",
+      "sourceRef": "elem-task-1",
+      "targetRef": "elem-gateway-1"
+    },
+    {
+      "id": "flow-3",
+      "name": "Complete",
+      "sourceRef": "elem-gateway-1",
+      "targetRef": "elem-task-3",
+      "conditionExpression": "${application.isComplete == true}"
+    },
+    {
+      "id": "flow-4",
+      "name": "Incomplete",
+      "sourceRef": "elem-gateway-1",
+      "targetRef": "elem-task-2",
+      "conditionExpression": "${application.isComplete == false}"
+    },
+    {
+      "id": "flow-5",
+      "sourceRef": "elem-task-2",
+      "targetRef": "elem-task-3"
+    },
+    {
+      "id": "flow-6",
+      "sourceRef": "elem-task-3",
+      "targetRef": "elem-gateway-2"
+    },
+    {
+      "id": "flow-7",
+      "name": "Approve",
+      "sourceRef": "elem-gateway-2",
+      "targetRef": "elem-end-1",
+      "conditionExpression": "${decision == 'APPROVED'}"
+    },
+    {
+      "id": "flow-8",
+      "name": "Decline",
+      "sourceRef": "elem-gateway-2",
+      "targetRef": "elem-end-2",
+      "conditionExpression": "${decision == 'DECLINED'}"
+    }
+  ]
+}
+      ]]></generated_config>
+    </example>
+  </config_generation_examples>
+
+  <validation_checklist>
+    <category name="structure">
+      <check>Config has all required top-level sections (process, roles, elements, flows)</check>
+      <check>All IDs follow naming conventions</check>
+      <check>No duplicate IDs within config</check>
+      <check>All required fields present for each element type</check>
+    </category>
+
+    <category name="references">
+      <check>All flow sourceRef values reference existing element IDs</check>
+      <check>All flow targetRef values reference existing element IDs</check>
+      <check>All task assignee values reference existing role IDs</check>
+      <check>All lane flowNodeRefs reference existing element IDs</check>
+    </category>
+
+    <category name="flow_logic">
+      <check>Start events have only outgoing flows</check>
+      <check>End events have only incoming flows</check>
+      <check>All tasks have at least one incoming and one outgoing flow</check>
+      <check>Gateway outgoing flows have conditions (except default path)</check>
+      <check>No orphaned elements (unreachable from start)</check>
+      <check>All paths lead to an end event</check>
+    </category>
+
+    <category name="business_logic">
+      <check>Process name and description are clear and meaningful</check>
+      <check>Role assignments make sense for task types</check>
+      <check>Gateway conditions are mutually exclusive (for exclusiveGateway)</check>
+      <check>Milestone placement is logical</check>
+    </category>
+  </validation_checklist>
+
+  <output_location>
+    <config_files>business-processes/configs/[context]/</config_files>
+    <naming_pattern>[ProcessName].bpmn-config.json</naming_pattern>
+    <example>business-processes/configs/Insurance/NewBusinessApplication.bpmn-config.json</example>
+  </output_location>
+
+  <integration_with_python>
+    <overview>
+      After generating the JSON config, it will be consumed by Python modules in BPMN_tools/
+      to generate valid BPMN XML.
+    </overview>
+    
+    <python_modules>
+      <module name="generate_bpmn.py">Main tool for BPMN XML generation from config</module>
+      <module name="bpmn_xml_builder.py">Internal XML builder (generates BPMN 2.0 XML)</module>
+      <module name="validator.py">Config and BPMN validation</module>
+    </python_modules>
+
+    <usage_pattern>
+      <step>1. Generate JSON config in this mode</step>
+      <step>2. Save config to business-processes/configs/[context]/</step>
+      <step>3. Automatically run generate_bpmn.py to create BPMN XML</step>
+      <step>4. BPMN XML is saved to business-processes/bpmn/[context]/</step>
+      <step>5. BPMN XML is ready for BAW deployment</step>
+    </usage_pattern>
+
+    <important>
+      This mode generates BPMN config files AND automatically runs the Python generator
+      (generate_bpmn.py) to create BPMN XML files. This is handled in Step 8 of the workflow.
+      The generated BPMN XML files are immediately ready for packaging or deployment.
+    </important>
+  </integration_with_python>
+
+  <common_patterns>
+    <pattern name="linear_sequence">
+      <when>Simple sequential process with no branching</when>
+      <structure>Start → Task1 → Task2 → Task3 → End</structure>
+      <example_ref>See simple_linear_process example above</example_ref>
+    </pattern>
+
+    <pattern name="approval_flow">
+      <when>Process requires decision-making or approval</when>
+      <structure>Start → Task → Gateway → [Approved/Declined] → End</structure>
+      <example_ref>See approval_with_gateway example above</example_ref>
+    </pattern>
+
+    <pattern name="parallel_execution">
+      <when>Multiple activities can happen concurrently</when>
+      <structure>Start → ParallelGateway(fork) → [Task1, Task2] → ParallelGateway(join) → End</structure>
+      <gateway_type>parallelGateway</gateway_type>
+    </pattern>
+
+    <pattern name="multi_role_swimlane">
+      <when>Process spans multiple departments or roles</when>
+      <structure>Use lanes array to group elements by role</structure>
+      <example_ref>See lanes section in simple_linear_process example</example_ref>
+    </pattern>
+  </common_patterns>
+
+  <troubleshooting>
+    <issue name="missing_flows">
+      <symptom>Element has no incoming or outgoing flows</symptom>
+      <solution>Add flows connecting element to process flow</solution>
+    </issue>
+
+    <issue name="invalid_references">
+      <symptom>Flow references non-existent element ID</symptom>
+      <solution>Verify all sourceRef and targetRef values match element IDs</solution>
+    </issue>
+
+    <issue name="gateway_without_conditions">
+      <symptom>Exclusive gateway outgoing flows lack conditions</symptom>
+      <solution>Add conditionExpression to each outgoing flow (except default)</solution>
+    </issue>
+
+    <issue name="orphaned_elements">
+      <symptom>Element not reachable from start event</symptom>
+      <solution>Add flows connecting element to main process flow</solution>
+    </issue>
+  </troubleshooting>
+
+  <best_practices>
+    <practice>Start with process metadata and roles before extracting elements</practice>
+    <practice>Number elements sequentially as you extract them from the document</practice>
+    <practice>Use descriptive names for elements and flows</practice>
+    <practice>Add documentation fields to capture business context</practice>
+    <practice>Validate config structure before considering it complete</practice>
+    <practice>Reference CONFIG_SCHEMA_DESIGN.md for complex patterns</practice>
+    <practice>Keep configs focused on single processes (avoid mega-processes)</practice>
+    <practice>Use milestones to mark significant process phases</practice>
+  </best_practices>
+</bpmn_config_generation_guide>
+
+<!-- Made with Bob -->

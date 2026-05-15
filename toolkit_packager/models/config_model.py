@@ -60,6 +60,7 @@ class ToolkitConfig:
     short_name: str = "CW"
     description: str = "Custom widget toolkit for BAW"
     version: str = "1.0.0"
+    baw_version: str = "25.0.1"  # BAW template version to use
     toolkit_id: Optional[str] = None  # Persistent toolkit ID for BAW
     branch_id: Optional[str] = None  # Persistent branch ID for BAW (for upgrade compatibility)
     is_toolkit: bool = True
@@ -109,6 +110,7 @@ class ToolkitConfig:
             'shortName': self.short_name,
             'description': self.description,
             'version': self.version,
+            'bawVersion': self.baw_version,
             'isToolkit': self.is_toolkit,
             'isHidden': self.is_hidden,
             'isSystem': self.is_system
@@ -168,6 +170,7 @@ class ToolkitConfig:
             short_name=toolkit_data.get('shortName', 'CW'),
             description=toolkit_data.get('description', 'Custom widget toolkit for BAW'),
             version=toolkit_data.get('version', '1.0.0'),
+            baw_version=toolkit_data.get('bawVersion', '25.0.1'),  # Load BAW version
             toolkit_id=toolkit_data.get('id'),  # Load persistent toolkit ID
             branch_id=toolkit_data.get('branchId'),  # Load persistent branch ID
             is_toolkit=toolkit_data.get('isToolkit', True),

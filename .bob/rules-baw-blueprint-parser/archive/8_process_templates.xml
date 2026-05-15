@@ -1,0 +1,668 @@
+<process_generation_templates>
+  <overview>
+    This file provides reusable templates and examples for generating business process
+    documentation with Mermaid diagrams. These templates serve as starting points for
+    common process patterns found in business blueprints.
+  </overview>
+
+  <template name="end_to_end_process">
+    <description>Complete business process with multiple actors and decision points</description>
+    <use_case>New Business Application, Claims Processing, Policy Administration</use_case>
+    <markdown_template><![CDATA[
+# [Process Name]
+
+## Process Overview
+
+**Process ID:** `[process-id]`  
+**Business Context:** [Context Name]  
+**Process Type:** End-to-End Business Process  
+**Estimated Duration:** [duration]  
+**Complexity:** [Low/Medium/High]
+
+### Purpose
+[Brief description of what this process accomplishes and its business value]
+
+### Scope
+- **Starts with:** [Triggering event]
+- **Ends with:** [Completion event]
+- **Includes:** [Key activities]
+- **Excludes:** [Out of scope items]
+
+---
+
+## Process Diagram
+
+```mermaid
+flowchart TD
+    Start([Start: Process Trigger])
+    
+    subgraph Actor1[Actor/Role 1]
+        A1[Activity 1]
+        A2[Activity 2]
+    end
+    
+    subgraph System[System/Automation]
+        S1[Validate Data]
+        S2{Decision Point}
+        S3[Process Data]
+    end
+    
+    subgraph Actor2[Actor/Role 2]
+        B1[Review Activity]
+        B2{Approval Decision}
+        B3[Complete Activity]
+    end
+    
+    Start --> A1
+    A1 --> A2
+    A2 --> S1
+    S1 --> S2
+    S2 -->|Path A| S3
+    S2 -->|Path B| B1
+    S3 --> B1
+    B1 --> B2
+    B2 -->|Approved| B3
+    B2 -->|Rejected| A1
+    B3 --> End([End: Process Complete])
+    
+    style Start fill:#90EE90
+    style End fill:#FFB6C1
+    style S2 fill:#FFD700
+    style B2 fill:#FFD700
+```
+
+---
+
+## Process Steps
+
+### 1. [Step Name]
+- **Actor:** [Role/System]
+- **Activity Type:** [User Task/Service Task/Manual Task]
+- **Description:** [What happens in this step]
+- **Input Data:** 
+  - [`BusinessObject1`](../../business-objects/generated/[context]/BusinessObject1.json)
+  - [`BusinessObject2`](../../business-objects/generated/[context]/BusinessObject2.json)
+- **Output Data:**
+  - [`BusinessObject3`](../../business-objects/generated/[context]/BusinessObject3.json)
+- **Business Rules:**
+  - [Rule 1]
+  - [Rule 2]
+
+### 2. [Decision Point Name]
+- **Actor:** [Role/System]
+- **Decision Type:** [Exclusive/Parallel/Inclusive Gateway]
+- **Description:** [What decision is being made]
+- **Conditions:**
+  - **Path A:** [Condition description]
+  - **Path B:** [Condition description]
+- **Business Logic:**
+  ```
+  IF [condition] THEN [path]
+  ELSE IF [condition] THEN [path]
+  ELSE [default path]
+  ```
+
+---
+
+## Business Objects
+
+This process uses the following business objects:
+
+| Business Object | Usage | Activity |
+|----------------|-------|----------|
+| [`ObjectName1`](../../business-objects/generated/[context]/ObjectName1.json) | Input | Activity 1, Activity 2 |
+| [`ObjectName2`](../../business-objects/generated/[context]/ObjectName2.json) | Output | Activity 3 |
+| [`ObjectName3`](../../business-objects/generated/[context]/ObjectName3.json) | Input/Output | Activity 4 |
+
+---
+
+## Business Rules
+
+### Validation Rules
+1. **Rule Name:** [Description]
+   - **Applies to:** [Activity/Step]
+   - **Condition:** [When this rule applies]
+   - **Action:** [What happens]
+
+### Decision Rules
+1. **Rule Name:** [Description]
+   - **Applies to:** [Decision point]
+   - **Logic:** [Decision criteria]
+
+---
+
+## Integration Points
+
+| Integration | Type | Activity | Description |
+|------------|------|----------|-------------|
+| [System Name] | [API/Service/Database] | [Activity] | [Purpose] |
+
+---
+
+## Exception Handling
+
+### Error Scenarios
+1. **Scenario:** [Error description]
+   - **Trigger:** [What causes this error]
+   - **Handling:** [How it's resolved]
+   - **Recovery:** [Return point in process]
+
+---
+
+## Process Metadata
+
+```json
+{
+  "processId": "[process-id]",
+  "processName": "[Process Name]",
+  "version": "1.0.0",
+  "context": "[Context Name]",
+  "processType": "end-to-end",
+  "actors": [
+    {
+      "id": "actor1",
+      "name": "[Actor Name]",
+      "type": "human|system"
+    }
+  ],
+  "activities": [
+    {
+      "id": "activity1",
+      "name": "[Activity Name]",
+      "type": "userTask|serviceTask|manualTask|scriptTask",
+      "actor": "actor1",
+      "inputData": ["BusinessObject1"],
+      "outputData": ["BusinessObject2"]
+    }
+  ],
+  "gateways": [
+    {
+      "id": "gateway1",
+      "name": "[Gateway Name]",
+      "type": "exclusive|parallel|inclusive",
+      "conditions": [
+        {
+          "path": "pathA",
+          "condition": "[Condition expression]"
+        }
+      ]
+    }
+  ],
+  "dataObjects": [
+    {
+      "id": "BusinessObject1",
+      "name": "Business Object 1",
+      "path": "business-objects/generated/[context]/BusinessObject1.json"
+    }
+  ],
+  "estimatedDuration": "[duration]",
+  "complexity": "low|medium|high",
+  "generatedFrom": "business-blueprints/[source].pdf",
+  "generatedDate": "2026-05-06T10:00:00Z"
+}
+```
+
+---
+
+**Generated by:** BAW Blueprint Parser Mode  
+**Source Document:** [Document reference]  
+**Last Updated:** [Date]
+    ]]></markdown_template>
+  </template>
+
+  <template name="subprocess">
+    <description>Reusable subprocess that can be called from parent processes</description>
+    <use_case>Medical Underwriting, Document Verification, Risk Assessment</use_case>
+    <markdown_template><![CDATA[
+# [Subprocess Name]
+
+## Subprocess Overview
+
+**Subprocess ID:** `[subprocess-id]`  
+**Business Context:** [Context Name]  
+**Process Type:** Reusable Subprocess  
+**Called By:** [Parent process names]
+
+### Purpose
+[What this subprocess accomplishes]
+
+---
+
+## Subprocess Diagram
+
+```mermaid
+flowchart TD
+    Start([Subprocess Start])
+    A[Activity 1]
+    B[Activity 2]
+    C{Decision}
+    D[Activity 3]
+    E[Activity 4]
+    End([Subprocess End])
+    
+    Start --> A
+    A --> B
+    B --> C
+    C -->|Yes| D
+    C -->|No| E
+    D --> End
+    E --> End
+    
+    style Start fill:#90EE90
+    style End fill:#FFB6C1
+```
+
+---
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| [paramName] | [`BusinessObject`](../../business-objects/generated/[context]/BusinessObject.json) | Yes/No | [Description] |
+
+## Output Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| [paramName] | [`BusinessObject`](../../business-objects/generated/[context]/BusinessObject.json) | [Description] |
+
+---
+
+## Subprocess Steps
+
+[Detailed step descriptions]
+
+---
+
+## Process Metadata
+
+```json
+{
+  "processId": "[subprocess-id]",
+  "processName": "[Subprocess Name]",
+  "processType": "subprocess",
+  "isReusable": true,
+  "inputParameters": [],
+  "outputParameters": [],
+  "activities": []
+}
+```
+    ]]></markdown_template>
+  </template>
+
+  <template name="decision_process">
+    <description>Process focused on decision-making with complex branching logic</description>
+    <use_case>Risk Assessment, Claim Adjudication, Approval Workflows</use_case>
+    <markdown_template><![CDATA[
+# [Decision Process Name]
+
+## Process Overview
+
+**Process ID:** `[process-id]`  
+**Process Type:** Decision Process  
+**Decision Complexity:** [Low/Medium/High]
+
+---
+
+## Decision Flow Diagram
+
+```mermaid
+flowchart TD
+    Start([Start: Decision Required])
+    Input[Gather Input Data]
+    Eval1{Evaluation<br/>Criteria 1}
+    Eval2{Evaluation<br/>Criteria 2}
+    Eval3{Evaluation<br/>Criteria 3}
+    
+    Result1[Outcome A]
+    Result2[Outcome B]
+    Result3[Outcome C]
+    Result4[Outcome D]
+    
+    End([End: Decision Made])
+    
+    Start --> Input
+    Input --> Eval1
+    Eval1 -->|Condition A| Result1
+    Eval1 -->|Condition B| Eval2
+    Eval2 -->|Condition C| Result2
+    Eval2 -->|Condition D| Eval3
+    Eval3 -->|Condition E| Result3
+    Eval3 -->|Condition F| Result4
+    
+    Result1 --> End
+    Result2 --> End
+    Result3 --> End
+    Result4 --> End
+    
+    style Start fill:#90EE90
+    style End fill:#FFB6C1
+    style Eval1 fill:#FFD700
+    style Eval2 fill:#FFD700
+    style Eval3 fill:#FFD700
+```
+
+---
+
+## Decision Criteria
+
+### Criterion 1: [Name]
+- **Input Data:** [`BusinessObject`](../../business-objects/generated/[context]/BusinessObject.json)
+- **Evaluation Logic:**
+  ```
+  IF [condition] THEN [outcome]
+  ```
+- **Possible Outcomes:** [List outcomes]
+
+---
+
+## Decision Matrix
+
+| Criteria 1 | Criteria 2 | Criteria 3 | Result |
+|-----------|-----------|-----------|--------|
+| [Value] | [Value] | [Value] | [Outcome] |
+
+---
+
+## Process Metadata
+
+```json
+{
+  "processId": "[process-id]",
+  "processType": "decision",
+  "decisionCriteria": [],
+  "possibleOutcomes": []
+}
+```
+    ]]></markdown_template>
+  </template>
+
+  <template name="interaction_process">
+    <description>Process emphasizing interactions between actors</description>
+    <use_case>Customer Onboarding, Agent Communication, Multi-party Approval</use_case>
+    <markdown_template><![CDATA[
+# [Interaction Process Name]
+
+## Process Overview
+
+**Process ID:** `[process-id]`  
+**Process Type:** Interaction Process  
+**Participants:** [List of actors]
+
+---
+
+## Interaction Diagram
+
+```mermaid
+sequenceDiagram
+    participant Actor1
+    participant System
+    participant Actor2
+    participant Actor3
+    
+    Actor1->>System: Action 1
+    System->>System: Process Data
+    System->>Actor2: Request Action
+    Actor2->>System: Provide Response
+    System->>Actor3: Notify
+    Actor3->>System: Acknowledge
+    System->>Actor1: Complete
+    
+    Note over Actor1,Actor3: [Important note about interaction]
+```
+
+---
+
+## Interaction Steps
+
+### 1. [Interaction Name]
+- **From:** [Actor/System]
+- **To:** [Actor/System]
+- **Message:** [Description]
+- **Data:** [`BusinessObject`](../../business-objects/generated/[context]/BusinessObject.json)
+- **Expected Response:** [Description]
+
+---
+
+## Process Metadata
+
+```json
+{
+  "processId": "[process-id]",
+  "processType": "interaction",
+  "participants": [],
+  "interactions": []
+}
+```
+    ]]></markdown_template>
+  </template>
+
+  <example_process name="new_business_application">
+    <description>Complete example of a New Business Application process</description>
+    <full_example><![CDATA[
+# New Business Application Process
+
+## Process Overview
+
+**Process ID:** `new-business-application`  
+**Business Context:** LifeInsuranceAndAnnuities  
+**Process Type:** End-to-End Business Process  
+**Estimated Duration:** 2-4 weeks  
+**Complexity:** High
+
+### Purpose
+This process manages the complete lifecycle of a new insurance or annuity application from initial submission through policy issuance or decline.
+
+### Scope
+- **Starts with:** Agent submits application
+- **Ends with:** Policy issued or application declined
+- **Includes:** Application validation, medical underwriting, risk assessment, policy issuance
+- **Excludes:** Post-issuance policy administration, claims processing
+
+---
+
+## Process Diagram
+
+```mermaid
+flowchart TD
+    Start([Start: Application Received])
+    
+    subgraph Agent[Insurance Agent]
+        A1[Collect Application Data]
+        A2[Submit Application]
+    end
+    
+    subgraph System[Automated System]
+        S1[Validate Application]
+        S2{Application<br/>Complete?}
+        S3[Route to Underwriter]
+        S4[Generate Policy]
+    end
+    
+    subgraph Underwriter[Underwriter]
+        U1[Review Application]
+        U2[Order Requirements]
+        U3[Assess Risk]
+        U4{Underwriting<br/>Decision}
+    end
+    
+    subgraph Medical[Medical Services]
+        M1[Schedule Exam]
+        M2[Conduct Exam]
+        M3[Submit Results]
+    end
+    
+    Start --> A1
+    A1 --> A2
+    A2 --> S1
+    S1 --> S2
+    S2 -->|Incomplete| A1
+    S2 -->|Complete| S3
+    S3 --> U1
+    U1 --> U2
+    U2 --> M1
+    M1 --> M2
+    M2 --> M3
+    M3 --> U3
+    U3 --> U4
+    U4 -->|Approved| S4
+    U4 -->|Declined| Decline[Send Decline Letter]
+    U4 -->|Postponed| Postpone[Request Additional Info]
+    S4 --> Issue[Issue Policy]
+    Issue --> End([End: Process Complete])
+    Decline --> End
+    Postpone --> U1
+    
+    style Start fill:#90EE90
+    style End fill:#FFB6C1
+    style S2 fill:#FFD700
+    style U4 fill:#FFD700
+```
+
+---
+
+## Process Steps
+
+### 1. Collect Application Data
+- **Actor:** Insurance Agent
+- **Activity Type:** User Task
+- **Description:** Agent collects applicant information and policy requirements
+- **Input Data:** 
+  - Customer information (manual entry)
+- **Output Data:**
+  - [`Application`](../../business-objects/generated/LifeInsuranceAndAnnuities/Application.json)
+  - [`Policyholder`](../../business-objects/generated/LifeInsuranceAndAnnuities/Policyholder.json)
+  - [`Insured`](../../business-objects/generated/LifeInsuranceAndAnnuities/Insured.json)
+- **Business Rules:**
+  - Applicant must be at least 18 years old
+  - All required fields must be completed
+
+### 2. Validate Application
+- **Actor:** System
+- **Activity Type:** Service Task
+- **Description:** Automated validation of application data completeness and format
+- **Input Data:**
+  - [`Application`](../../business-objects/generated/LifeInsuranceAndAnnuities/Application.json)
+- **Output Data:**
+  - Validation results
+- **Business Rules:**
+  - All required fields present
+  - Data format validation (SSN, dates, etc.)
+  - Age within product limits
+
+### 3. Application Completeness Decision
+- **Actor:** System
+- **Decision Type:** Exclusive Gateway
+- **Description:** Determines if application is complete enough to proceed
+- **Conditions:**
+  - **Complete:** All validations passed
+  - **Incomplete:** Missing required information
+- **Business Logic:**
+  ```
+  IF all_required_fields_present AND all_validations_passed THEN route_to_underwriter
+  ELSE return_to_agent
+  ```
+
+### 4. Medical Underwriting
+- **Actor:** Underwriter, Medical Services
+- **Activity Type:** Subprocess
+- **Description:** Comprehensive medical evaluation and risk assessment
+- **Input Data:**
+  - [`Application`](../../business-objects/generated/LifeInsuranceAndAnnuities/Application.json)
+  - [`Insured`](../../business-objects/generated/LifeInsuranceAndAnnuities/Insured.json)
+  - [`MedicalHistory`](../../business-objects/generated/LifeInsuranceAndAnnuities/MedicalHistory.json)
+- **Output Data:**
+  - [`UnderwritingDecision`](../../business-objects/generated/LifeInsuranceAndAnnuities/UnderwritingDecision.json)
+  - [`MedicalRating`](../../business-objects/generated/LifeInsuranceAndAnnuities/MedicalRating.json)
+
+### 5. Underwriting Decision
+- **Actor:** Underwriter
+- **Decision Type:** Exclusive Gateway
+- **Description:** Final underwriting decision on application
+- **Conditions:**
+  - **Approved:** Risk acceptable, issue policy
+  - **Declined:** Risk too high, decline application
+  - **Postponed:** Need additional information
+- **Business Logic:**
+  ```
+  IF risk_class IN [PREFERRED, STANDARD] AND no_exclusions THEN approve
+  ELSE IF unresolved_requirements THEN postpone
+  ELSE decline
+  ```
+
+---
+
+## Business Objects
+
+| Business Object | Usage | Activities |
+|----------------|-------|-----------|
+| [`Application`](../../business-objects/generated/LifeInsuranceAndAnnuities/Application.json) | Input/Output | All activities |
+| [`Policyholder`](../../business-objects/generated/LifeInsuranceAndAnnuities/Policyholder.json) | Input | Application collection, validation |
+| [`Insured`](../../business-objects/generated/LifeInsuranceAndAnnuities/Insured.json) | Input | Application collection, medical underwriting |
+| [`UnderwritingDecision`](../../business-objects/generated/LifeInsuranceAndAnnuities/UnderwritingDecision.json) | Output | Underwriting decision |
+| [`Policy`](../../business-objects/generated/LifeInsuranceAndAnnuities/Policy.json) | Output | Policy issuance |
+| [`Agent`](../../business-objects/generated/LifeInsuranceAndAnnuities/Agent.json) | Input | Application submission |
+
+---
+
+## Business Rules
+
+### Validation Rules
+1. **Age Eligibility:** Applicant must be between 18 and 85 years old
+2. **Coverage Limits:** Requested coverage must be within product limits
+3. **Medical Exam Threshold:** Medical exam required for coverage > $500,000
+
+### Decision Rules
+1. **Automatic Approval:** Standard risk class, no medical conditions, coverage < $250,000
+2. **Automatic Decline:** High-risk occupation, serious medical conditions, age > 80
+3. **Manual Review:** All other cases require underwriter review
+
+---
+
+## Integration Points
+
+| Integration | Type | Activity | Description |
+|------------|------|----------|-------------|
+| MIB (Medical Information Bureau) | API | Medical Underwriting | Check medical history |
+| Prescription Database | API | Medical Underwriting | Verify medications |
+| MVR Service | API | Risk Assessment | Motor vehicle records |
+| Payment Gateway | API | Policy Issuance | Process initial premium |
+
+---
+
+## Process Metadata
+
+```json
+{
+  "processId": "new-business-application",
+  "processName": "New Business Application Process",
+  "version": "1.0.0",
+  "context": "LifeInsuranceAndAnnuities",
+  "processType": "end-to-end",
+  "actors": [
+    {"id": "agent", "name": "Insurance Agent", "type": "human"},
+    {"id": "system", "name": "BAW System", "type": "system"},
+    {"id": "underwriter", "name": "Underwriter", "type": "human"},
+    {"id": "medical", "name": "Medical Services", "type": "human"}
+  ],
+  "estimatedDuration": "2-4 weeks",
+  "complexity": "high",
+  "generatedFrom": "business-blueprints/LifeInsuranceAndAnnuities-2.pdf",
+  "generatedDate": "2026-05-06T10:00:00Z"
+}
+```
+    ]]></full_example>
+  </example_process>
+
+  <mermaid_best_practices>
+    <practice>Use consistent node shapes for activity types</practice>
+    <practice>Apply color coding: green for start, pink for end, yellow for decisions</practice>
+    <practice>Keep diagrams readable - split complex processes into subprocesses</practice>
+    <practice>Use subgraphs for swimlanes to show actor responsibilities</practice>
+    <practice>Add notes for complex business logic or important clarifications</practice>
+    <practice>Link business objects in activity descriptions</practice>
+    <practice>Use meaningful node IDs for future BPMN conversion</practice>
+  </mermaid_best_practices>
+</process_generation_templates>
+
+<!-- Made with Bob -->

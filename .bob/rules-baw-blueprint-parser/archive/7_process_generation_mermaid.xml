@@ -1,0 +1,307 @@
+<process_generation_workflow>
+  <overview>
+    This section extends the BAW Blueprint Parser mode to extract and generate business
+    process definitions from blueprint documents. Processes are initially generated as
+    Mermaid diagrams in Markdown format, with the long-term goal of generating BPMN
+    (BAW artifacts) for direct deployment.
+  </overview>
+
+  <core_principles>
+    <principle>Extract process flows from blueprint documents alongside business objects</principle>
+    <principle>Identify process steps, decision points, and swimlanes from business context</principle>
+    <principle>Generate human-readable Mermaid diagrams for immediate visualization</principle>
+    <principle>Structure process definitions to facilitate future BPMN generation</principle>
+    <principle>Link processes to relevant business objects for data flow understanding</principle>
+  </core_principles>
+
+  <process_extraction_workflow>
+    <step number="1">
+      <title>Identify Process Workflows in Blueprint</title>
+      <description>Scan blueprint documents for process descriptions, workflows, and business flows</description>
+      <actions>
+        <action>Look for sections describing workflows, procedures, or business processes</action>
+        <action>Identify process names and high-level objectives</action>
+        <action>Extract process steps, activities, and decision points</action>
+        <action>Identify actors, roles, or swimlanes involved in processes</action>
+        <action>Note integration points and system interactions</action>
+      </actions>
+      <indicators>
+        <indicator>Sections titled "Workflows", "Processes", "Procedures"</indicator>
+        <indicator>Sequential descriptions with steps or phases</indicator>
+        <indicator>Decision trees or conditional logic descriptions</indicator>
+        <indicator>Actor-based activity descriptions (e.g., "Agent submits", "Underwriter reviews")</indicator>
+      </indicators>
+    </step>
+
+    <step number="2">
+      <title>Model Process Structure</title>
+      <description>Transform extracted process information into structured process models</description>
+      <actions>
+        <action>Define process start and end events</action>
+        <action>Identify sequential activities and their order</action>
+        <action>Map decision points (gateways) and their conditions</action>
+        <action>Identify parallel activities or concurrent flows</action>
+        <action>Define swimlanes for different actors or systems</action>
+        <action>Link activities to relevant business objects (data inputs/outputs)</action>
+      </actions>
+      <process_elements>
+        <element type="start_event">Process initiation point</element>
+        <element type="end_event">Process completion or termination</element>
+        <element type="activity">Work to be performed (user task, service task, etc.)</element>
+        <element type="gateway">Decision point (exclusive, parallel, inclusive)</element>
+        <element type="swimlane">Actor or role responsible for activities</element>
+        <element type="data_object">Business object used or produced</element>
+      </process_elements>
+    </step>
+
+    <step number="3">
+      <title>Generate Mermaid Process Diagrams</title>
+      <description>Create Mermaid flowchart or sequence diagrams representing the processes</description>
+      <actions>
+        <action>Generate Mermaid syntax for each identified process</action>
+        <action>Use appropriate Mermaid diagram types (flowchart, sequence, state)</action>
+        <action>Include decision points with conditional branches</action>
+        <action>Add swimlanes for multi-actor processes</action>
+        <action>Annotate activities with business object references</action>
+        <action>Include notes for complex logic or business rules</action>
+      </actions>
+      <mermaid_patterns>
+        <pattern type="flowchart">
+          <description>Best for sequential processes with decision points</description>
+          <syntax><![CDATA[
+```mermaid
+flowchart TD
+    Start([Start: Application Submission])
+    Submit[Submit Application]
+    Validate{Validate<br/>Application}
+    Review[Underwriter Review]
+    Decision{Underwriting<br/>Decision}
+    Approve[Issue Policy]
+    Decline[Send Decline Letter]
+    End([End])
+    
+    Start --> Submit
+    Submit --> Validate
+    Validate -->|Valid| Review
+    Validate -->|Invalid| End
+    Review --> Decision
+    Decision -->|Approved| Approve
+    Decision -->|Declined| Decline
+    Approve --> End
+    Decline --> End
+```
+          ]]></syntax>
+        </pattern>
+        
+        <pattern type="swimlane_flowchart">
+          <description>Best for processes with multiple actors/roles</description>
+          <syntax><![CDATA[
+```mermaid
+flowchart TD
+    subgraph Agent
+        A1[Collect Application]
+        A2[Submit to System]
+    end
+    
+    subgraph System
+        S1[Validate Data]
+        S2[Route to Underwriter]
+    end
+    
+    subgraph Underwriter
+        U1[Review Application]
+        U2[Make Decision]
+    end
+    
+    A1 --> A2
+    A2 --> S1
+    S1 --> S2
+    S2 --> U1
+    U1 --> U2
+```
+          ]]></syntax>
+        </pattern>
+        
+        <pattern type="sequence_diagram">
+          <description>Best for interaction-focused processes</description>
+          <syntax><![CDATA[
+```mermaid
+sequenceDiagram
+    participant Agent
+    participant System
+    participant Underwriter
+    participant Policyholder
+    
+    Agent->>System: Submit Application
+    System->>System: Validate Data
+    System->>Underwriter: Route for Review
+    Underwriter->>System: Request Medical Exam
+    System->>Policyholder: Schedule Exam
+    Policyholder->>System: Complete Exam
+    System->>Underwriter: Provide Results
+    Underwriter->>System: Approve Policy
+    System->>Agent: Issue Policy
+```
+          ]]></syntax>
+        </pattern>
+      </mermaid_patterns>
+    </step>
+
+    <step number="4">
+      <title>Document Process Metadata</title>
+      <description>Create structured metadata for each process to support future BPMN generation</description>
+      <actions>
+        <action>Document process name, description, and business purpose</action>
+        <action>List all activities with their types (user task, service task, etc.)</action>
+        <action>Define decision logic and gateway conditions</action>
+        <action>Map business objects to process activities (inputs/outputs)</action>
+        <action>Identify integration points and external systems</action>
+        <action>Note business rules and validation requirements</action>
+      </actions>
+      <metadata_structure>
+        <field name="processId">Unique identifier for the process</field>
+        <field name="processName">Human-readable process name</field>
+        <field name="description">Business purpose and scope</field>
+        <field name="actors">List of roles/swimlanes involved</field>
+        <field name="activities">Detailed activity definitions</field>
+        <field name="gateways">Decision points and conditions</field>
+        <field name="dataObjects">Business objects used in process</field>
+        <field name="integrations">External system touchpoints</field>
+        <field name="businessRules">Rules and constraints</field>
+      </metadata_structure>
+    </step>
+
+    <step number="5">
+      <title>Generate Process Documentation</title>
+      <description>Create comprehensive Markdown documentation for each process</description>
+      <actions>
+        <action>Create process files under business-processes/[context]/</action>
+        <action>Include Mermaid diagrams in Markdown format</action>
+        <action>Document process steps with descriptions</action>
+        <action>Link to related business objects</action>
+        <action>Include business rules and decision criteria</action>
+        <action>Add process metadata in structured format</action>
+      </actions>
+      <output_structure>
+        <file_location>business-processes/[context]/[ProcessName].process.md</file_location>
+        <file_sections>
+          <section>Process Overview</section>
+          <section>Process Diagram (Mermaid)</section>
+          <section>Process Steps</section>
+          <section>Decision Points</section>
+          <section>Business Objects</section>
+          <section>Business Rules</section>
+          <section>Integration Points</section>
+          <section>Process Metadata (JSON)</section>
+        </file_sections>
+      </output_structure>
+    </step>
+
+    <step number="6">
+      <title>Create Process Catalog</title>
+      <description>Generate a catalog of all processes for the business context</description>
+      <actions>
+        <action>Create process catalog at business-processes/catalog/[context].process-catalog.json</action>
+        <action>List all processes with metadata</action>
+        <action>Include relationships between processes</action>
+        <action>Link processes to business objects they use</action>
+        <action>Maintain master process catalog</action>
+      </actions>
+      <catalog_structure><![CDATA[
+{
+  "context": "LifeInsuranceAndAnnuities",
+  "version": "1.0.0",
+  "generatedDate": "2026-05-06T10:00:00Z",
+  "processes": [
+    {
+      "processId": "new-business-application",
+      "processName": "New Business Application Process",
+      "description": "End-to-end process for new policy applications",
+      "processFile": "business-processes/LifeInsuranceAndAnnuities/NewBusinessApplication.process.md",
+      "actors": ["Agent", "System", "Underwriter", "Medical Examiner"],
+      "businessObjects": ["Application", "Policy", "UnderwritingDecision"],
+      "subProcesses": ["medical-underwriting", "policy-issuance"],
+      "complexity": "high",
+      "estimatedDuration": "2-4 weeks"
+    }
+  ]
+}
+      ]]></catalog_structure>
+    </step>
+  </process_extraction_workflow>
+
+  <process_types>
+    <type name="end_to_end_process">
+      <description>Complete business process from start to finish</description>
+      <example>New Business Application Process, Claims Processing</example>
+      <diagram_type>Flowchart with swimlanes</diagram_type>
+    </type>
+    
+    <type name="subprocess">
+      <description>Reusable process component called by parent processes</description>
+      <example>Medical Underwriting, Document Verification</example>
+      <diagram_type>Flowchart</diagram_type>
+    </type>
+    
+    <type name="decision_process">
+      <description>Process focused on decision-making logic</description>
+      <example>Risk Assessment, Claim Adjudication</example>
+      <diagram_type>Flowchart with decision gateways</diagram_type>
+    </type>
+    
+    <type name="interaction_process">
+      <description>Process emphasizing actor interactions</description>
+      <example>Customer Onboarding, Agent Communication</example>
+      <diagram_type>Sequence diagram</diagram_type>
+    </type>
+  </process_types>
+
+  <future_bpmn_preparation>
+    <overview>
+      While current implementation generates Mermaid diagrams, the structure is designed
+      to facilitate future BPMN generation for direct BAW deployment.
+    </overview>
+    
+    <bpmn_mapping>
+      <mapping from="Mermaid Start Node" to="BPMN Start Event" />
+      <mapping from="Mermaid End Node" to="BPMN End Event" />
+      <mapping from="Mermaid Rectangle" to="BPMN User Task or Service Task" />
+      <mapping from="Mermaid Diamond" to="BPMN Exclusive Gateway" />
+      <mapping from="Mermaid Subgraph" to="BPMN Pool/Lane" />
+      <mapping from="Process Metadata" to="BPMN Process Definition" />
+    </bpmn_mapping>
+    
+    <preparation_steps>
+      <step>Store process metadata in JSON format for programmatic access</step>
+      <step>Use consistent naming conventions aligned with BPMN standards</step>
+      <step>Document activity types (user task, service task, script task)</step>
+      <step>Define data associations between activities and business objects</step>
+      <step>Capture gateway conditions in structured format</step>
+      <step>Maintain traceability from blueprint to process definition</step>
+    </preparation_steps>
+  </future_bpmn_preparation>
+
+  <output_contract>
+    <process_root>business-processes/</process_root>
+    <process_files_path>business-processes/[context]/</process_files_path>
+    <process_catalog_path>business-processes/catalog/[context].process-catalog.json</process_catalog_path>
+    <master_process_catalog>business-processes/catalog/master.process-catalog.json</master_process_catalog>
+    <file_naming>
+      <convention>Use PascalCase for process file names</convention>
+      <pattern>[ProcessName].process.md</pattern>
+      <example>NewBusinessApplication.process.md</example>
+    </file_naming>
+  </output_contract>
+
+  <integration_with_business_objects>
+    <principle>Processes and business objects are complementary artifacts</principle>
+    <linkage>
+      <link>Process activities reference business objects as inputs/outputs</link>
+      <link>Business object lifecycle events can trigger processes</link>
+      <link>Process documentation includes business object data flow</link>
+      <link>Catalogs cross-reference processes and business objects</link>
+    </linkage>
+  </integration_with_business_objects>
+</process_generation_workflow>
+
+<!-- Made with Bob -->
