@@ -9,6 +9,23 @@ BPMN_tools provides a **config-driven approach** to creating BPMN 2.0 compliant 
 - **Automated process modeling** - Convert business requirements to BPMN
 - **Version control** - Track process changes in readable JSON format
 - **Integration with BAW/BPM systems** - Export to IBM Business Automation Workflow
+- **Dual generation** - Creates both IBM BAW and standard BPMN 2.0 versions automatically
+
+## ✨ New: Dual BPMN Generation
+
+**By default, the tool now generates TWO versions of each BPMN file:**
+
+1. **IBM BAW Version** (`process.bpmn`) - Full-featured with IBM extensions
+   - Includes milestones (IBM BPM extension)
+   - IBM-specific namespaces
+   - Ready for direct import into IBM BAW
+
+2. **Standard BPMN 2.0 Preview** (`process-preview.bpmn`) - Generic viewer compatible
+   - Pure BPMN 2.0 standard
+   - Works with bpmn.io, Red Hat BPMN viewer, and other generic tools
+   - Perfect for documentation and sharing
+
+Both versions are generated from the same config file, ensuring consistency!
 
 ## 🚀 Quick Start
 
@@ -49,10 +66,12 @@ Create `my_process.json`:
 ### Step 2: Generate BPMN
 
 ```bash
-python generate_bpmn.py my_process.json my_process.bpmn
+python3 generate_bpmn.py my_process.json my_process.bpmn
 ```
 
-**Done!** You now have a valid BPMN XML file ready for import into BAW.
+**Done!** You now have TWO valid BPMN XML files:
+- `my_process.bpmn` - IBM BAW version (ready for import)
+- `my_process-preview.bpmn` - Standard BPMN 2.0 (for generic viewers)
 
 ## 📦 Components
 

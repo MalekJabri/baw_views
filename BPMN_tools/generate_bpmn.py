@@ -12,11 +12,17 @@ from bpmn_xml_builder import BPMNGenerator
 class ConfigLoader:
     """Load BPMN configurations from JSON files and generate BPMN XML"""
     
-    def __init__(self):
-        """Initialize the config loader"""
+    def __init__(self, standard_mode: bool = False):
+        """
+        Initialize the config loader
+        
+        Args:
+            standard_mode: If True, generate standard BPMN 2.0 without IBM extensions
+        """
         self.generator = None
         self.config = None
         self.element_map = {}  # Maps config IDs to generator IDs
+        self.standard_mode = standard_mode
         
     def load_config(self, config_path: str) -> Dict[str, Any]:
         """
@@ -124,7 +130,8 @@ class ConfigLoader:
         process_info = self.config['process']
         self.generator = BPMNGenerator(
             process_name=process_info['name'],
-            process_id=process_info['id']
+            process_id=process_info['id'],
+            standard_mode=self.standard_mode
         )
         
         # Add roles as lanes if lanes section exists
@@ -296,21 +303,38 @@ class ConfigLoader:
         print(f"BPMN XML saved to: {output_path}")
 
 
-def generate_bpmn_from_config(config_path: str, output_path: str) -> str:
+def generate_bpmn_from_config(config_path: str, output_path: str, generate_preview: bool = True) -> tuple[str, Optional[str]]:
     """
-    Convenience function to generate BPMN XML from config file
+    Generate BPMN XML from config file - creates both IBM BAW and standard preview versions by default
     
     Args:
         config_path: Path to JSON config file
-        output_path: Path where BPMN XML will be saved
+        output_path: Path where IBM BAW BPMN XML will be saved
+        generate_preview: If True (default), also generate standard BPMN 2.0 preview version
         
     Returns:
-        Generated BPMN XML as string
+        Tuple of (IBM BAW XML, Standard preview XML or None)
     """
-    loader = ConfigLoader()
-    loader.load_config(config_path)
-    loader.save_bpmn(output_path)
-    return loader.generator.generate_xml()
+    # Generate IBM BAW version
+    loader_ibm = ConfigLoader(standard_mode=False)
+    loader_ibm.load_config(config_path)
+    loader_ibm.save_bpmn(output_path)
+    ibm_xml = loader_ibm.generator.generate_xml()
+    
+    preview_xml = None
+    if generate_preview:
+        # Generate standard BPMN 2.0 preview version
+        output_file = Path(output_path)
+        preview_path = output_file.parent / f"{output_file.stem}-preview{output_file.suffix}"
+        
+        loader_standard = ConfigLoader(standard_mode=True)
+        loader_standard.load_config(config_path)
+        loader_standard.save_bpmn(str(preview_path))
+        preview_xml = loader_standard.generator.generate_xml()
+        
+        print(f"📋 Standard BPMN 2.0 preview saved to: {preview_path}")
+    
+    return ibm_xml, preview_xml
 
 
 if __name__ == "__main__":
@@ -318,18 +342,31 @@ if __name__ == "__main__":
     
     if len(sys.argv) < 3:
         print("Usage: python generate_bpmn.py <config_file.json> <output_file.bpmn>")
+        print("\nGenerates two versions by default:")
+        print("  1. <output_file.bpmn> - IBM BAW version with extensions")
+        print("  2. <output_file-preview.bpmn> - Standard BPMN 2.0 for generic viewers")
         print("\nExample:")
         print("  python generate_bpmn.py business-processes/configs/Insurance/SimpleClaimSubmission.bpmn-config.json output.bpmn")
+        print("\nOutput:")
+        print("  - output.bpmn (IBM BAW)")
+        print("  - output-preview.bpmn (Standard BPMN 2.0)")
         sys.exit(1)
     
     config_file = sys.argv[1]
     output_file = sys.argv[2]
     
     try:
-        generate_bpmn_from_config(config_file, output_file)
-        print(f"✅ Successfully generated BPMN XML from {config_file}")
+        ibm_xml, preview_xml = generate_bpmn_from_config(config_file, output_file, generate_preview=True)
+        print(f"\n✅ Successfully generated BPMN files from {config_file}")
+        print(f"   📦 IBM BAW version: {output_file}")
+        if preview_xml:
+            output_path = Path(output_file)
+            preview_path = output_path.parent / f"{output_path.stem}-preview{output_path.suffix}"
+            print(f"   📋 Standard BPMN 2.0 preview: {preview_path}")
     except Exception as e:
         print(f"❌ Error: {e}")
+        import traceback
+        traceback.print_exc()
         sys.exit(1)
 
 # Made with Bob

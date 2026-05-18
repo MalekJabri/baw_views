@@ -133,21 +133,30 @@
       <title>Generate BPMN XML Files</title>
       <description>Generate BPMN 2.0 XML files from the JSON config files using the generate_bpmn tool</description>
       <actions>
-        <action>For each BPMN config file created in step 7, generate the corresponding BPMN XML file</action>
-        <action>Use execute_command to run: python BPMN_tools/generate_bpmn.py business-processes/configs/[context]/[ProcessName].bpmn-config.json business-processes/[context]/[ProcessName].bpmn</action>
-        <action>Verify that BPMN XML files are created successfully in business-processes/[context]/</action>
-        <action>Validate that generated BPMN files are well-formed XML</action>
-        <action>Create a README.md in business-processes/[context]/ documenting the generated processes</action>
+        <action>For each BPMN config file created in step 7, generate BOTH IBM BAW and standard BPMN 2.0 versions</action>
+        <action>Use execute_command to run: python3 BPMN_tools/generate_bpmn.py business-processes/configs/[context]/[ProcessName].bpmn-config.json business-processes/bpmn/[context]/[ProcessName].bpmn</action>
+        <action>Tool automatically generates TWO files:</action>
+        <action>  1. [ProcessName].bpmn - IBM BAW version with extensions (milestones, IBM namespaces)</action>
+        <action>  2. [ProcessName]-preview.bpmn - Standard BPMN 2.0 for generic viewers (bpmn.io, Red Hat)</action>
+        <action>Verify that BOTH BPMN XML files are created successfully in business-processes/bpmn/[context]/</action>
+        <action>Validate that both generated BPMN files are well-formed XML</action>
+        <action>Create a README.md in business-processes/bpmn/[context]/ documenting the generated processes and explaining the two versions</action>
       </actions>
       <important>
-        The generate_bpmn tool automatically validates the config before generating XML.
-        BPMN XML files are placed in business-processes/[context]/ alongside their config files.
-        This step transforms JSON configs into importable BPMN 2.0 XML for BAW.
+        The generate_bpmn tool now automatically generates DUAL versions by default:
+        - IBM BAW version: Full-featured with IBM extensions, ready for BAW import
+        - Standard BPMN 2.0 preview: Compatible with generic viewers for documentation and sharing
+        Both versions are generated from the same config, ensuring consistency.
+        BPMN XML files are placed in business-processes/bpmn/[context]/ for organization.
       </important>
       <example>
-        python BPMN_tools/generate_bpmn.py \
+        python3 BPMN_tools/generate_bpmn.py \
           business-processes/configs/Insurance/SimpleClaimSubmission.bpmn-config.json \
-          business-processes/Insurance/SimpleClaimSubmission.bpmn
+          business-processes/bpmn/Insurance/SimpleClaimSubmission.bpmn
+        
+        # Automatically generates:
+        # - SimpleClaimSubmission.bpmn (IBM BAW)
+        # - SimpleClaimSubmission-preview.bpmn (Standard BPMN 2.0)
       </example>
     </step>
 

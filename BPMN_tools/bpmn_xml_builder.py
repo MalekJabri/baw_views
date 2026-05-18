@@ -13,18 +13,20 @@ from xml.dom import minidom
 class BPMNGenerator:
     """Main class for generating BPMN 2.0 compliant XML files"""
     
-    def __init__(self, process_name: str, process_id: Optional[str] = None):
+    def __init__(self, process_name: str, process_id: Optional[str] = None, standard_mode: bool = False):
         """
         Initialize BPMN Generator
         
         Args:
             process_name: Name of the business process
             process_id: Optional custom process ID (auto-generated if not provided)
+            standard_mode: If True, generate standard BPMN 2.0 without IBM extensions
         """
         self.process_name = process_name
         self.process_id = process_id or f"process-{self._generate_id()}"
         self.definition_id = f"definitions-{self._generate_id()}"
         self.diagram_id = f"diagram-{self._generate_id()}"
+        self.standard_mode = standard_mode
         
         # Storage for process elements
         self.flow_nodes = []
@@ -32,18 +34,31 @@ class BPMNGenerator:
         self.lanes = []
         self.milestones = []
         
-        # Namespaces
-        self.namespaces = {
-            'xmlns': 'http://www.omg.org/spec/BPMN/20100524/MODEL',
-            'xmlns:ns2': 'http://www.ibm.com/bpm/Extensions',
-            'xmlns:ns3': 'http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/process',
-            'xmlns:ns4': 'http://www.omg.org/spec/DD/20100524/DI',
-            'xmlns:ns5': 'http://www.omg.org/spec/DD/20100524/DC',
-            'xmlns:ns6': 'http://www.omg.org/spec/BPMN/20100524/DI',
-            'targetNamespace': f'http://www.ibm.com/bpm/process/{self.process_id}',
-            'exporter': 'BPMN_tools Python Generator',
-            'exporterVersion': '1.0'
-        }
+        # Namespaces - use standard or IBM-extended
+        if standard_mode:
+            # Standard BPMN 2.0 namespaces only
+            self.namespaces = {
+                'xmlns': 'http://www.omg.org/spec/BPMN/20100524/MODEL',
+                'xmlns:bpmndi': 'http://www.omg.org/spec/BPMN/20100524/DI',
+                'xmlns:dc': 'http://www.omg.org/spec/DD/20100524/DC',
+                'xmlns:di': 'http://www.omg.org/spec/DD/20100524/DI',
+                'targetNamespace': f'http://bpmn.io/schema/bpmn',
+                'exporter': 'BPMN_tools Python Generator',
+                'exporterVersion': '1.0'
+            }
+        else:
+            # IBM BAW namespaces with extensions
+            self.namespaces = {
+                'xmlns': 'http://www.omg.org/spec/BPMN/20100524/MODEL',
+                'xmlns:ns2': 'http://www.ibm.com/bpm/Extensions',
+                'xmlns:ns3': 'http://www.ibm.com/xmlns/prod/bpm/bpmn/ext/process',
+                'xmlns:ns4': 'http://www.omg.org/spec/DD/20100524/DI',
+                'xmlns:ns5': 'http://www.omg.org/spec/DD/20100524/DC',
+                'xmlns:ns6': 'http://www.omg.org/spec/BPMN/20100524/DI',
+                'targetNamespace': f'http://www.ibm.com/bpm/process/{self.process_id}',
+                'exporter': 'BPMN_tools Python Generator',
+                'exporterVersion': '1.0'
+            }
     
     def _generate_id(self) -> str:
         """Generate a unique ID for BPMN elements"""
@@ -261,8 +276,8 @@ class BPMNGenerator:
         process.set('processType', 'Private')
         process.set('isExecutable', 'true')
         
-        # Add extension elements (milestones)
-        if self.milestones:
+        # Add extension elements (milestones) - only in IBM mode
+        if self.milestones and not self.standard_mode:
             ext_elements = SubElement(process, 'extensionElements')
             bpm_attrs = SubElement(ext_elements, '{http://www.ibm.com/bpm/Extensions}bpmAttributes')
             milestones_elem = SubElement(bpm_attrs, '{http://www.ibm.com/bpm/Extensions}milestones')
@@ -311,9 +326,223 @@ class BPMNGenerator:
                 performer_elem = SubElement(node_elem, 'performer')
                 performer_elem.set('name', node['performer'])
         
+        # Add BPMN Diagram Interchange (DI) for visual layout - required for generic viewers
+        if self.standard_mode:
+            self._add_diagram_interchange(definitions)
+        
         # Pretty print XML
         xml_str = minidom.parseString(tostring(definitions)).toprettyxml(indent="    ")
         return xml_str
+    
+    def _add_diagram_interchange(self, definitions: Element):
+        """
+        Add BPMN Diagram Interchange (DI) elements for visual layout
+        This creates a proper flow-based layout that follows the process sequence
+        """
+        # Create BPMNDiagram element
+        diagram = SubElement(definitions, '{http://www.omg.org/spec/BPMN/20100524/DI}BPMNDiagram')
+        diagram.set('id', f'diagram-{self._generate_id()}')
+        
+        # Create BPMNPlane element
+        plane = SubElement(diagram, '{http://www.omg.org/spec/BPMN/20100524/DI}BPMNPlane')
+        plane.set('id', f'plane-{self._generate_id()}')
+        plane.set('bpmnElement', self.process_id)
+        
+        # Calculate positions based on flow topology
+        node_positions = self._calculate_node_positions()
+        
+        # Add lane shapes first
+        lane_y = 80
+        lane_height = 200
+        lane_width = 1400
+        
+        for lane in self.lanes:
+            lane_shape = SubElement(plane, '{http://www.omg.org/spec/BPMN/20100524/DI}BPMNShape')
+            lane_shape.set('id', f'shape-{lane["id"]}')
+            lane_shape.set('bpmnElement', lane['id'])
+            lane_shape.set('isHorizontal', 'true')
+            
+            bounds = SubElement(lane_shape, '{http://www.omg.org/spec/DD/20100524/DC}Bounds')
+            bounds.set('x', '80')
+            bounds.set('y', str(lane_y))
+            bounds.set('width', str(lane_width))
+            bounds.set('height', str(lane_height))
+            
+            lane_y += lane_height
+        
+        # Add shapes for all flow nodes
+        for node in self.flow_nodes:
+            if node['id'] not in node_positions:
+                continue
+                
+            shape = SubElement(plane, '{http://www.omg.org/spec/BPMN/20100524/DI}BPMNShape')
+            shape.set('id', f'shape-{node["id"]}')
+            shape.set('bpmnElement', node['id'])
+            
+            pos = node_positions[node['id']]
+            node_bounds = SubElement(shape, '{http://www.omg.org/spec/DD/20100524/DC}Bounds')
+            node_bounds.set('x', str(pos['x']))
+            node_bounds.set('y', str(pos['y']))
+            
+            # Different sizes for different node types
+            if node['type'] in ['startEvent', 'endEvent']:
+                node_bounds.set('width', '36')
+                node_bounds.set('height', '36')
+            elif node['type'] in ['exclusiveGateway', 'parallelGateway', 'inclusiveGateway']:
+                # Don't set dimensions for gateways - let viewer use default diamond shape
+                pass
+            else:
+                # Tasks get wider rectangular dimensions
+                node_bounds.set('width', '120')
+                node_bounds.set('height', '80')
+        
+        # Add edges for sequence flows with calculated waypoints
+        for flow in self.sequence_flows:
+            source_pos = node_positions.get(flow['sourceRef'])
+            target_pos = node_positions.get(flow['targetRef'])
+            
+            if not source_pos or not target_pos:
+                continue
+            
+            edge = SubElement(plane, '{http://www.omg.org/spec/BPMN/20100524/DI}BPMNEdge')
+            edge.set('id', f'edge-{flow["id"]}')
+            edge.set('bpmnElement', flow['id'])
+            
+            # Calculate waypoints based on actual node positions
+            source_node = next((n for n in self.flow_nodes if n['id'] == flow['sourceRef']), None)
+            target_node = next((n for n in self.flow_nodes if n['id'] == flow['targetRef']), None)
+            
+            # Source node center point (right edge)
+            if source_node and source_node['type'] in ['startEvent', 'endEvent']:
+                source_x = source_pos['x'] + 36
+                source_y = source_pos['y'] + 18
+            else:
+                source_x = source_pos['x'] + 100
+                source_y = source_pos['y'] + 40
+            
+            # Target node center point (left edge)
+            target_x = target_pos['x']
+            if target_node and target_node['type'] in ['startEvent', 'endEvent']:
+                target_y = target_pos['y'] + 18
+            else:
+                target_y = target_pos['y'] + 40
+            
+            # Add waypoints
+            waypoint1 = SubElement(edge, '{http://www.omg.org/spec/DD/20100524/DI}waypoint')
+            waypoint1.set('x', str(source_x))
+            waypoint1.set('y', str(source_y))
+            
+            waypoint2 = SubElement(edge, '{http://www.omg.org/spec/DD/20100524/DI}waypoint')
+            waypoint2.set('x', str(target_x))
+            waypoint2.set('y', str(target_y))
+    
+    def _calculate_node_positions(self) -> dict:
+        """
+        Calculate positions for all nodes based on process flow topology
+        Uses a level-based layout algorithm
+        """
+        positions = {}
+        
+        # Build adjacency list for flow graph
+        graph = {}
+        in_degree = {}
+        for node in self.flow_nodes:
+            graph[node['id']] = []
+            in_degree[node['id']] = 0
+        
+        for flow in self.sequence_flows:
+            graph[flow['sourceRef']].append(flow['targetRef'])
+            in_degree[flow['targetRef']] = in_degree.get(flow['targetRef'], 0) + 1
+        
+        # Find start nodes (nodes with no incoming edges)
+        start_nodes = [node_id for node_id, degree in in_degree.items() if degree == 0]
+        
+        # Assign levels using BFS
+        levels = {}
+        queue = [(node_id, 0) for node_id in start_nodes]
+        visited = set()
+        
+        while queue:
+            node_id, level = queue.pop(0)
+            if node_id in visited:
+                continue
+            visited.add(node_id)
+            levels[node_id] = max(levels.get(node_id, 0), level)
+            
+            for neighbor in graph.get(node_id, []):
+                queue.append((neighbor, level + 1))
+        
+        # Group nodes by lane
+        lane_nodes = {}
+        for lane in self.lanes:
+            lane_nodes[lane['id']] = [ref for ref in lane['flowNodeRefs']]
+        
+        # Assign base Y positions for lanes
+        lane_y_base = {}
+        current_y = 80
+        lane_height = 200
+        for lane in self.lanes:
+            lane_y_base[lane['id']] = current_y
+            current_y += lane_height
+        
+        # Group nodes by (level, lane) to detect overlaps
+        level_lane_nodes = {}
+        for node in self.flow_nodes:
+            node_id = node['id']
+            level = levels.get(node_id, 0)
+            
+            # Find which lane this node belongs to
+            node_lane = None
+            for lane_id, refs in lane_nodes.items():
+                if node_id in refs:
+                    node_lane = lane_id
+                    break
+            
+            key = (level, node_lane)
+            if key not in level_lane_nodes:
+                level_lane_nodes[key] = []
+            level_lane_nodes[key].append(node_id)
+        
+        # Assign X and Y positions with vertical spacing for nodes at same level
+        x_start = 150
+        x_spacing = 180
+        y_spacing = 100  # Vertical spacing between nodes at same level in same lane
+        
+        for node in self.flow_nodes:
+            node_id = node['id']
+            level = levels.get(node_id, 0)
+            
+            # Find which lane this node belongs to
+            node_lane = None
+            for lane_id, refs in lane_nodes.items():
+                if node_id in refs:
+                    node_lane = lane_id
+                    break
+            
+            # Calculate X position based on level
+            x_pos = x_start + (level * x_spacing)
+            
+            # Calculate Y position with vertical offset for multiple nodes at same level
+            key = (level, node_lane)
+            nodes_at_level = level_lane_nodes.get(key, [])
+            node_index = nodes_at_level.index(node_id) if node_id in nodes_at_level else 0
+            
+            # Center the group of nodes vertically within the lane
+            total_nodes = len(nodes_at_level)
+            total_height = (total_nodes - 1) * y_spacing
+            lane_center_y = lane_y_base.get(node_lane, 150) + lane_height // 2
+            
+            # Start from top of centered group
+            start_y = lane_center_y - total_height // 2 - 40
+            y_pos = start_y + (node_index * y_spacing)
+            
+            # Adjust for event nodes (smaller)
+            if node['type'] in ['startEvent', 'endEvent']:
+                y_pos += 22  # Center smaller events vertically
+            
+            positions[node_id] = {'x': x_pos, 'y': y_pos}
+        
+        return positions
     
     def save_to_file(self, filename: str):
         """

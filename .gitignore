@@ -9,6 +9,7 @@ output/
 .bob/mcp.json
 sample/
 .bob/oldmcp.txt
+widget_input
 business-objects/
 business-processes/
 business-blueprints/
